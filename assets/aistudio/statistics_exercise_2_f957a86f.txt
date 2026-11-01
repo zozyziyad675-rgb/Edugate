@@ -1,0 +1,181 @@
+20 MCQs from Lecture 2: Measures of Central Tendency and Dispersion
+
+---
+
+Q1. The arithmetic mean is defined as:
+A) The middle value of an ordered dataset
+B) The sum of all data values divided by the total number of observations
+C) The most frequently occurring value
+D) The difference between the largest and smallest values
+Answer: B) The sum of all data values divided by the total number of observations
+
+---
+
+Q2. For a sample of five heights (65.51, 72.30, 68.31, 67.05, 70.68 inches), the sample mean is:
+A) 67.05 in.
+B) 68.31 in.
+C) 68.77 in.
+D) 70.68 in.
+Answer: C) 68.77 in.
+
+---
+
+Q3. When n is odd, the median position is determined by:
+A) n/2
+B) (n+1)/2
+C) (n-1)/2
+D) 3(n+1)/4
+Answer: B) (n+1)/2
+
+---
+
+Q4. For the five heights (65.51, 72.30, 68.31, 67.05, 70.68), the sample median is:
+A) 65.51
+B) 67.05
+C) 68.31
+D) 70.68
+Answer: C) 68.31
+
+---
+
+Q5. Quartiles divide an ordered dataset into:
+A) Two equal parts
+B) Four equal parts
+C) Ten equal parts
+D) One hundred equal parts
+Answer: B) Four equal parts
+
+---
+
+Q6. The second quartile (Q_2) is identical to:
+A) The mode
+B) The median
+C) The range
+D) The standard deviation
+Answer: B) The median
+
+---
+
+Q7. The position of the k-th percentile (P_k) is approximately:
+A) k(n+1)/4
+B) k(n+1)/10
+C) k(n+1)/100
+D) k(n+1)/2
+Answer: C) k(n+1)/100
+
+---
+
+Q8. The fifth decile (D_5) is identical to:
+A) Q_1
+B) Q_3
+C) The median
+D) P_1
+Answer: C) The median
+
+---
+
+Q9. For the dataset 26, 25, 25, 34, the mode is:
+A) 25
+B) 26
+C) 34
+D) No mode
+Answer: A) 25
+
+---
+
+Q10. For the dataset 3, 7, 12, 6, 19, the mode is:
+A) 3
+B) 7
+C) 19
+D) No mode
+Answer: D) No mode (all values occur once)
+
+---
+
+Q11. For the dataset 3, 3, 12, 6, 8, 8, the dataset is:
+A) Unimodal
+B) Bimodal (3 and 8)
+C) Multimodal
+D) No mode
+Answer: B) Bimodal (3 and 8)
+
+---
+
+Q12. In a symmetric distribution:
+A) Mean > Median > Mode
+B) Mean < Median < Mode
+C) Mode = Mean = Median
+D) Mode > Mean > Median
+Answer: C) Mode = Mean = Median
+
+---
+
+Q13. In a negatively skewed (skewed left) distribution:
+A) Mean > Median > Mode
+B) Mean < Median < Mode
+C) Mode = Mean = Median
+D) Mode < Median < Mean
+Answer: B) Mean < Median < Mode
+
+---
+
+Q14. In a positively skewed (skewed right) distribution:
+A) Mean > Median > Mode
+B) Mean < Median < Mode
+C) Mode = Mean = Median
+D) Mode > Median > Mean
+Answer: A) Mean > Median > Mode
+
+---
+
+Q15. The range is defined as:
+A) The average squared deviation from the mean
+B) The positive square root of the variance
+C) The difference between the maximum and minimum values
+D) The standard deviation as a percentage of the mean
+Answer: C) The difference between the maximum and minimum values
+
+---
+
+Q16. The sample variance s^2 for raw data uses which denominator?
+A) n
+B) n-1
+C) n+1
+D) N
+Answer: B) n-1 (degrees of freedom)
+
+---
+
+Q17. The standard deviation is defined as:
+A) The square of the variance
+B) The positive square root of the variance
+C) The difference between max and min
+D) The average of all deviations
+Answer: B) The positive square root of the variance
+
+---
+
+Q18. The coefficient of variation (CV) is calculated as:
+A) s \times \bar{x} \times 100\%
+B) \bar{x} / s \times 100\%
+C) s / \bar{x} \times 100\%
+D) s^2 / \bar{x} \times 100\%
+Answer: C) s / \bar{x} \times 100\%
+
+---
+
+Q19. For grouped data, the mean is calculated using:
+A) \sum x_i / n
+B) \sum x_i f_i / \sum f_i
+C) \sum f_i / \sum x_i
+D) \sum (x_i - \bar{x})^2 / N
+Answer: B) \sum x_i f_i / \sum f_i, where x_i is the class mark
+
+---
+
+Q20. In the grouped data example (classes 0–8, 8–16, …, 40–48 with frequencies 8, 10, 16, 24, 15, 7; N = 80), the mean is:
+A) 22.5
+B) 24.9
+C) 26.0
+D) 27.8
+Answer: B) 24.9 (1992/80)

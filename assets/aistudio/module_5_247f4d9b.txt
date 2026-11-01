@@ -1,0 +1,837 @@
+Module 5: Stacks & Queues — Complete Lecture Walkthrough
+
+Welcome to Module 5 of CSE-111 Data Structures and Algorithms. This module is all about Limited-Access Data Structures — structures where the rule of how you can insert, inspect, and remove data is part of the definition itself. Let's make this fun, visual, and crystal clear. 🎯
+
+---
+
+🎯 Module Learning Outcomes
+
+By the end of this unit, you must be able to:
+
+· Design and implement limited-access data structures that control insertion, inspection, and removal order.
+· Implement Stack, Queue, Priority Queue, and Circular Queue operations.
+· Trace LIFO, FIFO, priority, and wrap-around behavior step by step.
+· Use C# and Python implementations and handle overflow/underflow.
+· Analyze time and space complexity for alternative implementations.
+· Choose the correct structure for application requirements.
+
+💡 Assessment focus: Traces • solved problems • complexity • practical tasks • unit project.
+
+---
+
+🗺️ Unit Roadmap
+
+Lesson Core Concept Practical Alignment
+5.1 Stacks LIFO; Push/Pop/Peek Stack implementation • string reversal • parentheses • undo • Hanoi
+5.2 Queues FIFO; Enqueue/Dequeue/Peek Built-in queue • linked queue • call-center simulation
+5.3 Priority Queues Priority before ordinary FIFO Stable priority service • implementation trade-offs • support center
+5.4 Circular Queues Fixed ring buffer; wrap-around front/rear/count • modulo arithmetic • buffer simulation
+
+🔁 Teaching cycle: explain ⇒ trace ⇒ code ⇒ analyze ⇒ exercise ⇒ assess.
+
+---
+
+🧱 Limited-Access Data Structures (The Big Picture)
+
+The access rule is part of the data structure definition. Imagine four different "boxes":
+
+· Stack 🥞 → Insert at TOP, Remove from TOP, Rule: LIFO
+· Queue 🚶‍♂️🚶‍♀️ → Insert at REAR, Remove from FRONT, Rule: FIFO
+· Priority Queue 🚑 → Remove highest priority; tie rule may preserve arrival order
+· Circular Queue 🔄 → FIFO in a fixed array; indices wrap around
+
+Restricted access gives predictable behavior that directly matches many real systems.
+
+⚠️ Key distinction: The ADT defines what operations are legal; the implementation defines how they are performed. Always analyze the implementation, not only the ADT name.
+
+Core ADT Operations & Boundary Conditions
+
+Structure Insert Remove Inspect Boundary Condition
+Stack Push(x) Pop() Peek() underflow; fixed stack may overflow
+Queue Enqueue(x) Dequeue() Peek() underflow; bounded queue may overflow
+Priority Queue Enqueue(x,p) DequeueHighest() PeekHighest() empty structure
+Circular Queue Enqueue(x) Dequeue() Peek() count=0 empty; count=capacity full
+
+· Underflow ⬇️ = Removing or inspecting when no element exists.
+· Overflow ⬆️ = Adding to a fixed-capacity structure that is already full.
+
+---
+
+📚 Lesson 5.1: Stacks (LIFO)
+
+🎓 Learning Outcomes
+
+· Explain the LIFO rule and identify the top of a stack.
+· Implement Push, Pop, Peek, and IsEmpty in C# and Python.
+· Trace stack state after each operation and identify underflow/overflow.
+· Use stacks for sequence reversal, balanced brackets, undo/redo, and Tower of Hanoi.
+· Calculate time and space complexity for stack-based algorithms.
+
+❓ Central question: Why does "most recent first" make a stack the correct structure?
+
+🥞 The Stack Concept: LIFO
+
+Last In, First Out — think of a stack of plates 🍽️. The last plate you put on top is the first one you take off.
+
+Visualize:
+
+[ 30 ]  ← TOP
+[ 20 ]
+[ 10 ]
+ BOTTOM
+The Operations:
+
+· Push ➕ → Adds a new item at the top. Push(40) makes 40 the next item to leave.
+· Pop ➖ → Removes and returns the top item. Pop() returns 30 in the shown stack.
+· Peek 👀 → Returns the top item without removal. The stack remains unchanged.
+· IsEmpty ❓ → Tests whether the stack has no items. Required before safe Pop/Peek.
+
+🔑 Only the TOP is directly accessible through the Stack ADT.
+
+📊 Trace: State After Every Operation
+
+Operation Stack (bottom → top) Return Cost
+Push(10) [10] — O(1)
+Push(20) [10, 20] — O(1)
+Push(30) [10, 20, 30] — O(1)
+Peek() [10, 20, 30] 30 O(1)
+Pop() [10, 20] 30 O(1)
+Pop() [20] 20 O(1)
+
+📝 Trace rule: Record the state after the operation, not before it.
+⚠️ Error case: Pop/Peek on an empty stack must be rejected.
+
+🧮 Array-Based Stack: Algorithm
+
+A top index turns one array end into the stack interface.
+
+Push pseudocode:
+
+Push(S, item)
+    if top = capacity - 1
+        report overflow
+    top <- top + 1
+    data[top] <- item
+Pop pseudocode:
+
+Pop(S)
+    if top = -1
+        report underflow
+    item <- data[top]
+    top <- top - 1
+    return item
+⚡ No loop depends on n ⇒ Push and Pop are O(1).
+
+💻 C# Implementation (Encapsulation Protects Invariants)
+
+public class ArrayStack<T>
+{
+    private readonly T[] data;
+    private int top = -1;
+
+    public ArrayStack(int capacity) => data = new T[capacity];
+    public bool IsEmpty() => top == -1;
+    public bool IsFull() => top == data.Length - 1;
+
+    public void Push(T item)
+    {
+        if (IsFull()) throw new InvalidOperationException("Stack overflow");
+        data[++top] = item;
+    }
+
+    public T Pop()
+    {
+        if (IsEmpty()) throw new InvalidOperationException("Stack underflow");
+        return data[top--];
+    }
+
+    public T Peek()
+    {
+        if (IsEmpty()) throw new InvalidOperationException("Stack empty");
+        return data[top];
+    }
+}
+🛡️ Encapsulation protects the top index and capacity rules.
+
+🐍 Python Stack & Built-In Collections
+
+Python wrapper:
+
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        if not self._items:
+            raise IndexError("Stack underflow")
+        return self._items.pop()
+
+    def peek(self):
+        if not self._items:
+            raise IndexError("Stack empty")
+        return self._items[-1]
+C# built-in Stack<T>:
+
+Stack<int> stack = new();
+
+stack.Push(10);
+stack.Push(20);
+stack.Push(30);
+
+Console.WriteLine(stack.Peek()); // 30
+Console.WriteLine(stack.Pop());  // 30
+🌍 The ADT behavior is language-independent: top-only insertion and removal.
+
+⏱️ Stack Complexity Analysis
+
+Operation/Algorithm Dominant Work Time Extra Space
+Push/Pop/Peek one end operation O(1) O(1)
+Search stack by popping or scanning may inspect n items O(n) implementation-dependent
+Reverse n characters n pushes + n pops O(n) O(n)
+Balanced brackets one scan + stack ops O(n) O(n) worst
+Tower of Hanoi 2T(n-1)+1 moves O(2ⁿ) O(n) recursion
+
+📏 Analysis rule: Count the complete algorithm. O(1) stack operations can still be used inside an O(n) or O(2ⁿ) application.
+
+🔄 Application 1: String Reversal
+
+A stack naturally reverses insertion order.
+
+Reverse(text)
+    create empty stack
+    for each character ch in text
+        Push(ch)
+    result <- empty
+    while stack is not empty
+        result <- result + Pop()
+    return result
+· Input: DATA
+· Output: ATAD
+
+⚡ n pushes + n pops = 2n operations → O(n) time; stack space O(n).
+
+Trace: Reverse "DATA"
+
+Step Action Stack (bottom → top) Output
+1 Push D [D] 
+2 Push A [D, A] 
+3 Push T [D, A, T] 
+4 Push A [D, A, T, A] 
+5 Pop A [D, A, T] A
+6 Pop T [D, A] AT
+7 Pop A [D] ATA
+8 Pop D [] ATAD
+
+🧭 Trace discipline: State changes are the evidence that the algorithm is correct.
+
+🔗 Application 2: Balanced Parentheses
+
+The most recent unmatched opening bracket must be checked first — perfect for LIFO.
+
+def balanced(text):
+    stack = []
+    pairs = {')': '(', ']': '[', '}': '{'}
+    for ch in text:
+        if ch in '([{':
+            stack.append(ch)
+        elif ch in ')]}':
+            if not stack or stack.pop() != pairs[ch]:
+                return False
+    return len(stack) == 0
+· ✅ Valid: (a + [b * c])
+· ❌ Invalid: ([a + b])
+· Complexity: One scan → O(n) time; worst-case stack → O(n) space.
+
+Trace: (a + [b * c])
+
+Character Action Stack Status
+( Push ( [(] continue
+[ Push [ [(, [] continue
+] Pop [ [(] match
+) Pop ( [] match
+End Check empty [] balanced
+
+🔑 Invariant: The stack stores unmatched opening brackets only.
+⚠️ Failure rule: Wrong type or empty stack during close → invalid.
+
+↩️ Application 3: Undo/Redo
+
+Stacks model "most recent action first".
+
+· Undo stack → Push each completed action. Undo pops the most recent action.
+· Redo stack → Undo pushes the reversed action onto Redo. Redo pops it back to Undo.
+
+User Event Undo Stack Redo Stack
+Type A [A] []
+Type B [A, B] []
+Undo [A] [B]
+Redo [A, B] []
+Type C [A, B, C] []
+
+🗼 Application 4: Tower of Hanoi (Recursive Stack Application)
+
+Each rod is naturally represented by a stack.
+
+Recursive algorithm:
+
+Move(n, from, to, auxiliary)
+    if n = 0
+        return
+    Move(n-1, from, auxiliary, to)
+    to.Push(from.Pop())
+    Move(n-1, auxiliary, to, from)
+· Rule 1: Move only the top disc of a rod.
+· Rule 2: Never place a larger disc on a smaller disc.
+
+Solved Trace: 3 Discs (minimum 2³ − 1 = 7 moves)
+
+Move From To Disc
+1 A C 1
+2 A B 2
+3 C B 1
+4 A C 3
+5 B A 1
+6 B C 2
+7 A C 1
+
+📈 T(n) = 2T(n−1) + 1 → 2ⁿ − 1 moves → O(2ⁿ) time; recursion depth O(n).
+
+📝 Lesson 5.1 Exercises
+
+· Starter: Trace Push(5), Push(8), Push(3), Pop, Peek, Pop.
+· Intermediate: Implement fixed-capacity stack with overflow/underflow; reverse a string; validate parentheses; build undo/redo.
+· Advanced: Trace Hanoi for 3 discs; derive 2ⁿ − 1; robust stack ADT.
+
+Assessment questions:
+
+1. Why does a stack follow LIFO?
+2. Trace Push(5), Push(8), Push(3), Pop(), Peek(), Pop().
+3. Why is reversal O(n) but Tower of Hanoi O(2ⁿ)?
+
+Assignment: Write a Stack ADT specification. Compare array-based and linked-node stacks in capacity, memory, and operation cost.
+
+---
+
+🚶 Lesson 5.2: Queues (FIFO)
+
+🎓 Learning Outcomes
+
+· Explain FIFO ordering and identify front and rear.
+· Implement Enqueue, Dequeue, Peek, and IsEmpty.
+· Compare built-in, linked, and inefficient shifting-array approaches.
+· Trace boundary cases: empty queue, one item, last-item removal.
+· Apply a queue to a call-center/service-line simulation.
+
+❓ Central question: Why should the earliest normal request be processed first?
+
+🚶‍♂️ The Queue Concept: FIFO
+
+First In, First Out — think of a line at a coffee shop ☕. The first person in line gets served first.
+
+Visualize:
+
+FRONT ↓                         REAR ↓
+[  A  ][  B  ][  C  ]
+The Operations:
+
+· Enqueue(x) ➕ → Add the new item at the rear.
+· Dequeue() ➖ → Remove and return the item at the front.
+· Peek() 👀 → Inspect the front item without removing it.
+
+📊 Queue Operations & Trace
+
+Operation Front → Rear Return Typical Cost
+Enqueue(A) [A] — O(1)
+Enqueue(B) [A, B] — O(1)
+Enqueue(C) [A, B, C] — O(1)
+Peek() [A, B, C] A O(1)
+Dequeue() [B, C] A O(1)
+Enqueue(D) [B, C, D] — O(1)
+
+⚠️ An efficient queue should NOT shift all remaining elements after every Dequeue.
+
+💻 Built-In Queues
+
+C# Queue<T>:
+
+Queue<string> q = new();
+
+q.Enqueue("A");
+q.Enqueue("B");
+q.Enqueue("C");
+
+Console.WriteLine(q.Peek());    // A
+Console.WriteLine(q.Dequeue()); // A
+Python collections.deque:
+
+from collections import deque
+
+q = deque()
+q.append("A")
+q.append("B")
+q.append("C")
+
+print(q[0])         # peek
+print(q.popleft())  # dequeue
+🔑 Choose operations that use opposite ends efficiently: rear insertion, front removal.
+
+⚠️ Complexity Trap: Python list as a Queue
+
+Correct FIFO output does NOT guarantee an efficient implementation!
+
+q = []
+q.append(item)     # rear insertion
+x = q.pop(0)       # front removal
+· Enqueue: append at end → O(1) amortized ✅
+· Dequeue: pop(0) shifts later elements → O(n) ❌
+
+🧠 Data-structure analysis asks both: "Does it work?" and "How does the cost grow?"
+
+🔗 Linked Queue
+
+Front removes; rear appends.
+
+FRONT ↓        REAR ↓
+[10] → [20]
+· front → Reference to the node that will be removed next.
+· rear → Reference to the last node; new nodes are linked here.
+· Empty invariant: front == null and rear == null.
+
+C# Implementation — both operations O(1):
+
+`csharp
+class QNode<T>
+{
+    public T Data;
+    public QNode<T>? Next;
+    public QNode(T data) => Data = data;
+}
+
+class LinkedQueue<T>
+{
+    private QNode<T>? front;
+    private QNode<T>? rear;
+public void Enqueue(T item)
+    {
+        QNode<T> n = new(item);
+        if (rear == null) front = rear = n;
+        else { rear.Next = n; rear = n; }
+    }
+
+    public T Dequeue()
+    {
+        if (front == null) throw new InvalidOperationException("Queue empty");
+        T value = front.Data;
+        front = front.Next;
+        if (front == null) rear = null;
+        return value;
+    }
+}
+
+Python Implementation:
+
+python
+class Node:
+    def init(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedQueue:
+    def init(self):
+        self.front = None
+        self.rear = None
+
+    def enqueue(self, item):
+        n = Node(item)
+        if self.rear is None:
+            self.front = self.rear = n
+        else:
+            self.rear.next = n
+            self.rear = n
+
+    def dequeue(self):
+        if self.front is None:
+            raise IndexError("Queue empty")
+        value = self.front.data
+        self.front = self.front.next
+        if self.front is None:
+            self.rear = None
+        return value
+
+Solved Trace: Linked Queue Boundary Cases
+
+Operation front rear Logical Queue
+Start null null empty
+Enqueue 10 10 10 10
+Enqueue 20 10 20 10 → 20
+Enqueue 30 10 30 10 → 20 → 30
+Dequeue 20 30 20 → 30
+Dequeue 30 30 30
+Dequeue null null empty
+
+🚨 Critical invariant: If front becomes null after Dequeue, rear must also become null.
+
+📊 Queue Complexity Clinic
+
+Implementation Enqueue Dequeue Search
+C# Queue<T> / Python deque O(1) O(1) O(n)
+Linked queue with front + rear O(1) O(1) O(n)
+Python list (append + pop(0)) O(1) amortized O(n) O(n)
+
+📏 Analysis lesson: The queue ADT says FIFO. It does NOT force an inefficient shifting implementation.
+
+☎️ Application: Normal Call-Center Queue
+
+Serve callers in arrival order.
+
+· Arrival: Each new call is Enqueued at the rear.
+· Service: The next free consultant Dequeues the front call.
+· Monitoring: Peek shows the next caller without removing them.
+
+FRONT ↓                         REAR ↓
+[ 101 ][ 102 ][ 103 ]
+
+Consultant serves → 101 first.
+
+Solved Call-Center Trace:
+
+Time Event Queue after event
+09:00 101 arrives [101]
+09:01 102 arrives [101, 102]
+09:02 consultant serves [102]
+09:03 103 arrives [102, 103]
+09:04 consultant serves [103]
+
+⚡ Across m calls, each call is enqueued once and dequeued once → O(m) total queue work.
+
+Assessment questions:
+
+1. Explain FIFO and identify front/rear.
+2. Why is list.pop(0) inefficient for a large queue?
+3. Trace Enqueue(4), Enqueue(7), Dequeue(), Enqueue(9), Peek().
+
+---
+
+🚑 Lesson 5.3: Priority Queues
+
+🎓 Learning Outcomes
+
+· Explain how priority changes ordinary FIFO service order.
+· Preserve FIFO order among equal-priority items (stability).
+· Implement a simple educational priority queue.
+· Compare sorted, unsorted, and heap-based priority-queue costs.
+· Apply priority processing to a support call-center scenario.
+
+❓ Central question: Which item should leave next when urgency matters more than arrival time?
+
+🚑 Priority Queue Concept
+
+Priority first; arrival order can break ties.
+
+Arrival Item Priority
+1 Normal-A 2
+2 Gold-A 0
+3 Normal-B 2
+4 Silver-A 1
+5 Gold-B 0
+
+Service order: Gold-A → Gold-B → Silver-A → Normal-A → Normal-B
+
+🎯 Convention used here: 0 = highest priority; larger values = lower priority. (Think: 0 = VIP, like a gold card!)
+
+⚖️ Stable Priority: Preserve Arrival Order Within a Priority
+
+Priority and sequence number form a useful comparison key.
+
+· Primary key → priority
+· Tie-break key → arrival order / sequence number
+
+Conceptual record:
+
+record = (priority, arrival_order, item)
+
+compare priority first
+    if equal:
+        compare arrival_order
+`
+
+🤝 Stable service avoids reordering customers who have equal priority. (Think: two Gold members both arrive — the one who came first should still go first!)
+
+⚖️ Priority Queue Implementation Trade-Offs
+
+The ADT is fixed; the operation cost depends on representation.
+
+Implementation Enqueue Dequeue highest Peek highest Idea
+Sorted sequence O(n) O(1)* O(1) pay during insertion
+Unsorted sequence O(1) O(n) O(n) pay during removal
+Binary heap O(log n) O(log n) O(1) balanced cost
+
+*Assumes highest-priority end can be removed efficiently; a Python list.pop(0) itself shifts elements.
+
+📥 Sorted Priority Queue: Insertion Algorithm
+
+Find the correct position using priority AND arrival order.
+
+Enqueue(item, priority)
+    record <- (priority, sequence, item)
+    sequence <- sequence + 1
+
+    i <- 0
+    while i < count and items[i] <= record
+        i <- i + 1
+
+    insert record at i
+· Search: May scan O(n) positions.
+· Array/list insert: May shift O(n) items.
+· Overall Enqueue: O(n).
+
+💻 Implementations
+
+Python educational version:
+
+class PriorityQueue:
+    def __init__(self):
+        self.items = []
+        self.order = 0
+
+    def enqueue(self, value, priority):
+        rec = (priority, self.order, value)
+        self.order += 1
+        i = 0
+        while i < len(self.items) and self.items[i] <= rec:
+            i += 1
+        self.items.insert(i, rec)
+
+    def dequeue(self):
+        if not self.items:
+            raise IndexError("empty")
+        return self.items.pop(0)[2]
+C# built-in style:
+
+var pq = new PriorityQueue<string, int>();
+pq.Enqueue("Normal-A", 2);
+pq.Enqueue("Gold-A", 0);
+pq.Enqueue("Silver-A", 1);
+
+Console.WriteLine(pq.Dequeue()); // Gold-A
+☎️ Solved Trace: Support Call Center
+
+Arrival Caller Priority Service Position
+1 A 2 4
+2 B 0 1
+3 C 1 3
+4 D 0 2
+5 E 2 5
+
+Service order: B → D → C → A → E
+
+🤝 B and D have equal highest priority, so arrival order keeps B before D.
+
+⚠️ Priority Design Issue: Starvation and Aging
+
+Correct priority order may still create fairness problems!
+
+· Starvation 😢 → A low-priority request may wait a very long time if higher-priority work keeps arriving.
+· Aging 👴 → Gradually increase the effective priority of items that have waited too long.
+· Quota rule 📊 → After several urgent items, force service of an older normal item.
+· Maximum wait ⏰ → Escalate an item after a defined waiting-time threshold.
+
+🧠 Data structure choice and service policy are related but NOT identical design decisions.
+
+📊 Complexity Summary (State the Representation First!)
+
+· Sorted sequence: Enqueue O(n), Dequeue O(1)*, Peek O(1)
+· Unsorted sequence: Enqueue O(1), Dequeue O(n), Peek O(n)
+· Binary heap: Enqueue O(log n), Dequeue O(log n), Peek O(1)
+
+🎯 The same Priority Queue ADT can have different performance profiles.
+
+· Choose based on which operation dominates the workload.
+· For large general-purpose priority queues, heaps are common because they balance insertion and removal.
+
+Assessment questions:
+
+1. How is a priority queue different from FIFO?
+2. Why can sorted insertion be O(n)?
+3. Compare sorted, unsorted, and heap-based implementations.
+
+---
+
+🔄 Lesson 5.4: Circular Queues
+
+🎓 Learning Outcomes
+
+· Explain the ring-buffer model and why fixed array positions can be reused.
+· Maintain front, rear, count, and capacity invariants.
+· Use modulo arithmetic to wrap indices to 0.
+· Implement Enqueue, Dequeue, Peek, IsEmpty, and IsFull in C# and Python.
+· Trace underflow, overflow, wrap-around, and full-capacity cases.
+
+❓ Central question: How can an array queue avoid shifting after every Dequeue?
+
+🔄 The Ring-Buffer Model
+
+A fixed array is reused by wrapping the indices.
+
+front
+ ↓
+[ A ][ B ][ C ][ — ][ — ]
+  0    1    2    3    4
+                  ↑
+                 rear
+♻️ Array cells are reused; no left-shifting is required.
+
+📋 Invariants (The Rules)
+
+Field/Condition Meaning
+front index of next item to dequeue
+rear index of next position to enqueue
+count number of stored items
+capacity length of storage array
+Empty count == 0
+Full count == capacity
+
+✅ After every Enqueue/Dequeue, check 0 ≤ count ≤ capacity and both indices stay in range.
+
+🔢 Modulo Arithmetic: next = (current + 1) % capacity
+
+nextIndex = (currentIndex + 1) % capacity
+
+capacity current (current+1)%capacity Meaning
+5 0 1 move to next cell
+5 3 4 move to last cell
+5 4 0 wrap to first cell
+8 7 0 wrap to first cell
+
+🧮 Why modulo works: The remainder after division by capacity is always a valid index from 0 to capacity−1. Think of a clock: after 12 comes 1 again! 🕐
+
+💻 C# Implementation — O(1) Enqueue/Dequeue
+
+public class CircularQueue<T>
+{
+    private readonly T[] items;
+    private int front = 0, rear = 0, count = 0;
+
+    public CircularQueue(int capacity) => items = new T[capacity];
+    public bool IsEmpty() => count == 0;
+    public bool IsFull() => count == items.Length;
+
+    public void Enqueue(T item)
+    {
+        if (IsFull()) throw new InvalidOperationException("Queue full");
+        items[rear] = item;
+        rear = (rear + 1) % items.Length;
+        count++;
+    }
+
+    public T Dequeue()
+    {
+        if (IsEmpty()) throw new InvalidOperationException("Queue empty");
+        T value = items[front];
+        front = (front + 1) % items.Length;
+        count--;
+        return value;
+    }
+}
+🐍 Python Implementation
+
+class CircularQueue:
+    def __init__(self, capacity):
+        self.items = [None] * capacity
+        self.front = 0
+        self.rear = 0
+        self.count = 0
+
+    def enqueue(self, item):
+        if self.count == len(self.items):
+            raise OverflowError("Queue full")
+        self.items[self.rear] = item
+        self.rear = (self.rear + 1) % len(self.items)
+        self.count += 1
+
+    def dequeue(self):
+        if self.count == 0:
+            raise IndexError("Queue empty")
+        value = self.items[self.front]
+        self.front = (self.front + 1) % len(self.items)
+        self.count -= 1
+        return value
+📊 Trace: Track front, rear, count, and logical order
+
+Operation front rear count Logical Contents
+Start 0 0 0 []
+Enq A 0 1 1 [A]
+Enq B 0 2 2 [A, B]
+Enq C 0 3 3 [A, B, C]
+Deq 1 3 2 [B, C]
+Enq D 1 4 3 [B, C, D]
+Enq E 1 0 4 [B, C, D, E]
+Enq F 1 1 5 [B, C, D, E, F] full
+
+👀 Notice that rear wraps from 4 to 0 and later to 1, while the logical FIFO order remains correct.
+
+⚔️ Circular Queue vs. Shifting Array Queue
+
+Same FIFO behavior, very different Dequeue cost!
+
+· Naive shifting array ❌ → Dequeue removes index 0. All remaining elements shift left. Worst-case Dequeue: O(n).
+· Circular array ✅ → Dequeue reads items[front]. front advances with modulo. Dequeue: O(1).
+
+🧠 Changing the representation removes unnecessary element movement.
+Both are FIFO. The circular representation is designed for repeated fixed-capacity enqueue/dequeue.
+
+🌐 Applications
+
+· Streaming buffer 📺 → Store a bounded window of arriving data.
+· Device/network buffer 🌐 → Reuse fixed storage as messages are consumed.
+· Roller-coaster queue 🎢 → Limited number of carts/slots.
+
+Assessment questions:
+
+1. Why does modulo arithmetic wrap an index?
+2. Trace a capacity-4 queue through mixed operations.
+3. Why is circular Dequeue O(1) but shifting Dequeue O(n)?
+
+---
+
+🎯 Choosing the Correct Structure
+
+Application Need Best Fit Reason
+Undo latest action Stack most recent action must leave first
+Printer / normal service line Queue first arrival should leave first
+Emergency / urgent tickets Priority Queue priority overrides global arrival order
+Fixed streaming buffer Circular Queue bounded memory with O(1) wrap-around operations
+Reverse a sequence Stack LIFO returns reverse insertion order
+Round-robin fixed slots Circular Queue storage positions are reused cyclically
+
+🧭 Decision rule: Choose from required behavior first, then select an efficient implementation.
+
+---
+
+📈 Module 5 Complexity Summary
+
+Operation Stack Efficient Queue Priority Queue* Circular Queue
+Insert O(1) O(1) O(1), O(log n), or O(n) O(1)
+Remove next O(1) O(1) O(1), O(log n), or O(n) O(1)
+Peek next O(1) O(1) implementation-dependent O(1)
+Search O(n) O(n) implementation-dependent O(n)
+Space O(n) O(n) O(n) O(capacity)
+
+*Depends on representation (sorted / unsorted / heap).
+
+---
+
+🏁 Final Takeaways
+1. Stack = LIFO 🥞 → top-only Push/Pop/Peek.
+2. Queue = FIFO 🚶 → efficient Enqueue/Dequeue use opposite ends.
+3. Priority Queue = priority-first 🚑 → implementation controls complexity.
+4. Circular Queue = fixed FIFO ring 🔄 → modulo arithmetic reuses array cells.
+5. Boundary handling is part of correctness ⚠️ → empty/full states matter.
+6. A correct ADT choice can still have a weak implementation → analyze both behavior and cost.
+7. Always connect traces, code, tests, and Big-O.
+
+📚 Supporting reading: Unit 5 lecture note • Supplied C# DSA chapter: Stacks and Queues • Supplied beginner DSA guide.
+🎯 Final practice: Complete the capstone and reproduce at least one trace from every lesson without running code. Next → use these ADTs inside larger algorithms.

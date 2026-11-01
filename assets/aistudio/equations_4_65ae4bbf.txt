@@ -1,0 +1,221 @@
+Twenty MCQs from Lecture 4: Inverse Laplace Transform
+
+---
+
+Q1. What is the inverse Laplace transform of F(s) = \dfrac{3}{s^4}?
+
+A) \dfrac{1}{2}t^3
+B) 3t^3
+C) \dfrac{1}{6}t^3
+D) \dfrac{1}{2}t^4
+
+Answer: A) \dfrac{1}{2}t^3
+
+---
+
+Q2. What is the inverse Laplace transform of F(s) = \dfrac{3}{s^2 + 16}?
+
+A) \dfrac{3}{4}\sin 4t
+B) 3\sin 4t
+C) \dfrac{3}{4}\cos 4t
+D) \dfrac{3}{4}\sinh 4t
+
+Answer: A) \dfrac{3}{4}\sin 4t
+
+---
+
+Q3. What is the inverse Laplace transform of F(s) = \dfrac{s}{s^2 - 16}?
+
+A) \cos 4t
+B) \cosh 4t
+C) \sinh 4t
+D) \sin 4t
+
+Answer: B) \cosh 4t
+
+---
+
+Q4. State the linear property of the inverse Laplace transform.
+
+A) L^{-1}\{c_1F_1(s) + c_2F_2(s)\} = c_1L^{-1}\{F_1(s)\} \cdot c_2L^{-1}\{F_2(s)\}
+B) L^{-1}\{c_1F_1(s) + c_2F_2(s)\} = c_1L^{-1}\{F_1(s)\} + c_2L^{-1}\{F_2(s)\}
+C) L^{-1}\{c_1F_1(s) + c_2F_2(s)\} = L^{-1}\{F_1(s)\} + L^{-1}\{F_2(s)\}
+D) L^{-1}\{c_1F_1(s) + c_2F_2(s)\} = \dfrac{c_1}{c_2}L^{-1}\{F_1(s)\}
+
+Answer: B) L^{-1}\{c_1F_1(s) + c_2F_2(s)\} = c_1L^{-1}\{F_1(s)\} + c_2L^{-1}\{F_2(s)\}
+
+---
+
+Q5. Find L^{-1}\left\{\dfrac{-2s + 6}{s^2 + 4}\right\}.
+
+A) -2\cos 2t + 3\sin 2t
+B) 2\cos 2t + 3\sin 2t
+C) -2\cos 2t - 3\sin 2t
+D) -2\sin 2t + 3\cos 2t
+
+Answer: A) -2\cos 2t + 3\sin 2t
+
+---
+
+Q6. Find L^{-1}\left\{3 + 2e^{-3s} + \dfrac{e^{-3s}}{s}\right\}.
+
+A) 3\delta(t) + 2\delta(t-3) + u(t-3)
+B) 3 + 2\delta(t-3) + u(t-3)
+C) 3\delta(t) + 2u(t-3) + \delta(t-3)
+D) 3\delta(t) + 2\delta(t+3) + u(t+3)
+
+Answer: A) 3\delta(t) + 2\delta(t-3) + u(t-3)
+
+---
+
+Q7. State the First Shifting Property for the inverse Laplace transform.
+
+A) If L^{-1}\{F(s)\} = f(t), then L^{-1}\{F(s-a)\} = e^{-at}f(t)
+B) If L^{-1}\{F(s)\} = f(t), then L^{-1}\{F(s-a)\} = e^{at}f(t)
+C) If L^{-1}\{F(s)\} = f(t), then L^{-1}\{F(s+a)\} = e^{at}f(t)
+D) If L^{-1}\{F(s)\} = f(t), then L^{-1}\{F(s-a)\} = e^{t}f(t-a)
+
+Answer: B) If L^{-1}\{F(s)\} = f(t), then L^{-1}\{F(s-a)\} = e^{at}f(t)
+
+---
+
+Q8. Find L^{-1}\left\{\dfrac{1}{(s-3)^5}\right\}.
+
+A) \dfrac{t^4 e^{3t}}{24}
+B) \dfrac{t^4 e^{-3t}}{24}
+C) \dfrac{t^5 e^{3t}}{120}
+D) \dfrac{t^3 e^{3t}}{6}
+
+Answer: A) \dfrac{t^4 e^{3t}}{24}
+
+---
+
+Q9. Find L^{-1}\left\{\dfrac{1}{s^2 + 4s + 4}\right\}.
+
+A) e^{-2t}t
+B) e^{2t}t
+C) e^{-2t}\sin t
+D) e^{-2t}\cos t
+
+Answer: A) e^{-2t}t
+
+---
+
+Q10. Find L^{-1}\left\{\dfrac{1}{s^2 + 2s + 2}\right\}.
+
+A) e^{-t}\sin t
+B) e^{t}\sin t
+C) e^{-t}\cos t
+D) e^{-t}t
+
+Answer: A) e^{-t}\sin t
+
+---
+
+Q11. Find L^{-1}\left\{\dfrac{s}{s^2 + 2s + 2}\right\}.
+
+A) e^{-t}(\cos t - \sin t)
+B) e^{-t}(\cos t + \sin t)
+C) e^{t}(\cos t - \sin t)
+D) e^{-t}(\sin t - \cos t)
+
+Answer: A) e^{-t}(\cos t - \sin t)
+
+---
+
+Q12. From the inverse Laplace transform table, what is L^{-1}\left\{\dfrac{1}{s}\right\}?
+
+A) \delta(t)
+B) 1
+C) t
+D) u(t)
+
+Answer: B) 1
+
+---
+
+Q13. From the table, what is L^{-1}\left\{\dfrac{1}{s^n}\right\} for n = 1, 2, \dots?
+
+A) \dfrac{t^{n-1}}{(n-1)!}
+B) \dfrac{t^n}{n!}
+C) \dfrac{t^{n+1}}{(n+1)!}
+D) t^{n-1}
+
+Answer: A) \dfrac{t^{n-1}}{(n-1)!}
+
+---
+
+Q14. From the table, what is L^{-1}\left\{\dfrac{1}{s-a}\right\}?
+
+A) e^{at}
+B) e^{-at}
+C) te^{at}
+D) \sin at
+
+Answer: A) e^{at}
+
+---
+
+Q15. From the table, what is L^{-1}\left\{\dfrac{a}{s^2 + a^2}\right\}?
+
+A) \sin at
+B) \cos at
+C) \sinh at
+D) \cosh at
+
+Answer: A) \sin at
+
+---
+
+Q16. From the table, what is L^{-1}\left\{\dfrac{s}{s^2 + a^2}\right\}?
+
+A) \sin at
+B) \cos at
+C) \cosh at
+D) \sinh at
+
+Answer: B) \cos at
+
+---
+
+Q17. From the table, what is L^{-1}\left\{\dfrac{a}{s^2 - a^2}\right\}?
+
+A) \sinh at
+B) \cosh at
+C) \sin at
+D) \cos at
+
+Answer: A) \sinh at
+
+---
+
+Q18. From the table, what is L^{-1}\left\{e^{-as}\right\}?
+
+A) \delta(t-a)
+B) u(t-a)
+C) e^{at}
+D) \delta(t)
+
+Answer: A) \delta(t-a)
+
+---
+
+Q19. From the table, what is L^{-1}\left\{\dfrac{e^{-as}}{s}\right\}?
+
+A) \delta(t-a)
+B) u(t-a)
+C) e^{-at}
+D) t-a
+
+Answer: B) u(t-a)
+
+---
+
+Q20. In finding L^{-1}\left\{\dfrac{1}{s^2 + 4s + 4}\right\}, the denominator is first rewritten as:
+
+A) (s+2)^2
+B) (s-2)^2
+C) (s+2)^2 + 1
+D) (s+2)(s-2)
+
+Answer: A) (s+2)^2

@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on Lecture 04 (Types of Solutions of Systems).
+
+Q1. The two main questions answered when analyzing a linear system are:
+A) What is the determinant and is it zero?
+B) Is the system consistent, and if so, is the solution unique?
+C) How many rows and columns does the matrix have?
+D) Is the matrix symmetric and invertible?
+Answer: B) Is the system consistent, and if so, is the solution unique?
+
+Q2. In the Gauss-Jordan method, a "pivot" is:
+A) any zero entry in the matrix
+B) a leading 1 used to eliminate entries in its column
+C) the last entry of the augmented column
+D) any negative entry
+Answer: B) a leading 1 used to eliminate entries in its column
+
+Q3. During elimination, if a row of the augmented matrix reduces to [0\ 0\ 0 \mid c] with c \neq 0, the system is:
+A) consistent with a unique solution
+B) consistent with infinitely many solutions
+C) inconsistent (no solution)
+D) homogeneous
+Answer: C) inconsistent (no solution)
+
+Q4. The equation 0 = -1 obtained during elimination indicates that the system:
+A) has a unique solution
+B) has infinitely many solutions
+C) has no solution
+D) has exactly two solutions
+Answer: C) has no solution
+
+Q5. "Back-substitution" means:
+A) substituting known values from the bottom equation upward to find the remaining unknowns
+B) substituting arbitrary values for free variables
+C) reversing the order of the rows
+D) multiplying a row by its inverse
+Answer: A) substituting known values from the bottom equation upward to find the remaining unknowns
+
+Q6. For the reduced augmented matrix \begin{bmatrix} 1 & 0 & 0 & 4 \\ 0 & 1 & 0 & -2 \\ 0 & 0 & 1 & 1 \end{bmatrix}, the solution is:
+A) x_1 = 1, x_2 = -2, x_3 = 4
+B) x_1 = 4, x_2 = -2, x_3 = 1
+C) x_1 = 4, x_2 = 1, x_3 = -2
+D) no solution
+Answer: B) x_1 = 4, x_2 = -2, x_3 = 1
+
+Q7. For the reduced matrix \begin{bmatrix} 1 & 0 & -5 & 1 \\ 0 & 1 & 1 & 4 \\ 0 & 0 & 0 & 0 \end{bmatrix}, the system has:
+A) a unique solution
+B) no solution
+C) infinitely many solutions
+D) exactly three solutions
+Answer: C) infinitely many solutions
+
+Q8. In the matrix of Q7, which variable is "free"?
+A) x_1
+B) x_2
+C) x_3
+D) none
+Answer: C) x_3 (its column has no pivot)
+
+Q9. In a system with free variables, the number of solutions is:
+A) zero
+B) one
+C) infinitely many
+D) equal to the number of variables
+Answer: C) infinitely many
+
+Q10. For the matrix \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 2 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}, the system is:
+A) consistent with a unique solution
+B) consistent with infinitely many solutions
+C) inconsistent
+D) homogeneous
+Answer: C) inconsistent (last row: 0 = 1)
+
+Q11. In the system corresponding to \begin{bmatrix} 1 & 0 & -5 & 1 \\ 0 & 1 & 1 & 4 \\ 0 & 0 & 0 & 0 \end{bmatrix}, the general solution is:
+A) x_1 = 1 + 5x_3,\ x_2 = 4 - x_3,\ x_3 free
+B) x_1 = 1 - 5x_3,\ x_2 = 4 + x_3,\ x_3 free
+C) x_1 = 5x_3,\ x_2 = 4x_3,\ x_3 free
+D) x_1 = 1,\ x_2 = 4,\ x_3 = 0
+Answer: A) x_1 = 1 + 5x_3,\ x_2 = 4 - x_3,\ x_3 free
+
+Q12. In the general solution of Q11, setting x_3 = 0 gives:
+A) x = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+B) x = \begin{bmatrix} 1 \\ 4 \\ 0 \end{bmatrix}
+C) x = \begin{bmatrix} 1 \\ -4 \\ 0 \end{bmatrix}
+D) no solution
+Answer: B) x = \begin{bmatrix} 1 \\ 4 \\ 0 \end{bmatrix}
+
+Q13. A "general solution" of a linear system is:
+A) a single numerical solution
+B) an explicit description of all solutions, often using free parameters
+C) the coefficient matrix
+D) the augmented matrix
+Answer: B) an explicit description of all solutions, often using free parameters
+
+Q14. If a free variable x_3 is assigned an arbitrary value t, this t is called:
+A) a pivot
+B) a parameter
+C) a determinant
+D) an identity
+Answer: B) a parameter
+
+Q15. A consistent system with a pivot in every variable column has:
+A) infinitely many solutions
+B) no solution
+C) a unique solution
+D) free variables
+Answer: C) a unique solution
+
+Q16. In Example 1, after obtaining x_3, the system is consistent and the solution is:
+A) not unique
+B) unique
+C) nonexistent
+D) infinite
+Answer: B) unique
+
+Q17. The main difference between Gaussian elimination and Gauss-Jordan elimination is:
+A) Gaussian uses back-substitution; Gauss-Jordan continues elimination to reduced row echelon form
+B) Gauss-Jordan only works for square systems
+C) Gaussian produces no solution
+D) Gauss-Jordan cannot use row operations
+Answer: A) Gaussian uses back-substitution; Gauss-Jordan continues elimination to reduced row echelon form
+
+Q18. In Example 5(b), after applying Gauss-Jordan elimination, the solution by inspection is:
+A) x_1 = 1, x_2 = 2, x_3 = 3
+B) x_1 = 3, x_2 = 1, x_3 = 2
+C) x_1 = 2, x_2 = 3, x_3 = 1
+D) x_1 = 3, x_2 = 2, x_3 = 1
+Answer: B) x_1 = 3, x_2 = 1, x_3 = 2
+
+Q19. If an augmented matrix reduces to triangular form with a bottom row [0\ 0\ 0 \mid -1], we conclude:
+A) x_3 = -1
+B) the system is inconsistent
+C) the system has infinitely many solutions
+D) the system is homogeneous
+Answer: B) the system is inconsistent
+
+Q20. A system has infinitely many solutions when the reduced augmented matrix has:
+A) a pivot in every column of the coefficient part
+B) at least one column of the coefficient part without a pivot (free variable) and no inconsistent row
+C) an inconsistent row
+D) more equations than unknowns
+Answer: B) at least one column of the coefficient part without a pivot (free variable) and no inconsistent row

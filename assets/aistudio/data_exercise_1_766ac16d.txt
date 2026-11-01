@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on the provided lecture slides, with the correct answer listed under each question.
+
+1. According to the lecture, what is the primary difference between a data structure and an algorithm?
+A) A data structure is written in C#, while an algorithm is written in Python.
+B) A data structure organizes data for efficient access, while an algorithm is a finite sequence of steps to solve a problem.
+C) A data structure is used for memory management, while an algorithm is used for object-oriented design.
+D) A data structure is a physical concept, while an algorithm is a theoretical concept.
+Correct Answer: B
+
+2. Why does the lecture emphasize that DSA is essential for scalable software?
+A) Because small programs with weak designs will always fail immediately.
+B) Because DSA guarantees that a program will never use too much memory.
+C) Because as data grows, poor structure selection becomes expensive in terms of time and memory.
+D) Because DSA is only required for university search systems with 5,000,000 students.
+Correct Answer: C
+
+3. Which data structure is the most appropriate choice for a "Browser back button"?
+A) Queue
+B) Dictionary
+C) Priority Queue
+D) Stack
+Correct Answer: D
+
+4. In the "Help-Desk Tickets" worked example, why is a Priority Queue used for emergency tickets?
+A) Because emergency tickets are served in the exact order they arrive.
+B) Because emergency tickets must be served first, regardless of arrival order.
+C) Because emergency tickets require a dictionary for fast lookup.
+D) Because the help desk needs to know if the queue is empty.
+Correct Answer: B
+
+5. When tracing the "Find Maximum" algorithm on the array {72, 91, 66, 88}, what happens at the third step when the current score is 66?
+A) The maximum is updated to 66.
+B) The algorithm stops because 66 is less than 91.
+C) The algorithm checks if 66 > 91, which is false, so the maximum remains 91.
+D) The algorithm throws an error because the values are not sorted.
+Correct Answer: C
+
+6. In the simplified memory model used in the lecture, what is stored in a Stack frame for a method call like Add(4, 7)?
+A) Only the return location.
+B) The method's local variables (parameters and local variables) and return location.
+C) All objects created by the program.
+D) A reference to the heap where the method is stored.
+Correct Answer: B
+
+7. In the "Heap Memory: Dynamic Objects" example, Student a = new Student(); Student b = a; b.Name = "Nour";, what is the value of a.Name?
+A) "" (empty string)
+B) "Mona"
+C) "Nour"
+D) null
+Correct Answer: C
+
+8. Which statement correctly describes the behavior of value types versus reference types?
+A) Assignment of a value type copies the reference, while assignment of a reference type copies the value.
+B) Assignment of a value type copies the value, while assignment of a reference type copies the reference.
+C) Both value and reference types copy the value upon assignment.
+D) Both value and reference types copy the reference upon assignment.
+Correct Answer: B
+
+9. What is the foundation of a linked list, as described in the "Dynamic Storage Allocation" slide?
+A) An array that stores contiguous space for indexed access.
+B) A stack frame that holds recursive calls.
+C) A node that stores data and a reference to the next node.
+D) A dictionary that maps keys to values.
+Correct Answer: C
+
+10. What happens if recursive calls become too deep, according to the "Recursion and Stack Frames" slide?
+A) The heap memory is cleared.
+B) The program automatically converts the recursion to a loop.
+C) A stack overflow may occur.
+D) The base case is ignored.
+Correct Answer: C
+
+11. What is an Abstract Data Type (ADT)?
+A) A specification of what a data type does, not how it is physically implemented.
+B) A specific implementation of a stack using an array.
+C) A programming language feature only available in C#.
+D) A visual diagram used to model class designs.
+Correct Answer: A
+
+12. In the Stack ADT specification, what is the pre-condition for the Pop() operation?
+A) The stack must have capacity.
+B) The stack must not be empty.
+C) The stack must be empty.
+D) Always allowed.
+Correct Answer: B
+
+13. Why is the interface of an ADT separated from its implementation?
+A) To make the code run faster.
+B) To allow other code to use the stack without knowing whether it is array-based or linked-node-based.
+C) To prevent the stack from ever becoming empty.
+D) To ensure that all data is stored in the heap.
+Correct Answer: B
+
+14. How does encapsulation protect correctness in a class like ArrayStack<T>?
+A) By making all internal fields public so they can be easily changed.
+B) By exposing controlled public methods and keeping internal fields private to prevent invalid states.
+C) By using recursion instead of loops.
+D) By storing all data in a dictionary.
+Correct Answer: B
+
+15. In Object-Oriented Programming, what is the difference between a class and an object?
+A) A class is an actual instance, while an object is a blueprint.
+B) A class is a blueprint, while an object is an actual instance created from the class.
+C) A class is used for memory management, while an object is used for algorithms.
+D) There is no difference; they are the same thing.
+Correct Answer: B
+
+16. In the UML class diagram visibility symbols, what does the - symbol represent?
+A) Public
+B) Private
+C) Protected
+D) Static
+Correct Answer: B
+
+17. What is the purpose of CRC cards in design?
+A) To define class responsibility and collaboration, helping avoid large classes that do too many things.
+B) To trace the step-by-step execution of a maximum-finding algorithm.
+C) To specify the pre- and post-conditions of a Stack ADT.
+D) To visually represent the stack and heap memory layout.
+Correct Answer: A
+
+18. In the "Mini Design Task: Simple Library System," which step involves identifying verbs to find possible methods?
+A) Step 1: Identify nouns → possible classes.
+B) Step 2: Identify verbs → possible methods.
+C) Step 3: Identify lookup needs → possible data structures.
+D) Step 4: Draw the UML diagram.
+Correct Answer: B
+
+19. In the Integrated Example "From Problem to Design," what is the purpose of using a dictionary/map for student records?
+A) To serve students in the order they arrive.
+B) To store students in contiguous memory for indexed access.
+C) To provide fast lookup by Student ID.
+D) To ensure that student names cannot be changed.
+Correct Answer: C
+
+20. According to the End-of-Unit Practical Assignment, what validation rule must be applied to the GPA field in the Student class?
+A) GPA must be a positive integer.
+B) GPA must be between 0.0 and 4.0.
+C) GPA must be unique for each student.
+D) GPA must be stored as a string.
+Correct Answer: B

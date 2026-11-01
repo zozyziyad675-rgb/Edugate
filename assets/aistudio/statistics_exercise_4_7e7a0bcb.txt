@@ -1,0 +1,181 @@
+20 MCQs from Lecture 4: Confidence Intervals
+
+---
+
+Q1. A numerical summary of a sample is called a:
+A) Parameter
+B) Statistic
+C) Population
+D) Confidence level
+Answer: B) Statistic
+
+---
+
+Q2. A numerical summary of a population is called a:
+A) Statistic
+B) Parameter
+C) Point estimate
+D) Sample mean
+Answer: B) Parameter
+
+---
+
+Q3. A statistic used to estimate a parameter is called a:
+A) Confidence interval
+B) Margin of error
+C) Point estimate
+D) Significance level
+Answer: C) Point estimate
+
+---
+
+Q4. The sample mean \bar{X} and sample proportion are examples of:
+A) Parameters
+B) Point estimates
+C) Confidence levels
+D) Population variances
+Answer: B) Point estimates
+
+---
+
+Q5. The purpose of a confidence interval is to:
+A) Replace the point estimate
+B) Provide a margin of error for the point estimate
+C) Eliminate sampling error
+D) Calculate the population size
+Answer: B) Provide a margin of error for the point estimate
+
+---
+
+Q6. A two-sided confidence interval for the population mean generally has the form:
+A) Point Estimate × Margin of Error
+B) Point Estimate ± Margin of Error
+C) Point Estimate ÷ Margin of Error
+D) Margin of Error ± Point Estimate
+Answer: B) Point Estimate ± Margin of Error
+
+---
+
+Q7. A confidence level of 100(1-\alpha)\% corresponds to a significance level of:
+A) 1-\alpha
+B) \alpha
+C) \alpha/2
+D) 2\alpha
+Answer: B) \alpha
+
+---
+
+Q8. Which of the following is NOT a common confidence level?
+A) 90%
+B) 95%
+C) 99%
+D) 75%
+Answer: D) 75%
+
+---
+
+Q9. For a large sample size (n \geq 30), the confidence interval for \mu uses:
+A) The t-distribution
+B) The z-distribution (standard normal)
+C) The chi-square distribution
+D) The F-distribution
+Answer: B) The z-distribution (standard normal)
+
+---
+
+Q10. The standard error of the sample mean is given by:
+A) \sigma \cdot \sqrt{n}
+B) \sigma / \sqrt{n}
+C) \sigma^2 / n
+D) s^2 / \sqrt{n}
+Answer: B) \sigma / \sqrt{n}
+
+---
+
+Q11. \bar{X} \pm 1.645 \frac{s}{\sqrt{n}} is a:
+A) 68% confidence interval
+B) 90% confidence interval
+C) 95% confidence interval
+D) 99% confidence interval
+Answer: B) 90% confidence interval
+
+---
+
+Q12. \bar{X} \pm 1.96 \frac{s}{\sqrt{n}} is a:
+A) 68% confidence interval
+B) 90% confidence interval
+C) 95% confidence interval
+D) 99% confidence interval
+Answer: C) 95% confidence interval
+
+---
+
+Q13. \bar{X} \pm 2.58 \frac{s}{\sqrt{n}} is a:
+A) 68% confidence interval
+B) 90% confidence interval
+C) 95% confidence interval
+D) 99% confidence interval
+Answer: D) 99% confidence interval
+
+---
+
+Q14. For the battery example (\bar{X} = 185.5, s = 5.0, n = 100), the standard error is:
+A) 5.0
+B) 0.5
+C) 0.05
+D) 1.0
+Answer: B) 0.5 (s/\sqrt{n} = 5/10)
+
+---
+
+Q15. For an 85% confidence interval, \alpha/2 equals:
+A) 0.15
+B) 0.075
+C) 0.025
+D) 0.05
+Answer: B) 0.075
+
+---
+
+Q16. The critical value z_{0.075} for an 85% confidence interval is:
+A) 1.96
+B) 1.645
+C) 1.44
+D) 2.58
+Answer: C) 1.44
+
+---
+
+Q17. For the battery example, the 85% confidence interval is:
+A) (184.78, 186.22)
+B) (184.50, 186.50)
+C) (185.00, 186.00)
+D) (184.28, 186.72)
+Answer: A) (184.78, 186.22)
+
+---
+
+Q18. In Example 2.2 (\bar{x} = 5, \sigma^2 = 9, n = 100), the 95% confidence interval is:
+A) (4.412, 5.588)
+B) (4.500, 5.500)
+C) (4.706, 5.294)
+D) (3.412, 6.588)
+Answer: A) (4.412, 5.588)
+
+---
+
+Q19. The margin of error of a confidence interval is:
+A) \bar{X} + z_{\alpha/2}\sigma/\sqrt{n}
+B) z_{\alpha/2}\sigma/\sqrt{n}
+C) \sigma/\sqrt{n}
+D) z_{\alpha/2}\sigma
+Answer: B) z_{\alpha/2}\sigma/\sqrt{n}
+
+---
+
+Q20. To obtain a 99% confidence interval of width ±1.0 A (with s = 5.0), the required sample size is approximately:
+A) 100
+B) 167
+C) 25
+D) 250
+Answer: B) 167 (using n = z^2\sigma^2/w^2)

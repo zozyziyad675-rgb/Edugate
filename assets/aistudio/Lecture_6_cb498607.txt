@@ -1,0 +1,336 @@
+Lecture 6: Applications of the Laplace Transform — Full Explanation
+
+1. The Big Picture: Why Do We Use Laplace Transforms?
+
+The Laplace transform is a tool that converts a problem in the "time domain" (t) into an easier problem in the "s-domain" (s). The magic is this:
+
+· Differentiation in t becomes multiplication by s in the s-domain.
+· Integration in t becomes division by s in the s-domain.
+
+So instead of solving a differential equation directly (which can be hard), we:
+
+1. Take the Laplace transform of the whole equation → get an algebraic equation in Y(s).
+2. Solve algebraically for Y(s).
+3. Take the inverse Laplace transform → get back y(t).
+
+This three-step recipe is the heart of this lecture. Let's build it carefully.
+
+---
+
+2. The Key Theorem: Laplace Transform of Derivatives
+
+This is the engine of the whole method. If L\{y(t)\} = Y(s), then:
+
+L\{y'(t)\} = sY(s) - y(0)
+
+L\{y''(t)\} = s^2Y(s) - s\,y(0) - y'(0)
+
+Why this matters: The initial conditions y(0) and y'(0) get automatically baked into the algebra. This is the huge advantage over classical methods — you never need to solve for constants separately at the end.
+
+Memory trick: Each derivative brings down one power of s, and you subtract the initial conditions multiplied by decreasing powers of s:
+
+· First derivative: subtract y(0) (times s^0 = 1).
+· Second derivative: subtract s\,y(0) and y'(0).
+
+---
+
+3. Application 1: Solving Ordinary Differential Equations (Constant Coefficients)
+
+The General Recipe
+
+Given an IVP (Initial Value Problem):
+
+1. Apply L\{\cdot\} to both sides.
+2. Use the derivative theorem to replace L\{y'\} and L\{y''\}.
+3. Substitute the initial conditions.
+4. Solve algebraically for Y(s).
+5. Use partial fractions to break Y(s) into simple pieces.
+6. Take the inverse Laplace transform using standard table entries.
+
+Standard table entries you must know:
+
+F(s) f(t) = L^{-1}\{F(s)\}
+\frac{1}{s-a} e^{at}
+\frac{1}{s} 1
+\frac{1}{s^2} t
+\frac{n!}{s^{n+1}} t^n
+
+---
+
+Example 4 (Page 4): A First-Order IVP
+
+Solve: y'(t) + 2y(t) = 4e^{2t}, \quad y(0) = 1
+
+Step 1 — Transform both sides:
+
+L\{y'\} + 2L\{y\} = L\{4e^{2t}\}
+
+Step 2 — Apply the derivative theorem and the table:
+
+sY(s) - y(0) + 2Y(s) = \frac{4}{s-2}
+
+Here we used L\{e^{2t}\} = \frac{1}{s-2}, so L\{4e^{2t}\} = \frac{4}{s-2}.
+
+Step 3 — Substitute y(0) = 1:
+
+sY(s) - 1 + 2Y(s) = \frac{4}{s-2}
+
+Step 4 — Collect Y(s) terms:
+
+(s+2)Y(s) = \frac{4}{s-2} + 1 = \frac{4 + (s-2)}{s-2} = \frac{s+2}{s-2}
+
+Step 5 — Solve for Y(s):
+
+Y(s) = \frac{1}{s-2}
+
+Notice how the (s+2) cancelled beautifully — this is the elegance of the method.
+
+Step 6 — Inverse transform:
+
+y(t) = e^{2t}
+
+✅ Check: y(0) = e^0 = 1 ✓. And y' + 2y = 2e^{2t} + 2e^{2t} = 4e^{2t} ✓.
+
+---
+
+Practice Problem (Pages 5–6): y' - 2y = e^{-t}, \quad y(0) = 0
+
+Step 1 — Transform:
+
+sY(s) - y(0) - 2Y(s) = \frac{1}{s+1}
+
+Step 2 — Use y(0) = 0:
+
+(s-2)Y(s) = \frac{1}{s+1}
+
+Step 3 — Solve:
+
+Y(s) = \frac{1}{(s+1)(s-2)}
+
+Step 4 — Partial fractions. We write:
+
+\frac{1}{(s+1)(s-2)} = \frac{A}{s+1} + \frac{B}{s-2}
+
+Cover-up method (the fastest technique): to find A, cover (s+1) and plug in s = -1:
+
+A = \frac{1}{s-2}\bigg|_{s=-1} = \frac{1}{-3} = -\frac{1}{3}
+
+To find B, cover (s-2) and plug in s = 2:
+
+B = \frac{1}{s+1}\bigg|_{s=2} = \frac{1}{3}
+
+So:
+
+Y(s) = \frac{-1/3}{s+1} + \frac{1/3}{s-2}
+
+Step 5 — Inverse transform:
+
+y(t) = -\frac{1}{3}e^{-t} + \frac{1}{3}e^{2t}
+
+---
+
+Example 5 (Pages 7–8): A Second-Order IVP
+
+Solve: y''(t) - 9y(t) = 0, \quad y(0) = -3, \quad y'(0) = 5
+
+Step 1 — Transform:
+
+L\{y''\} - 9L\{y\} = 0
+
+Step 2 — Derivative theorem:
+
+s^2Y(s) - s\,y(0) - y'(0) - 9Y(s) = 0
+
+Step 3 — Substitute y(0) = -3, y'(0) = 5:
+
+s^2Y(s) + 3s - 5 - 9Y(s) = 0
+
+(Note: -s(-3) = +3s and -5 comes from -y'(0).)
+
+Step 4 — Solve:
+
+(s^2 - 9)Y(s) = -3s + 5 \implies Y(s) = \frac{-3s+5}{s^2-9} = \frac{-3s+5}{(s-3)(s+3)}
+
+Step 5 — Partial fractions:
+
+Y(s) = \frac{A}{s-3} + \frac{B}{s+3}
+
+Cover-up for A (plug s = 3):
+
+A = \frac{-3(3)+5}{3+3} = \frac{-9+5}{6} = \frac{-4}{6} = -\frac{2}{3}
+
+Cover-up for B (plug s = -3):
+
+B = \frac{-3(-3)+5}{-3-3} = \frac{9+5}{-6} = \frac{14}{-6} = -\frac{7}{3}
+
+Step 6 — Inverse transform:
+
+y(t) = -\frac{2}{3}e^{3t} - \frac{7}{3}e^{-3t}
+
+✅ Check initial conditions: y(0) = -\frac{2}{3} - \frac{7}{3} = -3 ✓. And y'(t) = -2e^{3t} + 7e^{-3t}, so y'(0) = -2 + 7 = 5 ✓.
+
+---
+
+Example 5 (Pages 9–10): A Second-Order Non-Homogeneous IVP with Repeated Root
+
+Solve: y'' - 4y' + 3y = e^t, \quad y(0) = 0, \quad y'(0) = 1
+
+Step 1 — Transform:
+
+s^2Y - s\,y(0) - y'(0) - 4(sY - y(0)) + 3Y = \frac{1}{s-1}
+
+Step 2 — Substitute y(0)=0, y'(0)=1:
+
+s^2Y - 1 - 4sY + 3Y = \frac{1}{s-1}
+
+Step 3 — Collect:
+
+(s^2 - 4s + 3)Y = \frac{1}{s-1} + 1 = \frac{1 + (s-1)}{s-1} = \frac{s}{s-1}
+
+Step 4 — Factor the characteristic polynomial:
+
+s^2 - 4s + 3 = (s-1)(s-3)
+
+So:
+
+Y(s) = \frac{s}{(s-1)^2(s-3)}
+
+Step 5 — Partial fractions with a repeated factor. Because (s-1) appears squared, we need:
+
+Y(s) = \frac{A}{s-3} + \frac{B}{s-1} + \frac{C}{(s-1)^2}
+
+Finding A (cover-up, plug s = 3):
+
+A = \frac{s}{(s-1)^2}\bigg|_{s=3} = \frac{3}{4}
+
+Finding C (cover-up on (s-1)^2, plug s = 1):
+
+C = \frac{s}{s-3}\bigg|_{s=1} = \frac{1}{-2} = -\frac{1}{2}
+
+Finding B — no cover-up works here, so plug a convenient value, e.g. s = 0:
+
+Y(0) = \frac{0}{(-1)^2(-3)} = 0
+
+And from the decomposition:
+
+0 = \frac{A}{-3} + \frac{B}{-1} + \frac{C}{1} = -\frac{A}{3} - B + C
+
+So:
+
+0 = -\frac{1}{4} - B - \frac{1}{2} \implies B = -\frac{3}{4}
+
+Step 6 — Inverse transform:
+
+y(t) = \frac{3}{4}e^{3t} - \frac{1}{4}e^{t} - \frac{1}{2}t\,e^{t}
+
+Key point: The repeated factor (s-1)^2 produced the term t\,e^{t}. Remember: \frac{1}{(s-a)^2} \leftrightarrow t\,e^{at}. This t-multiplication is exactly what a repeated root in the characteristic equation corresponds to.
+
+---
+
+4. Application 2: Integral and Integro-Differential Equations
+
+Definitions (Page 11) — Learn These Precisely
+
+· Integral equation: An equation in which the unknown function occurs inside a definite integral.
+· Integro-differential equation: An equation in which the unknown function appears both inside an integral and in differentiated form in other terms.
+
+The crucial tool: L\left\{\int_0^t x(u)\,du\right\} = \frac{X(s)}{s}.
+
+This is the integration counterpart of the derivative theorem — integration in t becomes division by s. This single fact turns integral equations into simple algebra.
+
+---
+
+Example (Page 11): A Simple Integral Equation
+
+Solve: x(t) = 2 + \int_0^t x(u)\,du
+
+Step 1 — Transform both sides. The integral becomes \frac{X(s)}{s}:
+
+X(s) = \frac{2}{s} + \frac{X(s)}{s}
+
+Step 2 — Solve for X(s). Multiply through by s:
+
+sX(s) = 2 + X(s) \implies (s-1)X(s) = 2 \implies X(s) = \frac{2}{s-1}
+
+Step 3 — Inverse transform:
+
+x(t) = 2e^{t}
+
+✅ Check: RHS = 2 + \int_0^t 2e^{u}du = 2 + 2(e^t - 1) = 2e^t ✓.
+
+---
+
+Example (Page 12): Current in an RC Series Circuit
+
+The integral equation (from circuit theory, the current i(t) satisfies):
+
+i(t) + \int_0^t i(u)\,du = t
+
+Step 1 — Transform:
+
+I(s) + \frac{I(s)}{s} = \frac{1}{s^2}
+
+(Here L\{t\} = \frac{1}{s^2}.)
+
+Step 2 — Factor out I(s):
+
+\left(1 + \frac{1}{s}\right)I(s) = \frac{1}{s^2} \implies \frac{s+1}{s}I(s) = \frac{1}{s^2}
+
+Step 3 — Solve:
+
+I(s) = \frac{1}{s^2}\cdot\frac{s}{s+1} = \frac{1}{s(s+1)}
+
+Step 4 — Partial fractions:
+
+\frac{1}{s(s+1)} = \frac{1}{s} - \frac{1}{s+1}
+
+(Check: \frac{(s+1) - s}{s(s+1)} = \frac{1}{s(s+1)} ✓)
+
+Step 5 — Inverse transform:
+
+i(t) = 1 - e^{-t}
+
+Physical meaning: The current starts at i(0) = 0 (since 1 - 1 = 0) and rises toward the steady value 1 as t \to \infty. This matches the behavior of charging a capacitor in an RC circuit.
+
+---
+
+5. Summary Sheet — Everything in One Place
+
+Concept Formula
+Derivative of y' L\{y'\} = sY(s) - y(0)
+Derivative of y'' L\{y''\} = s^2Y(s) - s\,y(0) - y'(0)
+Integral of x L\left\{\int_0^t x(u)du\right\} = \frac{X(s)}{s}
+Exponential L\{e^{at}\} = \frac{1}{s-a}
+Constant L\{1\} = \frac{1}{s}
+Linear L\{t\} = \frac{1}{s^2}
+Repeated root factor \frac{1}{(s-a)^2} \leftrightarrow t\,e^{at}
+
+The master workflow:
+Transform → Substitute initial conditions → Solve algebraically for Y(s) → Partial fractions → Inverse transform.
+
+Partial fractions checklist:
+
+· Distinct linear factors (s-a)(s-b): use \frac{A}{s-a} + \frac{B}{s-b} with the cover-up method.
+· Repeated linear factor (s-a)^2: include both \frac{B}{s-a} and \frac{C}{(s-a)^2}. Cover-up gives C; use a substitution (like s=0) to find B.
+· Irreducible quadratic (not in this lecture, but next): use \frac{As+B}{s^2+...}.
+
+---
+
+6. Common Pitfalls to Avoid
+
+1. Sign errors with initial conditions. For y'', you subtract s\,y(0) and y'(0). Write the substitution step slowly.
+2. Forgetting the repeated-factor terms. When you see (s-1)^2, you need three terms if there's also an (s-3), not two.
+3. Cover-up doesn't give B for repeated factors. It only gives the coefficient of the highest power. Use substitution for the rest.
+4. Forgetting to transform the right-hand side. L\{e^t\} = \frac{1}{s-1}, not \frac{1}{s}.
+5. Algebra slip when adding fractions. Always combine over a common denominator before solving for Y(s).
+
+---
+
+7. Quick Self-Test (Try These Yourself)
+
+1. Solve y' + y = 0, y(0) = 2. (Answer: y = 2e^{-t})
+2. Solve y'' + y = 0, y(0) = 1, y'(0) = 0. (Answer: y = \cos t, using L\{\cos t\} = \frac{s}{s^2+1})
+3. Solve x(t) = t + \int_0^t x(u)du. (Answer: x = e^t - 1)
+4. Partial fractions: decompose \frac{2}{(s-1)(s+2)}. (Answer: \frac{2/3}{s-1} - \frac{2/3}{s+2})
+
+Work through these — if you can do them fluently, you have mastered everything in Lecture 6. 🎯

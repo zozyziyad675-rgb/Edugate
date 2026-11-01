@@ -1,0 +1,804 @@
+🎓 Module 1: Introduction to Software Principles & Data Basics — Full Lecture Walkthrough
+
+How this explanation works: Everything important stays in English (terminology, definitions, code keywords, exam-ready phrasing) so you can revise and answer exam questions directly in English. Arabic is only used for the explanation/flow. Every slide is covered — no gaps.
+
+---
+
+📌 Module Learning Outcome (Slide 2)
+
+"Analyze memory organization and apply core object-oriented and data abstraction principles to build modular, maintainable software structures."
+
+Three pillars of this module:
+
+Pillar English Keywords What you must be able to do
+Memory organization Stack, heap, references, dynamic objects Trace what happens in memory when code runs
+Data abstraction ADT, interface, implementation, encapsulation Separate what from how
+Object-oriented design Classes, interfaces, inheritance, UML, CRC Design before you code
+
+Exam tip: The outcome verbs are Analyze and Apply — meaning you will be asked to trace and design, not just define.
+
+---
+
+🗺️ Lessons Roadmap (Slide 3)
+
+· Lesson 1.1: Welcome to DSA
+· Lesson 1.2: How Memory Works
+· Lesson 1.3: Data Abstraction
+· Lesson 1.4: Object-Oriented Foundations
+
+Main idea: "DSA is not only coding. It is the disciplined choice of data representation and operations."
+
+Class method (the 5-step cycle): explain → trace → code → assess → practice
+
+Why this matters: In exams, "trace" questions are worth a lot. This method tells you exactly how the instructor thinks.
+
+---
+
+🟢 Lesson 1.1: Welcome to DSA
+
+Learning Outcomes (Slide 4)
+
+· Explain why DSA is essential for scalable applications
+· Identify real-world problems solved by optimal data structure selection
+· Describe the difference between data, data structure, and algorithm
+
+---
+
+Slide 5 — Data Structure + Algorithm
+
+Data structure: A way to organize data so that a program can store, access, update, and remove it efficiently.
+
+Algorithm: A finite sequence of clear steps used to solve a problem or perform a task.
+
+Example: Scores stored in an array + algorithm scans values to find the largest score.
+
+🎯 Analogy: A data structure is like a filing cabinet (how you organize papers). An algorithm is the procedure you follow to find a paper ("open drawer, check label, compare…").
+
+⚠️ Key distinction to memorize:
+
+· Data structure = WHERE/ HOW data is organized
+· Algorithm = the STEPS to do something with it
+
+---
+
+Slide 6 — Why DSA Matters in Scalable Software
+
+Four bullet points (word-for-word important):
+
+· A small program may work even with a weak design.
+· When data grows, poor structure selection becomes expensive.
+· DSA gives a systematic way to reduce time and memory cost.
+· Correct solution is not enough; efficient solution is required.
+
+📚 Example: University Search System
+
+· 50 students: scanning a list feels instant.
+· 5,000,000 students: repeated scanning wastes time.
+· Dictionary by StudentID → fast average lookup.
+
+🎯 Analogy: Finding a word in a 5-page booklet by reading every word = fine. Doing it in a 5-million-page dictionary = disaster. The dictionary (hash-based lookup) is the right structure.
+
+Practice question from slide 11: "Why may a program that works for 100 items fail for millions?"
+✅ Answer: Because the algorithm's cost grows with input size. A linear scan over 100 items is trivial; over millions it becomes too slow. The structure choice (list vs dictionary) determines whether the cost is linear or near-constant.
+
+---
+
+Slide 7 — Real-World Data Structure Selection (TABLE — memorize this!)
+
+Application need Good choice Reason
+Browser back button Stack Last page visited is returned first (LIFO)
+Printer job line Queue First job submitted is printed first (FIFO)
+Student record by ID Dictionary Fast lookup by key
+Emergency tickets Priority queue Highest priority is served first
+
+🎯 Memory hook:
+
+· Stack = LIFO (Last In, First Out) → back buttonSlide 8 — Worked Example: Help-Desk Tickets
+
+· Normal tickets → served by arrival order → Queue
+· Emergency tickets → must be served first → Priority Queue
+· Stored data: ticket number, customer, priority, description
+· Operations: AddTicket, PeekNext, ServeNext, IsEmpty
+
+Decision Rule: "Choose the structure from the behavior of the problem, not from the name of a library class."
+
+✅ Meaning: Don't say "I'll use a List because it exists." Say: "The problem needs first-come-first-served → that behavior is a Queue."
+
+---
+
+Slide 9 — Algorithm Example: Find Maximum (C# & Python)
+
+C#
+
+int[] scores = { 72, 91, 66, 88 };
+int max = scores[0];
+foreach (int s in scores) {
+    if (s > max) max = s;
+}
+Console.WriteLine(max); // 91
+Python
+
+scores = [72, 91, 66, 88]
+maximum = scores[0]
+for s in scores:
+    if s > maximum:
+        maximum = s
+print(maximum)  # 91
+🔑 Pattern to memorize (the "max algorithm"):
+
+1. Initialize max with the first element (NOT with 0 — because all scores could be negative!)
+2. Loop over each element
+3. Compare if s > max → update
+4. Output the result
+
+---
+
+Slide 10 — Trace: Find Maximum Step by Step (TABLE)
+
+Step Current score max before Action max after
+Start 72 — Initialize 72
+1 91 72 91 > 72, update 91
+2 66 91 66 > 91 is false 91
+3 88 91 88 > 91 is false 91
+
+Result: maximum = 91. The algorithm examines each item once → O(n) time.
+
+✅ How to write a trace in the exam: Draw a table with Step / Current value / max before / Action (true or false) / max after. Never skip the "Action" column — it's where the marks are.
+
+---
+
+Slide 11 — Lesson 1.1 Practice & Assessment
+
+Assessment Questions:
+
+1. Explain the difference between a data structure and an algorithm.
+2. Name two real applications and a suitable structure for each.
+3. Why may a program that works for 100 items fail for millions?
+
+Short Assignment: Choose a library, hospital, delivery service, or social network. Identify three kinds of data and select a structure for each, with reasons.
+
+Practical Question: Write C# or Python code that stores at least 10 integers and finds minimum, maximum, and average without built-in min/max. Trace the first five values.
+
+✅ Model answer for the practical (Python):
+
+nums = [7, 3, 9, 1, 5, 8, 2, 6, 4, 10]
+minimum = maximum = nums[0]
+total = 0
+for n in nums:
+    if n < minimum: minimum = n
+    if n > maximum: maximum = n
+    total += n
+average = total / len(nums)
+print(minimum, maximum, average)  # 1 10 5.5
+Trace table (first five values):
+
+Step n min max total
+Start — 7 7 0
+1 7 7 7 7
+2 3 3 7 10
+3 9 3 9 19
+4 1 1 9 20
+5 5 1 9 25
+
+---
+
+🔵 Lesson 1.2: How Memory Works
+
+Learning Outcomes (Slide 12)
+
+· Differentiate between stack and heap memory layout and management
+· Demonstrate dynamic storage allocation and memory reference mechanics
+· Trace method calls and object references using simple examples
+
+---
+
+Slide 13 — Why Memory Matters in DSA
+
+"Data structures live in memory."
+
+· Arrays need contiguous space for indexed access.
+· Linked nodes are objects connected by references.
+· Recursive calls create repeated stack frames.
+· Poor memory choices can waste space or slow access.
+
+Teaching model: We use two important regions: Stack and Heap. The model is simplified, but it is very useful for reasoning.
+
+⚠️ Note: The slide says the model is simplified — in real systems there are more regions (static/global, etc.), but for exams, Stack + Heap is what matters.
+
+---
+
+Slide 14 — Stack Memory: Method Calls
+
+static int Add(int a, int b) {
+    int sum = a + b;
+    return sum;
+}
+int result = Add(4, 7);
+Stack frame for Add(4, 7):
+
+· a = 4
+· b = 7
+· sum = 11
+· return location
+
+When Add returns, its frame is removed. The returned value is stored in result.
+
+🎯 Analogy: A stack frame is like a tray on a cafeteria stack. When the method finishes, the tray is removed (LIFO — the last tray placed is the first removed).
+
+🔑 What lives in a stack frame? Parameters, local variables, and the return address (return location).
+
+---
+
+Slide 15 — Heap Memory: Dynamic Objects
+
+class Student { public string Name = ""; }
+Student a = new Student();
+a.Name = "Mona";
+Student b = a;
+b.Name = "Nour";
+Memory layout:
+
+Region Content
+Stack a: reference (ref)
+Stack b: reference (ref)
+Heap One Student object → Name = "Nour"
+
+a and b refer to the SAME object. Changing b.Name changes the object seen through a.
+
+🎯 Analogy: a and b are two remote controls (references) pointed at the same TV (the object on the heap). Pressing "channel" on either remote changes what both see.
+
+---
+
+Slide 16 — Reference Trace: What Changes? (TABLE)
+
+Line a points to b points to Object Name
+new Student() Object #1 — —
+a.Name = "Mona" Object #1 — Mona
+b = a Object #1 Object #1 Mona
+b.Name = "Nour" Object #1 Object #1 Nour
+
+Important result: a.Name and b.Name both read "Nour".
+
+✅ Trace rule for exams: Track three columns: where a points, where b points, and the object's state. A reference assignment (b = a) copies the arrow, not the object.
+
+---
+
+Slide 17 — Value Type vs Reference Type (SUPER IMPORTANT)
+
+Behavior Value type Reference type
+Assignment copies the value copies the reference
+
+int x = 5;
+int y = x;
+y = 9;        // x is still 5 ✅
+
+Student a = new Student();
+Student b = a;
+b.Name = "Nour";   // a.Name is also Nour ✅
+🎯 Analogy:
+
+· Value type = photocopying a document → editing the copy doesn't change the original.
+· Reference type = sharing a Google Doc link → editing it changes it for everyone.
+
+⚠️ Common exam trap: People think b = a creates a new object — it does NOT. It creates a new reference to the same heap object.
+
+---
+
+Slide 18 — Dynamic Storage Allocation
+
+C# — dynamic node idea:
+
+class Node {
+    public int Value;
+    public Node? Next;
+}
+
+Node first = new Node { Value = 10 };
+Node second = new Node { Value = 20 };
+first.Next = second;
+Python — dynamic node idea:
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+first = Node(10)
+second = Node(20)
+first.next = second
+This is the foundation of linked lists: each node stores data and a reference to the next node.
+
+🎯 Analogy: A linked list is a scavenger hunt — each clue contains the next clue's location. The "chain" is made of references, not physical adjacency.
+
+🔑 Why "dynamic"? Because nodes are created with new at runtime on the heap — their number and lifetime are decided while the program runs, not fixed at compile time.
+
+---
+
+Slide 19 — Recursion and Stack Frames
+
+factorial(4) waits for factorial(3)
+             waits for factorial(2)
+              waits for factorial(1)
+             returns 1
+            returns 2
+          returns 6
+        returns 24
+Each waiting call has its own stack frame.
+
+Key rules:
+
+· Base case stops recursion.
+· Reduction step moves toward the base case.
+· Too many calls may cause stack overflow.
+
+🎯 Analogy: Recursion is like Russian dolls — you open one to find another inside, until you reach the smallest one (base case), then you close them back one by one (returning). Each open doll = a stack frame.
+
+🔑 Formula to remember: factorial(n) = n × factorial(n-1), base case factorial(1) = 1.
+
+Trace:
+
+Call Waits for Returns
+factorial(4) factorial(3) 4 × 6 = 24
+factorial(3) factorial(2) 3 × 2 = 6
+factorial(2) factorial(1) 2 × 1 = 2
+factorial(1) — (base case) 1
+
+Why stack overflow? Because each call adds a frame to the stack, and the stack has limited size. Infinite recursion (no base case) → frames pile up → overflow.
+
+---
+
+Slide 20 — Lesson 1.2 Practice & Assessment
+
+Assessment Questions:
+
+1. What is stored in a stack frame? (parameters, local variables, return location)
+2. Why can two variables refer to the same object? (because assignment copies the reference, not the object)
+3. What happens when recursive calls become too deep? (stack overflow)
+
+Short Assignment: Draw a memory diagram for two Student variables referring to the same object, then show what changes after updating one variable.
+· Queue = FIFO (First In, First Out) → printer line
+· Dictionary = key → value → student by ID
+· Priority Queue = priority order → emergency room
+
+Practical Question: Write a C# or Python program that creates two object variables referencing the same object. Change one property and print both variables to prove the shared reference.
+
+✅ Model answer (Python):
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+
+a = Student("Mona")
+b = a                # b references the SAME object
+b.name = "Nour"
+print(a.name, b.name)  # Nour Nour  → proves shared reference ✅
+---
+
+🟣 Lesson 1.3: Data Abstraction
+
+Learning Outcomes (Slide 21)
+
+· Define Abstract Data Types (ADTs)
+· Separate interface specifications from concrete implementations
+· Evaluate the benefits of encapsulation in component design
+
+---
+
+Slide 22 — What is an ADT?
+
+Abstract Data Type (ADT): A specification of WHAT a data type does, NOT how it is physically implemented.
+
+Examples of ADTs: Stack, Queue, List, Set, Dictionary / Map
+
+🎯 Analogy: A car's steering wheel and pedals are the interface — you know what they do without knowing how the engine works inside. The ADT is the pedals; the implementation is the engine.
+
+⚠️ ADT ≠ implementation! A Stack as an ADT is just the operations + behavior. It could be implemented with an array, a linked list, or a built-in collection.
+
+---
+
+Slide 23 — Interface vs Implementation (CRITICAL DISTINCTION)
+
+Concept Question it answers Example
+Interface WHAT operations are available Push, Pop, Peek, IsEmpty
+Implementation HOW operations are performed internally Array-based stack, Linked-list stack, Built-in collection wrapper
+
+Stack ADT operations: Push(item), Pop(), Peek(), IsEmpty()
+
+🎯 Analogy: Interface = the menu at a restaurant (what you can order). Implementation = the kitchen (how it's cooked). You don't care how as long as the menu items work.
+
+---
+
+Slide 24 — Stack ADT Specification (TABLE)
+
+Operation Meaning Condition (Precondition)
+Push(x) Insert x at the top Stack may need capacity
+Pop() Remove and return top Stack must not be empty
+Peek() Return top without removal Stack must not be empty
+IsEmpty() Check if no elements exist Always allowed
+
+ADT thinking focuses on LEGAL BEHAVIOR before code details.
+
+🔑 Precondition = what must be true BEFORE the operation runs. This is a favorite exam question!
+
+---
+
+Slide 25 — Pseudocode: Stack Push and Pop
+
+Push:
+
+algorithm Push(S, item)
+Pre: S is a stack
+Post: item is placed at the top
+1. S.top ← S.top + 1
+2. S.data[S.top] ← item
+end Push
+Pop:
+
+algorithm Pop(S)
+Pre: S is not empty
+Post: top item is removed
+1. item ← S.data[S.top]
+2. S.top ← S.top - 1
+3. return item
+end Pop
+⚠️ Always check pre-conditions in real code.
+
+✅ How to write Pre/Post conditions in exams:
+
+· Pre = what must be true before (e.g., "stack is not empty")
+· Post = what is true after (e.g., "top item is removed and returned")
+
+Step-by-step Push trace (stack with top = 1, data [10, 20]), Push(30):
+
+1. top = 1 + 1 = 2
+2. data[2] = 30 → stack becomes [10, 20, 30] ✅
+
+Step-by-step Pop trace on that stack:
+
+1. item = data[2] = 30
+2. top = 2 - 1 = 1
+3. return 30 → stack becomes [10, 20] ✅
+
+---
+
+Slide 26 — C# Interface for a Stack ADT
+
+public interface IStack<T> {
+    void Push(T item);
+    T Pop();
+    T Peek();
+    bool IsEmpty();
+}
+Any class that implements IStack<T> MUST provide these operations.
+
+Benefit: Other code can use the stack without knowing whether it is array-based or linked-node-based.
+
+🎯 Analogy: An interface is a contract/job description. If you sign it (implement it), you must deliver all listed operations. T = generic type (works for int, string, Student, etc.).
+
+---
+
+Slide 27 — Python Abstract Base Class for Stack
+
+from abc import ABC, abstractmethod
+
+class Stack(ABC):
+    @abstractmethod
+    def push(self, item): pass
+
+    @abstractmethod
+    def pop(self): pass
+
+    @abstractmethod
+    def peek(self): pass
+
+    @abstractmethod
+    def is_empty(self): pass
+Same concept, different syntax: define behavior first, then implement.
+
+🔑 Python equivalents: ABC + @abstractmethod ≈ C# interface. Abstract method = a method with no body that subclasses must override.
+
+---
+
+Slide 28 — Encapsulation Protects Correctness
+
+· Keep internal fields private.
+· Expose controlled public methods.
+· Prevent invalid states.
+· Make code easier to maintain and test.
+
+class ArrayStack<T> {
+    private T[] data;
+    private int top;
+
+    public void Push(T item) {
+        // validate capacity
+        data[++top] = item;
+    }
+}
+🎯 Analogy: A bank vault — you can't walk in and grab cash (private field). You must use the teller window (public method), which checks your ID (validation).
+
+⚠️ "Prevent invalid states" — e.g., a stack should never have top = -1 after a push, or top beyond capacity. Encapsulation guarantees this because outsiders can't touch top or data directly.
+
+---
+
+Slide 29 — Lesson 1.3 Practice & Assessment
+
+Assessment Questions:
+
+1. What does an ADT describe? (WHAT operations do, not HOW they're implemented)
+2. Why is interface separate from implementation? (so the client is independent of internals; easier to change/optimize/maintain)
+3. How does encapsulation prevent invalid states? (private fields + validated public methods ensure data can only be changed legally)
+
+Short Assignment: Write an ADT specification for a Queue. Include Enqueue, Dequeue, Peek, IsEmpty and basic pre/post conditions.
+
+✅ Model answer:
+
+Operation Meaning Pre Post
+Enqueue(x) Insert x at the rear Queue may need capacity x is at rear
+Dequeue() Remove and return front Queue not empty Front removed, returned
+Peek() Return front without removal Queue not empty Front unchanged
+IsEmpty() Check if empty Always allowed true/false
+
+Practical Question: Implement a simple Stack in C# or Python with Push, Pop, Peek, IsEmpty. Add error handling when Pop is called on an empty stack.
+
+✅ Model answer (Python):
+
+class Stack:
+    def __init__(self):
+        self.data = []
+    def push(self, item):
+        self.data.append(item)
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("Pop from empty stack")
+        return self.data.pop()
+    def peek(self):
+        if self.is_empty():
+            raise IndexError("Peek from empty stack")
+        return self.data[-1]
+    def is_empty(self):
+        return len(self.data) == 0
+---
+
+🔴 Lesson 1.4: Object-Oriented Foundations
+
+Learning Outcomes (Slide 30)
+
+· Implement classes, interfaces, inheritance, and encapsulation
+· Model software designs visually using UML class diagrams
+· Use CRC cards to define class responsibility and collaboration
+
+---
+
+Slide 31 — Objects and Classes
+
+Class = blueprint
+Object = actual instance created from the class
+
+class Student {
+    public string Name { get; set; }
+    public int Id { get; set; }
+    public void Print() {
+        Console.WriteLine($"{Id}: {Name}");
+    }
+}
+🎯 Analogy: A class is a cookie cutter; an object is an actual cookie. One blueprint → many objects.
+
+---
+
+Slide 32 — Encapsulation in OOP
+
+class BankAccount {
+    private decimal balance;
+
+    public void Deposit(decimal amount) {
+        if (amount <= 0) throw new ArgumentException();
+        balance += amount;
+    }
+
+    public decimal GetBalance() => balance;
+}
+Protected rule: balance cannot be changed directly from outside the class.
+
+This principle helps us build safe stacks, queues, lists, trees, and graphs.
+
+🔑 Why "safe structures"? Because the internal state (e.g., top, size, root) can only change through validated operations — never illegally from outside.
+
+---
+
+Slide 33 — Inheritance and Interfaces
+
+Inheritance: A child class specializes a parent class.
+Interface: A contract that states required operations.
+
+interface IPrintable {
+    void Print();
+}
+
+class Student : IPrintable {
+    public void Print() { }
+}
+🎯 Analogy:
+
+· Inheritance = "A Dog is a Animal" — child inherits parent's members and specializes.
+· Interface = "A Student can be Printable" — a capability contract (the : symbol = implements here).
+
+⚠️ Exam distinction:
+
+· Inheritance (is-a) → shares code + behavior from a parent class.
+· Interface (can-do) → only a contract; the class must provide the bodies.
+
+---
+Slide 34 — UML Class Diagram: Student Example
+
+UML visibility symbols (memorize!):
+
+Symbol Meaning
++ public
+- private
+# protected
+
+Student diagram:
+
+Student
+-------------------------
+- id: int
+- name: string
+-------------------------
++ Print(): void
++ ChangeName(name): void
+Use UML before implementation when the design has several classes.
+
+🔑 Reading the diagram: Top section = class name; middle = fields/attributes; bottom = methods/operations. Prefixes show visibility.
+
+---
+
+Slide 35 — UML Class Diagram: Linked Node Preview
+
+Node                         ┌──────► Node
+-------------------------    │        -------------------------
+- value: int                 │        - value: int
+- next: Node  ───────────────┘        - next: Node
+-------------------------             -------------------------
++ Node(value)                         + Node(value)
++ GetValue(): int
+The next field is a reference to another object.
+
+🎯 Analogy: A Node is a train car. The next field is the coupling to the next car. The arrow in UML shows the reference.
+
+---
+
+Slide 36 — CRC Cards: Design Before Coding (TABLE)
+
+CRC = Class–Responsibility–Collaborator
+
+Class Responsibilities Collaborators
+Ticket Store ticket data; expose priority —
+TicketQueue Add ticket; serve next ticket Ticket
+HelpDeskSystem Coordinate user operations TicketQueue
+
+CRC cards help avoid large classes that do too many things.
+
+🎯 Analogy: A CRC card is a job description card for each class:
+
+· Class = the job title
+· Responsibilities = what the job does
+· Collaborators = who it works with
+
+✅ Why useful? It forces you to distribute work across classes before writing code → avoids a "God class" that does everything.
+
+---
+
+Slide 37 — Mini Design Task: Simple Library System
+
+Given: Data = books, members, borrowed copies. Operations = add book, register member, borrow, return, search.
+
+Design Steps (memorize these 3 steps!):
+
+1. Identify nouns → possible classes
+2. Identify verbs → possible methods
+3. Identify lookup needs → possible data structures
+
+Possible classes: Book, Member, Loan, LibrarySystem
+Possible structures: list for books, dictionary by ISBN, queue for reservations
+
+✅ How this maps:
+
+· Nouns: book, member, loan, library → classes
+· Verbs: add, register, borrow, return, search → methods
+· Lookup needs: "find book by ISBN" → dictionary; "waiting list" → queue; "all books" → list
+
+---
+
+Slide 38 — Lesson 1.4 Practice & Assessment
+
+Assessment Questions:
+
+1. What is the difference between a class and an object? (class = blueprint; object = instance)
+2. Why should fields often be private? (encapsulation, prevent invalid states, allow controlled access)
+3. What is the purpose of a UML class diagram? (visualize structure: classes, fields, methods, visibility, and relationships before coding)
+
+Short Assignment: Create a CRC card for LibrarySystem with Book, Member, and Loan. State responsibilities and collaborators.
+
+Practical Question: Implement a Student class in C# or Python with private/protected data, public methods, and validation for student ID and name.
+
+✅ Model answer (Python):
+
+class Student:
+    def __init__(self, student_id, name):
+        self.__id = None
+        self.__name = None
+        self.set_id(student_id)
+        self.set_name(name)
+
+    def set_id(self, student_id):
+        if not isinstance(student_id, int) or student_id <= 0:
+            raise ValueError("Invalid student ID")
+        self.__id = student_id
+
+    def set_name(self, name):
+        if not name or not name.strip():
+            raise ValueError("Name cannot be empty")
+        self.__name = name.strip()
+
+    def get_id(self): return self.__id
+    def get_name(self): return self.__name
+
+    def print(self):
+        print(f"{self.__id}: {self.__name}")
+---
+
+Slide 39 — Integrated Example: From Problem to Design
+
+· Problem: manage student records by ID
+· Data structure: dictionary/map for fast lookup
+· Algorithm: validate input → search by key → update or report not found
+· Memory: objects are referenced from the dictionary
+· OOP: Student class hides fields and exposes safe methods
+
+algorithm UpdateStudentName(id, newName)
+Pre: id exists or report not found
+1. if dictionary does not contain id
+2.     return "Not found"
+3. student ← dictionary[id]
+4. student.ChangeName(newName)
+5. return "Updated"
+end
+✅ This slide ties EVERYTHING together: ADT (dictionary), Algorithm (search/update steps), Memory (references in heap), OOP (encapsulated Student), Design (pre/post conditions). Expect an exam question like this!
+
+---
+
+Slide 40 — Key Takeaways
+
+1. DSA is the study of organizing data and solving problems efficiently.
+2. Memory concepts explain references, objects, recursion, and dynamic structures.
+3. ADTs separate WHAT a structure does from HOW it is implemented.
+4. OOP gives tools for building safe, reusable, and maintainable data structures.
+
+---
+
+Slide 41 — End-of-Unit Assessment
+
+Four concept questions:
+
+1. Compare data structure and algorithm.
+2. Explain stack vs heap with one example.
+3. Define ADT and give two operations of Stack.
+4. Explain encapsulation with a class example.
+
+Trace Question: Given scores [4, 9, 2, 11, 7], trace the maximum-finding algorithm step by step using a table.
+
+✅ Model trace:
+
+Step Current score max before Action max after
+Start 4 — Initialize 4
+1 9 4 9 > 4, update 9
+2 2 9 2 > 9 is false 9
+3 11 9 11 > 9, update 11
+4 7 11 7 > 11 is false 11
+
+Result: maximum = 11 ✅
+
+Design Question: Design a small help-desk system. Name two classes, one ADT, and one suitable data structure.
+
+✅ Model answer: Classes = Ticket, HelpDeskSystem (or TicketQueue); ADT = Queue (plus Priority Queue for emergencies); Data structure = Queue for normal tickets, Priority Queue for emergency tickets.

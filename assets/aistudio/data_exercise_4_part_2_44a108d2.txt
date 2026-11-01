@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on the Lesson 4.2–4.4 lecture slides, with the correct answer listed under each question.
+
+1. What is the primary benefit of a doubly linked list over a singly linked list?
+A) It uses less memory per node.
+B) It provides natural forward and backward traversal.
+C) It allows O(1) random access by index.
+D) It requires fewer link updates during insertion.
+Correct Answer: B
+
+2. What is the cost of adding a Prev reference to each node in a doubly linked list?
+A) It changes the time complexity of search from O(n) to O(n²).
+B) It adds one extra reference per node and requires more link updates.
+C) It prevents the list from being traversed forward.
+D) It requires the list to be circular.
+Correct Answer: B
+
+3. When inserting a new node after a known node in a doubly linked list, how many reference updates are needed (assuming the right neighbor exists)?
+A) 1
+B) 2
+C) 4 (New.Prev, New.Next, Right.Prev, Left.Next)
+D) 6
+Correct Answer: C
+
+4. When tracing the insertion of 25 after node 20 in 10 ↔ 20 ↔ 30, what is the final list?
+A) 10 ↔ 20 ↔ 30 ↔ 25
+B) 10 ↔ 25 ↔ 20 ↔ 30
+C) 10 ↔ 20 ↔ 25 ↔ 30
+D) 25 ↔ 10 ↔ 20 ↔ 30
+Correct Answer: C
+
+5. What is the time complexity of RemoveNode(node) in a doubly linked list when the node reference is already known?
+A) O(1)
+B) O(n)
+C) O(log n)
+D) O(n²)
+Correct Answer: A
+
+6. What is the total time complexity of Remove(value) in a doubly linked list?
+A) O(1)
+B) O(n), because searching for the value dominates.
+C) O(log n)
+D) O(n²)
+Correct Answer: B
+
+7. When deleting a known interior node in a doubly linked list, what is the core relinking step?
+A) node.Prev.Next = node.Next and node.Next.Prev = node.Prev
+B) Head = node.Next and Tail = node.Prev
+C) node.Next = null and node.Prev = null
+D) node.Prev = node.Next and node.Next = node.Prev
+Correct Answer: A
+
+8. What is the time complexity of reverse traversal in a doubly linked list?
+A) O(1)
+B) O(n)
+C) O(n²)
+D) O(log n)
+Correct Answer: B
+
+9. Why can naive reverse traversal of a singly linked list be O(n²)?
+A) Because each node stores two references.
+B) Because finding the predecessor of each node requires starting from the Head, which can take O(n) per node.
+C) Because the list must be sorted before traversal.
+D) Because the Tail reference is always null.
+Correct Answer: B
+
+10. In the Browser Back/Forward History mini-project, what is the time complexity of the Back() operation?
+A) O(1)
+B) O(n)
+C) O(log n)
+D) O(n²)
+Correct Answer: A
+
+11. In a circular singly linked list, what is the stopping condition for a safe traversal?
+A) Stop when current == null.
+B) Stop when current returns to Head (or traverse exactly Count nodes).
+C) Stop when current.Next == null.
+D) Stop when Tail.Next == null.
+Correct Answer: B
+
+12. In a circular singly linked list with Head and Tail maintained, what is the time complexity of AddLast?
+A) O(1)
+B) O(n)
+C) O(log n)
+D) O(n²)
+Correct Answer: A
+
+13. What invariant must hold after inserting a new node at the tail of a circular singly linked list?
+A) Tail.Next == null
+B) Tail.Next == Head
+C) Head.Prev == Tail
+D) Head.Next == null
+Correct Answer: B
+
+14. In the Round-Robin Scheduler project, what happens after a time slice in the circular list model?
+A) The current task is removed from the list.
+B) current = current.Next
+C) The list is reversed.
+D) Head is set to null.
+Correct Answer: B
+
+15. In a circular doubly linked list with only one node, what are the correct initialization settings?
+A) newNode.next = null and newNode.prev = null
+B) newNode.next = newNode and newNode.prev = newNode
+C) newNode.next = Head and newNode.prev = Tail
+D) newNode.next = null and newNode.prev = Head
+Correct Answer: B
+
+16. What is the purpose of sentinel (dummy) nodes in a linked list?
+A) To store the actual data values.
+B) To simplify boundary logic by ensuring first and last real nodes always have neighbors.
+C) To make search operations O(1).
+D) To reduce the memory overhead of the list.
+Correct Answer: B
+
+17. With Header and Trailer sentinels, what is the uniform insertion step sequence between known left and right neighbors?
+A) new.prev = left; new.next = right; left.next = new; right.prev = new
+B) new.prev = right; new.next = left; left.next = new; right.prev = new
+C) new.prev = null; new.next = null; left.next = new; right.prev = new
+D) new.prev = left; new.next = right; left.prev = new; right.next = new
+Correct Answer: A
+
+18. Which statement correctly compares array front insertion with singly linked list AddFirst?
+A) Both are O(1).
+B) Array front insertion is O(n) due to shifting, while singly AddFirst is O(1).
+C) Array front insertion is O(1), while singly AddFirst is O(n).
+D) Both are O(n).
+Correct Answer: B
+
+19. Why can two traversals both be O(n) but have different measured real-world speeds?
+A) Because Big-O notation is always wrong.
+B) Because cache locality, memory allocation, and pointer overhead affect constant factors.
+C) Because one traversal must be O(n²) in practice.
+D) Because arrays cannot be traversed in O(n).
+Correct Answer: B
+
+20. According to the "Exam rule" in the Complexity Clinic, when can you claim O(1) deletion in a linked list?
+A) Always, because deletion only changes references.
+B) Only when you state how the node or predecessor is obtained (e.g., known node reference).
+C) Only for arrays, not linked lists.
+D) Only when the list is sorted.
+Correct Answer: B

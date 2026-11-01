@@ -1,0 +1,310 @@
+Laplace Transform (3) — Full Lecture Explanation
+
+Welcome back! In this lecture we move from "smooth" functions to functions with jump discontinuities — the kind that appear in real engineering problems (switches turning on and off, impulses, etc.). To handle them, we introduce three big tools: the Unit Step Function, the Dirac Delta Function, and the Laplace Transform of Integrals. Let's go through everything carefully.
+
+---
+
+1. Example 4 — Laplace Transform of a Piecewise Function (the hard way)
+
+The problem
+
+Evaluate \mathcal{L}\{f(t)\} where
+
+f(t) = \begin{cases} 0, & 0 \le t < 3 \\ 2, & t \ge 3 \end{cases}
+
+The graph is flat at zero until t=3, then jumps up to the constant value 2 and stays there — a classic jump discontinuity (a "step").
+
+The solution (direct integration, using the definition)
+
+By definition of the Laplace transform:
+
+\mathcal{L}\{f(t)\} = \int_0^\infty e^{-st} f(t)\,dt
+
+Because the formula for f(t) changes at t=3, we split the integral at that point:
+
+= \int_0^3 e^{-st}(0)\,dt + \int_3^\infty e^{-st}(2)\,dt
+
+· The first integral is zero (since f(t)=0 there).
+· The second integral:
+
+\int_3^\infty 2e^{-st}\,dt = 2 \cdot \frac{e^{-st}}{-s}\Big|_3^\infty
+
+Now evaluate at the limits. As t\to\infty, e^{-st}\to 0 (for s>0). At t=3, we get e^{-3s}. So:
+
+= 2\left(0 - \frac{e^{-3s}}{-s}\right) = \frac{2e^{-3s}}{s}, \quad s>0
+
+\boxed{\mathcal{L}\{f(t)\} = \frac{2e^{-3s}}{s}}
+
+Key observation: the answer contains the factor e^{-3s}, which "remembers" the delay of 3 units. This exponential factor is the signature of everything that happens late in time. This is exactly what the unit step function will let us handle efficiently without splitting integrals.
+
+---
+
+2. The Unit Step Function (Heaviside Function)
+
+Motivation
+
+Physical problems involve things that switch on and off — an electric circuit with a switch, a force applied only after a certain time, etc. These create jump discontinuities. To handle them cleanly, Oliver Heaviside introduced the unit step function.
+
+Definition 2 — The (basic) Unit Step Function
+
+u(t) = \begin{cases} 0, & t < 0 \\ 1, & t \ge 1 \end{cases}
+
+It is zero before t=0 and one afterward — a single jump at the origin. (In practice we only use it for t\ge 0, where it is simply the constant 1.)
+
+Its Laplace transform:
+
+L\{u(t)\} = \frac{1}{s}
+
+which matches the standard rule L\{1\} = \frac{1}{s}, since for t\ge 0, u(t)=1.
+
+Definition 3 — The Shifted Unit Step Function
+
+u(t-a) = \begin{cases} 0, & t < a \\ 1, & t \ge a \end{cases}
+
+This is the same step, but the jump now happens at t=a. Its graph is zero, then rises to 1 at t=a and stays there (see Figure 2 in your notes).
+
+Compute its transform directly:
+
+L\{u(t-a)\} = \int_a^\infty e^{-st}(1)\,dt = \frac{e^{-st}}{-s}\Big|_a^\infty = \frac{e^{-as}}{s}
+
+\boxed{L\{u(t-a)\} = \frac{e^{-as}}{s}, \quad s>0}
+
+Intuition: the factor e^{-as} is the "delay stamp." Any function that starts at time a instead of time 0 gets multiplied by e^{-as} in the s-domain.
+
+The most important use: writing piecewise functions compactly
+
+A general piecewise function of the form
+
+f(t) = \begin{cases} g(t), & 0 \le t < a \\ h(t), & t \ge a \end{cases}
+
+can be written in one line using unit steps:
+
+f(t) = g(t) + \big(h(t) - g(t)\big)\,u(t-a)
+
+(Equivalently: f(t) = g(t) - g(t)u(t-a) + h(t)u(t-a).)
+
+Why it works: for t<a, the unit step is 0, so only g(t) survives. For t\ge a, the step becomes 1, so we get g(t) + h(t) - g(t) = h(t).
+
+---
+
+3. The Key Tool: Second Shifting Property (Delay Theorem)
+
+Your notes use this heavily in the examples, so let's state it clearly. If L\{f(t)\} = F(s), then:
+
+\boxed{L\{f(t)\,u(t-a)\} = e^{-as}\,L\{f(t+a)\}}
+
+Or equivalently, L\{f(t-a)\,u(t-a)\} = e^{-as}F(s).
+
+How to use it in practice (the standard recipe):
+
+1. Identify the function multiplied by u(t-a).
+2. Shift the variable: replace every t by (t+a) inside that function.
+3. Find the Laplace transform of the shifted function.
+4. Multiply the result by e^{-as}.
+
+The shift step is essential: u(t-a) "turns on" at t=a, so inside the transform we must look at the function as it behaves starting from a, which means substituting t \to t+a.
+
+---
+
+Worked Example 1: L\{t\,u(t-2)\}
+
+Step 1: The step is at a=2, so we need L\{t\} evaluated with t\to t+2:
+
+L\{(t+2)\} = L\{t\} + L\{2\} = \frac{1}{s^2} + \frac{2}{s}
+
+Step 2: Multiply by e^{-2s}:
+
+\boxed{L\{t\,u(t-2)\} = e^{-2s}\left(\frac{1}{s^2} + \frac{2}{s}\right)}
+
+---
+
+Worked Example 2: L\{t^2\,u(t-1)\}
+
+Step 1: Here a=1, shift t\to t+1:
+
+(t+1)^2 = t^2 + 2t + 1
+
+Transform term by term:
+
+L\{t^2 + 2t + 1\} = \frac{2}{s^3} + \frac{2}{s^2} + \frac{1}{s}
+
+Step 2: Multiply by e^{-s}:
+
+\boxed{L\{t^2 u(t-1)\} = e^{-s}\left(\frac{2}{s^3} + \frac{2}{s^2} + \frac{1}{s}\right)}
+
+---
+
+Worked Example 3: L\{\sin t \cdot u(t-\pi)\}
+
+This one is tricky and beautiful — there's a sign change!
+
+Step 1: The step is at a=\pi. Shift t\to t+\pi:
+
+L\{\sin(t+\pi)\}
+
+Step 2: Use the trigonometric addition formula:
+
+\sin(t+\pi) = \sin t\cos\pi + \cos t\sin\pi = \sin t \cdot (-1) + \cos t \cdot 0 = -\sin t
+
+Step 3: Transform:
+
+L\{-\sin t\} = -\frac{1}{s^2+1}
+
+Step 4: Multiply by e^{-\pi s}:
+
+\boxed{L\{\sin t\,u(t-\pi)\} = -\frac{e^{-\pi s}}{s^2+1}}
+
+Lesson: always simplify the shifted function using identities before transforming. Here the shift by \pi flipped the sign of sine — if you skip this, you get the wrong answer. This is a very common exam trap.
+
+---
+
+4. Example: Piecewise Function → Unit Step → Transform
+
+The problem
+
+Express the given piecewise function in terms of unit step functions, then find its Laplace transform. From the solution shown:
+
+f(t) = \begin{cases} t^2, & 0 \le t < 2 \\ 4t, & t \ge 2 \end{cases}
+
+(Reading from the solution line f(t)=t^2 + (4t-t^2)u(t-2): here g(t)=t^2 and h(t)=4t.)
+
+Step 1 — Write it compactly
+
+Using the formula f(t) = g(t) + (h(t)-g(t))u(t-a) with a=2:
+
+\boxed{f(t) = t^2 + (4t - t^2)\,u(t-2)}
+
+Check: for t<2, the step is 0 → f(t)=t^2. ✓ For t\ge 2, step is 1 → t^2 + 4t - t^2 = 4t. ✓
+
+Step 2 — Transform term by term
+
+L\{f(t)\} = L\{t^2\} + L\{(4t-t^2)u(t-2)\}
+
+The first term: L\{t^2\} = \dfrac{2}{s^3}.
+
+The second term uses the delay theorem with a=2. Shift t\to t+2 inside (4t-t^2):
+
+4(t+2) - (t+2)^2 = 4t + 8 - (t^2 + 4t + 4) = -t^2 + 4
+
+Transform:
+
+L\{-t^2 + 4\} = -\frac{2}{s^3} + \frac{4}{s}
+
+Multiply by e^{-2s}:
+
+L\{(4t-t^2)u(t-2)\} = e^{-2s}\left(-\frac{2}{s^3} + \frac{4}{s}\right)
+
+Step 3 — Combine
+
+\boxed{L\{f(t)\} = \frac{2}{s^3} - \frac{2e^{-2s}}{s^3} + \frac{4e^{-2s}}{s}}
+
+Pattern to memorize: second-shift answers always look like (plain transform) ± e^{-as}(transform of shifted piece). The exponential factor is the fingerprint of the delay.
+
+---
+
+5. The Dirac Delta Function
+
+Definition 5 — Shifted Dirac Delta
+
+The Dirac delta function \delta(t-a) is a "spike" of infinite height and zero width at t=a, but with total area 1. Formally it is defined by its action on functions:
+
+\int_{-\infty}^{\infty} f(t)\,\delta(t-a)\,dt = f(a)
+
+It models impulses — a hammer strike, a sudden voltage spike, a point charge — events that happen instantaneously at a single moment.
+
+Theorem — Laplace Transform of the Dirac Delta
+
+\boxed{L\{\delta(t-a)\} = e^{-as}}
+
+and in particular, for a spike at the origin:
+
+\boxed{L\{\delta(t)\} = 1}
+
+Why so simple? Because the delta "picks out" the value of e^{-st} at t=a: \int_0^\infty e^{-st}\delta(t-a)dt = e^{-as}. The delta is the one function whose transform is a pure exponential — no s in a denominator at all.
+
+Remark: note the contrast with the unit step: L\{u(t-a)\} = \frac{e^{-as}}{s} (a delayed constant), while L\{\delta(t-a)\} = e^{-as} (a delayed impulse). The extra 1/s for the step corresponds to "integration" — a step is the integral of a spike.
+
+---
+
+6. Theorem — Laplace Transform of Integrals
+
+Statement
+
+If L\{f(t)\} = F(s), then
+
+\boxed{L\left\{\int_0^t f(u)\,du\right\} = \frac{F(s)}{s}}
+
+What it means
+
+Integration in the time domain (from 0 up to t) corresponds to division by s in the s-domain. It's the mirror image of the derivative rule (where differentiation in time multiplies by s). Division by s "smooths" the transform.
+
+Bonus intuition: this is consistent with the step function result! Since u(t) = \int_0^t \delta(u)\,du, we get L\{u(t)\} = \frac{L\{\delta(t)\}}{s} = \frac{1}{s}. ✓ Everything fits together.
+
+---
+
+Example: Find L\left\{\int_0^t \sin u\,du\right\}
+
+Step 1: Transform the integrand:
+
+L\{\sin t\} = \frac{1}{s^2+1}
+
+Step 2: Divide by s:
+
+\boxed{L\left\{\int_0^t \sin u\,du\right\} = \frac{1}{s(s^2+1)}}
+
+Check with elementary calculus: \int_0^t \sin u\,du = 1-\cos t, and L\{1-\cos t\} = \frac{1}{s} - \frac{s}{s^2+1}. Put over a common denominator: \frac{s^2+1-s^2}{s(s^2+1)} = \frac{1}{s(s^2+1)}. ✓ Perfect agreement — a great self-check.
+
+---
+
+Example: Find L\left\{\int_0^t e^u \sin u\,du\right\}
+
+This one combines the First Shifting Property (Lecture 2) with the integral theorem.
+
+Step 1: Transform the integrand e^t\sin t. Start from L\{\sin t\} = \frac{1}{s^2+1} and shift s\to s-1 (because of e^t):
+
+L\{e^t\sin t\} = \frac{1}{(s-1)^2+1}
+
+Step 2: Divide by s (integral theorem):
+
+\boxed{L\left\{\int_0^t e^u\sin u\,du\right\} = \frac{1}{s}\cdot\frac{1}{(s-1)^2+1}}
+
+Order of operations: transform the integrand first, then divide by s. Never divide first.
+
+---
+
+7. Master Summary Table
+
+Time domain Laplace transform
+u(t) \dfrac{1}{s}
+u(t-a) \dfrac{e^{-as}}{s}
+f(t)\,u(t-a) e^{-as}L\{f(t+a)\}
+\delta(t-a) e^{-as}
+\delta(t) 1
+\displaystyle\int_0^t f(u)\,du \dfrac{F(s)}{s}
+
+The piecewise recipe:
+
+f(t)=\begin{cases}g(t), & t<a\\ h(t), & t\ge a\end{cases} \quad\Longrightarrow\quad f(t)=g(t)+(h(t)-g(t))u(t-a)
+
+---
+
+8. Common Mistakes to Avoid
+
+1. Forgetting the substitution t\to t+a in the delay theorem. You must transform the function as it looks after the switch-on time.
+2. Ignoring trig identities after shifting. As in \sin(t+\pi)=-\sin t, the shifted function often simplifies dramatically — always simplify before transforming.
+3. Mixing up step and delta: u(t-a)\to e^{-as}/s, but \delta(t-a)\to e^{-as}. The extra 1/s belongs to the step.
+4. Dividing by s before transforming in integral problems — transform first, then divide.
+5. Sign errors in the piecewise formula: the correction term is (h(t)-g(t)), not h(t). Expand carefully, as in 4(t+2)-(t+2)^2 = -t^2+4.
+
+---
+
+9. Practice Problems
+
+1. Find L\{u(t-5)\} → answer: e^{-5s}/s.
+2. Find L\{(t-3)u(t-3)\} → shift t\to t+3 gives L\{t\}=\frac{1}{s^2}, so e^{-3s}/s^2.
+3. Find L\{e^{2t}u(t-1)\} → shift: L\{e^{2(t+1)}\}=e^2\cdot\frac{1}{s-2}, so e^2e^{-s}/(s-2).
+4. Find L\{\cos t\,u(t-\pi)\} → use \cos(t+\pi)=-\cos t, answer -\frac{e^{-\pi s}s}{s^2+1}.
+5. Find L\left\{\int_0^t t\,e^{t}\,dt\right\} → shift: L\{te^t\}=\frac{1}{(s-1)^2}, answer \frac{1}{s(s-1)^2}.
+6. Write f(t)=\begin{cases}1,& t<4\\ t,& t\ge 4\end{cases} in unit-step form and transform it.
+
+You now have the complete picture: piecewise functions handled two ways (direct integration and the unit-step shortcut), the delay theorem for shifted functions, the Dirac delta for impulses, and the integral theorem for accumulated quantities. Master the "shift, transform, multiply by e^{-as}" rhythm and these problems become quick and mechanical. Good luck!

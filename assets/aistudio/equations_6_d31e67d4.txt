@@ -1,0 +1,221 @@
+Twenty MCQs from Lecture 6: Applications of Laplace Transform
+
+---
+
+Q1. State the Laplace transform of the derivative y'(t).
+
+A) L\{y'(t)\} = sY(s) + y(0)
+B) L\{y'(t)\} = sY(s) - y(0)
+C) L\{y'(t)\} = s^2Y(s) - y(0)
+D) L\{y'(t)\} = sY(s) - y'(0)
+
+Answer: B) L\{y'(t)\} = sY(s) - y(0)
+
+---
+
+Q2. State the Laplace transform of the second derivative y''(t).
+
+A) L\{y''(t)\} = s^2Y(s) - sy(0) - y'(0)
+B) L\{y''(t)\} = s^2Y(s) + sy(0) + y'(0)
+C) L\{y''(t)\} = s^2Y(s) - y'(0)
+D) L\{y''(t)\} = s^2Y(s) - sy'(0) - y(0)
+
+Answer: A) L\{y''(t)\} = s^2Y(s) - sy(0) - y'(0)
+
+---
+
+Q3. Solve the IVP y'(t) + 2y(t) = 4e^{2t}, \quad y(0) = 1.
+
+A) y(t) = e^{2t}
+B) y(t) = e^{-2t}
+C) y(t) = 2e^{2t}
+D) y(t) = e^{2t} + e^{-2t}
+
+Answer: A) y(t) = e^{2t}
+
+---
+
+Q4. In solving y'(t) + 2y(t) = 4e^{2t}, after taking Laplace transforms, Y(s) simplifies to:
+
+A) \dfrac{1}{s-2}
+B) \dfrac{1}{s+2}
+C) \dfrac{s+2}{s-2}
+D) \dfrac{4}{s-2}
+
+Answer: A) \dfrac{1}{s-2}
+
+---
+
+Q5. Solve y' - 2y = e^{-t}, \quad y(0) = 0. What is Y(s)?
+
+A) \dfrac{1}{(s+1)(s-2)}
+B) \dfrac{1}{(s-1)(s+2)}
+C) \dfrac{1}{(s+1)(s+2)}
+D) \dfrac{1}{(s-1)(s-2)}
+
+Answer: A) \dfrac{1}{(s+1)(s-2)}
+
+---
+
+Q6. For Y(s) = \dfrac{1}{(s+1)(s-2)}, the partial fraction expansion gives y(t) equal to:
+
+A) -\dfrac{1}{3}e^{-t} + \dfrac{1}{3}e^{2t}
+B) \dfrac{1}{3}e^{-t} - \dfrac{1}{3}e^{2t}
+C) -\dfrac{1}{3}e^{t} + \dfrac{1}{3}e^{-2t}
+D) \dfrac{1}{3}e^{t} + \dfrac{1}{3}e^{-2t}
+
+Answer: A) -\dfrac{1}{3}e^{-t} + \dfrac{1}{3}e^{2t}
+
+---
+
+Q7. Solve the IVP y''(t) - 9y(t) = 0, \quad y(0) = -3, \quad y'(0) = 5. What is Y(s)?
+
+A) \dfrac{-3s + 5}{s^2 - 9}
+B) \dfrac{-3s - 5}{s^2 - 9}
+C) \dfrac{3s + 5}{s^2 - 9}
+D) \dfrac{-3s + 5}{s^2 + 9}
+
+Answer: A) \dfrac{-3s + 5}{s^2 - 9}
+
+---
+
+Q8. For the IVP y'' - 9y = 0 with y(0)=-3, y'(0)=5, the partial fraction constants are:
+
+A) A = -\dfrac{2}{3}, \ B = -\dfrac{7}{3}
+B) A = \dfrac{2}{3}, \ B = \dfrac{7}{3}
+C) A = -\dfrac{2}{3}, \ B = \dfrac{7}{3}
+D) A = \dfrac{2}{3}, \ B = -\dfrac{7}{3}
+
+Answer: A) A = -\dfrac{2}{3}, \ B = -\dfrac{7}{3}
+
+---
+
+Q9. The solution to y'' - 9y = 0, \ y(0)=-3, \ y'(0)=5 is:
+
+A) y(t) = -\dfrac{2}{3}e^{3t} - \dfrac{7}{3}e^{-3t}
+B) y(t) = -\dfrac{2}{3}e^{3t} + \dfrac{7}{3}e^{-3t}
+C) y(t) = \dfrac{2}{3}e^{3t} - \dfrac{7}{3}e^{-3t}
+D) y(t) = \dfrac{2}{3}e^{3t} + \dfrac{7}{3}e^{-3t}
+
+Answer: A) y(t) = -\dfrac{2}{3}e^{3t} - \dfrac{7}{3}e^{-3t}
+
+---
+
+Q10. Solve y'' - 4y' + 3y = e^{t}, \quad y(0) = 0, \quad y'(0) = 1. After taking Laplace transforms, the equation becomes:
+
+A) (s^2 - 4s + 3)Y(s) = \dfrac{1}{s-1} + 1
+B) (s^2 - 4s + 3)Y(s) = \dfrac{1}{s-1} - 1
+C) (s^2 + 4s + 3)Y(s) = \dfrac{1}{s-1} + 1
+D) (s^2 - 4s + 3)Y(s) = \dfrac{1}{s+1} + 1
+
+Answer: A) (s^2 - 4s + 3)Y(s) = \dfrac{1}{s-1} + 1
+
+---
+
+Q11. For the IVP y'' - 4y' + 3y = e^t, y(0)=0, y'(0)=1, the denominator of Y(s) factors as:
+
+A) (s-1)(s-3)
+B) (s+1)(s+3)
+C) (s-1)(s+3)
+D) (s+1)(s-3)
+
+Answer: A) (s-1)(s-3)
+
+---
+
+Q12. The solution to y'' - 4y' + 3y = e^t, \ y(0)=0, \ y'(0)=1 is:
+
+A) y(t) = \dfrac{3}{4}e^{3t} - \dfrac{1}{4}e^{t} - \dfrac{1}{2}te^{t}
+B) y(t) = \dfrac{3}{4}e^{3t} + \dfrac{1}{4}e^{t} - \dfrac{1}{2}te^{t}
+C) y(t) = \dfrac{3}{4}e^{3t} - \dfrac{1}{4}e^{t} + \dfrac{1}{2}te^{t}
+D) y(t) = -\dfrac{3}{4}e^{3t} - \dfrac{1}{4}e^{t} - \dfrac{1}{2}te^{t}
+
+Answer: A) y(t) = \dfrac{3}{4}e^{3t} - \dfrac{1}{4}e^{t} - \dfrac{1}{2}te^{t}
+
+---
+
+Q13. What is an integral equation?
+
+A) An equation involving derivatives only
+B) An equation in which an unknown function occurs in a definite integral
+C) An equation with only algebraic terms
+D) An equation involving infinite series
+
+Answer: B) An equation in which an unknown function occurs in a definite integral
+
+---
+
+Q14. What is an integro-differential equation?
+
+A) An equation where the unknown occurs only in integrals
+B) An equation where the unknown occurs only in derivatives
+C) An equation where the unknown occurs both in an integral and in differentiated form
+D) An equation with no unknown function
+
+Answer: C) An equation where the unknown occurs both in an integral and in differentiated form
+
+---
+
+Q15. Solve the integral equation x(t) = 2 + \displaystyle\int_0^t x(u)\,du. What is X(s)?
+
+A) \dfrac{2}{s-1}
+B) \dfrac{2}{s+1}
+C) \dfrac{2}{s}
+D) \dfrac{1}{s-1}
+
+Answer: A) \dfrac{2}{s-1}
+
+---
+
+Q16. The solution to x(t) = 2 + \displaystyle\int_0^t x(u)\,du is:
+
+A) x(t) = 2e^{t}
+B) x(t) = 2e^{-t}
+C) x(t) = e^{2t}
+D) x(t) = 2t
+
+Answer: A) x(t) = 2e^{t}
+
+---
+
+Q17. In solving the integral equation x(t) = 2 + \int_0^t x(u)\,du, which property of the Laplace transform is used for the integral term?
+
+A) L\left\{\int_0^t f(u)\,du\right\} = \dfrac{F(s)}{s}
+B) L\left\{\int_0^t f(u)\,du\right\} = sF(s)
+C) L\left\{\int_0^t f(u)\,du\right\} = F(s) - f(0)
+D) L\left\{\int_0^t f(u)\,du\right\} = \dfrac{F(s)}{s^2}
+
+Answer: A) L\left\{\int_0^t f(u)\,du\right\} = \dfrac{F(s)}{s}
+
+---
+
+Q18. For the RC series circuit integral equation, the transformed equation is I(s) + \dfrac{I(s)}{s} = \dfrac{1}{s^2}. Solving for I(s) gives:
+
+A) \dfrac{1}{s(s+1)}
+B) \dfrac{1}{s(s-1)}
+C) \dfrac{1}{s^2(s+1)}
+D) \dfrac{1}{s+1}
+
+Answer: A) \dfrac{1}{s(s+1)}
+
+---
+
+Q19. The partial fraction expansion of I(s) = \dfrac{1}{s(s+1)} is:
+
+A) \dfrac{1}{s} - \dfrac{1}{s+1}
+B) \dfrac{1}{s} + \dfrac{1}{s+1}
+C) \dfrac{1}{s+1} - \dfrac{1}{s}
+D) \dfrac{1}{s^2} - \dfrac{1}{s+1}
+
+Answer: A) \dfrac{1}{s} - \dfrac{1}{s+1}
+
+---
+
+Q20. The current i(t) in the RC series circuit is:
+
+A) i(t) = 1 - e^{-t}
+B) i(t) = 1 + e^{-t}
+C) i(t) = e^{-t} - 1
+D) i(t) = 1 - e^{t}
+
+Answer: A) i(t) = 1 - e^{-t}

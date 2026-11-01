@@ -1,0 +1,198 @@
+Here is a complete, engaging, and detailed explanation of Lecture 3: Probability Distributions, keeping all the essential English terminology so you can study and solve problems effectively.
+
+---
+
+🎯 Welcome to Probability Distributions!
+
+Imagine you are a detective. You don’t always know exactly what is going to happen, but you know the rules of how likely things are to happen. That is what a Probability Distribution is: a mathematical function that gives the probabilities of occurrence of different possible outcomes for an experiment.
+
+In this lecture, we divide probability distributions into two big families:
+
+1. Discrete Distributions (Countable outcomes like 0, 1, 2, 3...)
+2. Continuous Distributions (Infinite, measurable outcomes like height, weight, time, or blood pressure)
+
+Let’s break them down step-by-step.
+
+---
+
+1. Discrete Probability Distributions
+
+1.1 The Binomial Distribution
+
+The Story: Imagine flipping a coin 10 times. How many heads will you get? You have a fixed number of attempts (trials), and each trial has only two possible outcomes: success (heads) or failure (tails).
+
+The Definition: The Binomial distribution models the number of successes in a fixed number of independent Bernoulli trials. A Bernoulli trial is simply an experiment with exactly two outcomes (like Success/Failure, Yes/No, Defective/Non-defective).
+
+· n: The number of trials (fixed).
+· p: The probability of success (constant).
+· X: The binomial random variable representing the number of successes.
+
+The Formula (PMF - Probability Mass Function):
+
+P(X = x) = \binom{n}{x} p^x (1 - p)^{n - x} \quad \text{for } x = 0, 1, 2, \ldots , n
+
+· \binom{n}{x} is the "binomial coefficient" (how many ways you can choose x successes out of n trials), calculated as \frac{n!}{x!(n - x)!}.
+· p^x is the probability of getting x successes.
+· (1 - p)^{n - x} is the probability of getting the remaining (n - x) failures.
+
+Mean and Variance:
+
+· Mean (Expected Value): \mu = np (e.g., 10 flips × 0.5 probability = 5 heads on average).
+· Variance: \sigma^2 = np(1 - p).
+
+---
+
+1.2 The Poisson Distribution
+
+The Story: Imagine you work at a call center. You don't know exactly when the next call will come, but you know an average rate (e.g., 5 calls per hour). The Poisson distribution models the probability of a given number of events occurring within a fixed interval of time or space.
+
+The Definition: It describes events that occur with a known constant mean rate and independently of the time since the last event.
+
+· \lambda (Lambda): The average rate of occurrence.
+· X: The number of events.
+
+The Formula (PMF):
+
+P(X = x) = \frac{\lambda^x e^{-\lambda}}{x!} \quad \text{for } x = 0, 1, 2, \ldots
+
+(Note: e is Euler's number, approximately 2.71828).
+
+The Unique Property: Unlike the Binomial distribution, the Poisson distribution has the magical property that its Mean and Variance are equal:
+
+· Mean: \mu = \lambda
+· Variance: \sigma^2 = \lambda
+
+---
+
+2. Continuous Probability Distributions
+
+2.1 The Normal (Gaussian) Distribution
+
+The Story: This is the famous "Bell Curve." Most things in nature—human height, IQ scores, measurement errors—follow this distribution. It is perfectly symmetrical around the center.
+
+The Density Function (PDF):
+
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-(x - \mu)^2 / 2\sigma^2} \quad -\infty < x < \infty
+
+· \mu: The mean (the center of the bell).
+· \sigma: The standard deviation (how wide or narrow the bell is).
+
+The Cumulative Distribution Function (CDF):
+To find the probability that X is less than or equal to a specific value, we use the integral:
+
+F(x) = P(X\leq x) = \frac{1}{\sigma\sqrt{2\pi}}\int_{-\infty}^{x}e^{-(v - \mu)^2 / 2\sigma^2}dv
+
+(Don't panic! We never calculate this integral by hand. We use a table).
+
+2.2 The Standard Normal Distribution
+
+Because every normal distribution has a different mean and standard deviation, we standardize it into The Standard Normal Distribution (often denoted as Z).
+
+· Z has a mean of 0 and a standard deviation of 1.
+· To convert any X to a Z-score, we use: Z = \frac{X - \mu}{\sigma}.
+
+The CDF of Z:
+F(z) = P(Z\leq z) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{z}e^{-u^2 / 2}du
+
+Because of symmetry, this is also written as:
+
+F(z) = \frac{1}{2} +\frac{1}{\sqrt{2\pi}}\int_{0}^{z}e^{-u^2 / 2}du
+
+---
+
+📖 How to Read the Z-Table (Page 7)
+
+The table provided is a Right-Tail Area table. It gives you the probability of a random value being greater than a specific Z-score: P(Z > z).
+
+· Example: To find the probability of Z being greater than 1.09, look at row 1.0 and column .09. The value is 0.1379. So, P(Z > 1.09) = 0.1379.
+
+The 8 Golden Rules of Z-Problems (Pages 8 & 9):
+To solve any problem, visualize the bell curve! Here is what the slides mean:
+
+1. P(Z \geq z_1^+): Directly read from the table.
+2. P(Z \leq z_1^+): Use 1 - P(Z > z_1^+) (The whole area is 1).
+3. P(Z > z_1^-): A negative Z-score means it's on the left. P(Z > -1.09) = 1 - P(Z > 1.09).
+4. P(Z < z_1^-): This is the same as the right-tail of the positive value: P(Z > z_1^+).
+5. P(z_1^+ < Z < z_2^+): Area between two positive values. Subtract the smaller tail from the bigger tail: P(Z > z_1^+) - P(Z > z_2^+).
+6. P(z_1^- < Z < z_1^+): Symmetrical area around the mean. 1 - 2[P(Z \geq z_1^+)].
+7. P(|Z| \geq |z_1|): Absolute value means both tails. Since they are symmetric, 2 \times P(Z \geq z_1^+).
+8. P(|Z| \leq |z_1|): The area between the two absolute values (same as Case 6).
+
+---
+
+🩺 Practical Example: Blood Pressure (Pages 10-12)
+
+Given: Mean systolic blood pressure \mu = 125, Standard Deviation \sigma = 13.7. Blood pressure is normally distributed.
+
+i. Above 197.5
+
+· Standardize: Z = \frac{197.5 - 125}{13.7} = 5.29.
+· We want P(Z > 5.29). Since this is way beyond the table (which usually stops at 3.9), the probability is practically 0.0000.
+
+ii. Below 110
+
+· Standardize: Z = \frac{110 - 125}{13.7} = -1.09.
+· We want P(Z < -1.09). By symmetry (Rule 4), this is the same as P(Z > 1.09).
+· Look at the table: Row 1.0, Column .09 = 0.1379.
+
+iii. Between 110 and 140
+
+· Standardize both: Z_1 = -1.09, Z_2 = \frac{140 - 125}{13.7} = 1.09.
+· We want P(-1.09 < Z < 1.09).
+· Using Rule 6: 1 - 2[P(Z \geq 1.09)] = 1 - 2(0.1379) = 1 - 0.2758 = \mathbf{0.7242}.
+
+---
+
+3. Inferential Statistics and Sampling Theory
+
+The Big Picture
+
+· Inferential Statistics: Using sample data to make conclusions, estimates, or predictions about a whole population.
+· Population: The complete collection of everything you are studying (e.g., All 18-48 year olds).
+· Sample: A subset of the population (e.g., 100 people from that group).
+· Parameter: A numerical fact about a Population (e.g., Population Mean \mu, Variance \sigma^2).
+· Statistic: A numerical fact calculated from a Sample (e.g., Sample Mean \bar{X}, Variance S^2).
+
+Important: We use Statistics to estimate Parameters!
+
+The Central Limit Theorem (CLT) (Page 15)
+
+The magic rule of statistics: If you take a random sample of size n from any population (even if it isn't normal) with mean \mu and variance \sigma^2, as n gets large, the distribution of the Sample Mean (\bar{X}) becomes approximately Normal. 
+The standardization formula for the sample mean is:
+
+Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}
+
+Here, \sigma / \sqrt{n} is called the Standard Error (the standard deviation of the sample mean).
+
+---
+
+🔌 Practical Example: Resistors (Pages 16-17)
+
+Given: Mean resistance \mu = 100 ohms, \sigma = 10 ohms. Sample size n = 25. 
+Find the probability that the average resistance is less than 95 ohms.
+
+Step 1: Find the new mean and standard deviation for the sample.
+
+· The mean of the sample mean is the same: \mu_{\bar{X}} = 100.
+· The standard deviation of the sample mean (Standard Error) is: \sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}} = \frac{10}{\sqrt{25}} = \frac{10}{5} = 2.
+
+Step 2: Standardize the point \bar{X} = 95.
+
+z = \frac{95 - 100}{2} = -2.5
+
+Step 3: Find the probability.
+We want P(\bar{X} < 95), which is P(Z < -2.5).
+Using Rule 4, this is the same as P(Z > 2.5).
+Looking at the table, the value for 2.5 is 0.0062.
+
+Conclusion: There is only a 0.62% chance that a random sample of 25 resistors will have an average resistance less than 95 ohms.
+---
+
+💡 Final Study Tips
+
+· Don't mix up Discrete (countable) and Continuous (measurable).
+· Memorize the Z-formula (Z = \frac{X - \mu}{\sigma}) and the Sampling Z-formula (Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}).
+· Always draw the bell curve! Shade the area you are looking for, and it will tell you exactly which of the 8 rules you need to use.
+· The table gives the Right-Tail area. Remember that 1 - \text{Right Tail} = \text{Left Area}.
+
+You are fully equipped to ace this material! Good luck!

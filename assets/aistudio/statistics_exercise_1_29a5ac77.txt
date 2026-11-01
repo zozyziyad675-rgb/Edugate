@@ -1,0 +1,181 @@
+20 MCQs from Lecture 1: Frequency Distributions
+
+---
+
+Q1. Statistics is defined as the science of collecting, organizing, presenting, analyzing, and interpreting data to assist in making more effective:
+A) Observations
+B) Decisions
+C) Measurements
+D) Samples
+Answer: B) Decisions
+
+---
+
+Q2. Which branch of statistics uses methods to estimate a property of a population on the basis of a sample?
+A) Descriptive statistics
+B) Inferential statistics
+C) Qualitative statistics
+D) Frequency statistics
+Answer: B) Inferential statistics
+
+---
+
+Q3. The entire set of individuals or objects of interest is called:
+A) A sample
+B) A population
+C) A variable
+D) A frequency
+Answer: B) A population
+
+---
+
+Q4. A portion or part of the population of interest is called:
+A) A sample
+B) A population
+C) A class
+D) A variable
+Answer: A) A sample
+
+---
+
+Q5. A variable observed and recorded as a non-numeric characteristic or attribute is:
+A) Quantitative
+B) Discrete
+C) Qualitative
+D) Continuous
+Answer: C) Qualitative
+
+---
+
+Q6. Which of the following is an example of a qualitative variable?
+A) Balance in your checking account
+B) The life of a car battery
+C) Eye color
+D) Number of people employed by a company
+Answer: C) Eye color
+
+---
+
+Q7. Discrete variables are typically the result of:
+A) Measuring
+B) Counting
+C) Rounding
+D) Estimating
+Answer: B) Counting
+
+---
+
+Q8. Which of the following is an example of a continuous variable?
+A) The number of bedrooms in a house
+B) The number of students in a statistics course
+C) Duration of flights from Orlando to San Diego
+D) Number of strokes on a golf hole
+Answer: C) Duration of flights from Orlando to San Diego
+
+---
+
+Q9. A frequency table groups qualitative data into classes that are:
+A) Mutually exclusive and collectively exhaustive
+B) Random and overlapping
+C) Numeric and continuous
+D) Discrete and infinite
+Answer: A) Mutually exclusive and collectively exhaustive
+
+---
+
+Q10. In the table with Location and Number of Cars (total 180), the relative frequency for Kane (52 cars) is:
+A) 52
+B) 0.289
+C) 0.222
+D) 0.250
+Answer: B) 0.289 (52/180)
+
+---
+
+Q11. A graph that shows qualitative classes on the horizontal axis and class frequencies on the vertical axis, with bar heights proportional to frequencies, is called a:
+A) Pie chart
+B) Histogram
+C) Bar chart
+D) Frequency polygon
+Answer: C) Bar chart
+
+---
+
+Q12. A chart that shows the proportion or percentage that each class represents of the total number of frequencies is a:
+A) Bar chart
+B) Pie chart
+C) Histogram
+D) Stem-and-leaf display
+Answer: B) Pie chart
+
+---
+
+Q13. When constructing a frequency distribution, which of the following is NOT one of the listed steps?
+A) Decide on the number of classes
+B) Determine the class interval
+C) Set the individual class limits
+D) Calculate the median
+Answer: D) Calculate the median
+
+---
+
+Q14. For the Wachesaw Manufacturing data (16 days of units), the range is calculated as:
+A) 31 − 25 = 6
+B) 28 − 25 = 3
+C) 31 − 27 = 4
+D) 30 − 26 = 4
+Answer: A) 31 − 25 = 6
+
+---
+
+Q15. In the Wachesaw example, with 6 classes and a range of 6, the class width is:
+A) 6
+B) 1
+C) 2
+D) 3
+Answer: B) 1
+
+---
+
+Q16. In the Wachesaw solution table, the class "25 − 26" has a frequency of:
+A) 2
+B) 4
+C) 6
+D) 1
+Answer: B) 4
+
+---
+
+Q17. In the Wachesaw solution table, the relative frequency for the class "27 − 28" is:
+A) 0.25
+B) 0.125
+C) 0.0625
+D) 0.50
+Answer: A) 0.25 (4/16)
+
+---
+
+Q18. In the Wachesaw solution table, the cumulative frequency for the class "27 − 28" is:
+A) 4
+B) 8
+C) 12
+D) 14
+Answer: C) 12
+
+---
+
+Q19. Which of the following is an example of a discrete variable?
+A) Weight of a student
+B) Yearly rainfall in Tampa, FL
+C) TV sets owned
+D) Amount of income tax paid
+Answer: C) TV sets owned
+
+---
+
+Q20. In the profit frequency distribution table (total 180), which class has the highest frequency?
+A) $1,400 up to $1,800 (38)
+B) $1,800 up to $2,200 (45)
+C) $2,200 up to $2,600 (32)
+D) $1,000 up to $1,400 (23)
+Answer: B) $1,800 up to $2,200 (45)

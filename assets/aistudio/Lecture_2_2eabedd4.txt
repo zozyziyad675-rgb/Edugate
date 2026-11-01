@@ -1,0 +1,403 @@
+Lecture 2: Measures of Central Tendency and Dispersion — Full Explanation
+
+---
+
+🎯 The Big Picture
+
+This lecture answers two fundamental questions about any dataset:
+
+1. Where is the "center" of the data? → Measures of Central Tendency (Arithmetic Mean, Median, Quartiles/Deciles/Percentiles, Mode)
+2. How spread out is the data around that center? → Measures of Dispersion (Range, Variance, Standard Deviation, Coefficient of Variation)
+
+You will learn each measure twice: once for raw (ungrouped) data and once for grouped data (data presented in class intervals).
+
+---
+
+PART 1: Measures of Central Tendency for RAW DATA
+
+1️⃣ Arithmetic Mean (\bar{x})
+
+Definition: The arithmetic mean is the sum of all data values divided by the total number of observations. It represents the mathematical center of the data.
+
+Formula:
+
+\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}
+
+· \sum x_i = sum of all values
+· n = number of observations
+
+📌 Example 4.1: Five men's heights (inches): 65.51, 72.30, 68.31, 67.05, 70.68
+
+\bar{x} = \frac{65.51 + 72.30 + 68.31 + 67.05 + 70.68}{5} = \frac{343.85}{5} = 68.77 \text{ in.}
+
+💡 Intuition: The mean is the "balance point" — if you placed the data on a see-saw, the mean is where it balances.
+
+---
+
+2️⃣ Median
+
+Definition: The exact middle value when data is arranged in ascending (or descending) order. It splits the data into two equal halves.
+
+· If n is odd: Median = value at position \dfrac{n+1}{2}
+· If n is even: Median = arithmetic mean of the two middle values at positions \dfrac{n}{2} and \dfrac{n}{2}+1
+
+📌 Example 4.2: Same five heights. Arrange in increasing order:
+
+65.51,\ 67.05,\ \mathbf{68.31},\ 70.68,\ 72.30
+
+n = 5 (odd) → position = \frac{5+1}{2} = 3 → Median = 68.31
+
+💡 Intuition: The median is the "50% mark" — half the data lies below it, half above it. Unlike the mean, it is not affected by extreme values (outliers).
+
+---
+
+3️⃣ Quartiles, Deciles, and Percentiles (Quantiles)
+
+These are positional measures — they divide an ordered dataset into equal parts.
+
+Quartiles (divide data into 4 parts, each 25%)
+
+· Q_1 (First Quartile): median of the lower half → position \approx \dfrac{n+1}{4}
+· Q_2 (Second Quartile): identical to the Median
+· Q_3 (Third Quartile): median of the upper half → position \approx \dfrac{3(n+1)}{4}
+
+Deciles (divide data into 10 parts, each 10%)
+
+· Nine deciles: D_1, D_2, \ldots, D_9
+· Position of D_k \approx \dfrac{k(n+1)}{10}
+· D_5 is identical to the Median (and Q_2)
+
+Percentiles (divide data into 100 parts, each 1%)
+
+· Ninety-nine percentiles: P_1, P_2, \ldots, P_{99}
+· Position of P_k \approx \dfrac{k(n+1)}{100}
+· P_{50} is identical to the Median (and Q_2, D_5)
+
+💡 Key insight to memorize: Median = Q_2 = D_5 = P_{50}. They are all the same value expressed in different scales.
+
+---
+
+4️⃣ Mode
+
+Definition: The value (or values) that occurs most frequently in the dataset.
+
+· Unimodal = one mode
+· Bimodal = two modes
+· Multimodal = multiple modes
+· If all values occur with the same frequency → No mode
+
+📌 Example 4.5:
+
+Data set Mode(s)
+26, 25, 25, 34 25 (unimodal)
+3, 7, 12, 6, 19 No mode (all appear once)
+3, 3, 7, 7, 12, 12, 6, 6, 19, 19 No mode (all appear twice — same frequency)
+3, 3, 12, 6, 8, 8 3 and 8 (bimodal)
+
+💡 Intuition: Mode is the only central tendency measure that works for qualitative (categorical) data — e.g., the most common blood type.
+
+---
+
+5️⃣ Skewness — How Mean, Median, and Mode Relate
+
+Skewness describes the asymmetry of a distribution. This explains why we have three different measures of center.
+
+(a) Symmetric distribution
+
+\textbf{Mode} = \textbf{Mean} = \textbf{Median}
+
+The bell-shaped curve is perfectly balanced. All three measures coincide at the center.
+
+(b) Skewed Left (Negatively Skewed)
+
+The tail extends to the left. Order:
+
+\textbf{Mean} < \textbf{Median} < \textbf{Mode}
+
+The mean is pulled toward the low extreme values.
+
+(c) Skewed Right (Positively Skewed)
+
+The tail extends to the right. Order:
+
+\textbf{Mode} < \textbf{Median} < \textbf{Mean}
+
+The mean is pulled toward the high extreme values.
+
+💡 Memory trick: The mean always gets dragged in the direction of the tail (the extreme values), because it uses every value in its calculation. The median and mode are resistant to outliers.
+
+📌 Practical example: Income data is usually skewed right (a few billionaires pull the mean up), so economists prefer the median income as a "typical" value.
+
+---
+
+PART 2: Measures of Dispersion for RAW DATA
+
+Central tendency alone is not enough! Two datasets can have the same mean but very different spreads. Dispersion measures how spread out the data is.
+
+📌 Example: Dataset A = {48, 49, 50, 51, 52} and Dataset B = {10, 20, 50, 80, 90} — both have mean 50, but B is far more spread out.
+
+---
+
+1️⃣ Range
+
+Definition: The simplest measure of dispersion — the difference between the maximum and minimum values.
+
+R = x_{\max} - x_{\min}
+
+💡 Pros: Easy to compute. Cons: Uses only two values — very sensitive to outliers.
+
+---
+
+2️⃣ Sample Variance (s^2)
+
+Definition: The average squared deviation of each data point from the arithmetic mean. We square the deviations so that negative and positive differences don't cancel each other out.
+
+s^2 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}
+
+· \bar{x} = sample mean
+· n-1 = degrees of freedom (we divide by n-1, not n, because we're estimating from a sample)
+
+💡 Why n-1? Using n-1 makes s^2 an unbiased estimator of the population variance. (Conceptually: one degree of freedom is "used up" by estimating \bar{x}.)
+
+💡 Why squared? Squaring makes all deviations positive and gives more weight to large deviations.
+
+---
+
+3️⃣ Sample Standard Deviation (s)
+
+Definition: The positive square root of the variance. This brings the measure of spread back to the original units of the data, making it easier to interpret.
+
+s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}
+
+💡 Intuition: If heights are in inches, variance is in inches² (hard to interpret), but standard deviation is in inches — same units as the data. "On average, heights deviate about s inches from the mean."
+
+---
+
+4️⃣ Coefficient of Variation (CV)
+
+Definition: A relative measure of dispersion — the standard deviation expressed as a percentage of the mean.
+
+CV = \frac{s}{\bar{x}} \times 100\%
+
+💡 When is it useful? When comparing datasets with different units or very different means.
+
+📌 Example: Compare variability of weights (kg) vs. heights (cm) — you can't compare s = 5 kg with s = 5 cm directly, but you can compare their CVs.
+
+💡 Interpretation: A smaller CV means the data is more consistent/homogeneous; a larger CV means more variable/heterogeneous.
+
+---
+
+PART 3: Measures for GROUPED DATA
+
+When data is presented in a frequency table with class intervals, we no longer have individual values. Instead we use the class mark (midpoint of each class) to represent all values in that class:
+
+\text{Class Mark } x_i = \frac{\text{lower limit} + \text{upper limit}}{2}
+
+📌 The reference table from the lecture:
+
+Class Interval Class Mark x_i Frequency f_i
+10 – 20 15 5
+20 – 30 25 8
+30 – 40 35 12
+40 – 50 45 10
+50 – 60 55 5
+Total  N = 40
+
+Note: class mark of 10–20 is (10+20)/2 = 15; of 20–30 is 25; etc. And \sum f_i = N = 40.
+
+---
+
+1️⃣ Mean of Grouped Data
+
+\bar{x} = \frac{\sum x_i f_i}{\sum f_i}
+
+📌 Worked example (from the lecture's exercise, page 19):
+
+Class f x_i x_i f_i
+0 – 8 8 4 32
+8 – 16 10 12 120
+16 – 24 16 20 320
+24 – 32 24 28 672
+32 – 40 15 36 540
+40 – 48 7 44 308
+Total N = 80  \sum x_i f_i = 1992
+
+\bar{x} = \frac{1992}{80} = \mathbf{24.9}
+
+---
+
+2️⃣ Median of Grouped Data
+
+M_e = L + \frac{h}{f}\left[\frac{N}{2} - CF\right]
+
+Where:
+
+· L = lower limit of the median class
+· h = width of the median class
+· f = frequency of the median class
+· CF = cumulative frequency of the class preceding the median class
+· Median class = the class where the cumulative frequency first reaches/exceeds N/2
+
+📌 Worked example:
+
+Build the cumulative frequency column:
+
+Class f CF
+0 – 8 8 8
+8 – 16 10 18
+16 – 24 16 34
+24 – 32 24 58 ← first CF ≥ 40
+32 – 40 15 73
+40 – 48 7 80
+
+N/2 = 80/2 = 40. The first CF ≥ 40 is 58, so the median class is 24 – 32.
+· L = 24, h = 8, f = 24, CF = 34 (the CF before the median class)
+
+M_e = 24 + \frac{8}{24}[40 - 34] = 24 + \frac{8}{24}(6) = 24 + 2 = \mathbf{26}
+
+---
+
+3️⃣ Mode of Grouped Data
+
+M_o = L + \frac{h\,[f_k - f_{k-1}]}{2f_k - f_{k-1} - f_{k+1}}
+
+Where:
+
+· L = lower limit of the modal class (the class with the highest frequency)
+· h = class width
+· f_k = frequency of the modal class
+· f_{k-1} = frequency of the class preceding the modal class
+· f_{k+1} = frequency of the class succeeding the modal class
+
+📌 Worked example: The highest frequency is 24 (class 24 – 32), so that's the modal class.
+
+· L = 24, h = 8, f_k = 24, f_{k-1} = 16, f_{k+1} = 15
+
+M_o = 24 + \frac{8[24 - 16]}{2(24) - 16 - 15} = 24 + \frac{8(8)}{48 - 31} = 24 + \frac{64}{17} \approx \mathbf{27.8}
+
+---
+
+4️⃣ Quartiles of Grouped Data
+
+Q_k = L + \frac{h}{f}\left[k\frac{N}{4} - CF\right]
+
+Where:
+
+· L = lower limit of the Q_k class
+· f = frequency of the Q_k class
+· CF = cumulative frequency of the class preceding the quartile class
+· h = class width
+
+📌 Worked example — Q_3 (Third Quartile):
+
+Compute k\frac{N}{4} = \frac{3 \times 80}{4} = 60. Find the first CF ≥ 60 → that's 73, so the Q_3 class is 32 – 40.
+
+· L = 32, f = 15, CF = 58, h = 8
+
+Q_3 = 32 + \frac{8}{15}\left[\frac{3 \times 80}{4} - 58\right] = 32 + \frac{8}{15}[60 - 58] = 32 + \frac{16}{15} \approx \mathbf{33.07} \approx \mathbf{33}
+
+💡 Sanity check: Q_3 \approx 33 means 75% of the data lies below ~33 — consistent with the median of 26.
+
+---
+
+5️⃣ Deciles of Grouped Data
+
+D_k = L + \frac{h}{f}\left[\frac{kN}{10} - CF\right]
+
+Same structure as quartiles, but we locate the class using \frac{kN}{10}.
+
+📌 Worked example — D_3 (Third Decile):
+
+\frac{3 \times 80}{10} = 24
+
+First CF ≥ 24 is 34 → class 16 – 24.
+
+· L = 16, f = 16, CF = 18, h = 8
+
+D_3 = 16 + \frac{8}{16}[24 - 18] = 16 + \frac{1}{2}(6) = 16 + 3 = \mathbf{19}
+
+---
+
+6️⃣ Percentiles of Grouped Data
+
+P_k = L + \frac{h}{f}\left[\frac{kN}{100} - CF\right]
+
+📌 Worked example — P_{20} (20th Percentile):
+
+\frac{20 \times 80}{100} = 16
+
+First CF ≥ 16 is 18 → class 8 – 16.
+
+· L = 8, f = 10, CF = 8, h = 8
+
+P_{20} = 8 + \frac{8}{10}[16 - 8] = 8 + 0.8(8) = 8 + 6.4 = \mathbf{14.4}
+
+---
+
+7️⃣ Range of Grouped Data
+
+For grouped data, the range is estimated as the difference between the upper class limit (or boundary) of the highest class and the lower class limit (or boundary) of the lowest class:
+
+R = \text{Upper limit of highest class} - \text{Lower limit of lowest class}
+
+📌 Example: For classes 0–8 up to 40–48: R = 48 - 0 = 48.
+
+---
+
+8️⃣ Variance of Grouped Data
+
+We use each class mark to represent the class, and weight the squared deviations by the class frequency:
+
+s^2 = \frac{\sum f_i (x_i - \bar{x})^2}{N - 1}
+
+Where:
+
+· x_i = class mark
+· f_i = frequency of the i-th class
+· \bar{x} = sample mean
+· N = \sum f_i = total frequency
+
+---
+
+9️⃣ Standard Deviation of Grouped Data
+
+s = \sqrt{\frac{\sum f_i (x_i - \bar{x})^2}{N - 1}}
+
+---
+
+🔟 Coefficient of Variation of Grouped Data
+
+Same formula as before — the ratio of standard deviation to mean, as a percentage:
+
+CV = \frac{s}{\bar{x}} \times 100\%
+
+---
+
+📝 Summary Cheat Sheet
+
+Measure Raw Data Formula Grouped Data Formula
+Mean \bar{x} = \frac{\sum x_i}{n} \bar{x} = \frac{\sum x_i f_i}{\sum f_i}
+Median Middle value / average of two middles L + \frac{h}{f}\left[\frac{N}{2} - CF\right]
+Mode Most frequent value L + \frac{h[f_k - f_{k-1}]}{2f_k - f_{k-1} - f_{k+1}}
+Quartile Q_k Position \approx \frac{k(n+1)}{4} L + \frac{h}{f}\left[\frac{kN}{4} - CF\right]
+Decile D_k Position \approx \frac{k(n+1)}{10} L + \frac{h}{f}\left[\frac{kN}{10} - CF\right]
+Percentile P_k Position \approx \frac{k(n+1)}{100} L + \frac{h}{f}\left[\frac{kN}{100} - CF\right]
+Range x_{\max} - x_{\min} Upper limit of highest class − Lower limit of lowest class
+Variance \frac{\sum(x_i - \bar{x})^2}{n-1} \frac{\sum f_i(x_i - \bar{x})^2}{N-1}
+Std. Deviation \sqrt{s^2} \sqrt{s^2}
+CV \frac{s}{\bar{x}} \times 100\% \frac{s}{\bar{x}} \times 100\%
+
+---
+
+⚠️ Common Exam Traps
+1. Median class / quartile class identification: Always find the class where the cumulative frequency first reaches or exceeds the target value (N/2, kN/4, kN/10, kN/100). Use the CF of the class before the target class in the formula.
+2. Mode class: It's the class with the highest frequency, not the highest cumulative frequency.
+3. Dividing by N-1, not N: This is the sample variance. (Population variance would divide by N.)
+4. CV has no units — it's a percentage, which is why it's ideal for comparing different units.
+5. Median = Q_2 = D_5 = P_{50} — they are the same value; don't calculate them separately if you already have one.
+6. Mode can be "no mode" if all values have the same frequency — don't force an answer.
+7. Class mark must be used for all grouped-data calculations — never use class limits directly.
+
+---
+
+🎓 Final takeaway: Central tendency tells you where the data lives; dispersion tells you how reliably that center represents the data. Always report both — a mean without a standard deviation is an incomplete story. Good luck with your studying! 📚

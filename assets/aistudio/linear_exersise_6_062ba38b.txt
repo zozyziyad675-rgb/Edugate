@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on Lecture 06 (Determinants and Inverse of a Matrix).
+
+Q1. The determinant of A = \begin{bmatrix} a & b \\ c & d \end{bmatrix} is:
+A) ab - cd
+B) ad - bc
+C) ac - bd
+D) ad + bc
+Answer: B) ad - bc
+
+Q2. The determinant of a matrix can be:
+A) only positive
+B) only negative
+C) positive, zero, or negative
+D) only zero
+Answer: C) positive, zero, or negative
+
+Q3. The minor M_{ij} of an element a_{ij} is:
+A) the determinant of the matrix obtained by deleting the i-th row and j-th column
+B) the element a_{ij} multiplied by (-1)^{i+j}
+C) the sum of the i-th row and j-th column
+D) the product of the diagonal entries
+Answer: A) the determinant of the matrix obtained by deleting the i-th row and j-th column
+
+Q4. The cofactor C_{ij} is given by:
+A) M_{ij}
+B) (-1)^{i+j}M_{ij}
+C) (-1)^{i-j}M_{ij}
+D) a_{ij}M_{ij}
+Answer: B) (-1)^{i+j}M_{ij}
+
+Q5. The adjoint of a matrix A is:
+A) the cofactor matrix of A
+B) the transpose of the cofactor matrix of A
+C) the inverse of the cofactor matrix
+D) the determinant times the identity matrix
+Answer: B) the transpose of the cofactor matrix of A
+
+Q6. For A = \begin{bmatrix} 4 & 0 & 1 \\ 2 & 1 & -1 \\ 0 & 2 & 0 \end{bmatrix}, the minor matrix M_A is:
+A) \begin{bmatrix} 2 & 0 & 4 \\ -2 & 0 & 8 \\ -1 & -6 & 4 \end{bmatrix}
+B) \begin{bmatrix} 2 & 0 & 4 \\ 2 & 0 & -8 \\ -1 & 6 & 4 \end{bmatrix}
+C) \begin{bmatrix} 2 & -2 & -1 \\ 0 & 0 & -6 \\ 4 & 8 & 4 \end{bmatrix}
+D) \begin{bmatrix} 4 & 0 & 1 \\ 2 & 1 & -1 \\ 0 & 2 & 0 \end{bmatrix}
+Answer: A) \begin{bmatrix} 2 & 0 & 4 \\ -2 & 0 & 8 \\ -1 & -6 & 4 \end{bmatrix}
+
+Q7. For the same matrix A, the cofactor matrix C_A is:
+A) \begin{bmatrix} 2 & 0 & 4 \\ -2 & 0 & 8 \\ -1 & -6 & 4 \end{bmatrix}
+B) \begin{bmatrix} 2 & 0 & 4 \\ 2 & 0 & -8 \\ -1 & 6 & 4 \end{bmatrix}
+C) \begin{bmatrix} 2 & 0 & 4 \\ 2 & 0 & -8 \\ -1 & -6 & 4 \end{bmatrix}
+D) \begin{bmatrix} 2 & 0 & 4 \\ -2 & 0 & 8 \\ 1 & -6 & 4 \end{bmatrix}
+Answer: B) \begin{bmatrix} 2 & 0 & 4 \\ 2 & 0 & -8 \\ -1 & 6 & 4 \end{bmatrix}
+
+Q8. If an entire row of a square matrix consists of zeros, then its determinant is:
+A) 1
+B) 0
+C) undefined
+D) equal to the product of the diagonal
+Answer: B) 0
+
+Q9. If two rows of a square matrix are equal, then its determinant is:
+A) 1
+B) 0
+C) negative
+D) equal to the diagonal product
+Answer: B) 0
+
+Q10. If one row of a square matrix is a multiple of another row, then its determinant is:
+A) 1
+B) 0
+C) the multiple itself
+D) undefined
+Answer: B) 0
+
+Q11. The determinant of a triangular matrix is:
+A) the sum of the diagonal entries
+B) the product of the diagonal entries
+C) always zero
+D) the product of all entries
+Answer: B) the product of the diagonal entries
+
+Q12. For an upper triangular matrix with diagonal entries 1, 2, and -4, the determinant is:
+A) 1 + 2 - 4 = -1
+B) 1 × 2 × (-4) = -8
+C) 0
+D) 8
+Answer: B) 1 × 2 × (-4) = -8
+
+Q13. Which statement about determinants is TRUE?
+A) \det(A) = -\det(A^T)
+B) \det(A) = \det(A^T)
+C) \det(A^T) = 0 always
+D) \det(A^T) = 1/\det(A)
+Answer: B) \det(A) = \det(A^T)
+
+Q14. If A and B are square matrices of order n, then \det(AB) =:
+A) \det(A) + \det(B)
+B) \det(A)\det(B)
+C) \det(A) - \det(B)
+D) \det(A)/\det(B)
+Answer: B) \det(A)\det(B)
+
+Q15. If A is an n \times n matrix and k is a scalar, then \det(kA) =
+A) k\det(A)
+B) k^n\det(A)
+C) k^2\det(A)
+D) \det(A)
+Answer: B) k^n\det(A)
+
+Q16. A square matrix A is invertible if and only if:
+A) \det(A) = 0
+B) \det(A) \neq 0
+C) \det(A) = 1
+D) \det(A) > 0
+Answer: B) \det(A) \neq 0
+
+Q17. If A is invertible, then \det(A^{-1}) =:
+A) \det(A)
+B) -\det(A)
+C) 1/\det(A)
+D) \det(A)^2
+Answer: C) 1/\det(A)
+
+Q18. If A and B are 3\times 3 matrices with \det(A) = 5 and \det(B) = 4, then \det(2A) =:
+A) 10
+B) 20
+C) 40
+D) 80
+Answer: C) 40 (since 2^3 \times 5 = 40)
+
+Q19. With \det(A) = 5 and \det(B) = 4 (both 3\times 3), \det(A^{-1}B^T) =:
+A) 4/5
+B) 5/4
+C) 20
+D) 1/20
+Answer: A) 4/5 (since \det(A^{-1}) = 1/5 and \det(B^T) = 4)
+
+Q20. The inverse of an invertible matrix A using the adjoint method is:
+A) A^{-1} = \det(A) \cdot \text{adj}(A)
+B) A^{-1} = \frac{1}{\det(A)} \text{adj}(A)
+C) A^{-1} = \text{adj}(A)
+D) A^{-1} = \frac{1}{\det(A)} A^T
+Answer: B) A^{-1} = \frac{1}{\det(A)} \text{adj}(A)

@@ -1,0 +1,422 @@
+Lecture 1: Introduction to Differential Equations & Laplace Transform — Full Explanation
+
+---
+
+🎯 Course Overview (Pages 1–4)
+
+This is MAT313: Differential Equations and Numerical Analysis (2026/2027, First Semester). The course covers:
+
+1. Introduction to Differential Equations
+2. Laplace Transform
+3. Inverse Laplace Transform
+4. Solving ODEs using Laplace Transform
+5. Solution of Nonlinear Equations Using Iteration Methods
+6. Curve Fitting
+7. Numerical Solution of ODEs
+
+Grading: Midterm (Week 8) 10% + 3 Quizzes + 4 Assignments + Teamwork/Participation + Final Exam = 100% (final exam is the big 40%).
+
+Textbooks: Smith & Minton (Calculus), Constanda (Differential Equations), Chapra (Applied Numerical Methods with MATLAB).
+
+---
+
+📘 Part 1: What Is a Differential Equation? (Pages 5–8)
+
+Definition (Differential Equation)
+
+A differential equation (D.E.) is any relation between known variables and an unknown variable that involves the derivatives of the unknown variable with respect to the known variables.
+
+Key vocabulary you must memorize:
+
+· Dependent variable = the unknown variable (usually y)
+· Independent variable = the known variable (usually x or t)
+· Derivative = rate of change, e.g. \frac{dy}{dx}, y', y''
+
+Example from the lecture:
+
+\frac{d^2y}{dx^2} + 2\frac{dy}{dx} + 3xy = 0 \quad \equiv \quad y'' + 2y' + 3xy = 0
+
+Here y is the dependent variable, x is the independent variable. This is a D.E. because it contains derivatives of y.
+
+💡 Intuition: An algebraic equation asks "what number satisfies this?" A differential equation asks "what function satisfies this relationship between the function and its rates of change?"
+
+Order of a Differential Equation
+
+The order of a D.E. is the order of the highest derivative in the equation.
+
+Equation Highest derivative Order
+y' + y = 0 y' (1st) First order O.D.E.
+\frac{d^2y}{dx^2} + 2\left(\frac{dy}{dx}\right)^3 + 3xy = 0 y'' (2nd) Second order O.D.E.
+\frac{d^3y}{dx^3} + 2\left(\frac{dy}{dx}\right)^3 + 3xy = 0 y''' (3rd) Third order O.D.E.
+
+⚠️ Very common trap: In the second example, the term \left(\frac{dy}{dx}\right)^3 has a power of 3, but that does NOT make it third order! Order depends only on the highest derivative, which is y'' → second order. The power 3 would relate to "degree," not order.
+
+Also note: O.D.E. = Ordinary Differential Equation = a D.E. with only one independent variable (ordinary derivatives, not partial derivatives).
+
+Definition 2: Solution of a Differential Equation
+
+A solution to an n-th order D.E. is a function that is n times differentiable and that satisfies the equation.
+
+Symbolically, for
+
+a_n \frac{d^ny}{dx^n} + a_{n-1}\frac{d^{n-1}y}{dx^{n-1}} + \dots + a_1 \frac{dy}{dx} + a_0 = f(x) \tag{1}
+
+a solution is a function y(x) whose derivatives y'(x), y''(x), \dots, y^{(n)}(x) exist and which satisfies (1) for all x in some interval (a,b) where the equation is defined. The interval may be infinite (a \to -\infty, b \to \infty, or both).
+
+💡 Important idea: A solution is a function, not a number. And it must work on an interval, not just at one point.
+
+---
+
+✅ Verification Examples (Pages 9–10)
+
+Example 1: Verify y(x) = 2e^{-2x} solves y' + 2y = 0
+
+Strategy: Compute the LHS (left-hand side), substitute, and show it equals the RHS (right-hand side) = 0.
+
+y = 2e^{-2x} \quad \Rightarrow \quad y' = 2 \cdot (-2)e^{-2x} = -4e^{-2x}
+
+\text{LHS} = y' + 2y = -4e^{-2x} + 2(2e^{-2x}) = -4e^{-2x} + 4e^{-2x} = 0 = \text{RHS} \checkmark
+
+Example 2: Verify y(x) = e^{x} solves y'' - 2y' + y = 0
+
+y = e^x, \quad y' = e^x, \quad y'' = e^x
+
+\text{LHS} = y'' - 2y' + y = e^x - 2e^x + e^x = 0 = \text{RHS} \checkmark
+
+💡 Note: e^x is special: it is its own derivative, which is why it appears constantly in D.E. solutions.
+
+---
+
+🌍 Why Study ODEs? Real-World Models (Pages 11–15)
+
+ODEs are the language of change. Two completely different physical situations are described by similar mathematics:
+
+1️⃣ Newton's Law of Cooling (First-order linear ODE)
+The rate at which the temperature T(t) of a cooling body changes at time t is proportional to the difference between the body's temperature T(t) and the constant temperature T_s of the surrounding medium.
+
+This gives the first-order Initial Value Problem (IVP):
+
+\frac{dT}{dt} = k(T - T_s), \qquad T(0) = T_0
+
+· T_0 = initial temperature of the body
+· k = constant of proportionality
+· T_s = surrounding (ambient) temperature
+· T(0) = T_0 is the initial condition — this is what makes it an IVP
+
+Applications: a medical examiner finding the time of death; engineers designing heating/cooling systems.
+
+2️⃣ Series Electric Circuits (First-order linear ODEs)
+
+(a) Resistor + Inductor (RL circuit): From Kirchhoff's second law (the sum of voltage drops around a closed loop equals the applied voltage):
+
+L\frac{di}{dt} + iR = E(t)
+
+· L = inductance, R = resistance (constants)
+· i(t) = electric current, E(t) = applied voltage/source
+
+(b) Resistor + Capacitor (RC circuit): Kirchhoff's law gives
+
+\frac{1}{C}q + iR = E(t)
+
+· q = charge on the capacitor, C = capacitance
+· Current and charge are related by i = \frac{dq}{dt}
+
+Substituting i = \frac{dq}{dt}:
+
+R\frac{dq}{dt} + \frac{1}{C}q = E(t)
+
+which is again a linear differential equation.
+
+💡 Big picture: Cooling laws, circuits, population growth, springs — all reduce to ODEs. That's why this course matters.
+
+---
+
+🧩 Part 2: Separable Differential Equations (Pages 16–20)
+
+The Method
+
+A first-order equation is separable if it can be written in the form
+
+\frac{dy}{dx} = f(x)\,g(y)
+
+which can be rewritten by separating the variables:
+
+\frac{dy}{g(y)} = f(x)\,dx
+
+Then integrate both sides:
+
+\int \frac{dy}{g(y)} = \int f(x)\,dx
+
+The 3-step recipe:
+
+1. Separate — get all y's with dy on one side, all x's with dx on the other.
+2. Integrate both sides (don't forget +C).
+3. Solve for y if possible (explicit solution); otherwise leave implicit.
+
+---
+
+Example 1 (Page 18): Solve \dfrac{dy}{dx} = \dfrac{x-3}{y}
+
+Step 1 — Separate: multiply both sides by y\,dx:
+
+y\,dy = (x-3)\,dx
+
+Step 2 — Integrate:
+
+\int y\,dy = \int (x-3)\,dx
+
+\frac{y^2}{2} = \frac{x^2}{2} - 3x + c
+
+Step 3 — Solve for y: multiply by 2:
+
+y^2 = x^2 - 6x + 2c
+
+y = \pm\sqrt{x^2 - 6x + 2c}
+
+Since c is an arbitrary constant, we may replace 2c with a new constant k:
+
+\boxed{y = \pm\sqrt{x^2 - 6x + k}}
+
+💡 Why can we rename 2c to k? Because c is arbitrary, 2c is also an arbitrary constant — renaming it changes nothing mathematically and keeps the answer clean. The \pm appears because of the square root.
+
+---
+
+Example 2 (Page 19): Solve y' = \dfrac{9x^2 - \sin x}{\cos y + 5e^y}
+
+Step 1 — Separate: cross-multiply:
+
+(\cos y + 5e^y)\,dy = (9x^2 - \sin x)\,dx
+
+Step 2 — Integrate:
+
+\int (\cos y + 5e^y)\,dy = \int (9x^2 - \sin x)\,dx
+
+Using standard integrals (\int \cos y\,dy = \sin y, \int e^y\,dy = e^y, \int x^2 dx = x^3/3, \int \sin x\,dx = -\cos x):
+
+\boxed{\sin y + 5e^y = 3x^3 + \cos x + C}
+
+This is an implicit solution (we cannot easily solve for y alone). That's perfectly acceptable.
+
+---
+
+Example 3 (Page 20): Solve \dfrac{dy}{dx} = e^{x-y} + x^2 e^{-y}
+
+Key trick — factor the exponential: use e^{x-y} = e^x e^{-y}:
+
+\frac{dy}{dx} = e^{-y}(e^x + x^2)
+
+Step 1 — Separate: divide by e^{-y} (i.e., multiply by e^y):
+
+e^y\,dy = (e^x + x^2)\,dx
+
+Step 2 — Integrate:
+
+\int e^y\,dy = \int (e^x + x^2)\,dx
+
+e^y = e^x + \frac{x^3}{3} + c
+
+Step 3 — Solve for y by taking \ln of both sides:
+
+\boxed{y = \ln\left|e^x + \frac{x^3}{3} + c\right|}
+
+The absolute value inside the log is needed because the log is only defined for positive arguments — this is the standard careful form.
+
+---
+
+🔁 Part 3: Laplace Transform (Pages 21–28)
+
+The Big Idea (Page 22)
+
+The Laplace transform converts a function f(t) of a real variable t into a related function F(s) of a real variable s.
+
+Why is this powerful? When applied to an initial-value problem involving a linear differential equation in an unknown function of t, it transforms the D.E. problem into an algebraic problem in the variable s. Then, applying the inverse Laplace transform to the algebraic solution gives the solution of the original IVP.
+
+💡 Analogy: The Laplace transform is like a "translator." Calculus (differentiation) in the t-world becomes simple algebra (multiplication by s) in the s-world. You solve the easy algebra problem, then translate back.
+
+Flowchart:
+
+\text{IVP in } t \;\xrightarrow{\mathcal{L}}\; \text{Algebraic problem in } s \;\xrightarrow{\text{solve}}\; F(s) \;\xrightarrow{\mathcal{L}^{-1}}\; y(t)
+
+---
+
+Definition 1 (Page 23)
+
+Given a function f(t) defined for all t \geq 0, the Laplace transform of f(t) is
+
+F(s) = \mathcal{L}\{f(t)\} = \int_{0}^{\infty} e^{-st} f(t)\,dt
+
+for all values of s for which the improper integral converges.
+
+⚠️ Notes:
+
+· The lower limit is 0 (we only care about t \geq 0).
+· This is an improper integral (upper limit \infty) — it converges only for certain s.
+· Notation: \mathcal{L}\{f(t)\} = F(s).
+
+---
+
+Example 1 (Page 23): Find \mathcal{L}\{1\}
+
+F(s) = \int_0^\infty e^{-st}(1)\,dt = \lim_{b\to\infty}\int_0^b e^{-st}\,dt = \lim_{b\to\infty}\left[\frac{e^{-st}}{-s}\right]_0^b
+
+= \lim_{b\to\infty}\left(\frac{e^{-sb}}{-s} + \frac{1}{s}\right)
+
+Now, for s > 0, e^{-sb} \to 0 as b \to \infty. So:
+
+\boxed{\mathcal{L}\{1\} = \frac{1}{s}, \qquad s > 0}
+
+💡 The condition s > 0 is exactly what makes the improper integral converge — if s \le 0, e^{-sb} would blow up or not decay.
+
+---
+
+Example 2 (Page 24): Find \mathcal{L}\{e^{at}\}
+
+F(s) = \int_0^\infty e^{at} e^{-st}\,dt = \int_0^\infty e^{(a-s)t}\,dt = \left[\frac{e^{(a-s)t}}{a-s}\right]_0^\infty
+
+= \left(0 - \frac{1}{a-s}\right) = \frac{1}{s-a}, \qquad s > a
+
+\boxed{\mathcal{L}\{e^{at}\} = \frac{1}{s-a}, \qquad s > a}
+
+Why s > a? So that (a-s) < 0 and e^{(a-s)t} \to 0 as t \to \infty, making the integral converge.
+
+---
+
+Example 3 (Page 25): Find \mathcal{L}\{t\} — using Integration by Parts
+
+F(s) = \int_0^\infty t e^{-st}\,dt
+
+Use integration by parts \int u\,dv = uv - \int v\,du with u = t, dv = e^{-st}dt, so du = dt, v = \frac{e^{-st}}{-s}:
+
+= \left[t \cdot \frac{e^{-st}}{-s}\right]_0^\infty - \int_0^\infty (1)\cdot\frac{e^{-st}}{-s}\,dt
+
+= \left(0 - 0\right) + \frac{1}{s}\int_0^\infty e^{-st}\,dt = \frac{1}{s}\cdot\frac{1}{s}
+
+\boxed{\mathcal{L}\{t\} = \frac{1}{s^2}, \qquad s > 0}
+
+The DI (tabular) method shown in the slide — a quick way to do integration by parts:
+
+Sign Differentiate (u) Integrate (dv)
++ t e^{-st}
+- 1 \frac{e^{-st}}{-s}
++ 0 \frac{e^{-st}}{s^2}
+
+Multiply diagonally with signs and evaluate 0 \to \infty:
+
+· t \cdot \frac{e^{-st}}{-s} \Big|_0^\infty = 0
+· -1 \cdot \frac{e^{-st}}{s^2}\Big|_0^\infty = -\left(0 - \frac{1}{s^2}\right) = \frac{1}{s^2} ✓
+
+💡 The boundary terms vanish at \infty (because e^{-st} \to 0 for s>0) and at 0 only the last term contributes.
+
+---
+
+📋 Table 1: Laplace Transforms of Elementary Functions (Page 26)
+
+Memorize this table — it's the toolbox for everything that follows:
+
+f(t) F(s) = \mathcal{L}\{f(t)\} Condition
+1 \dfrac{1}{s} s > 0
+t^n, n = 1,2,\dots \dfrac{n!}{s^{n+1}} s > 0
+e^{at} \dfrac{1}{s-a} s > a
+\sin at \dfrac{a}{s^2 + a^2} s > 0
+\cos at \dfrac{s}{s^2 + a^2} s > 0
+\sinh at \dfrac{a}{s^2 - a^2} s > a
+\cosh at \dfrac{s}{s^2 - a^2} s > a
+
+Memory hooks:
+
+· t^n: the n! in the numerator, and the power of s is one higher than n.
+· \sin/\cos: s^2 + a^2 in denominator; \sin gets a on top, \cos gets s on top.
+· \sinh/\cosh: same pattern but with a minus in the denominator (s^2 - a^2).
+· e^{at} shifts s \to s - a.
+
+---
+
+Properties: Theorem 1 — Linearity (Page 27)
+
+Let f(t), g(t) have Laplace transforms for s > \alpha, and let c_1, c_2 be constants. Then for s > \alpha:
+
+\mathcal{L}\{c_1 f(t) + c_2 g(t)\} = c_1\mathcal{L}\{f(t)\} + c_2\mathcal{L}\{g(t)\}
+
+💡 Meaning: The Laplace transform is a linear operator — you can pull constants out and split sums. This is what lets you transform complicated expressions term-by-term using Table 1.
+
+---
+
+Example 4 (Page 28): Find \mathcal{L}\{3 + t^3 + e^{-5t} + 2\sin 5t\}
+
+Apply linearity and Table 1 term by term:
+
+· \mathcal{L}\{3\} = 3 \cdot \frac{1}{s} = \frac{3}{s}
+· \mathcal{L}\{t^3\} = \frac{3!}{s^{4}} = \frac{6}{s^4}
+· \mathcal{L}\{e^{-5t}\} = \frac{1}{s - (-5)} = \frac{1}{s+5}
+· \mathcal{L}\{2\sin 5t\} = 2 \cdot \frac{5}{s^2 + 25} = \frac{10}{s^2 + 25}
+
+Therefore:
+
+\boxed{F(s) = \frac{3}{s} + \frac{6}{s^4} + \frac{1}{s+5} + \frac{10}{s^2+25}, \qquad s > 5}
+
+Why s > 5? The strictest convergence condition among the terms is s > 5 (from e^{-5t}, need s > -5; from \sin 5t, s>0; actually the strongest here is s > 0; the slide writes s>5 as the safe combined condition). The safe rule: take the most restrictive condition among all terms.
+
+---
+
+Example 5 (Page 28): Find \mathcal{L}\{\sin^2 t\}
+
+Key trick — use a trigonometric identity first! You cannot look up \sin^2 t directly in the table, so rewrite it:
+
+\sin^2 t = \frac{1}{2}(1 - \cos 2t)
+
+(Double-angle identity: \cos 2t = 1 - 2\sin^2 t.)
+
+Now apply linearity:
+
+\mathcal{L}\{\sin^2 t\} = \frac{1}{2}\left[\mathcal{L}\{1\} - \mathcal{L}\{\cos 2t\}\right]
+
+= \frac{1}{2}\left(\frac{1}{s} - \frac{s}{s^2 + 4}\right), \qquad s > 0
+
+\boxed{\mathcal{L}\{\sin^2 t\} = \frac{1}{2}\left(\frac{1}{s} - \frac{s}{s^2+4}\right)}
+
+Here a = 2, so \mathcal{L}\{\cos 2t\} = \frac{s}{s^2 + 2^2} = \frac{s}{s^2+4}.
+
+💡 Lesson: When a function isn't in the table, use trigonometric identities (or other algebraic manipulation) to express it in terms of table entries, then use linearity.
+
+---
+
+📝 Summary Cheat Sheet
+
+Concept Key Formula / Rule
+Differential equation Relation involving derivatives of an unknown function
+Order Order of the highest derivative (ignore powers!)
+Solution A function that satisfies the D.E. on an interval
+Separable D.E. \frac{dy}{dx}=f(x)g(y) \Rightarrow \int\frac{dy}{g(y)}=\int f(x)dx
+Newton's cooling \frac{dT}{dt}=k(T-T_s), T(0)=T_0
+RL circuit L\frac{di}{dt}+iR=E(t)
+RC circuit R\frac{dq}{dt}+\frac{1}{C}q=E(t), i=\frac{dq}{dt}
+Laplace transform F(s)=\int_0^\infty e^{-st}f(t)\,dt
+Linearity \mathcal{L}\{c_1f+c_2g\}=c_1\mathcal{L}\{f\}+c_2\mathcal{L}\{g\}
+\mathcal{L}\{1\} 1/s, s>0
+\mathcal{L}\{t^n\} n!/s^{n+1}, s>0
+\mathcal{L}\{e^{at}\} 1/(s-a), s>a
+\mathcal{L}\{\sin at\}, \mathcal{L}\{\cos at\} a/(s^2+a^2), s/(s^2+a^2)
+\mathcal{L}\{\sinh at\}, \mathcal{L}\{\cosh at\} a/(s^2-a^2), s/(s^2-a^2)
+
+---
+
+⚠️ Common Mistakes to Avoid
+
+1. Order confusion: \left(\frac{dy}{dx}\right)^3 does not make the equation third order — only the highest derivative counts.
+2. Forgetting +C after integration in separable equations.
+3. Forgetting the \pm when taking a square root to solve for y.
+4. Wrong convergence condition: always state s > a (or s>0) with your transform — it comes from making the improper integral converge.
+5. Trying to transform \sin^2 t directly — use the identity \sin^2 t = \frac{1}{2}(1-\cos 2t) first.
+6. Dropping the absolute value in \ln|\cdot| when solving for y.
+7. Mixing up \sin vs \cos numerators: \sin at \to \frac{a}{s^2+a^2}, \cos at \to \frac{s}{s^2+a^2}.
+
+---
+
+🎓 Practice Check (test yourself)
+
+1. What is the order of y''' + (y')^5 + y = e^x? (Answer: third order — highest derivative is y''')
+2. Solve \frac{dy}{dx} = \frac{x}{y}. (Answer: y^2 = x^2 + k)
+3. Find \mathcal{L}\{5 - 2t + e^{3t}\}. (Answer: 5/s - 2/s^2 + 1/(s-3))
+4. Find \mathcal{L}\{\cos^2 t\}. (Hint: \cos^2 t = \frac{1}{2}(1+\cos 2t); Answer: \frac{1}{2}\left(\frac{1}{s}+\frac{s}{s^2+4}\right))
+
+Good luck — master the table and the separation method, and this lecture is fully in your pocket! 🚀

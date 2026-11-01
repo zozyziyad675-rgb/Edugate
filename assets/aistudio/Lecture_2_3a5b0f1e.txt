@@ -1,0 +1,212 @@
+Laplace Transform (2) — Full Lecture Explanation
+
+Welcome! In this lecture we build on the basic Laplace transform and learn two powerful properties that let you transform many more functions without integrating from scratch. Let's go step by step.
+
+---
+
+1. Theorem 2 — First Shifting Property (Translation in s)
+
+Statement
+
+If
+
+L\{f(t)\} = F(s)
+
+exists for s > a, then
+
+\boxed{L\{e^{at}f(t)\} = F(s-a)}
+
+What this really means (the idea)
+
+Multiplying a function f(t) by an exponential e^{at} in the time domain does something very simple in the s-domain: it shifts the whole transform by replacing every s with (s-a).
+
+· Multiplying by e^{at} → replace s by s-a.
+· Multiplying by e^{-at} → replace s by s+a.
+
+This is why it is called a shifting property: the graph of F(s) is shifted horizontally along the s-axis. It is a "translation in s."
+
+Key exam tip: First find the transform of the plain function f(t), then do the substitution. Never mix the two steps.
+
+---
+
+Example 1 (i): Find L\{e^{3t}\cos t\}
+
+Step 1 — Transform the plain function.
+
+We know the standard result:
+
+L\{\cos t\} = \frac{s}{s^2+1}
+
+Step 2 — Apply the shift. Here a = 3, so replace every s by (s-3):
+
+L\{e^{3t}\cos t\} = \frac{s-3}{(s-3)^2+1}
+
+Done. Notice we did not re-derive anything — we just shifted.
+
+---
+
+Example 1 (ii): Find L\{t^3 e^{-2t}\}
+
+Step 1 — Transform the plain function. The standard power rule is:
+
+L\{t^n\} = \frac{n!}{s^{n+1}}
+
+For n=3:
+
+L\{t^3\} = \frac{3!}{s^{4}} = \frac{6}{s^4}
+
+Step 2 — Apply the shift. Here the exponential is e^{-2t}, so a = -2. Replacing s by s-(-2) = s+2:
+
+L\{t^3 e^{-2t}\} = \frac{6}{(s+2)^4}
+
+Watch the sign carefully: e^{-2t} gives s+2, not s-2. This is the most common mistake students make.
+
+---
+
+Example 2 (a): Find L\{e^{3t}\sinh 4t\}
+
+Step 1 — Transform the plain function. The standard result is:
+
+L\{\sinh 4t\} = \frac{4}{s^2-16}
+
+(Recall: \sinh produces a minus sign in the denominator, unlike \sin which has a plus.)
+
+Step 2 — Apply the shift with a=3, replacing s by s-3:
+
+L\{e^{3t}\sinh 4t\} = \frac{4}{(s-3)^2-16}
+
+You may leave it in this form — it already shows the shift clearly.
+
+---
+
+Example 2 (b): Find L\{(e^{t}+t)^2\}
+
+Here the function is not in the form e^{at}f(t) directly, so we must first expand.
+
+Step 1 — Expand the square:
+
+(e^{t}+t)^2 = e^{2t} + 2te^{t} + t^2
+
+Now transform term by term (linearity of the Laplace transform).
+
+Term 1: L\{e^{2t}\} = \dfrac{1}{s-2} (standard exponential rule).
+
+Term 2: L\{2te^{t}\}. First, L\{t\} = \dfrac{1}{s^2}, so by the shift with a=1:
+
+L\{te^{t}\} = \frac{1}{(s-1)^2}
+
+Multiplying by the constant 2:
+
+L\{2te^{t}\} = \frac{2}{(s-1)^2}
+
+Term 3: L\{t^2\} = \dfrac{2!}{s^{3}} = \dfrac{2}{s^3}.
+
+Step 2 — Add everything:
+
+\boxed{L\{f(t)\} = \frac{1}{s-2} + \frac{2}{(s-1)^2} + \frac{2}{s^3}}
+
+Lesson: when you see a product, sum, or power, simplify/expand first, then use the standard table and the shifting property.
+
+---
+
+2. Theorem 3 — Multiplication by t
+
+Statement
+
+Let L\{f(t)\} = F(s), and assume f(t) is piecewise continuous on [0,\infty) and of exponential order \alpha. Then for s > \alpha:
+
+\boxed{L\{t\,f(t)\} = -\frac{dF(s)}{ds}}
+
+What this really means (the idea)
+
+Multiplying by t in the time domain corresponds to differentiating the transform in the s-domain (and multiplying by -1).
+
+· Multiplication by t → take -\dfrac{d}{ds} of the transform.
+· Each extra factor of t means one more derivative (with another minus sign each time, so signs alternate).
+
+The conditions ("piecewise continuous," "exponential order") are just the technical guarantees that the transform exists and that we are allowed to differentiate under the integral sign. In practice, for the functions in this course, they are always satisfied.
+
+---
+
+Example 3: Find L\{t\sin at\}
+
+Step 1 — Transform the plain function:
+
+L\{\sin at\} = \frac{a}{s^2+a^2} = F(s)
+
+Step 2 — Differentiate F(s) with respect to s. Use the chain/quotient rule. Treat a as a constant:
+
+\frac{d}{ds}\left(\frac{a}{s^2+a^2}\right) = a \cdot \frac{d}{ds}(s^2+a^2)^{-1} = a \cdot (-1)(s^2+a^2)^{-2}(2s) = -\frac{2as}{(s^2+a^2)^2}
+
+Step 3 — Apply the minus sign from the theorem:
+
+L\{t\sin at\} = -\left(-\frac{2as}{(s^2+a^2)^2}\right) = \boxed{\frac{2as}{(s^2+a^2)^2}}
+
+Notice the two minus signs cancel. This is exactly why the theorem has a minus sign built in — so that the final answer comes out positive and clean.
+
+---
+
+Example 12: Find L\{e^{-2t}\,t\sin 3t\}
+
+This example combines both theorems. The strategy is: work from the inside out.
+
+Step 1 — Start with the innermost function: L\{\sin 3t\}. Using the standard rule with a=3:
+
+L\{\sin 3t\} = \frac{3}{s^2+9}
+
+Step 2 — Multiply by t using Theorem 3 (differentiate and negate):
+
+L\{t\sin 3t\} = -\frac{d}{ds}\left(\frac{3}{s^2+9}\right)
+
+Compute the derivative:
+
+\frac{d}{ds}\left(\frac{3}{s^2+9}\right) = 3\cdot(-1)(s^2+9)^{-2}(2s) = -\frac{6s}{(s^2+9)^2}
+
+Apply the minus:
+
+L\{t\sin 3t\} = \frac{6s}{(s^2+9)^2}
+
+Step 3 — Now multiply by e^{-2t} using Theorem 2 (the shift). Here a=-2, so replace every s by s+2:
+
+\boxed{L\{e^{-2t}\,t\sin 3t\} = \frac{6(s+2)}{\left((s+2)^2+9\right)^2}}
+
+Order matters: do the t-multiplication first, then the exponential shift. If you shift first and then differentiate, you get the wrong answer. Rule of thumb: inner operations first.
+
+---
+
+3. Summary Cheat Sheet
+
+Time domain s-domain operation
+e^{at}f(t) F(s-a) — replace s by s-a
+e^{-at}f(t) F(s+a) — replace s by s+a
+t\,f(t) -\dfrac{d}{ds}F(s)
+t^n f(t) (-1)^n \dfrac{d^n}{ds^n}F(s) (repeated differentiation)
+
+Standard transforms used in this lecture:
+
+L\{1\}=\frac{1}{s},\quad L\{t^n\}=\frac{n!}{s^{n+1}},\quad L\{e^{at}\}=\frac{1}{s-a}
+
+L\{\cos t\}=\frac{s}{s^2+1},\quad L\{\sin at\}=\frac{a}{s^2+a^2}
+
+L\{\sinh 4t\}=\frac{4}{s^2-16},\quad L\{\cosh at\}=\frac{s}{s^2-a^2}
+
+---
+
+4. Common Mistakes to Avoid
+
+1. Sign of the shift: e^{-2t} → s+2, and e^{3t} → s-3. Always check the sign.
+2. Forgetting the minus sign in Theorem 3 — or forgetting that two minus signs can cancel.
+3. Shifting before multiplying by t in combined problems — always work inside-out.
+4. Not expanding expressions like (e^t+t)^2 before transforming.
+5. Confusing \sin and \sinh: \sin gives s^2+a^2 (plus), \sinh gives s^2-a^2 (minus).
+
+---
+
+5. Practice Problems (try before looking at the method)
+
+1. Find L\{e^{5t}\cos 2t\} → shift \cos 2t by a=5.
+2. Find L\{t^2 e^{4t}\} → start with L\{t^2\}=\frac{2}{s^3}, then shift to s-4.
+3. Find L\{t\cos 3t\} → differentiate \frac{s}{s^2+9} and negate.
+4. Find L\{e^{t}\,t\sin 2t\} → find L\{t\sin 2t\}=\frac{4s}{(s^2+4)^2}, then shift to s-1.
+
+You now have everything from this lecture: Theorem 2 (First Shifting Property), Theorem 3 (Multiplication by t), all worked examples, and the combined technique. Study the examples until the "inside-out" order feels automatic — that is the key skill examiners test. Good luck!

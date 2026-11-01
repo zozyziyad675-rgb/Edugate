@@ -1,0 +1,141 @@
+Based on the second PDF lecture on Logic Gates, here are 20 multiple-choice questions.
+
+1. Which of the following are considered "Basic Logic Gates" according to the lecture?
+A) XOR, XNOR, NAND
+B) NOT, AND, OR
+C) NAND, NOR, NOT
+D) AND, OR, XOR
+Correct Answer: B) NOT, AND, OR
+
+2. What is the Boolean expression for an AND gate with inputs A and B?
+A) X = A + B
+B) X = A · B
+C) X = A'
+D) X = A ⊕ B
+Correct Answer: B) X = A · B
+
+3. An AND gate produces an output of 1 only when:
+A) At least one input is 1
+B) Both inputs are 0
+C) Both inputs are 1
+D) The inputs are different
+Correct Answer: C) Both inputs are 1
+
+4. What is the output of an OR gate if input A = 1 and input B = 0?
+A) 0
+B) 1
+C) Undefined
+D) It depends on the previous state
+Correct Answer: B) 1
+
+5. A NOT gate is also commonly referred to as:
+A) An adder
+B) An inverter
+C) A buffer
+D) A multiplexer
+Correct Answer: B) An inverter
+
+6. Which gate is essentially the opposite of the AND gate?
+A) NOR
+B) OR
+C) NAND
+D) XNOR
+Correct Answer: C) NAND
+
+7. What is the Boolean expression for a NOR gate?
+A) X = (A · B)'
+B) X = (A + B)'
+C) X = A' + B'
+D) X = A ⊕ B
+Correct Answer: B) X = (A + B)'
+
+8. An XOR gate produces an output of 1 when:
+A) Both inputs are 1
+B) Both inputs are 0
+C) The two inputs are the same
+D) The two inputs are different
+Correct Answer: D) The two inputs are different
+
+9. How does an XNOR gate differ from an XOR gate?
+A) XNOR produces 1 when inputs are the same; XOR produces 1 when inputs are different
+B) XNOR produces 1 when inputs are different; XOR produces 1 when inputs are the same
+C) They are exactly the same
+D) XNOR has three inputs
+Correct Answer: A) XNOR produces 1 when inputs are the same; XOR produces 1 when inputs are different
+
+10. For a 3-input AND gate, the output is 1 only if:
+A) At least two inputs are 1
+B) All three inputs are 1
+C) All three inputs are 0
+D) Exactly one input is 1
+Correct Answer: B) All three inputs are 1
+
+11. In the circuit F = (X + Y) · Ȳ, what is the output F when X = 1 and Y = 1?
+A) 0
+B) 1
+C) X
+D) Y
+Correct Answer: A) 0
+
+12. Which of the following is NOT a way to describe the behavior of gates and circuits?
+A) Boolean expressions
+B) Logic diagrams
+C) Truth tables
+D) Flowcharts
+Correct Answer: D) Flowcharts
+
+13. What is the Boolean expression for the XOR gate shown in the lecture?
+A) X = A · B
+B) X = A + B
+C) X = A ⊕ B
+D) X = (A + B)'
+Correct Answer: C) X = A ⊕ B
+
+14. According to the review of gate processing, an OR gate produces 1 if:
+A) Only one input is 1
+B) Both inputs are 0
+C) One or the other or both input values are 1
+D) Both inputs are 1 only
+Correct Answer: C) One or the other or both input values are 1
+
+15. A NAND gate produces the opposite results of which gate?
+A) OR
+B) AND
+C) NOR
+D) XOR
+Correct Answer: B) AND
+
+16. In the XNOR gate truth table, what is the output when A=0 and B=0?
+A) 0
+B) 1
+C) Undefined
+D) Depends on the circuit
+Correct Answer: B) 1
+
+17. Which gate accepts only one input value?
+A) AND
+B) OR
+C) NOT
+D) NAND
+Correct Answer: C) NOT
+
+18. The Boolean expression X = A' represents:
+A) A AND gate
+B) A NOT gate
+C) An OR gate
+D) An XOR gate
+Correct Answer: B) A NOT gate
+
+19. For the circuit where F = X₁ · X₂, X₁ = (X + Y), and X₂ = Ȳ, what is F when X=0, Y=0?
+A) 1
+B) 0
+C) X
+D) Y
+Correct Answer: B) 0
+
+20. Which logic gate is said to be a "universal gate" because any digital system can be implemented with it?
+A) AND
+B) OR
+C) XOR
+D) NAND
+Correct Answer: D) NAND

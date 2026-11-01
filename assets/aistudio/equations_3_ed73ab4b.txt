@@ -1,0 +1,220 @@
+Twenty MCQs from Lecture 3: Laplace Transform (3)
+
+---
+
+Q1. Evaluate L\{f(t)\} where f(t) = \begin{cases} 0, & 0 \le t < 3 \\ 2, & t \ge 3 \end{cases}.
+
+A) \dfrac{2e^{-3s}}{s}, \quad s > 0
+B) \dfrac{2e^{3s}}{s}, \quad s > 0
+C) \dfrac{e^{-3s}}{s}, \quad s > 0
+D) \dfrac{2}{s}, \quad s > 0
+
+Answer: A) \dfrac{2e^{-3s}}{s}, \quad s > 0
+
+---
+
+Q2. What is the definition of the unit step function u(t)?
+
+A) u(t) = \begin{cases} 1, & t < 0 \\ 0, & t \ge 0 \end{cases}
+B) u(t) = \begin{cases} 0, & t < 0 \\ 1, & t \ge 0 \end{cases}
+C) u(t) = \begin{cases} 0, & t \le 0 \\ 1, & t > 0 \end{cases}
+D) u(t) = 1 for all t
+
+Answer: B) u(t) = \begin{cases} 0, & t < 0 \\ 1, & t \ge 0 \end{cases}
+
+---
+
+Q3. What is the Laplace transform of the unit step function u(t)?
+
+A) \dfrac{1}{s}, \quad s > 0
+B) \dfrac{1}{s^2}, \quad s > 0
+C) e^{-s}
+D) 1
+
+Answer: A) \dfrac{1}{s}, \quad s > 0
+
+---
+
+Q4. What is the Laplace transform of the shifted unit step function u(t-a)?
+
+A) \dfrac{e^{as}}{s}
+B) \dfrac{e^{-as}}{s}
+C) \dfrac{1}{s-a}
+D) e^{-as}
+
+Answer: B) \dfrac{e^{-as}}{s}
+
+---
+
+Q5. When a function f(t) defined for t \ge 0 is multiplied by u(t-a), what happens to the graph?
+
+A) The portion of f for t \ge a is turned off
+B) The portion of f for 0 \le t < a is turned off
+C) The entire graph of f is shifted by a
+D) The entire graph of f is turned off
+
+Answer: B) The portion of f for 0 \le t < a is turned off
+
+---
+
+Q6. A piecewise-defined function of the type f(t) = \begin{cases} g(t), & 0 \le t < a \\ h(t), & t \ge a \end{cases} can be written in compact form as:
+
+A) f(t) = g(t) + (h(t) - g(t))u(t-a)
+B) f(t) = g(t) - (h(t) + g(t))u(t-a)
+C) f(t) = h(t) + (g(t) - h(t))u(t-a)
+D) f(t) = g(t)u(t-a) + h(t)
+
+Answer: A) f(t) = g(t) + (h(t) - g(t))u(t-a)
+
+---
+
+Q7. Find L\{t\,u(t-2)\}.
+
+A) e^{-2s}\left(\dfrac{1}{s^2} + \dfrac{2}{s}\right)
+B) e^{2s}\left(\dfrac{1}{s^2} + \dfrac{2}{s}\right)
+C) e^{-2s}\left(\dfrac{1}{s^2} - \dfrac{2}{s}\right)
+D) e^{-2s}\left(\dfrac{2}{s^2} + \dfrac{1}{s}\right)
+
+Answer: A) e^{-2s}\left(\dfrac{1}{s^2} + \dfrac{2}{s}\right)
+
+---
+
+Q8. Find L\{t^2\,u(t-1)\}.
+
+A) e^{-s}\left(\dfrac{2}{s^3} + \dfrac{2}{s^2} + \dfrac{1}{s}\right)
+B) e^{-s}\left(\dfrac{2}{s^3} - \dfrac{2}{s^2} + \dfrac{1}{s}\right)
+C) e^{s}\left(\dfrac{2}{s^3} + \dfrac{2}{s^2} + \dfrac{1}{s}\right)
+D) e^{-s}\left(\dfrac{1}{s^3} + \dfrac{2}{s^2} + \dfrac{2}{s}\right)
+
+Answer: A) e^{-s}\left(\dfrac{2}{s^3} + \dfrac{2}{s^2} + \dfrac{1}{s}\right)
+
+---
+
+Q9. Find L\{\sin t\,u(t-\pi)\}.
+
+A) -e^{-\pi s}\dfrac{1}{s^2+1}
+B) e^{-\pi s}\dfrac{1}{s^2+1}
+C) -e^{\pi s}\dfrac{1}{s^2+1}
+D) e^{-\pi s}\dfrac{s}{s^2+1}
+
+Answer: A) -e^{-\pi s}\dfrac{1}{s^2+1}
+
+---
+
+Q10. In evaluating L\{\sin t\,u(t-\pi)\}, the identity used to simplify \sin(t+\pi) is:
+
+A) \sin(t+\pi) = \sin t
+B) \sin(t+\pi) = -\sin t
+C) \sin(t+\pi) = \cos t
+D) \sin(t+\pi) = -\cos t
+
+Answer: B) \sin(t+\pi) = -\sin t
+
+---
+
+Q11. Express f(t) = \begin{cases} t^2, & 0 \le t < 2 \\ 4t, & t \ge 2 \end{cases} in terms of the unit step function.
+
+A) f(t) = t^2 + (4t - t^2)u(t-2)
+B) f(t) = t^2 - (4t - t^2)u(t-2)
+C) f(t) = 4t + (t^2 - 4t)u(t-2)
+D) f(t) = t^2 + (4t + t^2)u(t-2)
+
+Answer: A) f(t) = t^2 + (4t - t^2)u(t-2)
+
+---
+
+Q12. For the function in Q11, the Laplace transform is:
+
+A) \dfrac{2}{s^3} - \dfrac{2e^{-2s}}{s^3} + \dfrac{4e^{-2s}}{s}
+B) \dfrac{2}{s^3} + \dfrac{2e^{-2s}}{s^3} + \dfrac{4e^{-2s}}{s}
+C) \dfrac{2}{s^3} - \dfrac{2e^{-2s}}{s^3} - \dfrac{4e^{-2s}}{s}
+D) \dfrac{2}{s^3} + \dfrac{4e^{-2s}}{s^3} - \dfrac{2e^{-2s}}{s}
+
+Answer: A) \dfrac{2}{s^3} - \dfrac{2e^{-2s}}{s^3} + \dfrac{4e^{-2s}}{s}
+
+---
+
+Q13. What is the Laplace transform of the shifted Dirac delta function \delta(t-a)?
+
+A) e^{as}
+B) e^{-as}
+C) \dfrac{e^{-as}}{s}
+D) \dfrac{1}{s-a}
+
+Answer: B) e^{-as}
+
+---
+
+Q14. What is the Laplace transform of the Dirac delta function \delta(t)?
+
+A) 0
+B) 1
+C) \dfrac{1}{s}
+D) e^{-s}
+
+Answer: B) 1
+
+---
+
+Q15. State the theorem for the Laplace transform of integrals.
+A) If L\{f(t)\} = F(s), then L\left\{\int_0^t f(u)\,du\right\} = sF(s)
+B) If L\{f(t)\} = F(s), then L\left\{\int_0^t f(u)\,du\right\} = \dfrac{F(s)}{s}
+C) If L\{f(t)\} = F(s), then L\left\{\int_0^t f(u)\,du\right\} = \dfrac{F(s)}{s^2}
+D) If L\{f(t)\} = F(s), then L\left\{\int_0^t f(u)\,du\right\} = F(s) - f(0)
+
+Answer: B) If L\{f(t)\} = F(s), then L\left\{\int_0^t f(u)\,du\right\} = \dfrac{F(s)}{s}
+
+---
+
+Q16. Find L\left\{\int_0^t \sin u\,du\right\}.
+
+A) \dfrac{1}{s(s^2+1)}
+B) \dfrac{s}{s^2+1}
+C) \dfrac{1}{s^2+1}
+D) \dfrac{1}{s^2(s^2+1)}
+
+Answer: A) \dfrac{1}{s(s^2+1)}
+
+---
+
+Q17. Find L\left\{\int_0^t e^u \sin u\,du\right\}.
+
+A) \dfrac{1}{s}\cdot\dfrac{1}{(s-1)^2+1}
+B) \dfrac{1}{s}\cdot\dfrac{1}{s^2+1}
+C) \dfrac{1}{s^2}\cdot\dfrac{1}{(s-1)^2+1}
+D) \dfrac{1}{(s-1)^2+1}
+
+Answer: A) \dfrac{1}{s}\cdot\dfrac{1}{(s-1)^2+1}
+
+---
+
+Q18. To find L\left\{\int_0^t e^u \sin u\,du\right\}, which transform is computed first?
+
+A) L\{e^t \sin t\} = \dfrac{1}{(s-1)^2+1}
+B) L\{\sin t\} = \dfrac{1}{s^2+1}
+C) L\{e^t\} = \dfrac{1}{s-1}
+D) L\{e^t \cos t\} = \dfrac{s-1}{(s-1)^2+1}
+
+Answer: A) L\{e^t \sin t\} = \dfrac{1}{(s-1)^2+1}
+
+---
+
+Q19. In L\{t^2 u(t-1)\} = e^{-s}L\{(t+1)^2\}, the substitution used is:
+
+A) t \to t-1
+B) t \to t+1
+C) t \to t+2
+D) t \to t-2
+
+Answer: B) t \to t+1
+
+---
+
+Q20. The unit step function was introduced by:
+
+A) Laplace
+B) Fourier
+C) Oliver Heaviside
+D) Dirac
+
+Answer: C) Oliver Heaviside

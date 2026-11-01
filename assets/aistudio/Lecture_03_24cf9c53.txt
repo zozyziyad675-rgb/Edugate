@@ -1,0 +1,343 @@
+Lecture 03: Linear Algebraic Systems — A Complete Walkthrough
+
+Welcome! In this lecture we will build the entire foundation for solving linear systems. By the end, you'll be able to read a system of equations, write it in matrix form, build its augmented matrix, recognize the three possible outcomes for any linear system, and solve it step by step using elementary row operations. Let's go.
+
+---
+
+1. Definition of a Linear System
+
+A linear system of m equations in n unknowns has the form:
+
+\begin{aligned}
+a_{11}x_1 + a_{12}x_2 + \dots + a_{1n}x_n &= b_1 \\
+a_{21}x_1 + a_{22}x_2 + \dots + a_{2n}x_n &= b_2 \\
+&\vdots \\
+a_{m1}x_1 + a_{m2}x_2 + \dots + a_{mn}x_n &= b_m
+\end{aligned}
+
+Here the a_{ij} are called the coefficients, and the b_i are the constant terms. All of them are real numbers.
+
+· m = number of equations (rows)
+· n = number of unknowns (variables x_1, \dots, x_n)
+
+Key special case — Homogeneous system: If all the constants b_i are zero, the system is called a homogeneous linear system.
+
+Matrix form: The whole system can be compressed into the elegant form
+
+Ax = b
+
+where A is the matrix of coefficients, x is the vector of unknowns, and b is the vector of constants. This compact notation is the language we'll use for the rest of the lecture.
+
+---
+
+2. Coefficient and Augmented Matrices
+
+Definition.
+For the linear system Ax = b:
+
+· The coefficient matrix A contains only the coefficients of the unknowns.
+· The augmented matrix, denoted [A \mid b], is formed by taking the coefficient matrix and appending the constant terms as an extra column.
+
+Think of the vertical bar \mid as the "equals sign" of the system. Everything to the left of the bar multiplies the unknowns; everything to the right is the constant.
+
+---
+
+Example 1 — Reading systems into matrices
+
+For the following three systems:
+(a) Determine the number of equations and unknowns.
+(b) Write the matrix form and the augmented matrix.
+
+System (1):
+
+\begin{aligned}
+2x_1 + 3x_2 &= 1\\
+x_1 - x_2 &= 10\\
+3x_1 + 2x_2 &= 0
+\end{aligned}
+
+System (2):
+
+\begin{aligned}
+x_1 - x_2 + x_3 &= 11\\
+-x_1 + x_3 &= 4\\
+x_1 + 2x_2 &= -6
+\end{aligned}
+
+System (3):
+
+\begin{aligned}
+x_2 - x_3 + x_4 &= 2\\
+x_1 + 2x_2 + x_4 &= 0
+\end{aligned}
+
+Solution (summary table):
+
+System # Equations # Unknowns Coefficient matrix A Augmented [A\mid b]
+(1) 3 2 \begin{bmatrix}2&3\\1&-1\\3&2\end{bmatrix} \begin{bmatrix}2&3&1\\1&-1&10\\3&2&0\end{bmatrix}
+(2) 3 3 \begin{bmatrix}1&-1&1\\-1&0&1\\1&2&0\end{bmatrix} \begin{bmatrix}1&-1&1&11\\-1&0&1&4\\1&2&0&-6\end{bmatrix}
+(3) 2 4 \begin{bmatrix}0&1&-1&1\\1&2&0&1\end{bmatrix} \begin{bmatrix}0&1&-1&1&2\\1&2&0&1&0\end{bmatrix}
+
+Important observations:
+
+· In system (2), the second equation -x_1 + x_3 = 4 has no x_2 term — so its coefficient is 0. Never leave a gap; zeros matter!
+· In system (3), the first equation has no x_1 term → coefficient 0. The system has more unknowns than equations (2 equations, 4 unknowns), which will matter later when we discuss infinitely many solutions.
+· The augmented matrix always has one more column than the coefficient matrix.
+
+---
+
+Example 2 — Going backwards: matrix → system
+
+Now the reverse skill: given an augmented matrix, reconstruct the linear system. Suppose the unknowns are x_1, x_2, x_3, \dots in order.
+
+(a)
+
+\begin{bmatrix}
+3 & 0 & -2 & \mid & 4\\
+7 & 1 & 4 & \mid & -3\\
+0 & -2 & 1 & \mid & -6
+\end{bmatrix}
+
+Size is 3\times 4 → 3 equations, 3 unknowns (3\times 3 system). The system is:
+
+\begin{aligned}
+3x_1 - 2x_3 &= 4\\
+7x_1 + x_2 + 4x_3 &= -3\\
+-2x_2 + x_3 &= -6
+\end{aligned}
+
+Notice how a 0 coefficient means the variable is absent from that equation. Also x_1 in row 2 has coefficient 7 (written, not implied 1), while x_2 in row 2 has coefficient 1 (hidden but present).
+
+(b)
+
+\begin{bmatrix}
+0 & 1 & -1 & 1 & \mid & 2\\
+1 & 2 & 0 & 1 & \mid & 0\\
+-1 & 3 & 4 & 0 & \mid & 3
+\end{bmatrix}
+
+Size 3\times 5 → 3 equations, 4 unknowns (x_1,x_2,x_3,x_4):
+
+\begin{aligned}
+x_2 - x_3 + x_4 &= 2\\
+x_1 + 2x_2 + x_4 &= 0\\
+-x_1 + 3x_2 + 4x_3 &= 3
+\end{aligned}
+
+(c)
+\begin{bmatrix}
+3 & -9 & 12 & -9 & 6 & \mid & 15\\
+0 & 2 & -4 & 4 & 2 & \mid & -6\\
+0 & 0 & 0 & 0 & 1 & \mid & 4
+\end{bmatrix}
+
+Size 3\times 6 → 3 equations, 5 unknowns:
+
+\begin{aligned}
+3x_1 - 9x_2 + 12x_3 - 9x_4 + 6x_5 &= 15\\
+2x_2 - 4x_3 + 4x_4 + 2x_5 &= -6\\
+x_5 &= 4
+\end{aligned}
+
+Note the third row: only x_5 appears with coefficient 1, and it directly gives x_5 = 4. This is the kind of "easy" equation elimination aims to produce.
+
+(d)
+
+\begin{bmatrix}
+1 & 0 & 0 & 0 & \mid & 15\\
+0 & 1 & 0 & 0 & \mid & -6\\
+0 & 0 & 1 & 0 & \mid & 4\\
+0 & 0 & 0 & 1 & \mid & 0
+\end{bmatrix}
+
+Size 4\times 5 → 4 equations, 4 unknowns. This is the identity-like form:
+
+x_1 = 15,\quad x_2 = -6,\quad x_3 = 4,\quad x_4 = 0
+
+The solution is read by inspection — this is exactly the "simplest equivalent system" that the elimination method is trying to reach.
+
+---
+
+3. Solutions of Linear Systems
+
+Definition (system solution). A solution of a linear system is a sequence of numbers (s_1, s_2, \dots, s_n) that makes each equation a true statement when we substitute s_1, \dots, s_n for x_1, \dots, x_n respectively.
+
+Definition (solution set). The solution set is the set of all possible solutions of the system.
+
+Example 3 — The three geometric possibilities
+
+Consider three systems in two variables (each equation is a line in the plane):
+
+(a) Unique solution (b) No solution (c) Infinitely many solutions
+3x + 2y = 7 3x + 2y = 7 3x + 2y = 7
+x - y = -1 3x + 2y = 4 6x + 4y = 14
+Two intersecting lines Two parallel lines Two coincident lines
+
+· (a) The lines intersect at exactly one point → one unique solution.
+· (b) The lines are parallel and distinct → they never meet → no solution.
+· (c) The second equation is just twice the first (6x+4y=14 is 2\times(3x+2y=7)) → the same line → infinitely many solutions.
+
+This is the Fundamental Theorem of Linear Systems: every linear system has exactly one of these three outcomes:
+
+1. no solution, or
+2. exactly one solution, or
+3. infinitely many solutions.
+
+There is no fourth possibility (e.g., exactly two solutions is impossible for a linear system).
+
+Definition (Consistent and inconsistent systems).
+
+· A linear system is consistent if it has either one solution or infinitely many solutions.
+· A system is inconsistent if it has no solution.
+
+The classification tree:
+
+Linear system
+├── Consistent
+│   ├── Unique solution (only one)
+│   └── Infinitely many solutions
+└── Inconsistent (no solutions)
+---
+
+4. Solving a System of Linear Equations (Elimination Method)
+
+The goal: replace a system with an equivalent system — one with the same solution set — that is easier to solve. We do this systematically by eliminating unknowns.
+
+The strategy: Use the x_1 term in the first equation to eliminate the x_1 terms from the other equations. Then use the x_2 term in the second equation to eliminate x_2 from the others, and so on — trying to place the minimum number of unknowns in each equation until we get a trivially simple system.
+
+Row operations (the solving algorithm)
+
+These are the three legal moves we may apply:
+
+1. Multiply an equation through by a nonzero constant.
+2. Interchange two equations.
+3. Replace one equation by the sum of itself and a multiple of another equation.
+
+Since each row of the augmented matrix corresponds to one equation, these become elementary row operations on the matrix:
+
+1. Multiply a row through by a nonzero constant.
+2. Interchange two rows.
+3. Replace one row by the sum of itself and a multiple of another row.
+
+Why nonzero? Multiplying by 0 would destroy information (it would erase the equation). Why these three? Because each one is reversible, so the solution set is preserved.
+
+Notation used in these notes:
+
+Operation Notation
+Multiply row i by constant \alpha \alpha R_i
+Interchange rows i and j R_i \leftrightarrow R_j
+Replace row i by itself plus \alpha times row j \alpha R_j + R_i \to R_i
+
+---
+
+Example 4 — A full 3\times 3 solve (both ways)
+
+System:
+
+\begin{aligned}
+x_1 - 2x_2 + x_3 &= 0\\
+2x_2 - 8x_3 &= 8\\
+-4x_1 + 5x_2 + 9x_3 &= -9
+\end{aligned}
+
+We solve it two ways in parallel — on the equations (left column) and on the rows of the augmented matrix (right column). Notice the exact correspondence: each equation operation mirrors a row operation.
+
+Step 1 — Write the augmented matrix.
+
+\begin{bmatrix}
+1 & -2 & 1 & \mid & 0\\
+0 & 2 & -8 & \mid & 8\\
+-4 & 5 & 9 & \mid & -9
+\end{bmatrix}
+
+Step 2 — Eliminate x_1 from the third equation. Add 4 times the first equation (row) to the third:
+
+\begin{aligned}
+x_1 - 2x_2 + x_3 &= 0\\
+2x_2 - 8x_3 &= 8\\
+-3x_2 + 13x_3 &= -9
+\end{aligned}
+\qquad
+\begin{bmatrix}
+1 & -2 & 1 & \mid & 0\\
+0 & 2 & -8 & \mid & 8\\
+0 & -3 & 13 & \mid & -9
+\end{bmatrix}
+
+(Check row 3: -4 + 4(1) = 0; 5 + 4(-2) = -3; 9 + 4(1) = 13; -9 + 4(0) = -9. ✓)
+
+Step 3 — Make the second pivot a 1. Multiply the second equation (row) by 1/2:
+
+\begin{aligned}
+x_1 - 2x_2 + x_3 &= 0\\
+x_2 - 4x_3 &= 4\\
+-3x_2 + 13x_3 &= -9
+\end{aligned}
+\qquad
+\begin{bmatrix}
+1 & -2 & 1 & \mid & 0\\
+0 & 1 & -4 & \mid & 4\\
+0 & -3 & 13 & \mid & -9
+\end{bmatrix}
+
+Step 4 — Eliminate x_2 from the third equation. Add 3 times the second equation (row) to the third:
+
+\begin{aligned}
+x_1 - 2x_2 + x_3 &= 0\\
+x_2 - 4x_3 &= 4\\
+x_3 &= 3
+\end{aligned}
+\qquad
+\begin{bmatrix}
+1 & -2 & 1 & \mid & 0\\
+0 & 1 & -4 & \mid & 4\\
+0 & 0 & 1 & \mid & 3
+\end{bmatrix}
+
+Now the third equation directly gives x_3 = 3 — back-substitution can begin.
+
+Step 5 — Eliminate x_3 upward. Add -1 times the third equation (row) to the first, and 4 times the third to the second:
+
+\begin{aligned}
+x_1 - 2x_2 &= -3\\
+x_2 &= 16\\
+x_3 &= 3
+\end{aligned}
+\qquad
+\begin{bmatrix}
+1 & -2 & 0 & \mid & -3\\
+0 & 1 & 0 & \mid & 16\\
+0 & 0 & 1 & \mid & 3
+\end{bmatrix}
+
+Step 6 — Eliminate x_2 from the first equation. Add 2 times the second equation (row) to the first:
+
+\begin{aligned}
+x_1 &= 29\\
+x_2 &= 16\\
+x_3 &= 3
+\end{aligned}
+\qquad
+\begin{bmatrix}
+1 & 0 & 0 & \mid & 29\\
+0 & 1 & 0 & \mid & 16\\
+0 & 0 & 1 & \mid & 3
+\end{bmatrix}
+
+Final answer: (x_1, x_2, x_3) = (29, 16, 3). Verify in the original third equation: -4(29) + 5(16) + 9(3) = -116 + 80 + 27 = -9. ✓
+
+The takeaway: All six augmented matrices are equivalent (same solution set), but the last one is the simplest — it gives the solution by inspection. Row operations let us travel from a messy system to this simple one without changing the solution set.
+
+---
+
+Summary of the whole lecture
+
+· A linear system has m equations and n unknowns; a_{ij} are coefficients, b_i are constants; if all b_i = 0 it's homogeneous.
+· Every system can be written as Ax = b. The coefficient matrix A holds the coefficients; the augmented matrix [A \mid b] appends the constants as an extra column.
+· We can move freely between a system and its augmented matrix in both directions (Examples 1 and 2).
+· A solution is a tuple making all equations true; the solution set is all such tuples.
+· Every linear system is exactly one of: unique solution, infinitely many solutions, or no solution. Consistent = at least one solution; inconsistent = none.
+· We solve by elimination using the three elementary row operations (scale by a nonzero constant, swap rows, add a multiple of one row to another), aiming for the simplest equivalent system — ideally the identity-like form where the answer is read by inspection.
+
+Practice tip: Whenever you solve a system, write the augmented matrix first, apply one row operation at a time, and record the notation (\alpha R_j + R_i \to R_i, etc.) beside each step — just like Example 4. That habit will make exam solutions clean and easy to follow.
+

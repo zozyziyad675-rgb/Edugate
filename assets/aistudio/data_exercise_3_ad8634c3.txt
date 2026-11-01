@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on the Module 3 lecture slides, with the correct answer listed under each question.
+
+1. For an array with n elements, what is the valid index range?
+A) 1 to n
+B) 0 to n
+C) 0 to n - 1
+D) 1 to n - 1
+Correct Answer: C
+
+2. If an array starts at base address 1000 and each integer occupies 4 bytes, what is the address of A[6]?
+A) 1006
+B) 1024
+C) 1028
+D) 1000 + 6
+Correct Answer: B
+
+3. Why is direct index access A[i] considered O(1)?
+A) Because it always takes zero time.
+B) Because it uses the formula Base + i × element_size, which requires a constant number of arithmetic operations regardless of n.
+C) Because it scans all previous elements to find the correct address.
+D) Because arrays are stored in the stack memory.
+Correct Answer: B
+
+4. In the score analyzer trace on [72, 91, 66, 88, 54], what is the final value of min?
+A) 54
+B) 66
+C) 72
+D) 91
+Correct Answer: A
+
+5. When performing linear search for target 88 in [72, 91, 66, 88, 54], how many comparisons are made before finding the target?
+A) 1
+B) 2
+C) 3
+D) 4
+Correct Answer: D
+
+6. In the insertion pseudocode for a fixed-capacity array, why must the shifting loop move from right to left (for i <- n-1 down to index)?
+A) To preserve the order of elements.
+B) To avoid overwriting data before it is copied.
+C) Because the loop must run in O(1) time.
+D) Because the array is sorted.
+Correct Answer: B
+
+7. When inserting 99 at index 2 into [10, 20, 30, 40], what is the logical array after all shifts but before writing 99?
+A) [10, 20, 30, 40, 40]
+B) [10, 20, 30, 30, 40]
+C) [10, 20, 99, 30, 40]
+D) [10, 20, 30, 40, 99]
+Correct Answer: B
+
+8. What is the worst-case time complexity of ordered deletion from an array?
+A) O(1)
+B) O(log n)
+C) O(n)
+D) O(n²)
+Correct Answer: C
+
+9. In unordered deletion, which element is copied into the deleted slot?
+A) The first element
+B) The previous element
+C) The next element
+D) The last logical element
+Correct Answer: D
+
+10. What is the time complexity of the duplicate detection algorithm that compares all pairs?
+A) O(n)
+B) O(n log n)
+C) O(n²) worst case
+D) O(1)
+Correct Answer: C
+
+11. In a rectangular matrix with R rows and C columns, what is the linear index of A[row][col] in row-major order?
+A) row + col
+B) row × C + col
+C) col × R + row
+D) row × R + col
+Correct Answer: B
+
+12. For a matrix with 6 columns, what is the linear index of A[3][4]?
+A) 7
+B) 18
+C) 22
+D) 34
+Correct Answer: C
+
+13. What is the time complexity of a full row-major traversal of an R × C matrix?
+A) O(R + C)
+B) O(R × C)
+C) O(R²)
+D) O(C²)
+Correct Answer: B
+
+14. If B is the transpose of A, what is the relationship between their elements?
+A) B[r][c] = A[r][c]
+B) B[c][r] = A[r][c]
+C) B[r][c] = A[c][r] + 1
+D) B[c][r] = A[r][c] × 2
+Correct Answer: B
+
+15. In a square matrix, what is the rule for the secondary diagonal?
+A) row == col
+B) row + col == n
+C) row + col == n - 1
+D) row - col == n
+Correct Answer: C
+
+16. What is a jagged array?
+A) An array where all rows have the same length.
+B) An array of arrays where different rows may have different lengths.
+C) A matrix stored in column-major order.
+D) An array that cannot be traversed with nested loops.
+Correct Answer: B
+
+17. For a jagged array with total stored elements T, what is the worst-case cost of a full traversal?
+A) O(1)
+B) O(T)
+C) O(T²)
+D) O(log T)
+Correct Answer: B
+
+18. Why are strings described as immutable in C# and Python?
+A) Because characters cannot be read by index.
+B) Because operations that appear to modify a string normally create a new string value.
+C) Because strings are always stored in the heap.
+D) Because strings can only contain uppercase letters.
+Correct Answer: B
+
+19. In the palindrome two-pointer algorithm, what is the time and extra space complexity?
+A) Time O(n), Extra space O(n)
+B) Time O(n), Extra space O(1)
+C) Time O(n²), Extra space O(1)
+D) Time O(log n), Extra space O(1)
+Correct Answer: B
+
+20. What is the worst-case time complexity of the direct pattern search algorithm?
+A) O(n)
+B) O(m)
+C) O(n + m)
+D) O(nm)
+Correct Answer: D

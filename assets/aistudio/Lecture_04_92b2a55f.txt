@@ -1,0 +1,147 @@
+Lecture 04: Types of Solutions of Linear Systems
+
+Welcome to one of the most important lectures in Linear Algebra! Today, we are going to play detective. When we look at a system of linear equations, we don't just want to solve it; we want to know its nature before we do all the hard work.
+
+The entire lecture revolves around answering two main questions:
+
+1. Is the system consistent? (Does at least one solution exist?)
+2. If a solution exists, is it unique? (Is there only one specific answer?)
+
+To answer these, we use a powerful tool: the Augmented Matrix and Row Operations to transform it into a triangular form (REF) or reduced form (RREF).
+
+Let's dive into the examples to see how this works!
+
+---
+
+Example 1: The Perfect Scenario (Consistent & Unique)
+
+Goal: Determine if the system is consistent, and if so, is the solution unique?
+
+The Process:
+
+1. We start with the augmented matrix.
+2. We swap Row 1 and Row 2 to get a leading 1 in the top left corner.
+3. We use elimination: we add -4 times Row 1 to Row 3 to eliminate the x_1 term below our pivot.
+4. We multiply Row 2 by 1/3 to get a leading 1 for x_2.
+5. We add -6 times Row 2 to Row 3 to eliminate the x_2 term in the third row.
+6. Finally, we divide Row 3 by -7 to get a leading 1 for x_3.
+
+The "Aha!" Moment:
+At this point, we have a triangular form. We can clearly see x_3. If we substitute this value into equation 2, we get x_2. Then we plug both into equation 1 to get x_1. This process is called back-substitution.
+
+· Conclusion: Because we found a value, the system is consistent. Because each variable had exactly one value, the solution is unique.
+
+Finding the exact solution (Gauss-Jordan):
+To go further, we continue eliminating above the pivots. We add -1 times Row 3 to Row 1, and -1/3 times Row 3 to Row 2. Then, we add -1 times Row 2 to Row 1.
+
+· Result: We get the exact values for x_1, x_2, and x_3.
+
+---
+
+Example 2: The Impossible Scenario (No Solution)
+
+Goal: Determine if the system is consistent.
+
+The Process:
+
+1. We swap the first two rows because x_1 is missing from the first equation.
+2. We add -2 times Row 1 to Row 3.
+3. We add Row 2 to Row 3.
+
+The "Aha!" Moment:
+Look at the bottom row of the matrix: [0 0 0 | -1]. 
+If we convert this back to equation notation, it says: 0x_1 + 0x_2 + 0x_3 = -1, which simplifies to 0 = -1.
+
+· Conclusion: This is a mathematical impossibility! Since this triangular system has no solution, and it is equivalent to the original system, the original system is inconsistent (has no solution).
+
+---
+
+Example 3: Another No-Solution Case
+
+Goal: Use the Gauss-Jordan method to find the solution.
+
+The Process:
+
+1. We start with a leading 1 in the first row.
+2. We add -5 times Row 1 to Row 2, and -6 times Row 1 to Row 3 to create zeros below the first pivot.
+3. We divide Row 2 by -4 to get the second pivot.
+4. We add 5 times Row 2 to Row 3 to create a zero below the second pivot.
+
+The "Aha!" Moment:
+Once again, look at the bottom row. It results in an equation like 0 = \text{non-zero}.
+
+· Conclusion: We can immediately stop and declare that the system is inconsistent (no solution).
+
+---
+
+Example 4: Reading Reduced Forms (The Three Types of Solutions)
+
+This is a crucial example! Here, the matrix is already reduced by row operations. We just have to read the solution set. Note: A column is a pivot column if it contains a leading 1.
+
+Case 1) Unique Solution:
+
+\begin{bmatrix} 1 & 0 & 0 & | & 4 \\ 0 & 1 & 0 & | & -2 \\ 0 & 0 & 1 & | & 1 \end{bmatrix} 
+
+· Analysis: The system is consistent because the last column (the constants) is not a pivot column. (If it were a pivot column, it would mean 0=1, which is inconsistent).
+· Since every variable column (x_1, x_2, x_3) is a pivot column, there are no free variables. The solution is unique.
+· By inspection: x_1 = 4, x_2 = -2, x_3 = 1. We can write this as a vector: x = \begin{bmatrix} 4 \\ -2 \\ 1 \end{bmatrix}.
+
+Case 2) Infinitely Many Solutions:
+
+\begin{bmatrix} 1 & 0 & -5 & | & 1 \\ 0 & 1 & 1 & | & 4 \\ 0 & 0 & 0 & | & 0 \end{bmatrix} 
+
+· Analysis: The last column is not a pivot column, so it is consistent. However, the third column (x_3) is not a pivot column. This means x_3 is a free variable.
+· The Solution: We express the pivot variables (x_1, x_2) in terms of the free variable (x_3).
+  · Row 1: x_1 - 5x_3 = 1 \Rightarrow x_1 = 1 + 5x_3
+  · Row 2: x_2 + x_3 = 4 \Rightarrow x_2 = 4 - x_3
+  · x_3 is free.
+· This is called the general solution. Because x_3 is free, we can pick any value for it (for example, let x_3 = 0, then x_1 = 1, x_2 = 4). Each choice gives a different solution, meaning there are infinitely many solutions.
+· If we assign an arbitrary parameter t to x_3, the vector form is: x = \begin{bmatrix} 1 \\ 4 \\ 0 \end{bmatrix} + t \begin{bmatrix} 5 \\ -1 \\ 1 \end{bmatrix}.
+
+Case 3) Inconsistent (No Solution):
+
+\begin{bmatrix} 1 & 0 & 0 & | & 0 \\ 0 & 1 & 2 & | & 0 \\ 0 & 0 & 0 & | & 1 \end{bmatrix} 
+
+· Analysis: Look at the bottom row. The last column is a pivot column (it has a leading 1). This translates to 0 = 1.
+· Conclusion: The system is inconsistent (no solution).
+
+---
+
+Example 5: Gaussian vs. Gauss-Jordan
+
+Goal: Solve the system using both methods to see the difference.
+
+(a) Gaussian Elimination (The "Back-Substitution" way)
+
+1. We use row operations to eliminate variables below the pivots.
+2. We add Row 1 to Row 2, and -3 times Row 1 to Row 3.
+3. Multiply Row 2 by -1.
+4. Add 10 times Row 2 to Row 3.
+5. Divide the third row by -52 to get a leading 1.
+
+· Result: We now have an upper triangular form (also known as Row Echelon Form, REF).
+· Why is the solution unique? Because we have 3 pivots for 3 variables, and the last column is not a pivot.
+· Back-Substitution: We solve the bottom equation for x_3, plug it into the middle equation to get x_2, and plug both into the top equation to get x_1. We get the exact unique solution.
+
+(b) Gauss-Jordan Elimination (The "Direct" way)
+
+1. We do all the steps from part (a).
+2. But we don't stop there! We add -1 times Row 2 to Row 1.
+3. Then, we divide the third row by -52.
+4. Finally, we add 5 times Row 3 to Row 2, and -7 times Row 3 to Row 1.
+
+· Result: We reach Reduced Row Echelon Form (RREF) where the identity matrix is on the left side.
+· By inspection: The rightmost column gives us the answer directly: x_1 = 3, x_2 = 1, x_3 = 2. No back-substitution needed!
+
+---
+
+📝 Key Takeaways for Your Exam:
+
+· Consistent: A system is consistent if the augmented column (the rightmost column) is NOT a pivot column. (No 0 = \text{non-zero} rows).
+· Inconsistent: If you ever see a row that looks like [0 0 0 | non-zero], stop immediately. The system has no solution.
+· Unique Solution: Consistent + Every variable is a pivot variable (no free variables).
+· Infinitely Many Solutions: Consistent + At least one variable is a free variable (a non-pivot column). You write the pivot variables in terms of the free variable(s) to get the general solution.
+· Gaussian Elimination gives you REF (Row Echelon Form) \rightarrow Requires back-substitution.
+· Gauss-Jordan Elimination gives you RREF (Reduced Row Echelon Form) \rightarrow The solution is found by inspection.
+
+Good luck with your studies! Keep practicing those row operations!

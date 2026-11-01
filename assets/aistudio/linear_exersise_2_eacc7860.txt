@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on Lecture 02 (Square Matrix and The Inverse).
+
+Q1. A square matrix is a matrix that:
+A) has all zero entries
+B) has the same number of rows as columns
+C) has a determinant equal to zero
+D) has ones on the principal diagonal
+Answer: B) has the same number of rows as columns
+
+Q2. The principal diagonal entries of a 3 \times 3 matrix A = [a_{ij}] are:
+A) a_{12}, a_{23}, a_{31}
+B) a_{11}, a_{22}, a_{33}
+C) a_{13}, a_{22}, a_{31}
+D) a_{11}, a_{12}, a_{13}
+Answer: B) a_{11}, a_{22}, a_{33}
+
+Q3. A square matrix A = [a_{ij}] is diagonal if:
+A) a_{ij} = 0 for i \neq j
+B) a_{ij} = 0 for i = j
+C) a_{ij} = 1 for i \neq j
+D) all entries are non-zero
+Answer: A) a_{ij} = 0 for i \neq j
+
+Q4. A scalar matrix is a diagonal matrix where:
+A) all diagonal entries are zero
+B) all diagonal entries are the same
+C) all diagonal entries are ones
+D) all off-diagonal entries are non-zero
+Answer: B) all diagonal entries are the same
+
+Q5. The identity matrix I_n is a scalar matrix in which:
+A) all diagonal entries are 0
+B) all diagonal entries are 1
+C) all entries are 1
+D) all off-diagonal entries are 1
+Answer: B) all diagonal entries are 1
+
+Q6. For any m \times n matrix A, which identity holds with the identity matrix?
+A) A I_m = I_n A = A
+B) A_{m \times n} I_n = I_m A_{m \times n} = A_{m \times n}
+C) A I_n = I_n A = I_n
+D) A_{m \times n} I_m = I_n A_{m \times n} = O
+Answer: B) A_{m \times n} I_n = I_m A_{m \times n} = A_{m \times n}
+
+Q7. A matrix is upper triangular if:
+A) a_{ij} = 0 for i > j
+B) a_{ij} = 0 for i < j
+C) a_{ij} = 0 for i = j
+D) a_{ij} = 1 for i > j
+Answer: A) a_{ij} = 0 for i > j
+
+Q8. A matrix is lower triangular if:
+A) all entries above the main diagonal are zero
+B) all entries below the main diagonal are zero
+C) all diagonal entries are zero
+D) all entries are zero
+Answer: A) all entries above the main diagonal are zero (i.e., a_{ij}=0 for i<j)
+
+Q9. A square matrix A is symmetric if:
+A) A = -A^T
+B) A = A^T
+C) A = A^{-1}
+D) A = -A
+Answer: B) A = A^T
+
+Q10. A skew-symmetric matrix has:
+A) ones on the main diagonal
+B) zeros on the main diagonal
+C) all entries positive
+D) A = A^T
+Answer: B) zeros on the main diagonal
+
+Q11. If A and B are symmetric matrices of the same size, which of the following is NOT necessarily true?
+A) A + B is symmetric
+B) A - B is symmetric
+C) kA is symmetric
+D) AB is symmetric
+Answer: D) AB is symmetric (the lecture only guarantees A \pm B and kA)
+
+Q12. For any matrix A, the product AA^T is:
+A) skew-symmetric
+B) symmetric
+C) always the identity
+D) always singular
+Answer: B) symmetric
+
+Q13. An n \times n matrix A is invertible if there exists a matrix B such that:
+A) AB = O
+B) AB = BA = I_n
+C) A + B = I_n
+D) AB = A
+Answer: B) AB = BA = I_n
+
+Q14. If A is an invertible matrix, its inverse A^{-1} is:
+A) not unique
+B) unique
+C) always equal to A^T
+D) equal to the zero matrix
+Answer: B) unique
+
+Q15. A square matrix that has no inverse is called:
+A) invertible or non-singular
+B) non-invertible or singular
+C) symmetric
+D) diagonal
+Answer: B) non-invertible or singular
+
+Q16. For A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}, the determinant |A| is:
+A) ad + bc
+B) ab - cd
+C) ad - bc
+D) ac - bd
+Answer: C) ad - bc
+
+Q17. The inverse of A = \begin{bmatrix} a & b \\ c & d \end{bmatrix} exists if and only if:
+A) ad - bc = 0
+B) ad - bc \neq 0
+C) a + d \neq 0
+D) ab - cd \neq 0
+Answer: B) ad - bc \neq 0
+
+Q18. If A = \begin{bmatrix} a & b \\ c & d \end{bmatrix} with ad-bc \neq 0, then A^{-1} equals:
+A) \frac{1}{ad-bc}\begin{bmatrix} a & -b \\ -c & d \end{bmatrix}
+B) \frac{1}{ad-bc}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
+C) \frac{1}{ad-bc}\begin{bmatrix} d & b \\ c & a \end{bmatrix}
+D) \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
+Answer: B) \frac{1}{ad-bc}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
+
+Q19. If A and B are invertible matrices of the same size, which is correct?
+A) (AB)^{-1} = A^{-1}B^{-1}
+B) (AB)^{-1} = B^{-1}A^{-1}
+C) (AB)^{-1} = AB
+D) (AB)^{-1} = A^{-1} + B^{-1}
+Answer: B) (AB)^{-1} = B^{-1}A^{-1}
+
+Q20. Which of the following is a correct property of inverse matrices?
+A) (A^T)^{-1} = A^T
+B) (A^T)^{-1} = (A^{-1})^T
+C) (cA)^{-1} = cA^{-1}
+D) (A^{-1})^{-1} = A^{-1}
+Answer: B) (A^T)^{-1} = (A^{-1})^T

@@ -1,0 +1,831 @@
+Module 3: Arrays & Sequential Data — Comprehensive Lecture Explanation
+
+---
+
+Overview
+
+This module covers three major lessons:
+
+Lesson Topic Labs
+3.1 Arrays (1D) Labs 1–3
+3.2 2D & Jagged Arrays Labs 4–5
+3.3 Strings as Arrays Labs 6–8
+
+The capstone integrates all three into a Student Marks Analyzer and a Professional Sequential Data Processing Toolkit.
+
+---
+
+Lesson 3.1: Single-Dimensional Arrays
+
+What is an Array?
+
+An array stores a sequence of values under one name. Each value has a position called an index.
+
+Example sequence:
+
+Index 0 1 2 3 4
+Value 15 20 8 31 12
+
+Why Arrays Matter
+
+1. Fast access when the index is known → O(1)
+2. Simple loop-based traversal → easy to iterate
+3. Foundation for matrices, heaps, dynamic arrays, and many algorithms
+4. Good cache locality → nearby values stored close together in memory
+
+C# and Python Syntax
+
+C#:
+
+int[] marks = {72, 91, 66, 88, 54};
+Console.WriteLine(marks[2]); // 66
+Python:
+
+marks = [72, 91, 66, 88, 54]
+print(marks[2]) # 66
+Indexing and Boundary Rules
+
+For n elements, valid indices are:
+
+0, 1, 2, ..., n − 1
+
+A safe index must satisfy:
+
+0 ≤ index < length
+
+Index Validity
+0 ✅ Valid (first element)
+length − 1 ✅ Valid (last element)
+length ❌ Invalid (out of bounds!)
+
+Safe access in C#:
+
+if (index >= 0 && index < values.Length)
+    Console.WriteLine(values[index]);
+else
+    Console.WriteLine("Invalid index");
+Safe access in Python:
+
+if 0 <= index < len(values):
+    print(values[index])
+else:
+    print("Invalid index")
+⚠️ Important: In C#, accessing an invalid index throws IndexOutOfRangeException. In Python, it raises IndexError. Always validate first!
+
+Contiguous Memory and Address Calculation
+
+Why known-index access is O(1):
+
+Address(A[i]) = Base + i × element_size
+
+Solved Example:
+
+· Base address = 1000
+· Each integer = 4 bytes
+· Find Address(A[6])
+· Offset = 6 × 4 = 24
+· Address = 1000 + 24 = 1024
+
+Why is this O(1)?
+
+· No scan of previous elements is needed
+· The formula uses a constant number of arithmetic operations
+· Therefore direct index access is O(1)
+
+⚠️ Important: O(1) does not mean zero time. It means the operation count does not grow with n.
+
+Complexity Snippets: Access vs Traversal
+
+Snippet A — Direct Access:
+
+int x = values[7];
+· Time: O(1) | Extra space: O(1)
+
+Snippet B — Full Traversal:
+
+int total = 0;
+for (int i = 0; i < values.Length; i++)
+{
+    total += values[i];
+}
+· Time: O(n) | Extra space: O(1)
+
+Quick Check:
+
+· Why does direct access not depend on n? → Because the address formula uses a fixed number of operations regardless of array size.
+· Why does traversal cost double when n doubles? → Because the loop runs n times; doubling n doubles the number of iterations.
+
+Traversal and Basic Statistics
+
+One full pass can compute several values at once:
+
+int sum = 0;
+int min = scores[0];
+int max = scores[0];
+
+foreach (int score in scores)
+{
+    sum += score;
+    if (score < min) min = score;
+    if (score > max) max = score;
+}
+Trace for [72, 91, 66, 88, 54]:
+
+Step Value Sum Min Max
+1 72 72 72 72
+2 91 163 72 91
+3 66 229 66 91
+4 88 317 66 91
+5 54 371 54 91
+
+Average = 371 / 5 = 74.2
+
+One full pass is O(n).
+
+Linear Search
+
+Find the first matching value by scanning left to right:
+
+C#:
+
+static int Search(int[] a, int target)
+{
+    for (int i = 0; i < a.Length; i++)
+        if (a[i] == target)
+            return i;
+    return -1;
+}
+Python:
+
+def search(a, target):
+    for i in range(len(a)):
+        if a[i] == target:
+            return i
+    return -1
+Trace Comparisons (Not Only the Final Answer!)
+
+Array: [72, 91, 66, 88, 54] | Target = 88
+
+Step i A[i] Comparison Action
+1 0 72 72 == 88? continue
+2 1 91 91 == 88? continue
+3 2 66 66 == 88? continue
+4 3 88 88 == 88? return 3
+
+Student Exercise:
+
+· Repeat the trace for target = 54 → comparisons: 5 (returns index 4)
+· Repeat the trace for target = 100 → comparisons: 5 (returns −1, not found)
+· Count comparisons in each case.
+
+Insertion into a Fixed-Capacity Array
+
+Right shifting creates a space.
+
+Insertion Pseudocode:
+
+Insert(A, n, capacity, index, value)
+Pre: 0 <= index <= n and n < capacity
+
+for i ← n−1 down to index
+    A[i+1] ← A[i]
+
+A[index] ← value
+n ← n + 1
+Key Ideas:
+
+· Move from right to left (do not overwrite data before copying it)
+· Need free capacity
+· Validate 0 <= index <= n
+· Worst case shifts n items → O(n)
+
+Insertion Trace: Insert 99 at Index 2
+
+Start with [10, 20, 30, 40] and free capacity:
+
+Action Logical View
+Start [10, 20, 30, 40, _]
+Shift 40 from index 3 to 4 [10, 20, 30, 40, 40]
+Shift 30 from index 2 to 3 [10, 20, 30, 30, 40]
+Write 99 at index 2 [10, 20, 99, 30, 40]
+
+Core Loop:
+
+for (int i = n - 1; i >= index; i--)
+    a[i + 1] = a[i];
+
+a[index] = value;
+n++;
+Trace Exercise: Insert 25 at index 1 into [10, 20, 30, 40]. Show every right shift. Count shifts.
+
+Answer: Shifts: 40→4, 30→3, 20→2. Total = 3 shifts. Final: [10, 25, 20, 30, 40].
+
+Deletion from an Array
+
+Left shifting closes the gap.
+
+Deletion Pseudocode:
+
+Delete(A, n, index)
+Pre: 0 <= index < n
+
+for i ← index to n−2
+    A[i] ← A[i+1]
+
+n ← n − 1
+Trace: Delete value 8 at index 1 from [5, 8, 12, 4]:
+
+Action Logical View
+Start [5, 8, 12, 4]
+Delete value 8 at index 1 [5, 12, 4]
+Move 12 left [5, 12, 12, 4]
+Move 4 left [5, 12, 4, 4]
+Reduce size [5, 12, 4]
+
+· Worst-case ordered deletion: O(n)
+· Delete last element: O(1)
+
+Ordered vs Unordered Deletion
+
+Ordered Deletion Unordered Deletion
+Shift elements left Copy last logical value into deleted slot
+Preserves order Does NOT preserve order
+Worst case O(n) Can be O(1)
+
+Ordered deletion core:
+
+for (int i = index; i < n - 1; i++)
+    a[i] = a[i + 1];
+n--;
+Unordered deletion core:
+
+a[index] = a[n - 1];
+n--;
+Discussion:
+
+· When is unordered deletion acceptable? → When order doesn't matter (e.g., a bag of items, a set-like collection, or when you just need to remove an element quickly)
+· Give an example where order must be preserved → A queue, a sorted list, a timeline of events, or a leaderboard
+
+Array Toolkit and Complexity Summary (Lab 3)
+
+Operation Main Idea Time Extra Space
+Reverse in place swap left/right O(n) O(1)
+Rotate right one save last, shift right O(n) O(1)
+Second largest distinct track first and second O(n) O(1)
+Duplicate detection compare all pairs O(n²) worst O(1)
+Merge sorted arrays two pointers O(n+m) O(n+m) output
+
+Duplicate detection snippet:
+
+for i in range(len(a)):
+    for j in range(i + 1, len(a)):
+        if a[i] == a[j]:
+            return True
+return False
+Lesson 3.1 Exercises and Assessment
+
+Exercises:
+
+1. Trace linear search for target 88 in [72, 91, 66, 88, 54]
+2. Calculate Address(A[9]) when Base = 2000 and element size = 8 bytes
+   Answer: Offset = 9 × 8 = 72; Address = 2000 + 72 = 2072
+3. Insert 25 at index 1 into [10, 20, 30, 40] and show every shift
+4. Delete index 2 from [7, 11, 19, 23, 29] and show every shift
+
+Assessment:
+
+· MCQ: What is the last valid index of an array of length n? → n − 1
+· MCQ: Why is A[i] O(1)? → Because address calculation uses a constant number of operations
+· Essay: Explain fast random access and expensive ordered middle insertion/deletion
+· Homework: Complete Labs 1–3 in C# and Python
+
+🔑 Key Lesson: Arrays are excellent for known-index access, but ordered middle updates can be expensive because shifting may be required.
+
+---
+
+Lesson 3.2: Multi-Dimensional Arrays
+
+What is a 2D Array?
+
+A two-dimensional array organizes values into rows and columns. Useful for:
+
+· Tables, game boards, maps, images, grade books, and matrices
+
+C# Rectangular Array:
+
+int[,] m =
+{
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+Console.WriteLine(m[1, 2]); // 6
+Python Nested List:
+
+m = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+print(m[1][2]) # 6
+Visual Grid:
+
+ Column 0 Column 1 Column 2
+Row 0 1 2 3
+Row 1 4 5 6
+Row 2 7 8 9
+
+Boundary Rules for 2D Arrays
+
+For an R × C matrix:
+
+· Valid rows: 0 .. R−1
+· Valid columns: 0 .. C−1
+
+Index Validity
+row = 0 ✅ Valid
+row = R ❌ Invalid
+col = C ❌ Invalid
+A[R−1][C−1] ✅ Last valid cell
+
+Safe cell access:
+
+if (row >= 0 && row < rows && col >= 0 && col < cols)
+    Console.WriteLine(m[row, col]);
+else
+    Console.WriteLine("Invalid cell");
+Row-Major Mapping (Linear Memory)
+
+Computer memory is linear even when we draw a matrix as a grid. In row-major order, all elements of row 0 are stored first, then row 1, and so on.
+
+linear_index = row × C + col
+
+Address(A[row][col]) = Base + (row × C + col) × element_size
+
+Row-major sequence:
+A[0][0], A[0][1], A[0][2], A[1][0], A[1][1], ...
+
+Index 0 1 2 3 4 ...
+Value A[0][0] A[0][1] A[0][2] A[1][0] A[1][1] ...
+
+Solved Problems: Linear Index and Address
+
+Solved Problem 1:
+
+· Matrix has C = 5 columns
+· Find linear index of A[2][3]
+· linear_index = 2 × 5 + 3 = 13
+
+Solved Problem 2:
+
+· Base = 1000
+· Element size = 4 bytes
+· Linear index = 13
+· Address = 1000 + 13 × 4 = 1052
+
+Practice:
+
+· For 6 columns, find index of A[3][4] → 3 × 6 + 4 = 22
+· If Base = 500 and element size = 8, find its address → 500 + 22 × 8 = 676
+
+Nested Loops Visit Every Cell
+
+C# Row-Major Traversal:
+
+int rows = m.GetLength(0);
+int cols = m.GetLength(1);
+
+for (int r = 0; r < rows; r++)
+{
+    for (int c = 0; c < cols; c++)
+    {
+        Console.WriteLine(m[r, c]);
+    }
+}
+Python Traversal:
+
+rows = len(m)
+cols = len(m[0])
+
+for r in range(rows):
+    for c in range(cols):
+        print(m[r][c])
+Visits = R × C → Time = O(RC)
+
+Row and Column Sums (Two Traversals)
+
+# Row sums
+for r in range(rows):
+    row_sum = 0
+    for c in range(cols):
+        row_sum += m[r][c]
+    print("row", r, row_sum)
+
+# Column sums
+for c in range(cols):
+    col_sum = 0
+    for r in range(rows):
+        col_sum += m[r][c]
+    print("column", c, col_sum)
+· First phase visits R × C cells
+· Second phase visits R × C cells
+· Total = 2RC → Drop constant factor → O(RC)
+
+Quick Checks:
+
+· For a 4 × 6 matrix, how many visits occur in one full traversal? → 24
+· What is the complexity of finding the maximum value? → O(RC)
+
+Transpose of a Matrix
+
+Rows become columns: If B is the transpose of A, then B[c][r] = A[r][c].
+
+Python transpose without shortcuts:
+
+rows = len(a)
+cols = len(a[0])
+b = [[0 for _ in range(rows)] for _ in range(cols)]
+
+for r in range(rows):
+    for c in range(cols):
+        b[c][r] = a[r][c]
+Property Result
+Input shape R × C
+Output shape C × R
+Time O(RC)
+Extra output space O(RC)
+
+Trace Exercise: Transpose [[1,2,3],[4,5,6]] by hand.
+
+Output: [[1,4],[2,5],[3,6]] — shape 2 × 3 → 3 × 2
+
+Diagonals and Symmetry
+
+Diagonal rules (square matrix n × n):
+
+· Main diagonal: row == col
+· Secondary diagonal: row + col == n − 1
+· Diagonal sum visits only n cells → O(n)
+
+C# diagonal sums:
+
+int main = 0, secondary = 0;
+for (int i = 0; i < n; i++)
+{
+    main += a[i, i];
+    secondary += a[i, n - 1 - i];
+}
+Symmetry check (Python):
+
+def is_symmetric(a):
+    n = len(a)
+    for r in range(n):
+        for c in range(r + 1, n):
+            if a[r][c] != a[c][r]:
+                return False
+    return True
+Symmetry worst case: about n(n−1)/2 → O(n²)
+
+Jagged Arrays
+
+A jagged array is an array of arrays where different rows may have different lengths.
+
+C# Jagged Array:
+
+int[][] groups =
+{
+    new int[] { 101, 108 },
+    new int[] { 205, 211, 219, 220 },
+    new int[] { 301 }
+};
+Python Jagged Data:
+
+groups = [
+    [101, 108],
+    [205, 211, 219, 220],
+    [301]
+]
+Good Use Cases:
+
+· Course registrations with different class sizes
+· Daily transaction lists with different counts
+· Graph adjacency lists
+· Variable-length sensor readings
+
+Jagged Array Traversal
+
+Cost depends on total stored elements.
+
+Safe jagged traversal:
+
+total_items = 0
+for r in range(len(groups)):
+    for c in range(len(groups[r])):
+        print(groups[r][c])
+        total_items += 1
+C# search all rows:
+for (int r = 0; r < groups.Length; r++)
+    for (int c = 0; c < groups[r].Length; c++)
+        if (groups[r][c] == target)
+            return true;
+Let T = total stored elements. Full traversal/search worst case = O(T).
+
+Quick Exercise:
+
+· Row lengths: 2, 5, 1, 4
+· Find T → 2 + 5 + 1 + 4 = 12
+· Cost of complete traversal → O(12) = O(T)
+
+Lesson 3.2 Exercises and Assessment
+
+Exercises:
+
+1. For 6 columns, calculate linear index of A[3][4] → 22
+2. Calculate address using Base = 500 and element size = 8 bytes → 676
+3. Trace row-major traversal of a 2 × 3 matrix
+4. Write pseudocode to find largest value in each row
+
+Assessment:
+
+· MCQ: A full traversal of R × C is O(RC)
+· MCQ: Jagged arrays are useful when rows have different lengths
+· Essay: Compare rectangular and jagged arrays
+· Homework: Complete Labs 4–5 in C# and Python
+
+🔑 Key Lesson: A matrix is a logical grid, but memory is linear; a jagged array stores irregular rows naturally.
+
+---
+
+Lesson 3.3: Strings as Arrays
+
+What is a String?
+
+A string is text stored as an ordered sequence of characters. Characters can be read by index like array elements.
+
+Example: "DATA"
+
+Index 0 1 2 3
+Character D A T A
+
+C# and Python indexing:
+
+string word = "DATA";
+Console.WriteLine(word[2]); // T
+```python
+word = "DATA"
+print(word[2]) # T
+
+Read known character: O(1) | Scan all characters: O(n)
+
+String Immutability
+
+In C# and Python, strings are immutable. Operations that appear to modify a string normally create a new string value.
+
+csharp
+string s = "DATA";
+// s[0] = 'L';        // ❌ not allowed
+s = "L" + s.Substring(1);  // ✅ creates new string
+
+Why this matters:
+
+· Repeated concatenation can create many temporary strings
+· Large output should be built with StringBuilder or join-based techniques
+· Memory-conscious text processing is part of professional programming
+
+Memory-Conscious String Building
+
+Less efficient pattern (bad):
+
+python
+result = ""
+for x in values:
+    result = result + str(x) + ","
+
+C# preferred pattern (good):
+
+csharp
+var sb = new StringBuilder();
+for (int i = 0; i < values.Length; i++)
+{
+    if (i > 0) sb.Append(',');
+    sb.Append(values[i]);
+}
+string result = sb.ToString();
+
+Python preferred pattern (good):
+
+python
+parts = []
+for x in values:
+    parts.append(str(x))
+result = ",".join(parts)
+
+⚠️ Repeated concatenation may copy an increasingly long string many times → O(n²) total time. Using StringBuilder/join reduces it to O(n).
+
+Palindrome Check (Two Pointers)
+
+A palindrome reads the same left-to-right and right-to-left (e.g., LEVEL, RADAR).
+
+C# palindrome check:
+
+csharp
+static bool IsPalindrome(string text)
+{
+    int left = 0;
+    int right = text.Length - 1;
+
+    while (left < right)
+    {
+        if (text[left] != text[right])
+            return false;
+        left++;
+        right--;
+    }
+    return true;
+}
+
+Python palindrome check:
+
+python
+def is_palindrome(text):
+    left = 0
+    right = len(text) - 1
+    while left < right:
+        if text[left] != text[right]:
+            return False
+        left += 1
+        right -= 1
+    return True
+
+Time: O(n) | Extra space: O(1)
+
+Palindrome Trace: LEVEL
+
+Step Left Char Right Char Result
+1 L L match
+2 E E match
+3 V V middle reached
+
+Trace Exercises:
+
+· Trace RADAR → R/R match, A/A match, D middle → True
+· Trace DATA → D/A mismatch → False (1 comparison)
+· How many comparisons are made before returning? → RADAR: 3; DATA: 1
+
+For phrase palindromes, state the normalization rule clearly: ignore case? spaces? punctuation?
+
+Frequency Counting and Anagrams
+
+Python frequency dictionary:
+
+python
+freq = {}
+for ch in text.lower():
+    if ch.isalpha():
+        freq[ch] = freq.get(ch, 0) + 1
+`
+
+Anagram check:
+
+1. Normalize both strings
+2. If lengths differ, return false
+3. Increment counts for first string
+4. Decrement counts for second string
+5. All final counts must be zero
+
+Exercises:
+· Build a frequency table for MISSISSIPPI:
+  M:1, I:4, S:4, P:2
+· Check whether LISTEN and SILENT are anagrams after normalization → Yes! (Both have E:1, I:1, L:1, N:1, S:1, T:1)
+
+Direct Pattern Search
+
+Find a smaller pattern inside a larger string.
+
+def find_pattern(text, pattern):
+    positions = []
+    for start in range(len(text) - len(pattern) + 1):
+        matched = True
+        for j in range(len(pattern)):
+            if text[start + j] != pattern[j]:
+                matched = False
+                break
+        if matched:
+            positions.append(start)
+    return positions
+Solved Example:
+
+· Text = BANANA, Pattern = ANA
+· Positions = 1 and 3
+
+Worst-case time: O(nm) where n = text length, m = pattern length
+
+Trace Exercise: Find ABA in ABABABA. List all starting positions.
+
+Positions: 0 (ABA), 2 (ABA), 4 (ABA)
+Count comparisons for one full trace: at position 0 → 3 comparisons, position 1 → 1 comparison (mismatch), position 2 → 3 comparisons, position 3 → 1, position 4 → 3. Total ≈ 11 comparisons.
+
+Integrated Project: Student Marks Analyzer
+
+Combining arrays, matrices, and strings:
+
+· Store student names in a string array/list
+· Store marks in a rectangular 2D structure with exactly three subjects
+· Validate names and marks
+· Calculate student averages and subject averages
+· Find the highest overall student
+· Search for a student by name
+· Build a formatted report efficiently
+
+Operation Suggested Complexity
+Search by name O(S)
+Full grade traversal O(S × C)
+If C = 3 fixed O(S)
+Report generation O(S × C + text length)
+
+Required Test Cases:
+
+· One student only
+· Repeated name attempt
+· Mark = 0 and mark = 100
+· Search existing and missing student
+· Names containing spaces or hyphens
+
+Lesson 3.3 Exercises and Assessment
+
+Exercises:
+
+1. Trace RADAR with the two-pointer palindrome algorithm
+2. Count vowels, digits, spaces, and words in "DSA 2026 Lab"
+   Vowels: 3 (A, a), Digits: 4 (2026), Spaces: 2, Words: 3
+3. Write a frequency table for MISSISSIPPI
+4. Use direct search to find ABA in ABABABA
+
+Assessment:
+
+· MCQ: Strings are immutable sequences in C# and Python
+· MCQ: Direct pattern search worst case is O(nm)
+· Essay: Discuss immutability, memory, and efficient construction
+· Homework: Complete Lab 6 and extend Lab 7
+
+🔑 Key Lesson: Strings support array-like indexing for reading, but memory-conscious construction is needed for large output.
+
+---
+
+Unit 3 Complexity Summary
+
+Operation Time Extra Space
+Array index access O(1) O(1)
+Full 1D traversal O(n) O(1)
+Linear search O(n) worst O(1)
+Middle insertion/deletion O(n) O(1)
+Pair duplicate detection O(n²) worst O(1)
+Matrix traversal O(RC) O(1)
+Matrix transpose O(RC) O(RC) output
+Jagged traversal O(T) O(1)
+Palindrome two-pointer O(n) O(1)
+Direct pattern search O(nm) worst output dependent
+
+---
+
+End-of-Unit Homework and Capstone
+
+Professional Sequential Data Processing Toolkit
+
+Build a reusable console toolkit with:
+
+1. Array module: traversal, search, insert, delete, reverse, duplicate detection
+2. Matrix module: row/column statistics, transpose, row-major index calculator
+3. Jagged module: group statistics and safe traversal
+4. Text module: palindrome, frequency counting, validation, efficient report building
+5. Testing module: normal, boundary, empty/invalid, and stress-size cases
+6. Complexity report: time and extra-space complexity for every public operation
+
+Deliverables:
+
+· Submit C# code, Python code, traces, tests, sample output, and a short design reflection
+· State when a linked list would be better than an array
+
+💡 When is a linked list better than an array?
+
+· When you need frequent insertions/deletions in the middle (O(1) with a pointer vs O(n) shifting in arrays)
+· When the size is unknown and may grow/shrink dynamically
+· When you don't need random access by index (linked lists are O(n) for access)
+· When memory fragmentation is a concern (linked lists don't need contiguous memory)
+
+---
+
+Final Quick-Reference Cheat Sheet
+Concept Formula / Rule
+1D address Base + i × element_size
+2D linear index row × C + col
+2D address Base + (row × C + col) × element_size
+Safe 1D index 0 ≤ i < length
+Safe 2D cell 0 ≤ row < R and 0 ≤ col < C
+Main diagonal row == col
+Secondary diagonal row + col == n − 1
+Jagged total T = sum of all row lengths
+Palindrome two pointers moving inward
+Pattern search worst case O(nm)
+
+---

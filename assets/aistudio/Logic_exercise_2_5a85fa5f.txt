@@ -1,0 +1,141 @@
+Based on the provided lecture slides, here are 20 multiple-choice questions covering numbering systems, conversions, and arithmetic operations.
+
+1. What is the base of the Hexadecimal numbering system?
+A) 2
+B) 8
+C) 10
+D) 16
+Correct Answer: D) 16
+
+2. In the decimal system, what does the weight of a digit represent?
+A) The base multiplied by the position
+B) 10 raised to the power of the digit's position
+C) The sum of all digits to its right
+D) The digit multiplied by 2
+Correct Answer: B) 10 raised to the power of the digit's position
+
+3. Which of the following symbols is NOT valid in the octal number system?
+A) 7
+B) 5
+C) 8
+D) 0
+Correct Answer: C) 8
+
+4. Convert the octal number (721.34)₈ to decimal. What is the weight of the digit '3'?
+A) 8²
+B) 8¹
+C) 8⁻¹
+D) 8⁻²
+Correct Answer: C) 8⁻¹
+
+5. When performing addition in the octal system, if the sum of a column is equal to or greater than 8, what is the rule?
+A) Subtract 8 and carry 1 to the next position
+B) Subtract 10 and carry 1 to the next position
+C) Add 8 and carry 1 to the next position
+D) Reset to 0 and carry 2 to the next position
+Correct Answer: A) Subtract 8 and carry 1 to the next position
+
+6. In the Hexadecimal system, what decimal value does the symbol 'B' represent?
+A) 10
+B) 11
+C) 12
+D) 15
+Correct Answer: B) 11
+
+7. What is the correct expansion for the hexadecimal number (B4A5.3F1)₁₆?
+A) B×16³ + 4×16² + A×16¹ + 5×16⁰ + 3×16⁻¹ + F×16⁻² + 1×16⁻³
+B) B×16⁴ + 4×16³ + A×16² + 5×16¹ + 3×16⁰ + F×16⁻¹ + 1×16⁻²
+C) B×10³ + 4×10² + A×10¹ + 5×10⁰ + 3×10⁻¹ + F×10⁻² + 1×10⁻³
+D) B×16³ + 4×16² + A×16¹ + 5×16⁰ + 3×16¹ + F×16² + 1×16³
+Correct Answer: A) B×16³ + 4×16² + A×16¹ + 5×16⁰ + 3×16⁻¹ + F×16⁻² + 1×16⁻³
+
+8. What are the only valid symbols in the Binary system?
+A) 0, 1, 2
+B) 0, 1
+C) 1, 2
+D) 0 through 7
+Correct Answer: B) 0, 1
+
+9. Convert the binary number (1011.101)₂ to decimal. What is the value of the leftmost '1' (at position 2³)?
+A) 1
+B) 4
+C) 8
+D) 16
+Correct Answer: C) 8
+
+10. In binary addition, what is the result of 1 + 1 + 1?
+A) 0 with a carry of 1
+B) 1 with a carry of 1
+C) 1 with a carry of 0
+D) 0 with a carry of 0
+Correct Answer: B) 1 with a carry of 1
+
+11. When converting a decimal fraction (e.g., 0.6875) to binary, which operation is repeatedly performed?
+A) Division by 2
+B) Multiplication by 2
+C) Subtraction of 2
+D) Addition of 2
+Correct Answer: B) Multiplication by 2
+
+12. When converting the integer part of a decimal number to binary, in what order should the remainders be read to form the final binary number?
+A) From top to bottom
+B) From bottom to top
+C) In random order
+D) Only the first remainder is used
+Correct Answer: B) From bottom to top
+
+13. To convert an octal number to binary, how many binary digits (bits) are equivalent to one octal digit?
+A) 2
+B) 3
+C) 4
+D) 8
+Correct Answer: B) 3
+
+14. Convert the octal number (721.534)₈ to binary. What is the binary equivalent of the digit '7'?
+A) 100
+B) 101
+C) 110
+D) 111
+Correct Answer: D) 111
+
+15. To convert a hexadecimal number to binary, how many binary digits are equivalent to one hexadecimal digit?
+A) 2
+B) 3
+C) 4
+D) 16
+Correct Answer: C) 4
+
+16. What is the binary equivalent of the hexadecimal digit 'F'?
+A) 1111
+B) 1010
+C) 1100
+D) 1000
+Correct Answer: A) 1111
+
+17. According to the conversion flowchart, what is the direct method to convert from Hexadecimal to Octal (without going through decimal)?
+A) Multiply by 16 then divide by 8
+B) Convert Hex to Binary, then Binary to Octal
+C) Convert Hex to Decimal, then Decimal to Octal
+D) There is no direct method
+Correct Answer: B) Convert Hex to Binary, then Binary to Octal
+
+18. What is the weight of the 4th position to the left of the decimal point in the binary system (position 3)?
+A) 2
+B) 4
+C) 8
+D) 16
+Correct Answer: C) 8
+
+19. In the equation (N)₁₀ = 18² + 28¹ + 78⁰ + 38⁻¹ + 18⁻² + 48⁻³, what is the value of N in octal notation?
+A) (127.314)₈
+B) (127.413)₈
+C) (721.314)₈
+D) (127.134)₈
+Correct Answer: A) (127.314)₈
+
+20. When converting the decimal number (125.852)₁₀ to binary, the integer part results in (1111101)₂. What is the first step in calculating the fractional part?
+A) 0.852 / 2
+B) 0.852 + 2
+C) 0.852 * 2
+D) 0.852 - 2
+Correct Answer: C) 0.852 * 2

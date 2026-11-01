@@ -1,0 +1,226 @@
+Inverse Laplace Transform — Complete Lecture Explanation
+
+🎯 The Big Picture
+
+The Laplace transform takes a function f(t) in the time domain and converts it to F(s) in the s-domain. The Inverse Laplace transform does the reverse: it takes you back from F(s) to f(t). This is essential for solving differential equations — you transform, solve algebraically in the s-domain, then inverse-transform to get the answer in time.
+
+---
+
+1. Warm-Up Examples (Page 2) — Building Intuition
+
+Before defining the inverse, the lecture shows four forward Laplace transforms. These matter because they become your "dictionary" for reversing later.
+
+1. f(t) = t^3
+
+L\{t^3\} = \frac{3!}{s^4} = \frac{6}{s^4}
+
+Key formula: L\{t^n\} = \dfrac{n!}{s^{n+1}}. Here n = 3, so 3! = 6.
+
+2. f(t) = t^3 e^{2t}
+
+L\{t^3 e^{2t}\} = \frac{6}{(s-2)^4}
+
+Key idea (First Shifting): multiplying by e^{at} in time means replacing s with s-a. Since L\{t^3\} = \frac{6}{s^4}, we get \frac{6}{(s-2)^4}.
+
+3. f(t) = t\sin 4t
+
+L\{\sin 4t\} = \frac{4}{s^2+16} \;\rightarrow\; L\{t\sin 4t\} = -\frac{d}{ds}\left(\frac{4}{s^2+16}\right) = \frac{8s}{(s^2+16)^2}
+
+Key idea (Multiplication by t): L\{t\,f(t)\} = -\dfrac{d}{ds}F(s). Differentiate the transform and flip the sign.
+
+4. f(t) = t^2 u(t-1)
+
+L\{t^2 u(t-1)\} = e^{-s}L\{(t+1)^2\} = e^{-s}L\{t^2+2t+1\} = e^{-s}\left(\frac{2}{s^3}+\frac{2}{s^2}+\frac{1}{s}\right)
+
+Key idea (Second Shifting / unit step): L\{f(t)\,u(t-a)\} = e^{-as}L\{f(t+a)\}. Substitute t \to t+1 inside, expand, and transform each term. Note L\{t^2\} = \frac{2}{s^3}, L\{2t\} = \frac{2}{s^2}, L\{1\} = \frac{1}{s}.
+
+---
+
+2. Definition of the Inverse Laplace Transform (Page 3)
+
+Definition 1. Given a function F(s), if there is a function f(t) such that
+
+L\{f(t)\} = F(s),
+
+then we say f(t) is the inverse Laplace transform of F(s), written
+
+L^{-1}\{F(s)\} = f(t).
+
+Important note: The inverse is not unique in general (functions differing at single points have the same transform), but in practice we take the continuous representative. Also, the inverse is linear — that's the workhorse property.
+
+There are several methods to find inverse transforms; the lecture covers them in detail.
+
+---
+
+3. Method 1: Using the Table + Basic Properties (Pages 4–5)
+
+📋 The Table (memorize this!)
+
+F(s) L^{-1}\{F(s)\} = f(t)
+1 \delta(t) (Dirac delta)
+\dfrac{1}{s} 1
+\dfrac{1}{s^n} \dfrac{t^{n-1}}{(n-1)!}, n = 1,2,\dots
+\dfrac{1}{s-a} e^{at}
+\dfrac{a}{s^2+a^2} \sin at
+\dfrac{s}{s^2+a^2} \cos at
+\dfrac{a}{s^2-a^2} \sinh at
+\dfrac{s}{s^2-a^2} \cosh at
+e^{-as} \delta(t-a)
+\dfrac{e^{-as}}{s} u(t-a) (unit step)
+
+⚠️ Watch the signs! \frac{1}{s^2+a^2} gives sin/cos (plus sign), while \frac{1}{s^2-a^2} gives sinh/cosh (minus sign). Mixing these up is the #1 exam mistake.
+
+Example 1 (Page 5)
+
+i) L^{-1}\left\{\dfrac{3}{s^4}\right\}
+
+We need the form \frac{n!}{s^{n+1}}. Here s^4 = s^{3+1}, so n = 3 and n! = 6. Rewrite:
+
+L^{-1}\left\{\frac{3}{s^4}\right\} = \frac{1}{2}\,L^{-1}\left\{\frac{3!}{s^4}\right\} = \frac{1}{2}t^3
+
+Trick: adjust the numerator to match n!, then compensate with a constant outside. Since \frac{3}{6} = \frac12, we factor out \frac12.
+
+ii) L^{-1}\left\{\dfrac{3}{s^2+16}\right\}
+
+Match \frac{a}{s^2+a^2} with a^2 = 16 \Rightarrow a = 4. Adjust numerator to 4:
+
+L^{-1}\left\{\frac{3}{s^2+16}\right\} = \frac{3}{4}\,L^{-1}\left\{\frac{4}{s^2+16}\right\} = \frac{3}{4}\sin 4t
+
+iii) L^{-1}\left\{\dfrac{s}{s^2-16}\right\}
+
+Minus sign in denominator → hyperbolic. a^2 = 16 \Rightarrow a=4:
+
+L^{-1}\left\{\frac{s}{s^2-16}\right\} = \cosh 4t
+
+Theorem 1 — Linearity
+
+If L^{-1}\{F_1(s)\} and L^{-1}\{F_2(s)\} exist and c_1, c_2 are constants, then
+
+L^{-1}\{c_1F_1(s) + c_2F_2(s)\} = c_1L^{-1}\{F_1(s)\} + c_2L^{-1}\{F_2(s)\}.
+
+This lets you split complicated fractions into table entries term by term.
+
+---
+
+4. Example 2 (Page 6) — Linearity + Table in Action
+
+i) L^{-1}\left\{\dfrac{-2s+6}{s^2+4}\right\}
+
+Split into two pieces and use linearity:
+
+= -2L^{-1}\left\{\frac{s}{s^2+4}\right\} + 6L^{-1}\left\{\frac{1}{s^2+4}\right\}
+
+For the first: \frac{s}{s^2+a^2} with a=2 → \cos 2t. For the second, adjust to a=2: 6\cdot\frac{1}{2}L^{-1}\left\{\frac{2}{s^2+4}\right\} = 3\sin 2t.
+
+\boxed{-2\cos 2t + 3\sin 2t}
+
+ii) L^{-1}\left\{3 + 2e^{-3s} + \dfrac{e^{-3s}}{s}\right\}
+
+Use the table directly, term by term:
+
+= 3\delta(t) + 2\delta(t-3) + u(t-3)
+
+Reasoning: L^{-1}\{1\} = \delta(t); L^{-1}\{e^{-3s}\} = \delta(t-3); L^{-1}\left\{\frac{e^{-3s}}{s}\right\} = u(t-3). The e^{-3s} factor always signals a time shift by 3.
+
+---
+
+5. Theorem 2 — First Shifting Property (Page 7)
+
+Theorem 2 (First Shifting). If L^{-1}\{F(s)\} = f(t), then
+
+L^{-1}\{F(s-a)\} = e^{at}f(t),
+
+where a is any constant.
+
+In words: a shift in s (replace s by s-a) becomes multiplication by e^{at} in time.
+
+Example 3 (Page 7)
+
+i) L^{-1}\left\{\dfrac{1}{(s-3)^5}\right\}
+
+Here F(s-3) with F(s) = \frac{1}{s^5} and a = 3. From the table, L^{-1}\left\{\frac{1}{s^5}\right\} = \frac{t^4}{4!} = \frac{t^4}{24}. So:
+
+= e^{3t}\cdot\frac{t^4}{4!} = \frac{t^4 e^{3t}}{24}
+
+ii) L^{-1}\left\{\dfrac{1}{s^2+4s+4}\right\}
+
+Step 1 — Complete the square: s^2+4s+4 = (s+2)^2. So this is F(s+2) with F(s) = \frac{1}{s^2} and shift a = -2.
+
+= e^{-2t}L^{-1}\left\{\frac{1}{s^2}\right\} = e^{-2t}\,t
+
+Careful: s+2 = s-(-2), so a = -2, giving e^{-2t} (not e^{2t}).
+
+iii) L^{-1}\left\{\dfrac{1}{s^2+2s+2}\right\}
+
+Step 1 — Complete the square: s^2+2s+2 = (s^2+2s+1)+1 = (s+1)^2+1.
+
+Step 2 — Recognize the shift: this is F(s+1) with F(s) = \frac{1}{s^2+1}, so a = -1. Table: L^{-1}\left\{\frac{1}{s^2+1}\right\} = \sin t.
+
+= e^{-t}\sin t
+
+---
+
+6. Example 3 (Page 8) — The "Complete the Square + Adjust Numerator" Combo
+
+Find L^{-1}\left\{\dfrac{s}{s^2+2s+2}\right\}
+
+Step 1 — Complete the square:
+
+s^2+2s+2 = (s+1)^2+1
+
+So we have \dfrac{s}{(s+1)^2+1}.
+
+Step 2 — Match the shifted variable. The table entry for cosine needs the numerator to be (s+1), not s. So add and subtract 1:
+
+\frac{s}{(s+1)^2+1} = \frac{(s+1)-1}{(s+1)^2+1}
+
+Step 3 — Apply first shifting with a = -1:
+
+= e^{-t}L^{-1}\left\{\frac{s-1}{s^2+1}\right\}
+
+Step 4 — Split by linearity:
+
+= e^{-t}L^{-1}\left\{\frac{s}{s^2+1}\right\} - e^{-t}L^{-1}\left\{\frac{1}{s^2+1}\right\} = e^{-t}(\cos t - \sin t)
+
+\boxed{e^{-t}(\cos t - \sin t)}
+
+The golden recipe for quadratics that don't factor:
+
+1. Complete the square.
+2. Rewrite the numerator to contain the shifted variable (s+a).
+3. Split into a cosine-type term and a sine-type term.
+4. Multiply the whole result by e^{at} (with the correct sign of a).
+
+---
+
+7. Summary Cheat Sheet
+
+Situation Tool Result pattern
+\frac{c}{s^n} Table + adjust n! \frac{c}{(n-1)!}t^{n-1}
+\frac{c}{s^2+a^2} Table + adjust numerator to a \frac{c}{a}\sin at
+\frac{cs}{s^2+a^2} Table c\cos at
+\frac{c}{s^2-a^2}, \frac{cs}{s^2-a^2} Table (minus sign!) \sinh at, \cosh at
+Denominator with (s-a)^n First Shifting e^{at}\cdot (table entry)
+e^{-as} in numerator Second Shifting time shift by a: \delta(t-a), u(t-a)
+s^2+bs+c (no real roots) Complete the square e^{at}(\cos and/or \sin)
+Sum of terms Linearity handle each term separately
+
+⚠️ Common Pitfalls
+
+1. Forgetting to adjust the numerator — e.g., writing L^{-1}\left\{\frac{3}{s^2+16}\right\} = 3\sin 4t ❌ (correct: \frac34\sin 4t).
+2. Wrong sign in the shift — F(s+2) gives e^{-2t}, not e^{2t}.
+3. Confusing s^2+a^2 (sin/cos) with s^2-a^2 (sinh/cosh).
+4. Not completing the square before trying to match table entries.
+5. Dropping the e^{-as} shift when it appears in the numerator.
+
+---
+
+🧠 Final Mental Model
+
+Think of inverse Laplace as pattern matching with three moves:
+
+1. Match a table entry (possibly rescaling the numerator).
+2. Shift — if you see (s-a) or e^{-as}, pull out an exponential or a time delay.
+3. Split — use linearity to break sums into simple pieces.
+
+Master the table, complete the square fluently, and always check the sign of a — that's 90% of the battle. Good luck! 🚀

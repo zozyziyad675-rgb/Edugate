@@ -1,0 +1,430 @@
+Lecture 5: Inverse Laplace Transform (Part 2) — Complete Explanation
+
+🎯 What This Lecture Is About
+
+This lecture continues the Inverse Laplace Transform. It covers four major tools:
+
+1. Completing the square (for quadratic denominators)
+2. Theorem 4: Derivative of F(s) (for logs and arctan)
+3. Theorem 3: Second Shifting Property (for e^{-as}F(s))
+4. Partial Fractions (non-repeated and repeated linear factors)
+
+Let's go through every page carefully.
+
+---
+
+📄 Page 2: Completing the Square
+
+Example 1: \displaystyle F(s)=\frac{1}{s^2+4}
+
+Key idea: Match the denominator to a standard table form. The standard form is:
+
+L^{-1}\left\{\frac{\omega}{s^2+\omega^2}\right\}=\sin \omega t
+
+Here \omega^2=4, so \omega=2. We need a "2" on top, so we multiply and divide by 2:
+
+F(s)=\frac{1}{2}\cdot\frac{2}{s^2+4}
+
+\boxed{L^{-1}\{F(s)\}=\frac{1}{2}\sin 2t}
+
+⚠️ Important: Never forget the factor \frac{1}{\omega}. The table needs \omega in the numerator.
+
+Example 2: \displaystyle F(s)=\frac{1}{s^2+4s+3}
+
+Step 1 — Complete the square on the denominator:
+
+s^2+4s+3 = s^2+4s+4-4+3 = (s+2)^2-1
+
+(We added and subtracted 4 because \left(\frac{4}{2}\right)^2=4.)
+
+Step 2 — Rewrite:
+
+F(s)=\frac{1}{(s+2)^2-1}
+
+Step 3 — Use the First Shifting Property:
+
+L^{-1}\{F(s-a)\}=e^{at}f(t) \quad\Longleftrightarrow\quad L^{-1}\{G(s+2)\}=e^{-2t}L^{-1}\{G(s)\}
+
+Here G(s)=\frac{1}{s^2-1}, and from the table:
+
+L^{-1}\left\{\frac{1}{s^2-1}\right\}=\sinh t
+
+Therefore:
+
+\boxed{L^{-1}\{F(s)\}=e^{-2t}\sinh t}
+
+💡 Why \sinh and not \sin? Because the denominator is s^2-1 (a minus sign), which matches \sinh (or \sin with imaginary argument). A plus sign (s^2+1) gives \sin.
+
+Summary of standard forms used:
+
+F(s) f(t)
+\dfrac{1}{s^2+\omega^2} \dfrac{1}{\omega}\sin\omega t
+\dfrac{s}{s^2+\omega^2} \cos\omega t
+\dfrac{1}{s^2-\omega^2} \dfrac{1}{\omega}\sinh\omega t
+\dfrac{s}{s^2-\omega^2} \cosh\omega t
+\dfrac{1}{s^n} \dfrac{t^{n-1}}{(n-1)!}
+
+---
+
+📄 Page 3: Theorem 4 — Derivative of F(s)
+
+The Theorem
+
+\boxed{L^{-1}\left\{\frac{dF(s)}{ds}\right\}=-t\,f(t)}
+
+where f(t)=L^{-1}\{F(s)\}.
+
+🔑 How to use it: If F(s) is a logarithm or arctan, you cannot find it directly in the table. So:
+
+1. Compute F'(s).
+2. Find L^{-1}\{F'(s)\} (this is usually easy!).
+3. Divide by -t to get f(t).
+
+Example 5(i): F(s)=\ln(s+3)
+
+Step 1 — Differentiate:
+
+F'(s)=\frac{1}{s+3}
+
+Step 2 — Inverse transform:
+
+L^{-1}\{F'(s)\}=L^{-1}\left\{\frac{1}{s+3}\right\}=e^{-3t}
+
+Step 3 — Apply Theorem 4:
+
+-t\,f(t)=e^{-3t}
+
+\boxed{f(t)=-\frac{e^{-3t}}{t}}
+
+⚠️ Common mistake: Forgetting the minus sign from -tf(t).
+
+---
+
+📄 Page 4: More Theorem 4 Examples
+
+Example 5(ii): \displaystyle F(s)=\ln\left(1+\frac{1}{s^2}\right)
+
+Step 1 — Simplify using log laws:
+
+F(s)=\ln\left(\frac{s^2+1}{s^2}\right)=\ln(s^2+1)-2\ln s
+
+Step 2 — Differentiate:
+
+F'(s)=\frac{2s}{s^2+1}-\frac{2}{s}
+
+Step 3 — Inverse transform term by term:
+
+L^{-1}\left\{\frac{2s}{s^2+1}\right\}=2\cos t
+
+L^{-1}\left\{\frac{2}{s}\right\}=2
+
+So:
+
+L^{-1}\{F'(s)\}=2\cos t-2
+
+Step 4 — Apply Theorem 4:
+
+-t\,f(t)=2\cos t-2
+
+\boxed{f(t)=\frac{2-2\cos t}{t}}
+
+💡 Notice how the minus sign flips the numerator. Always divide by -t.
+
+Example 5(iii): F(s)=\tan^{-1}s
+
+Step 1 — Differentiate (standard derivative):
+
+F'(s)=\frac{1}{s^2+1}
+
+Step 2 — Inverse transform:
+
+L^{-1}\left\{\frac{1}{s^2+1}\right\}=\sin t
+
+Step 3 — Apply Theorem 4:
+
+-t\,f(t)=\sin t
+
+\boxed{f(t)=-\frac{\sin t}{t}}
+
+🎯 Pattern to remember: For these problems, the answer is always \dfrac{\text{(something)}}{t}.
+
+---
+
+📄 Page 5: Theorem 3 — Second Shifting Property
+
+The Theorem
+
+\boxed{L^{-1}\{e^{-as}F(s)\}=u(t-a)\,f(t-a)}
+
+where f(t)=L^{-1}\{F(s)\} and u(t-a) is the unit step function (Heaviside function):
+
+u(t-a)=\begin{cases}0, & t<a\\ 1, & t\ge a\end{cases}
+
+🔑 Recipe:
+
+1. Remove the exponential e^{-as}.
+2. Find the inverse of what remains: f(t).
+3. Replace every t by (t-a).
+4. Multiply by u(t-a).
+
+Example 4(i): \displaystyle \frac{e^{-5s}}{(s+3)^3}
+
+Step 1 — Ignore the exponential, work with F(s)=\dfrac{1}{(s+3)^3}.
+
+Step 2 — First Shifting Property:
+L^{-1}\left\{\frac{1}{(s+3)^3}\right\}=e^{-3t}L^{-1}\left\{\frac{1}{s^3}\right\}
+
+Since L^{-1}\left\{\dfrac{1}{s^3}\right\}=\dfrac{t^2}{2!}=\dfrac{t^2}{2}:
+
+f(t)=\frac{t^2e^{-3t}}{2}
+
+Step 3 — Apply Second Shifting with a=5: replace t\to(t-5), multiply by u(t-5):
+
+\boxed{L^{-1}\left\{\frac{e^{-5s}}{(s+3)^3}\right\}=u(t-5)\cdot\frac{(t-5)^2e^{-3(t-5)}}{2}}
+
+⚠️ Critical: The e^{-3t} also gets shifted! It becomes e^{-3(t-5)}, not e^{-3t}.
+
+---
+
+📄 Page 6: More Second Shifting Examples
+
+Example 4(ii): \displaystyle \frac{e^{-4s}}{s^2}
+
+Step 1 — Base function:
+
+L^{-1}\left\{\frac{1}{s^2}\right\}=t
+
+So f(t)=t.
+
+Step 2 — Shift with a=4:
+
+\boxed{L^{-1}\left\{\frac{e^{-4s}}{s^2}\right\}=(t-4)\,u(t-4)}
+
+Example 4(iii): \displaystyle \frac{e^{-3s}}{s^2+9}
+
+Step 1 — Base function:
+
+L^{-1}\left\{\frac{1}{s^2+9}\right\}=\frac{1}{3}\sin 3t
+
+Step 2 — Shift with a=3: replace t\to(t-3), multiply by u(t-3):
+
+\boxed{L^{-1}\left\{\frac{e^{-3s}}{s^2+9}\right\}=\frac{1}{3}u(t-3)\sin 3(t-3)}
+
+💡 Remember: The \frac{1}{3} factor stays in front; only t is shifted.
+
+---
+
+📄 Page 7: Partial Fractions — Overview
+
+We now handle rational functions \dfrac{P(s)}{Q(s)} where:
+
+· P(s) and Q(s) are polynomials
+· \deg P < \deg Q (proper fraction)
+· Coefficients are real numbers
+
+The form of the expansion depends on the factors of Q(s). Two cases:
+
+1. Non-repeated linear factors
+2. Repeated linear factors
+
+📌 If \deg P \ge \deg Q, you must first do long division.
+
+---
+
+📄 Page 8: Case 1 — Non-Repeated Linear Factors
+
+If:
+
+Q(s)=(s-s_1)(s-s_2)\cdots(s-s_n)
+
+with all s_i distinct real numbers, then:
+
+\boxed{\frac{P(s)}{Q(s)}=\frac{A_1}{s-s_1}+\frac{A_2}{s-s_2}+\cdots+\frac{A_n}{s-s_n}}
+
+Two methods to find the constants:
+
+Method A — Substitution (cover-up): Multiply both sides by the full denominator, then substitute s=s_i to isolate each constant.
+
+Method B — Comparing coefficients: Expand and equate coefficients of like powers of s.
+
+💡 Inverse transforms you'll need:
+
+> L^{-1}\left\{\frac{1}{s-a}\right\}=e^{at}
+> 
+
+---
+
+📄 Page 9: Example 1 — Three Distinct Linear Factors
+
+Problem
+
+F(s)=\frac{s+3}{s(s-1)(s+2)}
+
+Step 1 — Set up the expansion
+
+\frac{s+3}{s(s-1)(s+2)}=\frac{A}{s}+\frac{B}{s-1}+\frac{C}{s+2}
+
+Step 2 — Multiply by s(s-1)(s+2)
+
+s+3=A(s-1)(s+2)+Bs(s+2)+Cs(s-1)
+
+Step 3 — Substitute smart values of s
+
+Let s=0:
+
+3=A(-1)(2)+0+0=-2A \implies A=-\frac{3}{2}
+
+Let s=1:
+
+4=0+B(1)(3)+0=3B \implies B=\frac{4}{3}
+
+Let s=-2:
+
+1=0+0+C(-2)(-3)=6C \implies C=\frac{1}{6}
+
+Result
+
+F(s)=\frac{-3/2}{s}+\frac{4/3}{s-1}+\frac{1/6}{s+2}
+
+---
+
+📄 Page 10: Inverse Transform of Example 1
+
+L^{-1}\{F(s)\}=L^{-1}\left\{\frac{-3/2}{s}\right\}+L^{-1}\left\{\frac{4/3}{s-1}\right\}+L^{-1}\left\{\frac{1/6}{s+2}\right\}
+
+Using L^{-1}\left\{\frac{1}{s}\right\}=1, L^{-1}\left\{\frac{1}{s-1}\right\}=e^{t}, L^{-1}\left\{\frac{1}{s+2}\right\}=e^{-2t}:
+
+\boxed{L^{-1}\{F(s)\}=-\frac{3}{2}+\frac{4}{3}e^{t}+\frac{1}{6}e^{-2t}}
+
+⚠️ Note: \frac{1}{s+2}=\frac{1}{s-(-2)}, so the exponent is -2t, not +2t.
+
+Example 2: \displaystyle F(s)=\frac{2s-1}{s^3-s}
+
+Step 1 — Factor the denominator:
+
+s^3-s=s(s^2-1)=s(s-1)(s+1)
+
+Step 2 — Set up:
+
+\frac{2s-1}{s(s-1)(s+1)}=\frac{A}{s}+\frac{B}{s-1}+\frac{C}{s+1}
+
+---
+
+📄 Page 11: Solving Example 2
+
+Multiply by s(s-1)(s+1):
+
+2s-1=A(s-1)(s+1)+Bs(s+1)+Cs(s-1)
+
+Let s=0:
+
+-1=A(-1)(1) \implies A=1
+
+Let s=1:
+
+1=B(1)(2) \implies B=\frac{1}{2}
+
+Let s=-1:
+
+-3=C(-1)(-2)=2C \implies C=-\frac{3}{2}
+
+So:
+
+F(s)=\frac{1}{s}+\frac{1/2}{s-1}-\frac{3/2}{s+1}
+
+Therefore (combining with Page 12):
+
+\boxed{f(t)=1+\frac{1}{2}e^{t}-\frac{3}{2}e^{-t}}
+
+---
+
+📄 Page 12: Case 2 — Repeated Linear Factors
+
+If (s-s_k) is a factor of Q(s) with power n, then that part of the expansion is:
+
+\boxed{\frac{A_1}{s-s_k}+\frac{A_2}{(s-s_k)^2}+\cdots+\frac{A_n}{(s-s_k)^n}}
+
+🔑 Rule: A repeated factor of power n produces n terms, with denominators of increasing power 1,2,\dots,n.
+
+💡 Inverse transforms needed:
+
+> L^{-1}\left\{\frac{1}{(s-a)^n}\right\}=\frac{t^{n-1}e^{at}}{(n-1)!}
+> 
+
+Example 3: \displaystyle F(s)=\frac{s^2+9s+2}{(s-1)^2(s+3)}
+
+The factor (s-1) is repeated twice, so:
+\frac{s^2+9s+2}{(s-1)^2(s+3)}=\frac{A}{s-1}+\frac{B}{(s-1)^2}+\frac{C}{s+3}
+
+---
+
+📄 Page 13: Solving Example 3
+
+Multiply by (s-1)^2(s+3):
+
+s^2+9s+2=A(s-1)(s+3)+B(s+3)+C(s-1)^2
+
+Let s=1 (kills A and C):
+
+1+9+2=B(4) \implies 12=4B \implies B=3
+
+Let s=-3 (kills A and B):
+
+9-27+2=C(-4)^2 \implies -16=16C \implies C=-1
+
+Compare coefficients of s^2:
+
+· LHS: 1
+· RHS: A(s^2+\dots)+C(s^2+\dots) → coefficient is A+C
+
+So:
+
+1=A+C \implies 1=A-1 \implies A=2
+
+Final expansion
+
+F(s)=\frac{2}{s-1}+\frac{3}{(s-1)^2}-\frac{1}{s+3}
+
+Inverse transform
+
+L^{-1}\left\{\frac{2}{s-1}\right\}=2e^{t}
+
+L^{-1}\left\{\frac{3}{(s-1)^2}\right\}=3te^{t}
+
+L^{-1}\left\{\frac{-1}{s+3}\right\}=-e^{-3t}
+
+\boxed{f(t)=2e^{t}+3te^{t}-e^{-3t}}
+
+💡 Check: \frac{1}{(s-1)^2} gives te^{t} (since n=2: \frac{t^{2-1}e^{t}}{(2-1)!}=te^{t}). The repeated factor always produces a t multiplier.
+
+---
+
+🧠 Master Summary Table
+
+Technique When to Use Key Formula
+Completing the square Quadratic denominator s^2+bs+c (s+\frac{b}{2})^2+\left(c-\frac{b^2}{4}\right)
+First Shifting F(s+a) L^{-1}\{F(s+a)\}=e^{-at}f(t)
+Theorem 4 F(s)=\ln(\cdot) or \tan^{-1}(\cdot) L^{-1}\{F'(s)\}=-tf(t)
+Second Shifting e^{-as}F(s) u(t-a)f(t-a)
+Partial fractions Rational P(s)/Q(s) Split into simple terms
+
+---
+
+⚠️ Top 5 Mistakes to Avoid
+
+1. Forgetting \frac{1}{\omega} when inverting \frac{1}{s^2+\omega^2}.
+2. Wrong sign in Theorem 4: f(t)=\dfrac{L^{-1}\{F'(s)\}}{-t}.
+3. Not shifting the exponential in Second Shifting: e^{-3t}\to e^{-3(t-5)}, not e^{-3t}.
+4. Forgetting u(t-a) entirely.
+5. Missing terms in repeated factors: power n needs n terms.
+
+---
+
+✅ Quick Practice (Test Yourself)
+
+1. Find L^{-1}\left\{\dfrac{1}{s^2+6s+13}\right\} (Hint: complete the square → e^{-3t}\sin 2t\cdot\frac{1}{2})
+2. Find L^{-1}\left\{\ln\dfrac{s+1}{s-1}\right\} (Hint: Theorem 4 → \frac{2\sinh t}{t})
+3. Find L^{-1}\left\{\dfrac{e^{-2s}}{(s+1)^2}\right\} (Hint: Second Shifting → u(t-2)(t-2)e^{-(t-2)})
+4. Find L^{-1}\left\{\dfrac{s+1}{s(s-2)^2}\right\} (Hint: repeated factor → A/s+B/(s-2)+C/(s-2)^2)
+
+Good luck with your studying! 🎓 This lecture is all about recognizing the pattern and applying the right theorem — practice each type until the recipe becomes automatic.

@@ -1,0 +1,118 @@
+Welcome to Chapter 1! This lecture is the absolute foundation of digital electronics and computer science. We are going to explore how computers "think" using numbers, and how they understand the physical world through signals. Let's dive in!
+
+Part 1: The Four Numbering Systems (Page 2)
+
+Look at the diagram on Page 2. It shows a tree of four main Numbering Systems (أنظمة العد). A numbering system is simply a way to represent numbers using a specific set of symbols (digits).
+
+Here is the breakdown of each system, exactly as shown in your notes:
+
+1. Decimal System (النظام العشري)
+
+· Base: 10 (because it uses 10 digits).
+· Digits: 0 → 9 (0, 1, 2, 3, 4, 5, 6, 7, 8, 9).
+· Explanation: This is the system humans use every day. When you count from 9 to 10, you run out of single digits, so you add a "1" to the next column and reset to "0".
+· Example: 245 in decimal means (2 × 10²) + (4 × 10¹) + (5 × 10⁰).
+
+2. Binary System (النظام الثنائي)
+
+· Base: 2.
+· Digits: 0 → 1 (Only 0 and 1).
+· Explanation: This is the language of computers. Computers only understand "Off" (0) and "On" (1).
+· Example: The decimal number 5 is written as 101 in binary. (1 × 2²) + (0 × 2¹) + (1 × 2⁰) = 4 + 0 + 1 = 5.
+
+3. Octal System (النظام الثماني)
+
+· Base: 8.
+· Digits: 0 → 7 (0, 1, 2, 3, 4, 5, 6, 7).
+· Explanation: This is a shorthand way for humans to read long binary numbers. Because 8 is 2³, every 3 binary bits can be grouped into one octal digit.
+· Example: The binary number 111 equals 7 in Octal.
+
+4. Hexadecimal System (النظام السادس عشر)
+
+· Base: 16.
+· Digits: 0 → 9 and the letters A, B, C, D, E, F.
+· Explanation: Since we only have 10 standard number symbols, we borrow letters from the alphabet! A=10, B=11, C=12, D=13, E=14, F=15.
+· Example: The decimal number 10 is A in Hexadecimal. The decimal number 15 is F.
+
+---
+
+Part 2: Numbering Sequence Table (Page 3)
+
+Page 3 contains a massive data table. Do not let it intimidate you! It is simply a Counting Sequence Table. It shows the exact same numbers counted in the four different systems side-by-side.
+
+Notice the pattern:
+
+· In Binary, the rightmost digit flips between 0 and 1 constantly.
+· In Octal, the digits count from 0 to 7, then reset to 0 and carry over 1 to the next column.
+· In Decimal, it counts 0 to 9, then carries over.
+· In Hexadecimal, it counts 0 to 9, then goes A, B, C, D, E, F, then carries over.
+
+Quick Example from the table: Look at row 10.
+
+· Decimal: 10
+· Binary: 1010
+· Octal: 12
+· Hexadecimal: A
+
+---
+
+Part 3: Analog vs. Digital Signals (Page 4)
+
+This is the most crucial part of the lecture. Page 4 contains a drawing comparing the real world to the digital world.
+
+The Top Graph: Analog Signal
+
+· What is it? It is a Continuous wave. It looks like a smooth, rolling hill (a sine wave).
+· Symbol: AC (Alternating Current). Notice the red box in the top left corner.
+· Real-World Example: The sound of your voice, the temperature in a room, or the electricity coming out of a wall socket. It changes smoothly and has an infinite number of values.
+· Axes: The vertical axis is Voltage (V), and the horizontal axis is Time (t).
+
+The Bottom Graph: Digital Signal
+
+· What is it? It is a Discrete signal. It does not curve smoothly; it jumps abruptly in straight lines.
+· Square Wave: The red line drawn represents a Square Wave.
+· Binary States:
+  · High: Represented by 5v (or 1). This is the top flat line.
+  · Low: Represented by 0v (or 0). This is the bottom flat line.
+· DC Stable: The notes mention "DC stable". This means Direct Current. Unlike AC, the voltage stays stable at a constant high or low level.
+· Digital Code (ASCII): On the right, it says ASCII Code. ASCII is a character encoding standard used to represent text in computers. For example, the letter 'A' is represented by a specific digital binary code (01000001).
+
+The Transition (How we get from Analog to Digital)
+
+Below the red square wave, there is a small purple drawing showing pulses. This represents the sampling process.
+
+· Real-world analogy: If you are recording your voice (Analog) on a computer (Digital), the computer takes thousands of "samples" per second. If the sound wave is above a certain threshold, it records a 1. If it is below, it records a 0. This converts the smooth wave into the blocky square wave.
+
+---
+
+Part 4: Your Assignment (Page 5)
+
+Your professor has left a clear instruction at the end of the lecture:
+
+Report # 1:-
+in One paper summarize Different Numbering System.
+(Handwritten) 💙 :)
+
+How to nail this assignment:
+
+1. Format: It must be handwritten on a single piece of paper. Do not type it.
+2. Content: Summarize the four systems we discussed: Decimal, Binary, Octal, and Hexadecimal.
+3. What to include in your summary:
+   · Define each system.
+   · List the Base (Radix) of each.
+   · List the allowed digits for each.
+   · Give one example of a number in each system (e.g., Decimal 15 = Binary 1111 = Octal 17 = Hex F).
+4. Pro-Tip: Draw a small version of the tree diagram from Page 2 or a small table like Page 3 on your paper. Visuals make summaries much better!
+
+---
+
+💡 Quick Recap for your Memory:
+
+· Decimal: 0-9 (Human language)
+· Binary: 0-1 (Computer language)
+· Octal: 0-7 (Shorthand for binary)
+· Hex: 0-9, A-F (Shorthand for binary)
+· Analog: Smooth wave (AC), continuous.
+· Digital: Square wave (DC High/Low), discrete, uses Binary (0 and 1).
+
+You are now fully prepared for this chapter! Good luck with your handwritten report! 💙

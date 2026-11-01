@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on the Module 5 lecture slides, with the correct answer listed under each question.
+
+1. Which access rule defines a Stack?
+A) FIFO (First In, First Out)
+B) LIFO (Last In, First Out)
+C) Priority-first
+D) Index-based random access
+Correct Answer: B
+
+2. In a stack, which operation adds a new item at the top?
+A) Pop()
+B) Peek()
+C) Push()
+D) IsEmpty()
+Correct Answer: C
+
+3. When tracing a stack after Push(10), Push(20), Push(30), Peek(), and Pop(), what does Pop() return?
+A) 10
+B) 20
+C) 30
+D) The stack is empty
+Correct Answer: C
+
+4. In an array-based stack, what happens when Pop is called and top = -1?
+A) The stack overflows.
+B) The operation reports underflow.
+C) The operation returns 0.
+D) The top index wraps to the end of the array.
+Correct Answer: B
+
+5. What is the time complexity of Push and Pop in an array-based stack?
+A) O(n)
+B) O(log n)
+C) O(1)
+D) O(n²)
+Correct Answer: C
+
+6. When reversing the string "DATA" using a stack, what is the output?
+A) DATA
+B) ATAD
+C) TADA
+D) ADAT
+Correct Answer: B
+
+7. Why is the balanced-parentheses algorithm O(n) time and O(n) worst-case space?
+A) Because it uses recursion for each character.
+B) Because it scans each character once and the stack may hold up to n unmatched opening brackets.
+C) Because it sorts the brackets before checking.
+D) Because it uses two nested loops.
+Correct Answer: B
+
+8. In the Undo/Redo stack model, what does the Redo stack hold?
+A) The most recent completed action.
+B) Reversed actions that were undone, ready to be reapplied.
+C) All actions ever performed.
+D) Only the first action performed.
+Correct Answer: B
+
+9. In Tower of Hanoi with 3 discs, what is the minimum number of moves?
+A) 3
+B) 5
+C) 7
+D) 9
+Correct Answer: C
+
+10. What is the time complexity of the Tower of Hanoi recursive algorithm?
+A) O(n)
+B) O(n log n)
+C) O(2^n)
+D) O(n²)
+Correct Answer: C
+
+11. Which access rule defines a Queue?
+A) LIFO
+B) FIFO
+C) Priority-first
+D) Random access
+Correct Answer: B
+
+12. In a queue, where are new items added and where are items removed?
+A) Added at the front, removed from the rear.
+B) Added at the rear, removed from the front.
+C) Added and removed from the same end.
+D) Added and removed by index.
+Correct Answer: B
+
+13. Why is list.pop(0) inefficient for a large Python list used as a queue?
+A) Because it removes the last element.
+B) Because it shifts all remaining elements left, making Dequeue O(n).
+C) Because it requires sorting the list first.
+D) Because it converts the list into a stack.
+Correct Answer: B
+
+14. In a linked queue, what must happen if front becomes null after a Dequeue?
+A) The rear must also become null.
+B) The rear must point to the removed node.
+C) The queue must be reversed.
+D) An overflow error must be thrown.
+Correct Answer: A
+
+15. In the call-center queue trace, after 101 and 102 arrive and a consultant serves one caller, what is the queue state?
+A) [101, 102]
+B) [101]
+C) [102]
+D) []
+Correct Answer: C
+
+16. In the priority queue convention used in the lecture, which value represents the highest priority?
+A) 0
+B) 1
+C) 2
+D) Larger values always mean higher priority.
+Correct Answer: A
+
+17. For a sorted-sequence priority queue implementation, what is the time complexity of Enqueue?
+A) O(1)
+B) O(log n)
+C) O(n), because finding the position and inserting may require scanning and shifting.
+D) O(n²)
+Correct Answer: C
+
+18. What problem occurs when low-priority requests wait indefinitely because higher-priority work keeps arriving?
+A) Overflow
+B) Underflow
+C) Starvation
+D) Wrap-around
+Correct Answer: C
+
+19. In a circular queue with capacity 5, what is (4 + 1) % 5?
+A) 0
+B) 1
+C) 4
+D) 5
+Correct Answer: A
+
+20. Why is Dequeue O(1) in a circular queue but O(n) in a naive shifting array queue?
+A) Because the circular queue stores items in sorted order.
+B) Because the circular queue advances the front index with modulo arithmetic instead of shifting all remaining elements.
+C) Because the circular queue uses a linked list internally.
+D) Because the circular queue always keeps the queue empty.
+Correct Answer: B

@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on Lecture 03 (Linear Algebraic Systems).
+
+Q1. A linear system is called homogeneous if:
+A) all coefficients a_{ij} are zero
+B) all constants b_i are zero
+C) it has exactly one solution
+D) the coefficient matrix is square
+Answer: B) all constants b_i are zero
+
+Q2. For the system Ax = b, the matrix A containing only the coefficients is called the:
+A) augmented matrix
+B) identity matrix
+C) coefficient matrix
+D) transpose matrix
+Answer: C) coefficient matrix
+
+Q3. The augmented matrix of a system is denoted by:
+A) A^T
+B) A^{-1}
+C) [A \mid b]
+D) AB
+Answer: C) [A \mid b]
+
+Q4. For a system with 3 equations and 4 unknowns, the augmented matrix has size:
+A) 3 \times 3
+B) 3 \times 4
+C) 4 \times 3
+D) 3 \times 5
+Answer: D) 3 \times 5 (4 coefficient columns + 1 constant column)
+
+Q5. A solution of a linear system is:
+A) any matrix satisfying Ax = O
+B) a sequence of numbers that makes each equation true when substituted
+C) the coefficient matrix itself
+D) the augmented matrix
+Answer: B) a sequence of numbers that makes each equation true when substituted
+
+Q6. The set of all possible solutions of a system is called the:
+A) coefficient set
+B) augmented set
+C) solution set
+D) row set
+Answer: C) solution set
+
+Q7. A system of two linear equations represented by two parallel lines has:
+A) exactly one solution
+B) infinitely many solutions
+C) no solution
+D) two solutions
+Answer: C) no solution
+
+Q8. A system represented by two coincident lines has:
+A) exactly one solution
+B) infinitely many solutions
+C) no solution
+D) exactly two solutions
+Answer: B) infinitely many solutions
+
+Q9. A consistent linear system is one that has:
+A) no solution
+B) either one solution or infinitely many solutions
+C) only one solution
+D) only infinitely many solutions
+Answer: B) either one solution or infinitely many solutions
+
+Q10. An inconsistent linear system is one that has:
+A) one solution
+B) infinitely many solutions
+C) no solution
+D) two solutions
+Answer: C) no solution
+
+Q11. Which of the following is NOT one of the three basic row operations?
+A) Multiply a row by a nonzero constant
+B) Interchange two rows
+C) Replace a row by the sum of itself and a multiple of another row
+D) Multiply two rows together
+Answer: D) Multiply two rows together
+
+Q12. The operation R_i \leftrightarrow R_j means:
+A) multiply row i by j
+B) interchange rows i and j
+C) add row j to row i
+D) replace row i by row j
+Answer: B) interchange rows i and j
+
+Q13. The notation \alpha R_i means:
+A) interchange row i with row \alpha
+B) multiply row i by the constant \alpha
+C) add \alpha to row i
+D) replace row i by row \alpha
+Answer: B) multiply row i by the constant \alpha
+
+Q14. The notation \alpha R_j + R_i \to R_i means:
+A) replace row i by the sum of itself and \alpha times row j
+B) replace row j by \alpha times row i
+C) interchange rows i and j
+D) multiply row i by \alpha and add row j
+Answer: A) replace row i by the sum of itself and \alpha times row j
+
+Q15. The basic strategy for solving a linear system is to replace it with an equivalent system that:
+A) has more equations
+B) has the same solution set but is easier to solve
+C) has no solution
+D) has a different coefficient matrix
+Answer: B) has the same solution set but is easier to solve
+
+Q16. For the augmented matrix \begin{bmatrix} 1 & 0 & 0 & 29 \\ 0 & 1 & 0 & 16 \\ 0 & 0 & 1 & 3 \end{bmatrix}, the solution is:
+A) x_1 = 3,\ x_2 = 16,\ x_3 = 29
+B) x_1 = 29,\ x_2 = 16,\ x_3 = 3
+C) x_1 = 16,\ x_2 = 29,\ x_3 = 3
+D) no solution
+Answer: B) x_1 = 29,\ x_2 = 16,\ x_3 = 3
+
+Q17. The augmented matrix \begin{bmatrix} 3 & 0 & -2 & 4 \\ 7 & 1 & 4 & -3 \\ 0 & -2 & 1 & -6 \end{bmatrix} corresponds to which system?
+A) 3x_1 - 2x_3 = 4,\ 7x_1 + x_2 + 4x_3 = -3,\ -2x_2 + x_3 = -6
+B) 3x_1 + x_2 - 2x_3 = 4,\ 7x_1 + 4x_3 = -3,\ -2x_1 + x_2 = -6
+C) 3x_1 - 2x_2 = 4,\ 7x_1 + x_2 + 4x_3 = -3,\ -2x_2 + x_3 = -6
+D) 3x_1 - 2x_3 = 4,\ 7x_1 + x_2 + 4x_3 = 3,\ -2x_2 + x_3 = -6
+Answer: A) 3x_1 - 2x_3 = 4,\ 7x_1 + x_2 + 4x_3 = -3,\ -2x_2 + x_3 = -6
+
+Q18. A linear system can have which of the following numbers of solutions?
+A) exactly two solutions
+B) exactly three solutions
+C) no solution, exactly one solution, or infinitely many solutions
+D) any finite number of solutions
+Answer: C) no solution, exactly one solution, or infinitely many solutions
+
+Q19. The augmented matrix in Example 2(d), \begin{bmatrix} 1 & 0 & 0 & 0 & 15 \\ 0 & 1 & 0 & 0 & -6 \\ 0 & 0 & 1 & 0 & 4 \\ 0 & 0 & 0 & 1 & 0 \end{bmatrix}, represents:
+A) an inconsistent system
+B) a system with infinitely many solutions
+C) a unique solution x_1=15,\ x_2=-6,\ x_3=4,\ x_4=0
+D) a homogeneous system
+Answer: C) a unique solution x_1=15,\ x_2=-6,\ x_3=4,\ x_4=0
+
+Q20. Elementary row operations on the augmented matrix:
+A) change the solution set of the system
+B) produce an equivalent system with the same solution set
+C) are only allowed on square matrices
+D) can only be applied once per system
+Answer: B) produce an equivalent system with the same solution set

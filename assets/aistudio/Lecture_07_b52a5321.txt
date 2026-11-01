@@ -1,0 +1,157 @@
+Here is a comprehensive, engaging, and detailed explanation of Lecture 07, based exactly on the provided PDF.
+
+Since your course is in English, I have kept all mathematical terms, definitions, and concepts in English as requested, and avoided Arabic translations of the technical terms so you can easily study and solve problems in your exams.
+
+---
+
+Lecture 07: Determinants and Square Systems (Inverse & Cramer's Rule)
+
+Welcome to Lecture 7! In the previous lecture, you learned a golden rule: A matrix is invertible if and only if its determinant is non-zero.
+
+In this lecture, we are going to connect determinants to solving Square Systems of Linear Equations. We will explore two powerful methods: the Inverse Method and Cramer's Rule.
+
+---
+
+1. Theorem 1: The Golden Equivalencies
+
+This theorem is the foundation of everything in this lecture. For an n \times n matrix A, the following four statements are equivalent (meaning if one is true, they are all true; if one is false, they are all false):
+
+· (a) A is nonsingular (it has an inverse, A^{-1}).
+· (b) \det(A) \neq 0 (the determinant is not zero).
+· (c) The system Ax = b has a unique solution for every n \times 1 column matrix b. The solution is exactly x = A^{-1}b.
+· (d) The system Ax = 0 (homogeneous) has only the trivial solution (where all variables equal 0).
+
+Why is this amazing? It means that if you are asked to solve a system Ax = b, the very first thing you should do is calculate \det(A).
+
+· If \det(A) \neq 0, Boom! You immediately know there is exactly one unique solution, and you can use the Inverse method or Cramer's Rule.
+· If \det(A) = 0, the inverse method and Cramer's rule cannot be used. You must use Gaussian elimination to find out if it has infinitely many solutions or no solution.
+
+Example 1 (From the slides)
+
+Suppose you are given two systems of equations.
+
+· System 1: You calculate the determinant of its coefficient matrix A, and you find |A| \neq 0.
+· System 2: You calculate the determinant of its coefficient matrix B, and you find |B| = 0.
+
+Conclusion: According to Theorem 1, only System 1 has a unique solution. You can solve System 1 using Gauss-Jordan, the Inverse Method, or Cramer's Rule. However, for System 2, you cannot use the Inverse Method or Cramer's Rule; you must use elimination to see if it has infinite solutions or no solution.
+
+---
+
+2. Cramer's Rule (Theorem 2)
+
+Cramer's Rule gives us a direct formula to find the solution of a system Ax = b using only determinants.
+
+The Rule:
+Let A be an n \times n nonsingular matrix (\det(A) \neq 0), and let b be a column vector. Let A_k be the matrix obtained by replacing the k-th column of A by the vector b.
+
+The unique solution x is found by:
+
+x_k = \frac{\det(A_k)}{\det(A)}, \quad \text{for } k = 1, 2, \dots, n
+
+How the Proof works (Briefly):
+Since x = A^{-1}b = \frac{1}{\det(A)} \text{adj}(A)b, if you expand the adjoint formula, the numerator turns out to be exactly the determinant of the modified matrix A_k.
+
+Let's make this concrete with examples!
+
+---
+
+Example 2: Cramer's Rule for a 2 \times 2 System
+
+Solve the following system:
+
+4x_1 - 2x_2 = 10
+
+3x_1 - 5x_2 = 11
+
+Step 1: Find the determinant of the coefficient matrix A.
+
+|A| = \begin{vmatrix} 4 & -2 \\ 3 & -5 \end{vmatrix} = (4 \times -5) - (-2 \times 3) = -20 + 6 = -14
+
+Because |A| \neq 0, we know a unique solution exists.
+
+Step 2: Apply Cramer's Rule.
+To find x_1, we replace the first column of A with the constants (10, 11)^T:
+
+x_1 = \frac{|A_1|}{|A|} = \frac{\begin{vmatrix} 10 & -2 \\ 11 & -5 \end{vmatrix}}{-14} = \frac{(10 \times -5) - (-2 \times 11)}{-14} = \frac{-50 + 22}{-14} = \frac{-28}{-14} = 2
+
+To find x_2, we replace the second column of A with the constants (10, 11)^T:
+
+x_2 = \frac{|A_2|}{|A|} = \frac{\begin{vmatrix} 4 & 10 \\ 3 & 11 \end{vmatrix}}{-14} = \frac{(4 \times 11) - (10 \times 3)}{-14} = \frac{44 - 30}{-14} = \frac{14}{-14} = -1
+
+Final Answer: x_1 = 2, x_2 = -1.
+
+---
+
+Example 3: Cramer's Rule for a 3 \times 3 System
+
+Solve the following system:
+
+x_1 + 2x_2 + x_3 = 5
+
+2x_1 + 2x_2 + x_3 = 6
+
+x_1 + 2x_2 + 3x_3 = 9
+
+Step 1: Find |A|. (The slide assumes you calculate this, and the result is |A| = -4).
+Because |A| \neq 0, there is a unique solution.
+
+Step 2: Apply Cramer's Rule.
+The slide gives the final results based on the determinants of A_1, A_2, and A_3:
+
+· x_1 = \frac{|A_1|}{|A|} = \frac{-4}{-4} = 1
+· x_2 = \frac{|A_2|}{|A|} = \frac{-4}{-4} = 1
+· x_3 = \frac{|A_3|}{|A|} = \frac{-8}{-4} = 2
+
+(Tip: If you want to practice, try calculating |A_1| by replacing the first column with [5, 6, 9]^T and check if you get -4!)
+
+---
+
+3. Example 4: The Grand Comparison (Solving with Three Methods)
+
+In this example, we have a 3 \times 3 system, and we are given that |A| = \det(A) = 2 \neq 0. 
+Because |A| \neq 0, we immediately know:
+
+1. A is nonsingular (invertible).
+2. The system Ax = b has a unique solution.
+3. Ax = 0 has only the trivial solution.
+
+The slide shows how to solve it using two methods (and leaves the third as an activity).
+
+Method 1: The Inverse Method
+(Note: The exact matrix calculations for the inverse are on Page 4 of the original PDF, though not explicitly typed out in the text. But the concept is to find A^{-1} and multiply it by b, x = A^{-1}b.)
+
+Method 2: Cramer's Rule
+Look at the beautiful, clean calculation on Page 5 of the PDF!
+The original matrix A is:
+
+A = \begin{bmatrix} 1 & 2 & 1 \\ 0 & -1 & 1 \\ 1 & 0 & 1 \end{bmatrix}
+
+They calculate the four determinants:
+
+· \Delta = \begin{vmatrix} 1 & 2 & 1 \\ 0 & -1 & 1 \\ 1 & 0 & 1 \end{vmatrix} = 2 (This is |A|)
+· \alpha = \begin{vmatrix} 1 & 2 & 1 \\ 2 & -1 & 1 \\ 2 & 0 & 1 \end{vmatrix} = 1 (Replaced column 1 with b)
+· \beta = \begin{vmatrix} 1 & 1 & 1 \\ 0 & 2 & 1 \\ 1 & 2 & 1 \end{vmatrix} = -1 (Replaced column 2 with b)
+· \gamma = \begin{vmatrix} 1 & 2 & 1 \\ 0 & -1 & 2 \\ 1 & 0 & 2 \end{vmatrix} = 3 (Replaced column 3 with b)
+
+The solution is then:
+
+· x_1 = \frac{\alpha}{\Delta} = \frac{1}{2}
+· x_2 = \frac{\beta}{\Delta} = \frac{-1}{2}
+· x_3 = \frac{\gamma}{\Delta} = \frac{3}{2}
+
+Method 3: Gauss-Jordan
+The slide leaves this as an activity ("try yourself"). Hint: You can set up the augmented matrix [A | b] and use row operations to reduce it to the identity matrix [I | x]. You should get the exact same answers: x_1 = 1/2, x_2 = -1/2, x_3 = 3/2.
+
+---
+
+Summary Checklist for Exams
+
+When facing a square system Ax = b:
+
+1. Calculate \det(A) first.
+2. If \det(A) \neq 0, you are guaranteed a unique solution.
+3. Choose your weapon:
+   · Cramer's Rule: x_k = \frac{\det(A_k)}{\det(A)}. Great for small systems (2x2 or 3x3).
+   · Inverse Method: x = A^{-1}b.
+   · Gauss-Jordan: Augmented matrix [A | b] \rightarrow [I | x].
+4. If \det(A) = 0, do not use Cramer's Rule or the Inverse Method. Use Gauss-Jordan elimination to find if the system is inconsistent (no solution) or dependent (infinitely many solutions).

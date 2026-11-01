@@ -1,0 +1,364 @@
+Lecture 01: Matrices — A Complete Walkthrough
+
+Hello! Let's turn this lecture into something you'll actually enjoy reading. I'll keep every key term in English (as you need it for studying and solving problems), explain every single point, and back things up with examples. Ready? Let's go. 🚀
+
+---
+
+1. What Is a Matrix?
+
+Definition (Matrix): A matrix is a rectangular array of numbers. An m × n matrix has m rows and n columns.
+
+We usually name it with a capital letter like A, or write it as [aᵢⱼ]. The notation aᵢⱼ means: the element in row i and column j.
+
+Example:
+
+A = \begin{bmatrix} 3 & -1 \\ 0 & 5 \\ 2 & 7 \end{bmatrix}
+
+· This has 3 rows and 2 columns → size is 3 × 2 (read "three-by-two").
+· The element a₁₂ = −1 (row 1, column 2).
+· a₂₁ = 0 and a₃₂ = 7 — the answers to the lecture's question! ✅
+
+Key vocabulary to remember:
+
+· Row = horizontal line of entries
+· Column = vertical line of entries
+· Size / order = m × n
+· Element / entry = a single number inside, aᵢⱼ
+
+💡 Tip: Always say "rows first, columns second." Size is m × n — Rows before Columns (alphabetical too!).
+
+---
+
+2. Column Vectors
+
+A column vector is just a matrix with only one column (size m × 1).
+
+Any matrix can be broken down into column vectors. For example, take a 2 × 3 matrix:
+
+A = \begin{bmatrix} 2 & 1 & -1 \\ 0 & 4 & 7 \end{bmatrix}
+
+Its column vectors are:
+
+a_1 = \begin{bmatrix} 2 \\ 0 \end{bmatrix}, \quad
+a_2 = \begin{bmatrix} 1 \\ 4 \end{bmatrix}, \quad
+a_3 = \begin{bmatrix} -1 \\ 7 \end{bmatrix}
+
+And we can write the matrix compactly as:
+
+A = [\,a_1 \;\; a_2 \;\; a_3\,]
+
+This "column vector view" will be super important later when we talk about matrix multiplication as a linear combination of column vectors. Keep it in your pocket! 🧠
+
+---
+
+3. Matrix Arithmetic
+
+3.1 Equality of Matrices
+
+Definition: Two matrices A = [aᵢⱼ] and B = [bᵢⱼ] are equal if:
+
+1. They have the same size (m × n), and
+2. aᵢⱼ = bᵢⱼ for every entry.
+
+In short: same size + same corresponding entries = equal.
+
+Example 1: Find a, b, c such that
+
+\begin{bmatrix} 3 & 2a & 0 \\ 4b & 0 & 6 \end{bmatrix}
+=
+\begin{bmatrix} 3 & c & 0 \\ -8 & 0 & 3c \end{bmatrix}
+
+Solution: Compare entry by entry:
+
+· Position (1,2): 2a = c
+· Position (2,1): 4b = −8 → b = −2
+· Position (2,3): 6 = 3c → c = 2
+· Then 2a = 2 → a = 1
+
+✅ a = 1, b = −2, c = 2
+
+⚠️ Common mistake: Students compare only some entries. You must check every corresponding pair, and the sizes must match first.
+
+3.2 Scalar Multiplication
+
+Definition: If A is m × n and α is a scalar (a real number), then αA is the m × n matrix where every entry is multiplied by α.
+
+Example 2: If
+
+A = \begin{bmatrix} 2 & -2 \\ 4 & 0 \end{bmatrix}
+
+then
+
+2A = \begin{bmatrix} 4 & -4 \\ 8 & 0 \end{bmatrix},
+\qquad
+-\tfrac{1}{2}A = \begin{bmatrix} -1 & 1 \\ -2 & 0 \end{bmatrix}
+
+Key idea: The scalar distributes over every single entry — no exceptions.
+
+3.3 Matrix Addition
+
+Definition: If A = [aᵢⱼ] and B = [bᵢⱼ] are both m × n, then
+
+A + B = [\,a_{ij} + b_{ij}\,]
+
+So we add corresponding entries.
+
+$$
+\begin{bmatrix} 1 & 2 \ 3 & 4 \end{bmatrix}
+
+· 
+
+\begin{bmatrix} 5 & 6 \ 7 & 8 \end{bmatrix}
+=
+\begin{bmatrix} 6 & 8 \ 10 & 12 \end{bmatrix}
+$$
+
+⚠️ Big rule: You can only add matrices of the same size. A 2 × 3 plus a 3 × 2? Not defined! ❌
+
+---
+
+4. The Zero Matrix
+
+Definition (Zero Matrix): A matrix where all entries are 0 is called the zero matrix, denoted by O.
+
+O = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}
+\quad \text{or} \quad
+O = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix}
+
+It plays the role of "0" in matrix world — the additive identity.
+
+Theorem (Properties of Zero Matrices) — assuming sizes allow the operations:
+
+Property Statement
+a) A + O = O + A = A
+b) A − A = O
+c) O − A = −A
+d) AO = O = OA
+
+Note (d): multiplying by a zero matrix gives a zero matrix (of appropriate size). Be careful — AO and OA may have different sizes depending on the shapes! But both are zero matrices.
+
+---
+
+5. The Additive Inverse
+
+If O is the zero matrix of the same size as A, then
+
+A + O = O + A = A
+So O is the additive identity. Moreover, every matrix A has an additive inverse, namely −A, because:
+
+A + (-1)A = O = (-1)A + A
+
+By convention:
+
+-A = (-1)A
+
+meaning: flip the sign of every entry.
+
+Theorem (Properties of Matrix Addition) — for A, B, C all of order m × n:
+
+1. A + B = B + A  (commutative law)
+2. A + (B + C) = (A + B) + C  (associative law)
+3. A + O = O + A = A  (identity)
+4. A + (−1)A = O  (additive inverse)
+
+🧠 Think of these as "the familiar rules of ordinary addition, but wearing matrix clothes."
+
+---
+
+6. Matrix Multiplication ⭐ (the heart of the lecture)
+
+6.1 The Definition
+
+Definition: If A is m × n and B is n × p, then the product AB = C = [cᵢⱼ] is an m × p matrix with:
+
+c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{in}b_{nj}
+
+In words: To get entry cᵢⱼ, take row i of A and column j of B, multiply them entry by entry, and add the products.
+
+6.2 The Golden Size Rule
+
+\underbrace{A}_{m \times n} \;\; \underbrace{B}_{n \times p} = \underbrace{AB}_{m \times p}
+
+The inner dimensions must match (n = n). The outer dimensions give the result size (m × p). If the inner dimensions don't match → the product is not defined. ❌
+
+🎯 Memory trick: "Inner must agree, outer tells you what you'll see."
+
+6.3 Example 4 — Is AB defined?
+
+The lecture asks: for the given matrices, is AB defined, and what is the entry in row 2, column 3?
+
+Solution logic: A has 2 columns, B has 2 rows → AB is defined, and the product is 2 × 3.
+
+Entry in row 2, column 3 is computed as:
+
+(2)(3) + (6)(1) + (0)(2) = 6 + 6 + 0 = 12
+
+So c₂₃ = 12 ✅
+
+6.4 Example 5 — A whole row of AB
+
+The second row of AB comes from row 2 of A multiplied against each column of B:
+
+· (row 2 of A) · (column 1 of B) → entry (2,1)
+· (row 2 of A) · (column 2 of B) → entry (2,2)
+· (row 2 of A) · (column 3 of B) → entry (2,3)
+
+This gives you the complete second row.
+
+6.5 The Two Big Interpretations
+
+The lecture highlights two powerful ways to view AB:
+
+1. Row view: the i-th row of AB = (i-th row of A) × B
+2. Column view: the j-th column of AB = A × (j-th column of B) — which is a linear combination of the column vectors of A, with coefficients coming from the j-th column of B.
+
+💡 This column interpretation is exactly why we introduced column vectors in Section 2. Everything connects!
+
+---
+
+7. Properties of Matrix Multiplication
+
+Theorem: Let A be m × n, and B, C have compatible sizes. Then:
+
+Property Name
+a) A(BC) = (AB)C associative law
+b) A(B + C) = AB + AC left distributive law
+c) (B + C)A = BA + CA right distributive law
+d) k(AB) = (kA)B = A(kB) scalar compatibility
+
+The Critical Warning ⚠️
+
+The left-to-right order matters! In general, AB ≠ BA.
+
+If AB = BA, we say A and B commute with one another.
+
+Example 6 (True/False): The two given matrices A and B — do they commute?
+
+Solution: Compute AB and BA separately. The results are different:
+
+AB \neq BA
+
+Therefore A and B do NOT commute. The statement is False. ❌
+
+🧠 Why this matters: For ordinary numbers, 3 × 5 = 5 × 3. For matrices, this fails in general. Never swap the order casually — it's a classic exam trap!
+
+---
+
+8. The Transpose of a Matrix
+
+Definition: Given an m × n matrix A, the transpose Aᵀ is the n × m matrix whose columns are formed from the corresponding rows of A. In other words: rows become columns, columns become rows.
+
+Example 7:
+
+A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}
+\;\Longrightarrow\;
+A^T = \begin{bmatrix} a & c \\ b & d \end{bmatrix}
+
+B = \begin{bmatrix} 1 & 2 \\ 4 & 0 \\ 7 & 0 \end{bmatrix}_{3\times 2}
+\;\Longrightarrow\;
+B^T = \begin{bmatrix} 1 & 4 & 7 \\ 2 & 0 & 0 \end{bmatrix}_{2\times 3}
+
+C = \begin{bmatrix} 3 & 2 & -1 & 0 \\ 0 & 0 & 3 & 4 \end{bmatrix}_{2\times 4}
+\;\Longrightarrow\;
+C^T = \begin{bmatrix} 3 & 0 \\ 2 & 0 \\ -1 & 3 \\ 0 & 4 \end{bmatrix}_{4\times 2}
+
+Theorem (Transpose Properties):
+
+Property Statement
+a) (Aᵀ)ᵀ = A (transpose twice → back to A)
+b) (A + B)ᵀ = Aᵀ + Bᵀ
+c) (kA)ᵀ = kAᵀ for any scalar k
+d) (AB)ᵀ = Bᵀ Aᵀ ⚠️ reverse order!
+
+🎯 Property (d) is the most tested: the transpose of a product equals the product of the transposes in reverse order. Think: "you put your shoes on, then socks — to undo it, socks come off first." 🧦👟
+
+---
+
+9. Example 8 — Putting It All Together
+
+Given matrices A, B, C, compute the following if valid:
+
+a) A² + CCᵀ
+
+· A² = A · A — valid only if A is square (same number of rows and columns). If A is n × n, then A² is n × n. ✅
+· CCᵀ: If C is m × n, then Cᵀ is n × m, so CCᵀ is m × m — a square matrix. ✅
+· Then add A² + CCᵀ — valid only if both are the same size (both m × m). ✅
+
+💡 Note: CCᵀ is always square (and in fact symmetric). Nice fact to remember!
+
+b) BᵀC
+
+· Bᵀ has three columns (since B has three rows) and C has only two rows.
+· Inner dimensions: 3 ≠ 2 → BᵀC is not defined ❌
+
+Solution as stated in the lecture: The product is not possible to compute.
+
+🧠 Moral: Always check sizes BEFORE computing anything. Many exam marks are lost by ignoring the inner-dimension rule.
+
+c) C(AᵀC + 2AC)ᵀ
+
+This is a transpose + distributivity puzzle. The lecture walks through it beautifully:
+
+(A^T C + 2AC)^T = \big((A^T + 2A)C\big)^T = C^T (A^T + 2A)^T = C^T(2A^T + A)
+
+Let's break down each step:
+
+1. Factor out C: AᵀC + 2AC = (Aᵀ + 2A)C. (Distributive law, in reverse.)
+2. Apply transpose of a product: ((Aᵀ + 2A)C)ᵀ = Cᵀ (Aᵀ + 2A)ᵀ — remember: reverse order!
+3. Transpose of a sum: (Aᵀ + 2A)ᵀ = (Aᵀ)ᵀ + (2A)ᵀ = A + 2Aᵀ.
+   Wait — careful! The lecture writes it as 2Aᵀ + A. Let's verify:
+   · (Aᵀ)ᵀ = A
+   · (2A)ᵀ = 2Aᵀ
+   · So (Aᵀ + 2A)ᵀ = A + 2Aᵀ — same thing as 2Aᵀ + A (addition is commutative). ✅
+4. Therefore: (AᵀC + 2AC)ᵀ = Cᵀ(2Aᵀ + A).
+
+Then the full expression becomes:
+
+C \cdot C^T (2A^T + A) = CC^T(2A^T + A)
+
+🎯 This example is examiner's favorite because it tests: distributivity, transpose of a product (reverse order!), transpose of a sum, and scalar handling — all in one.
+
+---
+
+📌 Quick Summary Sheet
+
+Concept Key Rule
+Matrix m rows × n columns, entries aᵢⱼ
+Equality same size + same corresponding entries
+Scalar multiplication multiply every entry by the scalar
+Addition add corresponding entries — same size only
+Zero matrix O all zeros; A + O = A; AO = O = OA
+Additive inverse −A = (−1)A
+Multiplication AB (m×n)(n×p) = m×p; inner dims must match
+cᵢⱼ row i of A · column j of B (dot product)
+Non-commutative AB ≠ BA in general
+Transpose Aᵀ rows ↔ columns; (AB)ᵀ = BᵀAᵀ (reverse!)
+Transpose rules (Aᵀ)ᵀ = A; (A+B)ᵀ = Aᵀ+Bᵀ; (kA)ᵀ = kAᵀ
+
+---
+
+⚠️ Top 5 Traps to Avoid in Exams
+
+1. Adding matrices of different sizes — check first!
+2. Forgetting to check inner dimensions before multiplying — like BᵀC in Example 8(b).
+3. Writing (AB)ᵀ = AᵀBᵀ — WRONG! It's BᵀAᵀ (reverse order).
+4. Assuming AB = BA — not true in general; Example 6 shows this.
+5. Mixing up rows and columns when computing cᵢⱼ — always "row i of the first, column j of the second."
+
+---
+
+🧪 Mini Practice (test yourself!)
+
+1. If A is 3 × 4 and B is 4 × 2, what is the size of AB? Is BA defined?
+      (Answer: AB is 3 × 2; BA is NOT defined since 2 ≠ 3.)
+2. If A is 2 × 2 and B is 2 × 3, what are the sizes of Aᵀ and Bᵀ? Is AᵀBᵀ defined?
+      (Answer: Aᵀ is 2 × 2, Bᵀ is 3 × 2. AᵀBᵀ: inner dims 2 vs 3 → not defined. But BᵀAᵀ IS defined: 3 × 2 times 2 × 2 = 3 × 2, which equals (AB)ᵀ.)
+3. Compute the transpose of
+      $\begin{bmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \end{bmatrix}$
+      (Answer: $\begin{bmatrix} 1 & 3 & 5 \\ 2 & 4 & 6 \end{bmatrix}$, size 2 × 3.)
+
+---
+
+That's the entire lecture covered — every definition, every theorem, every example, all in English with the key terms kept intact. You're ready to study and solve! 💪
+
+If you want, I can generate extra solved problems or a flashcard set on any section — just tell me which one.

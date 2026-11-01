@@ -1,0 +1,305 @@
+Lecture 5: Confidence Interval Part 2 — Full Explanation
+
+Welcome to Lecture 5! This lecture is all about Confidence Intervals — but with a twist. In Part 1, you probably learned how to estimate a single population mean (μ). Now we're leveling up: we'll handle small samples, and we'll learn how to compare two populations by estimating the difference between their means (μ₁ − μ₂).
+
+Let's break it down step by step, with intuition, examples, and every important term you need to memorize.
+
+---
+
+1. The Big Picture: Large Sample (Z) vs. Small Sample (t)
+
+Before we build any interval, we must ask: How big is my sample? This single question decides which distribution you use.
+
+Large Samples (n ≥ 30)
+
+· The Central Limit Theorem (CLT) applies. This theorem says that when n ≥ 30, the sampling distribution of the sample mean (X̄) is approximately normal, even if the population itself isn't normal.
+· Because the sampling distribution is normal, we use the Standard Normal Z-Distribution.
+· We don't know the population standard deviation σ, so we replace it with the sample standard deviation s. This is acceptable when n ≥ 30.
+
+Small Samples (n < 30)
+
+· The CLT no longer saves us. Instead, we require the underlying population to be approximately normally distributed.
+· We use Student's t-Distribution.
+· Degrees of Freedom (df) = n − 1.
+· Why t and not Z? Because we are estimating σ with s, which introduces extra variability. The t-distribution "accounts for" that extra uncertainty by having heavier tails.
+
+Intuition: Think of the Z-distribution as a confident person who knows everything (σ known). The t-distribution is a cautious person who has to guess (σ estimated from a small sample) — so it spreads out more to be safe.
+
+---
+
+2. Case 2: Small Sample Confidence Interval for a Single Mean
+
+Let X_1, \ldots, X_n be a small (n < 30) random sample from a normal population with mean μ.
+
+The 100(1 − α)% confidence interval for μ is:
+
+\overline{X} \pm t_{n-1,\,\alpha/2} \cdot \frac{s}{\sqrt{n}}
+
+Where:
+
+· \overline{X} = sample mean (point estimate)
+· s = sample standard deviation
+· n = sample size
+· t_{n-1, \alpha/2} = the critical value from the Student's t-distribution with n − 1 degrees of freedom and tail area α/2
+
+Understanding the t-Distribution (Definition)
+
+The t-distribution is a continuous probability distribution that arises when estimating the mean of a normally distributed population when:
+
+1. The sample size is small (n < 30), and
+2. The population standard deviation σ is unknown.
+
+Key properties:
+
+· It is symmetric and bell-shaped, just like the normal distribution.
+· BUT it has heavier tails — meaning it is more prone to producing values far from the mean. This makes the interval wider (more conservative), which is exactly what we want when we're uncertain.
+· Its shape is completely determined by degrees of freedom (ν), where ν = n − 1.
+
+Formal definition: Let Z be a standard normal random variable and V be a chi-square random variable with ν degrees of freedom. Then the t-random variable is:
+
+T = \frac{Z}{\sqrt{V/\nu}}
+
+Important behavior: As the sample size (and thus df) increases, the t-distribution approaches the standard normal distribution. In fact, if you look at the table, as df → ∞, the t-values converge to the Z-values (e.g., 1.96 for 95%).
+
+The Table (Page 5)
+
+The table gives you t-values for various tail probabilities (0.25, 0.2, 0.15, 0.1, 0.05, 0.025, 0.01, 0.005, 0.0005) and various degrees of freedom (1, 2, 3, ... 30, 40, 60, 120, ∞).
+
+How to read it: If you want a 95% confidence interval with df = 5, then α = 0.05, α/2 = 0.025. Look at column 0.025 and row 5 → you get 2.571.
+
+---
+
+3. Worked Example 2.5 (Small Sample Mean)
+
+Problem: Assuming the population is normally distributed, find a 95% confidence interval for the mean μ using this sample:
+
+0.74,\ 0.75,\ 0.73,\ 0.75,\ 0.74,\ 0.72
+
+Step-by-step:
+
+Step 1: Compute the sample mean (X̄)
+
+\overline{x} = \frac{0.74 + 0.75 + 0.73 + 0.75 + 0.74 + 0.72}{6} = \frac{4.43}{6} = 0.738
+Step 2: Compute the sample standard deviation (s)
+The result (given on page 7) is:
+
+s = 0.0117 \approx 0.011
+
+Step 3: Find the t-value
+
+· df = n − 1 = 6 − 1 = 5
+· α/2 = 0.025 (for 95% confidence)
+· From the t-table: t_{5, 0.025} = 2.571 \approx 2.57
+
+Step 4: Compute the confidence interval
+
+0.738 - 2.57\left(\frac{0.011}{\sqrt{6}}\right) \leq \mu \leq 0.738 + 2.57\left(\frac{0.011}{\sqrt{6}}\right)
+
+Note: \frac{0.011}{\sqrt{6}} \approx 0.00449, and 2.57 \times 0.00449 \approx 0.0115.
+
+0.738 - 0.0115 \leq \mu \leq 0.738 + 0.0115
+
+\boxed{0.727 \leq \mu \leq 0.750}
+
+So the 95% confidence interval for μ is (0.727, 0.750).
+
+Interpretation: We are 95% confident that the true population mean lies between 0.727 and 0.750.
+
+---
+
+4. Case 3: Difference Between Two Population Means (μ_X − μ_Y) — Large Samples
+
+Now we move to comparing two independent populations. Let:
+
+· X ~ Normal(μ_X, σ_X²)
+· Y ~ Normal(μ_Y, σ_Y²)
+
+If X and Y are independent, then the difference X − Y is also normally distributed with:
+
+· Mean: μ_X − μ_Y
+· Variance: σ_X² + σ_Y²
+
+The Confidence Interval Formula
+
+\overline{X} - \overline{Y} \pm z_{\alpha/2} \sqrt{\frac{\sigma_X^2}{n_X} + \frac{\sigma_Y^2}{n_Y}}
+
+Important note: In this large-sample case, the formula uses σ (population standard deviations) directly. In practice, if σ is unknown but n is large, we substitute s₁ and s₂ in place of σ₁ and σ₂ (as noted on page 2: "Sample standard deviation s replaces unknown σ when n ≥ 30").
+
+Worked Example 2.7
+
+Problem:
+
+· Sample 1: n₁ = 30, σ₁ = 5, Ȳ₁ = 80
+· Sample 2: n₂ = 30, σ₂ = 3, Ȳ₂ = 75
+· Find a 94% confidence interval for μ₁ − μ₂.
+
+Step 1: Point Estimate
+
+\overline{y}_1 - \overline{y}_2 = 80 - 75 = 5
+
+Step 2: Standard Error of the Difference
+
+\sigma_{\overline{Y}_1 - \overline{Y}_2} = \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}} = \sqrt{\frac{5^2}{30} + \frac{3^2}{30}} = \sqrt{\frac{25 + 9}{30}} = \sqrt{\frac{34}{30}} \approx 1.0646
+
+Step 3: Critical Value
+
+· 94% confidence → 1 − α = 0.94 → α = 0.06 → α/2 = 0.03
+· From the standard normal table, the z-value for a tail area of 0.03 is z = 1.88
+
+Step 4: Confidence Interval
+
+5 - (1.88)(1.0646) \leq \mu_1 - \mu_2 \leq 5 + (1.88)(1.0646)
+
+5 - 2.0015 \leq \mu_1 - \mu_2 \leq 5 + 2.0015
+
+\boxed{2.9985 \leq \mu_1 - \mu_2 \leq 7.0015}
+
+Approximately: (3.00, 7.00).
+
+Interpretation: We are 94% confident that the difference between the two population means is between about 3 and 7. Since the entire interval is positive (above 0), this suggests μ₁ is likely greater than μ₂.
+
+---
+
+5. Case 4: Difference Between Two Means When σ_X = σ_Y (Pooled t-Procedure)
+
+When sample sizes are small, we use the t-distribution. But there's a catch: we have two unknown variances. If we assume the two population variances are equal (σ_X² = σ_Y²), we can pool the two sample variances into a single, better estimate.
+
+Step 1: Compute the Pooled Standard Deviation (s_p)
+
+s_p = \sqrt{\frac{(n_X - 1)s_X^2 + (n_Y - 1)s_Y^2}{n_X + n_Y - 2}}
+
+This is a weighted average of the two sample variances, weighted by their degrees of freedom.
+
+Step 2: Compute the Degrees of Freedom
+
+\text{df} = n_X + n_Y - 2
+
+Step 3: The Confidence Interval
+
+A level C confidence interval is:
+
+(\overline{X} - \overline{Y}) \pm t_{C} \cdot s_p \sqrt{\frac{1}{n_X} + \frac{1}{n_Y}}
+
+Where t_C is the critical t-value with df = n_X + n_Y − 2 and tail area (1 − C)/2.
+
+Worked Example 2.8
+
+Problem:
+
+· Design I: n₁ = 11 stores, x̄₁ = 52 units, s₁ = 12 units
+· Design II: n₂ = 6 stores, x̄₂ = 46 units, s₂ = 10 units
+· Construct a point estimate and a 95% confidence interval for μ₁ − μ₂.
+
+Step 1: Point Estimate
+
+\overline{x}_1 - \overline{x}_2 = 52 - 46 = 6 \text{ units}
+
+Step 2: Degrees of Freedom & Critical Value
+
+· df = 11 + 6 − 2 = 15
+· 95% confidence → α = 0.05 → α/2 = 0.025
+· From t-table: t_{15, 0.025} = 2.131
+
+Step 3: Pooled Variance (s_p²)
+
+s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2} = \frac{(10)(12)^2 + (5)(10)^2}{15} = \frac{1440 + 500}{15} = \frac{1940}{15} \approx 129.33
+
+Step 4: Confidence Interval
+CI = 6 \pm 2.131 \sqrt{129.33\left(\frac{1}{11} + \frac{1}{6}\right)}
+
+First, compute the inside: \frac{1}{11} + \frac{1}{6} = 0.0909 + 0.1667 = 0.2576. Then 129.33 \times 0.2576 \approx 33.32. And \sqrt{33.32} \approx 5.77. Then 2.131 \times 5.77 \approx 12.30.
+
+6 \pm 12.30
+
+\boxed{-6.30 \leq \mu_1 - \mu_2 \leq 18.30}
+
+Interpretation: We are 95% confident that the true difference in average monthly sales is between −6.30 and 18.30. Since this interval contains 0, we cannot conclude that there is a significant difference between the two packaging designs. (Zero difference is plausible.)
+
+---
+
+6. Decision Tree: Selecting the Right Procedure (Page 17)
+
+This is your roadmap. Here's the full breakdown:
+
+Start: "Estimating Population Means (μ)"
+
+Branch 1: Single Population Mean (μ)
+
+· Large Sample (n ≥ 30): Use Z-Distribution
+  \bar{X} \pm z_{\alpha/2} \cdot (s/\sqrt{n})
+· Small Sample (n < 30): Use t-Distribution (df = n − 1)
+  \bar{X} \pm t_{df, \alpha/2} \cdot (s/\sqrt{n})
+
+Branch 2: Difference Between Two Means (μ₁ − μ₂)
+
+· Large Independent Samples: Use Z-Distribution
+  (\bar{X}_1 - \bar{X}_2) \pm z_{\alpha/2} \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
+· Small Samples (Equal σ²): Use Pooled t-Procedure (df = n₁ + n₂ − 2)
+  (\bar{X}_1 - \bar{X}_2) \pm t_{df, \alpha/2} \cdot s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}
+
+---
+
+7. Summary: Formula Quick Reference Matrix (Page 18)
+
+Here's the entire lecture condensed into one table:
+
+Case / Condition Point Estimate Critical Value Margin of Error (E)
+Single Mean (n ≥ 30) X̄ z_α/2 (Z-table) z_α/2 · (s / √n)
+Single Mean (n < 30, Normal) x̄ t_df, α/2 (df = n − 1) t_df, α/2 · (s / √n)
+Two Means Difference (Large) X̄₁ − X̄₂ z_α/2 (Z-table) z_α/2 · √(s₁²/n₁ + s₂²/n₂)
+Two Means Difference (Pooled t) x̄₁ − x̄₂ t_df, α/2 (df = n₁ + n₂ − 2) t_df, α/2 · s_p √(1/n₁ + 1/n₂)
+
+---
+
+8. Key Terms You Must Know (Vocabulary Checklist)
+
+Make sure you can define each of these in English:
+
+· Confidence Interval (CI): A range of values, computed from sample data, that is likely to contain the true population parameter.
+· Confidence Level (1 − α): The probability that the interval contains the true parameter (e.g., 95%).
+· Critical Value: The number (z or t) that defines the boundary of the confidence interval based on the chosen confidence level.
+· Margin of Error (E): The half-width of the confidence interval (critical value × standard error).
+· Standard Error: The standard deviation of the sampling distribution of a statistic.
+· Degrees of Freedom (df): A parameter that determines the shape of the t-distribution (df = n − 1 for one sample; df = n₁ + n₂ − 2 for pooled two-sample).
+· Pooled Standard Deviation (s_p): A weighted average of two sample standard deviations, used when assuming equal population variances.
+· Central Limit Theorem (CLT): For n ≥ 30, the sampling distribution of X̄ is approximately normal.
+· Independent Samples: Samples from two populations where observations in one sample have no relationship to observations in the other.
+· Point Estimate: A single value used to estimate a population parameter (e.g., x̄ estimates μ, x̄₁ − x̄₂ estimates μ₁ − μ₂).
+
+---
+
+9. Quick Recap of All Formulas
+
+Single mean, small sample:
+
+\overline{X} \pm t_{n-1, \alpha/2} \frac{s}{\sqrt{n}}
+
+Difference of means, large samples:
+
+\overline{X} - \overline{Y} \pm z_{\alpha/2} \sqrt{\frac{\sigma_X^2}{n_X} + \frac{\sigma_Y^2}{n_Y}}
+
+Pooled t-procedure (small samples, equal variances):
+
+s_p = \sqrt{\frac{(n_X - 1)s_X^2 + (n_Y - 1)s_Y^2}{n_X + n_Y - 2}}
+
+(\overline{X} - \overline{Y}) \pm t_{df, \alpha/2} \cdot s_p \sqrt{\frac{1}{n_X} + \frac{1}{n_Y}}
+
+with df = n_X + n_Y − 2.
+
+The t-statistic definition:
+
+T = \frac{Z}{\sqrt{V/\nu}}
+
+---
+
+10. Final Tips for Exams
+
+1. Always check sample size first. n ≥ 30 → Z. n < 30 → t.
+2. For two samples: Check if samples are large or small, and whether variances are assumed equal (pooled) or not.
+3. Know how to read the t-table. Row = df, column = tail probability (α/2).
+4. Interpret your interval in context. Say "We are X% confident that the true [parameter] lies between [a] and [b]."
+5. If the interval for μ₁ − μ₂ contains 0, there is no significant evidence of a difference between the means.
+6. Larger df → t approaches Z. For df = ∞, t-values equal z-values (e.g., 1.96 for 95%).
+7. The t-distribution has heavier tails — this makes intervals wider, which is the "price" we pay for using s instead of σ in small samples.
+
+Good luck! This lecture is all about choosing the right tool for the right job — and now you have the complete decision map. 🎯

@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on Lecture 05 (Eliminations and the Inverse of a Matrix).
+
+Q1. To find the inverse of an n \times n matrix A using Gauss-Jordan elimination, we form the matrix:
+A) [A \mid 0]
+B) [I_n \mid A]
+C) [A \mid I_n]
+D) [A \mid A^T]
+Answer: C) [A \mid I_n]
+
+Q2. If Gauss-Jordan elimination on [A \mid I_n] produces [I_n \mid B], then:
+A) B = A^T
+B) B = A^{-1}
+C) B = I_n
+D) A is singular
+Answer: B) B = A^{-1}
+
+Q3. If during Gauss-Jordan elimination on [A \mid I_n] a row of zeros appears on the left side (A portion), we conclude that:
+A) A is invertible
+B) A is singular (has no inverse)
+C) B = I_n
+D) the system has infinitely many solutions
+Answer: B) A is singular (has no inverse)
+
+Q4. Which of the following is NOT one of the equivalent statements for an n \times n matrix A?
+A) A is nonsingular
+B) A is row equivalent to I_n
+C) Ax = b has a unique solution for every b
+D) Ax = 0 has infinitely many solutions
+Answer: D) Ax = 0 has infinitely many solutions (it should have only the trivial solution)
+
+Q5. If A is an n \times n nonsingular matrix, the homogeneous system Ax = 0 has:
+A) infinitely many solutions
+B) no solution
+C) only the trivial solution x = 0
+D) exactly two solutions
+Answer: C) only the trivial solution x = 0
+
+Q6. If A is nonsingular, the unique solution of Ax = b is:
+A) x = bA^{-1}
+B) x = A^{-1}b
+C) x = Ab
+D) x = A^T b
+Answer: B) x = A^{-1}b
+
+Q7. To find the inverse of A = \begin{bmatrix} 1 & 3 \\ 2 & 5 \end{bmatrix}, we solve AX = I, which can be split into:
+A) one system with two right-hand sides
+B) two systems sharing the same coefficient matrix A
+C) a homogeneous system only
+D) an inconsistent system
+Answer: B) two systems sharing the same coefficient matrix A
+
+Q8. The "doubly augmented" matrix used to find A^{-1} has size:
+A) n \times n
+B) n \times 2n
+C) 2n \times n
+D) 2n \times 2n
+Answer: B) n \times 2n
+
+Q9. If A = \begin{bmatrix} 1 & 3 \\ 2 & 5 \end{bmatrix}, its inverse is:
+A) \begin{bmatrix} 5 & -3 \\ -2 & 1 \end{bmatrix}
+B) \begin{bmatrix} -5 & 3 \\ 2 & -1 \end{bmatrix}
+C) \begin{bmatrix} -5 & -3 \\ -2 & -1 \end{bmatrix}
+D) \begin{bmatrix} 5 & 3 \\ 2 & 1 \end{bmatrix}
+Answer: B) \begin{bmatrix} -5 & 3 \\ 2 & -1 \end{bmatrix} (since |A| = -1, A^{-1} = \frac{1}{-1}\begin{bmatrix} 5 & -3 \\ -2 & 1 \end{bmatrix})
+
+Q10. The process of solving two systems with the same coefficient matrix simultaneously is done by:
+A) adjoining the identity matrix to the coefficient matrix
+B) adjoining the two right-hand sides together
+C) transposing the matrix
+D) using determinants only
+Answer: A) adjoining the identity matrix to the coefficient matrix
+
+Q11. In Example 3, the matrix is shown to be singular because:
+A) a row of zeros appears on the left side of [A \mid I]
+B) the identity matrix appears on the left
+C) the determinant is nonzero
+D) it has a unique inverse
+Answer: A) a row of zeros appears on the left side of [A \mid I]
+
+Q12. In Example 4, the coefficient matrix for both systems is:
+A) \begin{bmatrix} 1 & 1 & 1 \\ 1 & 1 & -1 \\ 1 & 3 & -5 \end{bmatrix}
+B) \begin{bmatrix} 1 & 1 & 0 \\ 1 & 1 & 0 \\ 1 & 3 & 0 \end{bmatrix}
+C) \begin{bmatrix} 3 & 1 & 1 \\ 1 & 1 & -1 \\ 1 & 3 & 1 \end{bmatrix}
+D) \begin{bmatrix} 1 & 0 & 1 \\ 0 & 1 & -1 \\ 1 & 3 & -5 \end{bmatrix}
+Answer: A) \begin{bmatrix} 1 & 1 & 1 \\ 1 & 1 & -1 \\ 1 & 3 & -5 \end{bmatrix}
+
+Q13. For the system in Example 4(a) with right-hand side b = \begin{bmatrix} 3 \\ 1 \\ 1 \end{bmatrix}, the solution is:
+A) x_1 = 1, x_2 = 2, x_3 = 0
+B) x_1 = 0, x_2 = 2, x_3 = 1
+C) x_1 = 2, x_2 = 1, x_3 = 0
+D) x_1 = 3, x_2 = 1, x_3 = 1
+Answer: B) x_1 = 0, x_2 = 2, x_3 = 1
+
+Q14. For the homogeneous system in Example 4(b), the solution is:
+A) infinitely many solutions
+B) no solution
+C) the trivial solution x = 0
+D) x = \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}
+Answer: C) the trivial solution x = 0
+
+Q15. In Example 2 (3×3 inverse), after row reduction, the inverse A^{-1} was found to be:
+A) \begin{bmatrix} -2 & 2 & -1 \\ 1 & -3/2 & 1/2 \\ 1/2 & -1/2 & 0 \end{bmatrix} multiplied by \frac{1}{2}
+B) \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}
+C) the zero matrix
+D) not possible to find
+Answer: A) \begin{bmatrix} -2 & 2 & -1 \\ 1 & -3/2 & 1/2 \\ 1/2 & -1/2 & 0 \end{bmatrix} multiplied by \frac{1}{2} (equivalently \frac{1}{2}\begin{bmatrix} -1 & 4 & -1 \\ 2 & -3 & 1 \\ 1 & -1 & 0 \end{bmatrix})
+
+Q16. The check for the inverse is performed by verifying:
+A) A + A^{-1} = I
+B) AA^{-1} = I_n
+C) A - A^{-1} = 0
+D) A^T = A^{-1}
+Answer: B) AA^{-1} = I_n
+
+Q17. A square matrix that can be transformed to the identity matrix by row operations is:
+A) singular
+B) nonsingular (invertible)
+C) skew-symmetric
+D) homogeneous
+Answer: B) nonsingular (invertible)
+
+Q18. If A is invertible and Ax = b, then the solution set is:
+A) empty
+B) a single unique vector
+C) infinitely many vectors
+D) the zero vector only
+Answer: B) a single unique vector
+
+Q19. When solving AX = I for a 2 \times 2 matrix A, the matrix X has size:
+A) 1 \times 2
+B) 2 \times 1
+C) 2 \times 2
+D) 1 \times 1
+Answer: C) 2 \times 2
+
+Q20. If a matrix A is singular, which of the following is true?
+A) A is row equivalent to I_n
+B) A has an inverse
+C) A cannot be row reduced to I_n
+D) Ax = 0 has only the trivial solution
+Answer: C) A cannot be row reduced to I_n

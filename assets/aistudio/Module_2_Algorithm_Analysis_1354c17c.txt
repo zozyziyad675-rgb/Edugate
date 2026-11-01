@@ -1,0 +1,223 @@
+Module 2: Algorithm Analysis & Complexity (Big-O)
+
+The Core Idea: A correct algorithm is necessary, but scalable performance is also a requirement. "Growth matters." Hardware speed is not a reliable way to compare ideas. We must understand how work and memory grow as input size  n  grows.
+
+---
+
+Lesson 2.1: Writing Algorithms
+
+1. What is an Algorithm?
+An algorithm is a finite sequence of clear steps that transforms input into the required output.
+It must have these Properties:
+
+· Correctness: Produces the required result for every valid input.
+· Finiteness: Stops after a limited number of steps.
+· Clarity: Each step has one clear meaning.
+· Input / Output: States what enters and what is produced.
+· Generality: Solves a class of problems, not just one example.
+
+2. The 7 Steps to Write an Algorithm:
+
+1. Understand the problem.
+2. Identify input and constraints.
+3. Write steps in English.
+4. Convert to pseudocode or flowchart.
+5. Trace a small example.
+6. Test boundary cases.
+7. Implement in C# and Python.
+
+3. Pseudocode Rules:
+
+· Use clear control words: IF, ELSE, FOR, WHILE, RETURN, END.
+· Indent blocks so that scope is visible.
+· Use meaningful variable names.
+· State pre-conditions and post-conditions when needed.
+· Keep the logic independent from C# or Python syntax.
+
+4. Pre-conditions & Post-conditions:
+
+· FindMax(A): Pre-condition: A is non-empty. Post-condition: Returned value is the largest element.
+· BinarySearch(A, x): Pre-condition: A is sorted. Post-condition: Returns target index or -1.
+· Average(A): Pre-condition: A has at least one number. Post-condition: Returns arithmetic mean.
+· SecondLargestDistinct(A): Pre-condition: A has at least two distinct values. Post-condition: Returns the second largest distinct value.
+· Important Note: If a pre-condition is false, the algorithm may be wrong even if the code compiles.
+
+5. Trace Table Example: FindMax
+Let's trace FindMax([7, 4, 8, 3, 10]):
+
+· Initial: max = 7.
+· i = 1: current = 4, max before = 7, max after = 7.
+· i = 2: current = 8, max before = 7, max after = 8.
+· i = 3: current = 3, max before = 8, max after = 8.
+· i = 4: current = 10, max before = 8, max after = 10.
+· Conclusion: Returns 10. The number of comparisons is  n - 1 , which is linear growth.
+· Rule: Never initialize max to 0 unless the problem guarantees non-negative data.
+
+6. Second Largest Distinct Value Example
+Array: [4, 9, 2, 9, 7]
+We use two variables: first and second (initialized to negative infinity).
+
+· Read 4: first = 4, second = -∞.
+· Read 9: 9 > 4, so second = 4, first = 9.
+· Read 2: ignored (2 < 9 and 2 < 4).
+· Read 9: duplicate largest, ignored.
+· Read 7: 7 < 9 and 7 > 4, so second = 7.
+· Answer: 7.
+
+7. Lab Rule: Every program must include a short trace or explanation of correctness. Always include at least one trace table for each major algorithm.
+
+---
+
+Lesson 2.2: Measuring Efficiency
+
+1. Why Operation Counting?
+Clock time depends on hardware, OS, compiler, and background activity. Algorithm analysis counts important operations instead (comparisons, assignments, array accesses). We study how the count changes as input size  n  grows.
+
+· Question to ask: If  n  doubles, what happens to the amount of work?
+
+2. Constant vs. Linear Work:
+
+· Direct access (e.g., int x = values[5];): 1 operation, constant growth.
+· One loop over n items:  n  operations, linear growth.
+· Two consecutive loops:  2n  operations, linear growth.
+· One loop over half the items:  n/2  operations, linear growth.
+· Rule: Constants change exact time, not growth class.
+
+3. Consecutive vs. Nested Loops:
+
+· Consecutive: Add costs ( n + n = 2n ).
+· Nested repeated work: Multiply costs.
+
+4. Nested Loop (Triangular Count) Example:
+Python code:
+
+for i in range(n):
+    for j in range(i + 1, n):
+        count += 1
+If  n = 5 :
+
+· i=0: 4 iterations.
+· i=1: 3 iterations.
+· i=2: 2 iterations.
+· i=3: 1 iteration.
+· i=4: 0 iterations.
+· Derivation: (n-1) + (n-2) + \dots + 1 = n(n-1)/2.
+· Leading term is  n^2/2 \rightarrow  Quadratic growth. Used in duplicate checking and all-pairs comparisons.
+
+5. Logarithmic Growth (Repeated Doubling/Halving):
+
+· Repeated doubling: i = 1; while (i < n) { i *= 2; }
+· Repeated halving: x = n; while (x > 1) { x /= 2; }
+· If  2^k \ge n , then  k \approx \log_2(n) .
+
+6. Mixed Loop Example:
+C# code:
+
+for (int i = 0; i < n; i++) {
+    int x = n;
+    while (x > 1) {
+        x /= 2;
+    }
+}
+· Outer loop:  n  iterations.
+· Inner loop: about  \log_2(n)  iterations.
+· Total:  n \times \log_2(n) \rightarrow \Theta(n \log n) .
+· This appears in efficient comparison sorting algorithms.
+
+7. Space Complexity:
+Describes how memory use changes as input grows. Auxiliary space counts extra memory beyond the input.
+
+· FindMax: Constant auxiliary space (just one variable max).
+· doubled(values): Linear auxiliary space (creates a new list result).
+· Call stack: Each active recursive call stores a frame. At depth  n , about  n  frames exist. Auxiliary stack space:  \Theta(n) . Iterative alternatives may reduce stack usage.
+· Practical question: Implement two versions of the same operation and compare time + auxiliary space.
+
+---
+
+Lesson 2.3: Asymptotic Notation
+
+1. Definitions:
+
+·  O(g(n)) : Upper bound (Big-O). Worst-case upper bound. "The algorithm will not grow faster than this class."
+·  \Omega(g(n)) : Lower bound (Big-Omega). Guaranteed minimum growth.
+·  \Theta(g(n)) : Tight bound (Big-Theta). Actual asymptotic growth class. "This class tightly describes the growth."
+
+2. Simplification Rules:
+
+1. Drop constant multipliers:  10n \rightarrow \Theta(n) .
+2. Drop lower-order terms:  n^2 + 5n + 8 \rightarrow \Theta(n^2) .
+3. For a sum, keep the fastest-growing term.
+4. Consecutive sections: add costs, then simplify.
+5. Nested repeated sections: multiply costs.
+
+Examples:
+
+·  12n + 8 \rightarrow \Theta(n) 
+·  4n^2 + 30n + 100 \rightarrow \Theta(n^2) 
+·  9 \log n + 40 \rightarrow \Theta(\log n) 
+·  7n \log n + 2n \rightarrow \Theta(n \log n) 
+·  3n^3 + 10n^2 + n \rightarrow \Theta(n^3) 
+· Dominant term controls the growth.
+
+3. Search Algorithms & Complexity:
+
+· Linear Search:
+  · Best case: target at A[0] -> 1 comparison ->  \Theta(1) .
+  · Worst case: target absent or last ->  n  comparisons ->  \Theta(n) .
+  · Average case: about  n/2  ->  \Theta(n) .
+· Binary Search:
+  · Pre-condition: Array is sorted.
+  · Each step checks the middle element. Half of the remaining range is discarded.
+  · Worst-case time:  \Theta(\log n) .
+  · Iterative auxiliary space:  \Theta(1) .
+  · Trace Example: Array [3, 8, 12, 17, 21, 29, 34, 41], target = 29.
+    · Step 1: low=0, high=7, mid=3, A[3]=17. Target > 17 -> low = 4.
+    · Step 2: low=4, high=7, mid=5, A[5]=29. Found at index 5. (2 comparisons).
+
+4. Big-O, Big-Omega, Big-Theta Claims:
+For  f(n) = 3n + 10 :
+
+·  f(n)  is  O(n) : Yes (Upper bound is linear).
+·  f(n)  is  \Omega(n) : Yes (Lower bound is linear).
+·  f(n)  is  \Theta(n) : Yes (Tight linear bound).
+·  f(n)  is  O(n^2) : Yes, but loose ( n^2  grows faster than needed).
+· Rule: Prefer the simplest tight bound when the task asks for "the complexity."
+
+---
+
+Unit 2 Practical Lab Roadmap & Assignment
+
+1. Lab Roadmap:
+
+· Starter: Pseudocode and trace tables (FindMax, CountPositive).
+· Foundation: Operation counting (Annotated snippets).
+· Intermediate: Linear search with counters (C# and Python).
+· Advanced: Binary search with counters (Trace and comparison counts).
+· Professional: Complexity Analyzer mini-project (Report, code, and conclusions).
+· Professional expectation: Students must explain results, not only submit running code.
+
+2. Lab Tasks:
+
+· Implement selected algorithms in C# and Python.
+· Add counters for comparisons or loop-body executions.
+· Run test sizes: 10, 100, 1,000, 10,000.
+· Record counts in a table.
+· Classify the complexity and justify it.
+· Compare measured counts with theoretical predictions.
+
+Expected Growth for Lab Metrics:
+
+· FindMax: comparisons  \Theta(n) .
+· Linear search: best  \Theta(1) , worst  \Theta(n) .
+· Binary search: comparisons  \Theta(\log n) .
+· Pair duplicate check: comparisons  \Theta(n^2) .
+
+3. End-of-Unit Assignment (Key Takeaways):
+For each problem, provide pseudocode, C# code, Python code, a small trace, time complexity, and auxiliary-space complexity.
+
+· Count occurrences of a target: single traversal, comparison count,  \Theta(n)  space is constant.
+· Find second largest distinct value: trace first and second values, boundary cases.
+· Detect duplicate using pair comparison: triangular count, worst-case quadratic behavior  \Theta(n^2) .
+· Compare search algorithms: linear vs binary search counters and cases.
+
+Exam Habit: Identify  n \rightarrow  count dominant work  \rightarrow  simplify.

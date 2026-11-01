@@ -1,0 +1,152 @@
+Here is a comprehensive, engaging, and detailed explanation of your Linear Algebra Lecture 02, designed to make the concepts crystal clear while keeping all the essential English terminology intact for your studies and exams.
+
+---
+
+🎓 Lecture 02: Square Matrices and The Inverse
+
+Welcome to the world of Square Matrices! In this lecture, we are going to explore matrices that have a special "perfect square" shape, learn about their unique properties, and discover how to "undo" them using the Inverse. Let’s dive in!
+
+---
+
+1. What is a Square Matrix? ⬛
+
+Definition: A matrix is called a Square Matrix if it has the same number of rows as columns.
+
+· If it has n rows and n columns, we say it has an order n (it is an n \times n matrix).
+· The Principal Diagonal: Look at the entries a_{11}, a_{22}, \ldots, a_{nn}. These specific elements form the principal diagonal (or main diagonal). It runs from the top-left corner to the bottom-right corner.
+
+📝 Example: 
+If A = \begin{bmatrix} 0 & 5 \\ 2 & 1 \end{bmatrix}, the principal diagonal entries are a_{11} = 0 and a_{22} = 1.
+
+---
+
+2. Special Square Matrices 🛠️
+
+Not all square matrices are created equal. Here are the special types you need to know:
+
+2.1 Diagonal Matrices
+
+· Definition: A square matrix where all entries outside the principal diagonal are zeros (a_{ij} = 0 for i \neq j). The non-zero entries appear only on the principal diagonal.
+· Scalar Matrix: A diagonal matrix where all the diagonal elements are the same number.
+· Identity Matrix (Unit Matrix), I_n: A scalar matrix where all the diagonal elements are exactly 1s.
+  · Example: I_2 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} and I_3 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}.
+  · The Magic of I_n: Just like multiplying a number by 1 doesn't change it, multiplying any matrix A_{m \times n} by the identity matrix leaves it unchanged: A_{m \times n}I_n = I_mA_{m \times n} = A_{m \times n}.
+
+2.2 Triangular Matrices (Upper and Lower) 📐
+
+· Upper Triangular Matrix: All entries below the main diagonal are zeros (a_{ij} = 0 for i > j).
+  · Example: \begin{bmatrix} 2 & 0 & 3 \\ 0 & 1 & 4 \\ 0 & 0 & 3 \end{bmatrix}
+· Lower Triangular Matrix: All entries above the main diagonal are zeros (a_{ij} = 0 for i < j).
+  · Example: \begin{bmatrix} 2 & 0 & 0 \\ 7 & 1 & 0 \\ 2 & 2 & 3 \end{bmatrix}
+
+2.3 Symmetric and Skew-Symmetric Matrices 🪞
+
+· Symmetric Matrix: A matrix that is equal to its transpose (A = A^T). If you fold it along the main diagonal, the elements mirror each other perfectly.
+· Skew-Symmetric Matrix: A matrix that is equal to the negative of its transpose (A = -A^T).
+  · Crucial Rule: For a skew-symmetric matrix, all the elements on the main diagonal must be zeros.
+
+🔥 Important Theorem about Symmetric Matrices:
+If A and B are symmetric matrices (same size) and k is a scalar:
+a) A^T is symmetric.
+b) A + B and A - B are symmetric.
+c) kA is symmetric.
+Proof idea: It's straightforward! For example, for (c): (kA)^T = kA^T = kA (because A = A^T).
+
+💡 Bonus Fact from Example 1: For any matrix A, the product AA^T is always a symmetric matrix. Why? Because (AA^T)^T = (A^T)^T A^T = AA^T.
+
+---
+
+3. The Inverse of a Matrix 🔄 (Focusing on 2x2)
+
+Think of the inverse as the "undo" button for a matrix.
+
+Definition: An n \times n matrix A is invertible (or non-singular) if there exists an n \times n matrix B such that:
+
+AB = BA = I_n
+
+B is called the inverse of A and is denoted as A^{-1}.
+
+· Uniqueness Theorem: If a matrix has an inverse, that inverse is absolutely unique. (Proof: If B and C are both inverses, C = CI = C(AB) = (CA)B = IB = B).
+· Singular Matrix: If a square matrix has no inverse, it is called non-invertible or singular.
+
+📏 The Formula for a 2x2 Matrix
+
+If you have a 2x2 matrix A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}, you can find its inverse only if ad - bc \neq 0.
+
+A^{-1} = \frac{1}{ad - bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
+
+How to memorize this:
+1. Swap the main diagonal entries (a and d).
+2. Put minus signs in front of the other two entries (-b and -c).
+3. Multiply the whole matrix by \frac{1}{\text{Determinant}}.
+
+· The Determinant |A|: The scalar ad - bc is called the determinant of matrix A, denoted by |A|.
+· Example 4 Check: If B = \begin{bmatrix} 4 & 8 \\ -1 & -2 \end{bmatrix}, then |B| = (4)(-2) - (8)(-1) = -8 + 8 = 0. Since the determinant is 0, B has no inverse (it is a singular matrix).
+
+---
+
+4. Properties of Inverse Matrices 🧠
+
+If A and B are invertible matrices of size n, k is a positive integer, and c is a non-zero scalar, the following properties hold true:
+
+1. (A^{-1})^{-1} = A (The inverse of the inverse is the original matrix).
+2. (AB)^{-1} = B^{-1}A^{-1} (⚠️ Very Important! The order reverses! Think of it like putting on shoes and socks: to undo it, you take off shoes first, then socks.)
+3. (A^k)^{-1} = (A^{-1})^k
+4. (cA)^{-1} = \frac{1}{c} A^{-1}
+5. (A^T)^{-1} = (A^{-1})^T
+
+Cancellation Properties: If A is invertible:
+
+· If AB = AC, then B = C (Left cancellation).
+· If BA = CA, then B = C (Right cancellation).
+
+Negative Exponents: We can extend exponent rules to negative integers! A^{-k} simply means multiplying the inverse k times: A^{-k} = (A^{-1})^k.
+
+---
+
+5. Examples & Student Task Walkthrough ✍️
+
+Example 5: Compute A^{-2} two ways.
+Suppose you are given a matrix A. You want to find A^{-2}.
+
+· Way 1: Find A^2 first, then find the inverse of that result: (A^2)^{-1}.
+· Way 2: Find A^{-1} first, then square the result: (A^{-1})^2.
+  Both methods will give you the exact same answer!
+
+---
+
+📝 Student Task Solution
+
+Task: Find the vector X = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} if AX = \begin{bmatrix} -4 \\ 0 \end{bmatrix} and A = \begin{bmatrix} 1 & 1 \\ 2 & 4 \end{bmatrix}.
+
+Step-by-step Solution:
+We have the equation AX = B. To isolate X, we need to multiply both sides by the inverse of A:
+
+X = A^{-1}B
+
+Step 1: Find the determinant of A.
+
+|A| = (1)(4) - (1)(2) = 4 - 2 = 2
+
+Since |A| \neq 0, the inverse exists.
+
+Step 2: Find A^{-1}.
+Using the 2x2 formula (swap main diagonal, negate others, multiply by 1/|A|):
+
+A^{-1} = \frac{1}{2} \begin{bmatrix} 4 & -1 \\ -2 & 1 \end{bmatrix} = \begin{bmatrix} 2 & -\frac{1}{2} \\ -1 & \frac{1}{2} \end{bmatrix}
+
+Step 3: Calculate X = A^{-1}B.
+
+X = \begin{bmatrix} 2 & -\frac{1}{2} \\ -1 & \frac{1}{2} \end{bmatrix} \begin{bmatrix} -4 \\ 0 \end{bmatrix}
+
+Now, multiply the rows of A^{-1} by the column of B:
+
+· Row 1: (2 \times -4) + (-\frac{1}{2} \times 0) = -8 + 0 = -8
+· Row 2: (-1 \times -4) + (\frac{1}{2} \times 0) = 4 + 0 = 4
+
+Final Answer:
+
+X = \begin{bmatrix} -8 \\ 4 \end{bmatrix}
+
+(Which means x_1 = -8 and x_2 = 4).
+

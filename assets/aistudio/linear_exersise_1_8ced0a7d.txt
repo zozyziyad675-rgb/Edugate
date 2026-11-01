@@ -1,0 +1,93 @@
+20 MCQs from the Lecture
+
+Q1. What is the size of the matrix A = \begin{bmatrix} 1 & -1 \\ 0 & 5 \\ 3 & 2 \end{bmatrix}?
+A) 2\times 3 B) 3\times 2 C) 3\times 3 D) 2\times 2
+Answer: B) 3\times 2
+
+Q2. For the matrix in Q1, what is the element a_{32}?
+A) -1 B) 3 C) 2 D) 5
+Answer: C) 2
+
+Q3. Two matrices are equal if:
+A) they have the same number of rows only
+B) they have the same order and corresponding entries are equal
+C) their determinants are equal
+D) they are both square
+Answer: B) they have the same order and corresponding entries are equal
+
+Q4. Find a such that \begin{bmatrix} 3 & 2a \\ 4b & 0 \end{bmatrix} = \begin{bmatrix} 3 & c \\ -8 & 0 \end{bmatrix} (comparing entry a_{12}).
+A) a = 0 B) a = \frac{c}{2} C) a = c D) a = 2c
+Answer: B) a = \frac{c}{2}
+
+Q5. From the same equality, the value of b is:
+A) b = 2 B) b = -2 C) b = -8 D) b = 4
+Answer: B) b = -2
+
+Q6. If A = \begin{bmatrix} 2 & -2 \\ 4 & 0 \end{bmatrix}, then 2A is:
+A) \begin{bmatrix} 4 & -4 \\ 8 & 0 \end{bmatrix} B) \begin{bmatrix} 1 & -1 \\ 2 & 0 \end{bmatrix} C) \begin{bmatrix} 4 & -2 \\ 8 & 0 \end{bmatrix} D) \begin{bmatrix} 2 & -4 \\ 4 & 0 \end{bmatrix}
+Answer: A) \begin{bmatrix} 4 & -4 \\ 8 & 0 \end{bmatrix}
+
+Q7. For the same matrix A, -\frac{1}{2}A equals:
+A) \begin{bmatrix} -1 & 1 \\ -2 & 0 \end{bmatrix} B) \begin{bmatrix} 1 & 1 \\ 2 & 0 \end{bmatrix} C) \begin{bmatrix} -2 & 2 \\ -4 & 0 \end{bmatrix} D) \begin{bmatrix} -1 & -1 \\ -2 & 0 \end{bmatrix}
+Answer: A) \begin{bmatrix} -1 & 1 \\ -2 & 0 \end{bmatrix}
+
+Q8. Which of the following is NOT a valid property of the zero matrix O (sizes permitting)?
+A) A + O = A B) A - A = O C) AO = O D) O - A = A
+Answer: D) O - A = A (correct is O - A = -A)
+
+Q9. The additive inverse of A is given by:
+A) A^T B) (-1)A C) O D) A^{-1}
+Answer: B) (-1)A
+
+Q10. If A is 3\times 4 and B is 4\times 2, what is the size of AB?
+A) 4\times 4 B) 3\times 2 C) 2\times 3 D) 3\times 4
+Answer: B) 3\times 2
+
+Q11. The product AB is defined only when:
+A) A and B have the same order
+B) the number of columns of A equals the number of rows of B
+C) the number of rows of A equals the number of columns of B
+D) both are square matrices
+Answer: B) the number of columns of A equals the number of rows of B
+
+Q12. The entry c_{ij} of the product AB is computed by:
+A) multiplying row i of A by column j of B and summing the products
+B) multiplying column i of A by row j of B
+C) adding a_{ij} and b_{ij}
+D) multiplying a_{ij} by b_{ij}
+Answer: A) multiplying row i of A by column j of B and summing the products
+
+Q13. In matrix multiplication, which statement is generally TRUE?
+A) AB = BA always
+B) AB \neq BA in general
+C) AB = B^T A^T
+D) AB is always defined
+Answer: B) AB \neq BA in general
+
+Q14. If AB = BA, we say that A and B:
+A) are inverses B) commute with one another C) are transposes D) are singular
+Answer: B) commute with one another
+
+Q15. Which is the associative law of matrix multiplication?
+A) A(B+C) = AB + AC B) A(BC) = (AB)C C) AB = BA D) (A+B)^T = A^T + B^T
+Answer: B) A(BC) = (AB)C
+
+Q16. Which is the left distributive law?
+A) A(B+C) = AB + AC B) (B+C)A = BA + CA C) k(AB) = (kA)B D) (AB)^T = B^T A^T
+Answer: A) A(B+C) = AB + AC
+
+Q17. The transpose A^T of an m\times n matrix A is:
+A) an m\times n matrix B) an n\times m matrix C) always square D) the inverse of A
+Answer: B) an n\times m matrix
+
+Q18. If A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}, then A^T is:
+A) \begin{bmatrix} d & b \\ c & a \end{bmatrix} B) \begin{bmatrix} a & c \\ b & d \end{bmatrix} C) \begin{bmatrix} a & b \\ c & d \end{bmatrix} D) \begin{bmatrix} -a & -b \\ -c & -d \end{bmatrix}
+Answer: B) \begin{bmatrix} a & c \\ b & d \end{bmatrix}
+
+Q19. Which of the following is the correct rule for the transpose of a product?
+A) (AB)^T = A^T B^T B) (AB)^T = B^T A^T C) (AB)^T = AB D) (AB)^T = BA
+Answer: B) (AB)^T = B^T A^T
+
+Q20. Which of the following is TRUE about (A^T)^T?
+A) (A^T)^T = A^T B) (A^T)^T = A C) (A^T)^T = -A D) (A^T)^T = O
+Answer: B) (A^T)^T = A

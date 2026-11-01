@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on the Module 4 lecture slides, with the correct answer listed under each question.
+
+1. In a singly linked list, what does the Head reference store?
+A) The total number of nodes in the list.
+B) A reference to the first node in the list.
+C) The entire list as a single object.
+D) A reference to the last node in the list.
+Correct Answer: B
+
+2. Which of the following is a standard invariant for a non-empty singly linked list?
+A) Head.Next == null
+B) Tail.Next == Head
+C) Tail.Next == null in a non-circular list.
+D) Count == Head.Data
+Correct Answer: C
+
+3. Why is AddFirst considered an O(1) operation?
+A) Because it traverses the entire list to find the head.
+B) Because it performs a fixed number of reference updates regardless of list size.
+C) Because it requires shifting all existing elements to the right.
+D) Because it searches for the correct position before inserting.
+Correct Answer: B
+
+4. In the AddFirst pseudocode, what happens if the list is empty before insertion?
+A) The operation throws an error.
+B) Head becomes the new node, but Tail remains null.
+C) Head and Tail both become the new node.
+D) The new node's Next is set to itself.
+Correct Answer: C
+
+5. What is the time complexity of AddLast when the list maintains a Tail reference?
+A) O(1)
+B) O(n)
+C) O(log n)
+D) O(n²)
+Correct Answer: A
+
+6. Without a Tail reference, what is the worst-case time complexity of AddLast?
+A) O(1)
+B) O(n), because the algorithm must traverse to the end of the list.
+C) O(log n)
+D) O(n²)
+Correct Answer: B
+
+7. In the traversal pseudocode for a singly linked list, what is the loop condition?
+A) while current.Next != null
+B) while current != null
+C) while current.Data != target
+D) while current == Head
+Correct Answer: B
+
+8. What is the worst-case time complexity of GetAt(index) in a singly linked list?
+A) O(1)
+B) O(n), especially when the index is near the tail.
+C) O(log n)
+D) O(n²)
+Correct Answer: B
+
+9. When deleting a middle node X from a singly linked list, why is the predecessor important?
+A) Because the predecessor stores the count of the list.
+B) Because the predecessor must change its Next reference from X to X.Next.
+C) Because the predecessor's data must be copied into X.
+D) Because the predecessor becomes the new Tail.
+Correct Answer: B
+
+10. In the Remove(value) algorithm, what is the time complexity of removing the Head node?
+A) O(1)
+B) O(n)
+C) O(log n)
+D) O(n²)
+Correct Answer: A
+
+11. When tracing Remove(15) on 5 → 10 → 15 → 20, what is the final list after relinking?
+A) 5 → 10 → 15
+B) 5 → 15 → 20
+C) 5 → 10 → 20
+D) 10 → 15 → 20
+Correct Answer: C
+
+12. In the "One node" deletion case, what is the state of Head and Tail after removing the only node?
+A) Head = X, Tail = null
+B) Head = null, Tail = X
+C) Head = null, Tail = null
+D) Head = X, Tail = X
+Correct Answer: C
+
+13. Which of the following is a common singly linked-list bug mentioned in the lecture?
+A) Forgetting to use a for-loop instead of a while-loop.
+B) Overwriting a link before saving the remainder of the list.
+C) Using too many variables in the traversal.
+D) Storing data in the Head node.
+Correct Answer: B
+
+14. In the in-place reversal algorithm, how many references are used to track the process?
+A) One
+B) Two
+C) Three: prev, current, and next.
+D) Four
+Correct Answer: C
+
+15. When reversing 10 → 20 → 30 in place, what is the final list after all iterations?
+A) 10 → 20 → 30
+B) 30 → 20 → 10
+C) 20 → 10 → 30
+D) 10 → 30 → 20
+Correct Answer: B
+
+16. What is the time and extra space complexity of the in-place reversal algorithm?
+A) Time O(n), Extra space O(n)
+B) Time O(n), Extra space O(1)
+C) Time O(n²), Extra space O(1)
+D) Time O(1), Extra space O(n)
+Correct Answer: B
+
+17. After reversing a singly linked list, what does the Tail reference point to?
+A) The old Head node, which is now the last node.
+B) The new Head node.
+C) null
+D) The middle node.
+Correct Answer: A
+
+18. Why does a singly linked list not support natural backward traversal?
+A) Because nodes are stored in contiguous memory.
+B) Because each node only stores a reference to its successor (Next), not its predecessor.
+C) Because the Head reference blocks backward movement.
+D) Because the Tail reference is null.
+Correct Answer: B
+
+19. Which lab focuses on implementing in-place reversal of a singly linked list?
+A) Lab 1
+B) Lab 2
+C) Lab 3
+D) Lab 4
+Correct Answer: D
+
+20. According to the debugging checklist, what should you confirm after every mutation?
+A) That the Count is always zero.
+B) That Head and Tail are correct, reachable nodes are counted, and Tail.Next == null.
+C) That all nodes are stored in contiguous memory.
+D) That the list is always sorted.
+Correct Answer: B

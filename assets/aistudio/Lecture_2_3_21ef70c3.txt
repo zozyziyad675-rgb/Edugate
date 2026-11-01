@@ -1,0 +1,376 @@
+📚 CSE 131 Logic Design – Complete Lecture Breakdown
+
+Welcome to Logic Design (CSE 131)! This lecture takes everything from Chapter 1 (Numbering Systems) and goes deep into the math, conversions, and arithmetic. Let's break it down step by step, keeping all the important English terminology intact.
+
+---
+
+
+---
+
+1️⃣ The Decimal System (Page 2)
+
+The Decimal System is the base-10 system we use daily.
+
+· Base (الأساس): 10
+· Symbols (الرموز): 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+· Weight (الوزن): 10^x, where x is the position of the digit relative to the decimal point.
+
+Understanding the Weight (The Key Concept!)
+
+Look at the example on Page 3:
+
+9 8 4 . 3 2
+· To the left of the decimal point (⊕): The weights increase. The position immediately left of the point is 10⁰ = 1, then 10¹ = 10, 10² = 100, 10³ = 1000.
+· To the right of the decimal point (⊖): The weights decrease. 10⁻¹ = 1/10, 10⁻² = 1/100, 10⁻³ = 1/1000.
+
+Example: 984.32 = (9 × 10²) + (8 × 10¹) + (4 × 10⁰) + (3 × 10⁻¹) + (2 × 10⁻²)
+
+---
+
+2️⃣ The Octal System (Page 4 & 5)
+
+· Base: 8
+· Symbols: 0, 1, 2, 3, 4, 5, 6, 7 (Notice: NO 8 or 9!)
+· Weight: 8^x
+
+Octal to Decimal Conversion (Page 5)
+
+Example: Convert N = (721.34)₈ to Decimal.
+
+Solution: Multiply each digit by its weight (8 raised to the position power).
+
+(N)₈ = 7×8² + 2×8¹ + 1×8⁰ + 3×8⁻¹ + 4×8⁻²
+     = 7×64 + 2×8 + 1×1 + 3×(1/8) + 4×(1/64)
+     = 448 + 16 + 1 + 0.375 + 0.0625
+     = (465.4375)₁₀
+Octal Addition (Page 5)
+
+· Rule: Add normally. If the sum is equal to or greater than 8 (the base), subtract 8 and carry 1 to the next column.
+
+Octal Addition Examples (Page 6)
+
+Here are the problems given:
+
+1. 347₈ + 475₂... (Note: the handwriting shows addition columns)
+2. 637₇₈ + 55₇₈
+3. 14356₈ + 61158₈
+
+How to solve (Example 1: 347₈ + 475₈):
+
+· Rightmost: 7 + 5 = 12 → 12 ≥ 8 → 12 − 8 = 4, carry 1.
+· Middle: 4 + 7 + 1 (carry) = 12 → 12 ≥ 8 → 4, carry 1.
+· Leftmost: 3 + 4 + 1 (carry) = 8 → 8 ≥ 8 → 0, carry 1.
+· Result: 1044₈
+
+---
+
+3️⃣ The Hexadecimal System (Pages 7 & 8)
+
+· Base: 16
+· Symbols: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F
+  · A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
+· Weight: 16^x
+
+Hex to Decimal Conversion (Page 8)
+
+Example: Convert N = (B4A5.3F1)₁₆ to Decimal.
+
+Solution:
+
+· B = 11, A = 10, F = 15
+· Positions (left to right): 16³, 16², 16¹, 16⁰ . 16⁻¹, 16⁻², 16⁻³
+
+(N)₁₆ = 11×16³ + 4×16² + 10×16¹ + 5×16⁰ + 3×16⁻¹ + 15×16⁻² + 1×16⁻³
+Calculate:
+
+· 11 × 4096 = 45056
+· 4 × 256 = 1024
+· 10 × 16 = 160
+· 5 × 1 = 5
+· Integer part = 46245
+
+For the fraction:
+
+· 3 × (1/16) = 0.1875
+· 15 × (1/256) ≈ 0.05859
+· 1 × (1/4096) ≈ 0.000244
+· Fraction part ≈ 0.24633
+
+Final Answer: (46245.24633)₁₀
+
+Hex Addition (Page 8 & 9)
+
+· Rule: Add normally. If the sum is ≥ 16, subtract 16 and carry 1.
+· Remember the letter values: A=10, B=11, C=12, D=13, E=14, F=15.
+
+Example from Page 9 (Hex addition problems):
+The page shows vertical addition with hex digits. For instance, if you add F + F:
+
+· F = 15, so 15 + 15 = 30
+· 30 ≥ 16 → 30 − 16 = 14 (which is E), carry 1.
+
+---
+
+4️⃣ The Binary System (Page 10)
+
+· Base: 2
+· Symbols: 0, 1
+· Weight: 2^x
+
+Binary to Decimal Conversion
+
+Example: Convert N = 1011.101₂ to Decimal.
+
+Solution:
+
+· Integer part: 1×2³ + 0×2² + 1×2¹ + 1×2⁰ = 8 + 0 + 2 + 1 = 11
+· Fraction part: 1×2⁻¹ + 0×2⁻² + 1×2⁻³ = 0.5 + 0 + 0.125 = 0.625
+
+Final Answer: (11.625)₁₀
+
+---
+
+5️⃣ Binary Addition & Subtraction (Page 11)
+
+Binary Addition Rules:
+
+· 0 + 0 = 0
+· 0 + 1 = 1
+· 1 + 0 = 1
+· 1 + 1 = 0 (carry 1)
+· 1 + 1 + 1 = 1 (carry 1)
+
+Example 1: (10101)₂ + (10111)₂ = ?
+
+  1 0 1 0 1
++ 1 0 1 1 1
+-----------
+1 0 1 1 0 0
+Result: (101100)₂
+
+Example 2: (11100)₂ + (0111)₂ = ?
+
+  1 1 1 0 0
++ 0 1 1 1
+-----------
+1 0 1 0 1 1
+Result: (101011)₂
+
+Binary Subtraction Rules:
+
+· 0 − 0 = 0
+· 1 − 0 = 1
+· 1 − 1 = 0
+· 0 − 1 = 1 (borrow 1 from the next column)
+
+Example: (1001)₂ − (0110)₂ = ?
+
+  1 0 0 1
+- 0 1 1 0
+-----------
+  0 0 1 1
+Result: (0011)₂
+
+---
+
+6️⃣ The Master Conversion Map (Page 13 & 23)
+
+Rule 1: From ANY System → Decimal
+Multiply each digit by its weight (base raised to the position power) and sum.
+
+Rule 2: From Decimal → ANY System
+
+· Integer part: Divide repeatedly by the base (2, 8, or 16). Collect remainders bottom-up.
+· Fractional part: Multiply repeatedly by the base. Collect integer parts top-down.
+
+The Circular Diagram (Page 23)
+
+This shows all conversion paths:
+
+· Decimal ↔ Any: Use weights / division-multiplication.
+· Binary ↔ Octal: Group 3 binary digits = 1 octal digit.
+· Binary ↔ Hex: Group 4 binary digits = 1 hex digit.
+· Octal ↔ Hex: Go through Binary as a bridge.
+
+---
+
+7️⃣ Decimal to Binary Conversion (Pages 15, 16, 17)
+
+A. Integer Conversion – Division Method
+
+Example: Convert (125)₁₀ to Binary.
+
+125 ÷ 2 = 62  remainder 1  ← LSB
+ 62 ÷ 2 = 31  remainder 0
+ 31 ÷ 2 = 15  remainder 1
+ 15 ÷ 2 = 7   remainder 1
+  7 ÷ 2 = 3   remainder 1
+  3 ÷ 2 = 1   remainder 1
+  1 ÷ 2 = 0   remainder 1  ← MSB
+Read remainders bottom-up: (125)₁₀ = (1111101)₂
+
+B. Fractional Conversion – Multiplication Method
+
+Example: Convert (0.6875)₁₀ to Binary (Page 15).
+
+0.6875 × 2 = 1.375  → integer 1  ← MSB
+0.375  × 2 = 0.75   → integer 0
+0.75   × 2 = 1.5    → integer 1
+0.5    × 2 = 1.0    → integer 1  ← LSB
+Read integers top-down: (0.6875)₁₀ = (0.1011)₂
+
+C. Combined Example (Page 16)
+
+Convert (125.852)₁₀ to Binary:
+
+· Integer part (125): (1111101)₂ (from division)
+· Fraction part (0.852):
+
+0.852 × 2 = 1.704 → 1
+0.704 × 2 = 1.408 → 1
+0.408 × 2 = 0.816 → 0
+0.816 × 2 = 1.632 → 1
+0.632 × 2 = 1.264 → 1
+→ (0.11011)₂
+
+Final: (125.852)₁₀ = (1111101.11011)₂
+
+D. Practice Example (Page 17)
+
+Convert N = (31.4375)₁₀ to Binary:
+
+· 31 ÷ 2: remainders = 1,1,1,1,1 → (11111)₂
+· 0.4375:
+
+0.4375 × 2 = 0.875 → 0
+0.875 × 2 = 1.75 → 1
+0.75 × 2 = 1.5 → 1
+0.5 × 2 = 1.0 → 1
+→ (0.0111)₂
+
+Final: (31.4375)₁₀ = (11111.0111)₂
+
+---
+
+8️⃣ Octal ↔ Binary (Pages 19 & 20)
+
+The Golden Rule
+
+Each 3 digits of the Binary system are equivalent to one digit of the Octal.
+(كل 3 أرقام في النظام الثنائي تكافئ رقم واحد في النظام الثماني)
+
+Because 2³ = 8.
+
+Binary → Octal (Page 19)
+
+Example: Convert (110 100 101 011 . 111 100 000 110)₂ to Octal.
+
+Steps:
+
+1. Group binary digits in threes, starting from the decimal point outward.
+2. Convert each group.
+
+Binary Group Octal
+110 6
+100 4
+101 5
+011 3
+. .
+111 7
+100 4
+000 0
+110 6
+
+Result: (6453.7406)₈
+
+Octal → Binary (Page 20)
+
+Example: Convert (721.534)₈ to Binary.
+
+Steps: Replace each octal digit with its 3-bit binary equivalent.
+
+Octal Binary
+7 111
+2 010
+1 001
+. .
+5 101
+3 011
+4 100
+
+Result: (111010001.101011100)₂
+
+The Truth Table (Page 20)
+
+This table shows the binary equivalent of every octal digit (0–7):
+
+Octal Binary (x y z)
+0 000
+1 001
+2 010
+3 011
+4 100
+5 101
+6 110
+7 111
+
+---
+
+9️⃣ Hexadecimal ↔ Binary (Pages 21 & 22)
+
+The Golden Rule
+
+Each 4 digits of the Binary system are equivalent to one digit of the Hex.
+Because 2⁴ = 16.
+
+Hex → Binary (Page 22)
+
+Example: Convert (35F.BC6)₁₆ to Binary.
+
+Steps: Replace each hex digit with its 4-bit binary equivalent.
+
+Hex Binary
+3 0011
+5 0101
+F 1111
+. .
+B 1011
+C 1100
+6 0110
+
+Result: (001101011111.101111000110)₂
+
+Binary → Hex
+
+Rule: Group binary digits in fours from the decimal point outward, then convert each group.
+
+---
+
+🔟 Quick Reference: The Big Conversion Rules (Page 13)
+
+Conversion Method
+Any → Decimal Multiply each digit by its weight and sum
+Decimal → Any Integer: divide by base (remainders bottom-up). Fraction: multiply by base (integers top-down)
+Binary ↔ Octal 3 binary bits = 1 octal digit
+Binary ↔ Hex 4 binary bits = 1 hex digit
+Octal ↔ Hex Go through Binary (octal → binary → hex)
+
+---
+
+📝 Important Notes from the Lecture (الملاحظات المهمة)
+
+1. Octal Addition: If the sum ≥ 8, subtract 8 and carry 1.
+2. Hex Addition: If the sum ≥ 16, subtract 16 and carry 1.
+3. Fractional conversion is never guaranteed to be exact — you stop when the fractional part becomes 0 or when you reach the required precision.
+4. When converting from decimal to any system, always read remainders bottom-up for the integer part, and top-down for the fraction part.
+
+---
+
+🎯 Summary Table
+System Base Symbols
+Decimal 10 0–9
+Octal 8 0–7
+Hexadecimal 16 0–9, A–F
+Binary 2 0, 1
+
+Good luck with Logic Design! This chapter is the foundation for everything that follows. Practice the conversion problems until they become second nature. 💪

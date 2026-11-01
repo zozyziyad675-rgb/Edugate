@@ -1,0 +1,53 @@
+Here are 10 exam-style questions in English based on the lecture content (Numbering Systems and Digital Signals), with the correct answers provided under each question.
+
+---
+
+Part 1: Multiple Choice Questions (MCQ)
+
+1. Which of the following represents the correct range of digits used in the Binary numbering system?
+A) 0 to 9
+B) 0 to 7
+C) 0 to 1
+D) 0 to F
+Correct Answer: C) 0 to 1
+
+2. In the Hexadecimal numbering system, which letters are used to represent values from 10 to 15?
+A) A, B, C, D, E, F
+B) 10, 11, 12, 13, 14, 15
+C) A, B, C, D, E, G
+D) 0, 1, 2, 3, 4, 5
+Correct Answer: A) A, B, C, D, E, F
+
+3. According to the digital signal diagram, what voltage level represents the "High" state?
+A) 0 V
+B) 2.5 V
+C) 5 V
+D) 10 V
+Correct Answer: C) 5 V
+
+4. Which numbering system uses the digits 0 through 7?
+A) Decimal
+B) Binary
+C) Octal
+D) Hexadecimal
+Correct Answer: C) Octal
+
+5. What does the acronym "ASCII" stand for in the context of the diagram?
+A) American Standard Code for Information Interchange
+B) Advanced System Code for Interface Interaction
+C) Analog Signal Control for Internal Input
+D) Automated System Code for Information
+Correct Answer: A) American Standard Code for Information Interchange
+
+---
+
+Part 2: True or False Questions
+
+6. The Decimal numbering system uses digits from 0 to 9.
+Correct Answer: True
+
+7. An Alternating Current (AC) signal is represented as a square wave in the diagram.
+Correct Answer: False (It is represented as a sine wave).
+
+8. In the Binary system, the digit 2 is not allowed.
+Correct Answer: True (Binary only uses 0 and 1).

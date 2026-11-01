@@ -1,0 +1,220 @@
+Twenty MCQs from Lecture 1: Introduction to Differential Equations
+
+---
+
+Q1. What is the order of the differential equation y'' + 2(y')^3 + 3xy = 0?
+
+A) First order
+B) Second order
+C) Third order
+D) Fourth order
+
+Answer: B) Second order
+
+---
+
+Q2. Which of the following is the definition of a differential equation?
+
+A) Any equation involving only algebraic terms
+B) Any relation between known variables and an unknown variable that involves derivatives of the unknown variable
+C) Any equation that can be solved for y explicitly
+D) Any equation containing integrals only
+
+Answer: B) Any relation between known variables and an unknown variable that involves derivatives of the unknown variable
+
+---
+
+Q3. Verify whether y = 2e^{-2x} is a solution of y' + 2y = 0. Which statement is correct?
+
+A) y' = -4e^{-2x}, and LHS = 0 = RHS, so it is a solution
+B) y' = 2e^{-2x}, and LHS = 4e^{-2x} \neq 0, so it is not a solution
+C) y' = -2e^{-2x}, and LHS = -2e^{-2x} \neq 0, so it is not a solution
+D) y' = 4e^{-2x}, and LHS = 8e^{-2x} \neq 0, so it is not a solution
+
+Answer: A) y' = -4e^{-2x}, and LHS = 0 = RHS, so it is a solution
+
+---
+
+Q4. Verify whether y = e^x is a solution of y'' - 2y' + y = 0. Which statement is correct?
+
+A) y'' = e^x, and LHS = e^x - 2e^x + e^x = 0 = RHS, so it is a solution
+B) y'' = 2e^x, and LHS = 2e^x - 2e^x + e^x = e^x \neq 0, so it is not a solution
+C) y'' = e^x, and LHS = e^x - e^x + e^x = e^x \neq 0, so it is not a solution
+D) y'' = 0, and LHS = -2e^x + e^x = -e^x \neq 0, so it is not a solution
+
+Answer: A) y'' = e^x, and LHS = e^x - 2e^x + e^x = 0 = RHS, so it is a solution
+
+---
+
+Q5. Newton's Law of Cooling is represented by which first-order IVP?
+
+A) \dfrac{dT}{dt} = k(T_s - T), \quad T(0) = T_0
+B) \dfrac{dT}{dt} = k(T - T_s), \quad T(0) = T_0
+C) \dfrac{dT}{dt} = kT, \quad T(0) = T_s
+D) \dfrac{dT}{dt} = k(T + T_s), \quad T(0) = T_0
+
+Answer: B) \dfrac{dT}{dt} = k(T - T_s), \quad T(0) = T_0
+
+---
+
+Q6. For a series circuit containing only a resistor and an inductor, Kirchhoff's second law gives which differential equation?
+
+A) L\dfrac{di}{dt} + iR = E(t)
+B) R\dfrac{di}{dt} + iL = E(t)
+C) L\dfrac{dq}{dt} + iR = E(t)
+D) \dfrac{1}{C}q + iR = E(t)
+
+Answer: A) L\dfrac{di}{dt} + iR = E(t)
+
+---
+
+Q7. For a series circuit containing only a resistor and a capacitor, the equation becomes:
+
+A) L\dfrac{di}{dt} + iR = E(t)
+B) R\dfrac{dq}{dt} + \dfrac{1}{C}q = E(t)
+C) C\dfrac{dq}{dt} + \dfrac{1}{R}q = E(t)
+D) \dfrac{1}{L}q + iR = E(t)
+
+Answer: B) R\dfrac{dq}{dt} + \dfrac{1}{C}q = E(t)
+
+---
+
+Q8. A first-order equation is separable if it can be written in which form?
+
+A) \dfrac{dy}{dx} = f(x) + g(y)
+B) \dfrac{dy}{dx} = f(x)g(y)
+C) \dfrac{dy}{dx} = f(x) - g(y)
+D) \dfrac{dy}{dx} = \dfrac{f(x)}{g(y)} + h(x)
+
+Answer: B) \dfrac{dy}{dx} = f(x)g(y)
+
+---
+
+Q9. Solve the separable D.E. \dfrac{dy}{dx} = \dfrac{x-3}{y}. Which is the correct general solution?
+
+A) y = \pm\sqrt{x^2 - 6x + k}
+B) y = \pm\sqrt{x^2 - 3x + k}
+C) y = \pm\sqrt{x^2 - 6x + 2k} only, with no simplification
+D) y = x^2 - 6x + k
+
+Answer: A) y = \pm\sqrt{x^2 - 6x + k}
+
+---
+
+Q10. Solve the separable D.E. y' = \dfrac{9x^2 - \sin x}{\cos y + 5e^y}. Which is the correct implicit solution?
+
+A) \sin y + 5e^y = 3x^3 + \cos x + C
+B) \sin y + 5e^y = 3x^3 - \cos x + C
+C) \cos y + 5e^y = 3x^3 + \cos x + C
+D) \sin y + 5e^y = x^3 + \cos x + C
+
+Answer: A) \sin y + 5e^y = 3x^3 + \cos x + C
+
+---
+
+Q11. Solve the D.E. \dfrac{dy}{dx} = e^{x-y} + x^2 e^{-y}. Which is the correct solution for y?
+
+A) y = \ln\left|e^x + \dfrac{x^3}{3} + c\right|
+B) y = \ln\left|e^x + x^3 + c\right|
+C) y = e^x + \dfrac{x^3}{3} + c
+D) y = \ln\left|e^x - \dfrac{x^3}{3} + c\right|
+
+Answer: A) y = \ln\left|e^x + \dfrac{x^3}{3} + c\right|
+
+---
+
+Q12. What is the Laplace transform of f(t) = 1, t \geq 0?
+
+A) \dfrac{1}{s}, \quad s > 0
+B) \dfrac{1}{s^2}, \quad s > 0
+C) \dfrac{1}{s-1}, \quad s > 1
+D) s, \quad s > 0
+
+Answer: A) \dfrac{1}{s}, \quad s > 0
+
+---
+
+Q13. What is the Laplace transform of f(t) = e^{at}, t \geq 0?
+A) \dfrac{1}{s+a}, \quad s > -a
+B) \dfrac{1}{s-a}, \quad s > a
+C) \dfrac{a}{s^2 + a^2}, \quad s > 0
+D) \dfrac{s}{s^2 - a^2}, \quad s > a
+
+Answer: B) \dfrac{1}{s-a}, \quad s > a
+
+---
+
+Q14. What is the Laplace transform of f(t) = t, t \geq 0?
+
+A) \dfrac{1}{s}
+B) \dfrac{1}{s^2}
+C) \dfrac{2}{s^2}
+D) \dfrac{1}{s^3}
+
+Answer: B) \dfrac{1}{s^2}
+
+---
+
+Q15. Using the table, what is the Laplace transform of f(t) = t^n, n = 1, 2, \dots?
+
+A) \dfrac{n}{s^{n+1}}, \quad s > 0
+B) \dfrac{n!}{s^{n+1}}, \quad s > 0
+C) \dfrac{n!}{s^n}, \quad s > 0
+D) \dfrac{1}{s^{n+1}}, \quad s > 0
+
+Answer: B) \dfrac{n!}{s^{n+1}}, \quad s > 0
+
+---
+
+Q16. Using the table, what is the Laplace transform of f(t) = \cos at?
+
+A) \dfrac{a}{s^2 + a^2}, \quad s > 0
+B) \dfrac{s}{s^2 + a^2}, \quad s > 0
+C) \dfrac{s}{s^2 - a^2}, \quad s > a
+D) \dfrac{a}{s^2 - a^2}, \quad s > a
+
+Answer: B) \dfrac{s}{s^2 + a^2}, \quad s > 0
+
+---
+
+Q17. Which theorem states that L\{c_1 f(t) + c_2 g(t)\} = c_1 L\{f(t)\} + c_2 L\{g(t)\}?
+
+A) Theorem of inverse transforms
+B) Linearity of the Laplace transform
+C) First shifting theorem
+D) Convolution theorem
+
+Answer: B) Linearity of the Laplace transform
+
+---
+
+Q18. Find the Laplace transform of f(t) = 3 + t^3 + e^{-5t} + 2\sin 5t. Which is correct?
+
+A) \dfrac{3}{s} + \dfrac{6}{s^4} + \dfrac{1}{s+5} + \dfrac{10}{s^2+25}, \quad s > 5
+B) \dfrac{3}{s} + \dfrac{6}{s^4} + \dfrac{1}{s-5} + \dfrac{10}{s^2+25}, \quad s > 5
+C) \dfrac{3}{s} + \dfrac{3}{s^4} + \dfrac{1}{s+5} + \dfrac{5}{s^2+25}, \quad s > 5
+D) \dfrac{3}{s} + \dfrac{6}{s^3} + \dfrac{1}{s+5} + \dfrac{10}{s^2+25}, \quad s > 5
+
+Answer: A) \dfrac{3}{s} + \dfrac{6}{s^4} + \dfrac{1}{s+5} + \dfrac{10}{s^2+25}, \quad s > 5
+
+---
+
+Q19. Find the Laplace transform of f(t) = \sin^2 t. Which is correct?
+
+A) \dfrac{1}{2}\left(\dfrac{1}{s} - \dfrac{s}{s^2+4}\right), \quad s > 0
+B) \dfrac{1}{2}\left(\dfrac{1}{s} + \dfrac{s}{s^2+4}\right), \quad s > 0
+C) \dfrac{1}{s} - \dfrac{s}{s^2+4}, \quad s > 0
+D) \dfrac{1}{2}\left(\dfrac{1}{s} - \dfrac{2}{s^2+4}\right), \quad s > 0
+
+Answer: A) \dfrac{1}{2}\left(\dfrac{1}{s} - \dfrac{s}{s^2+4}\right), \quad s > 0
+
+---
+
+Q20. Using the table, what is the Laplace transform of f(t) = \sinh at?
+
+A) \dfrac{a}{s^2 + a^2}, \quad s > 0
+B) \dfrac{s}{s^2 - a^2}, \quad s > a
+C) \dfrac{a}{s^2 - a^2}, \quad s > a
+D) \dfrac{s}{s^2 + a^2}, \quad s > 0
+
+Answer: C) \dfrac{a}{s^2 - a^2}, \quad s > a

@@ -1,0 +1,235 @@
+Lecture 4: Confidence Interval — Full Explanation
+
+1. Point Estimation vs. Interval Estimation
+
+Let's start with the big picture. In statistics, we have two worlds:
+
+· The population — the entire group we care about. Its numerical summaries are called parameters (e.g., population mean \mu, population variance \sigma^2).
+· The sample — the subset we actually observe. Its numerical summaries are called statistics (e.g., sample mean \overline{X}, sample variance s^2).
+
+We use statistics to estimate parameters. A single statistic used for this purpose is a point estimate — for example, the sample mean \overline{X} or the sample proportion. It's called a "point" because it's one single number.
+
+The problem: a point estimate is almost never exactly equal to the true parameter. So how far off might it be? That's exactly what a confidence interval answers — it adds a margin of error around the point estimate, indicating how far off the true value is likely to be.
+
+Simple analogy: If someone asks your height, saying "175 cm" is a point estimate. Saying "I'm between 173 and 177 cm, and I'm 95% sure of that" is an interval estimate — much more informative!
+
+---
+
+2. Definition of a Confidence Interval
+
+A confidence interval for a population parameter is an interval constructed from sample data that is expected to contain the true value of the parameter with a specified level of confidence.
+
+For the population mean \mu, a two-sided confidence interval generally has the form:
+
+\text{Point Estimate} \pm \text{Margin of Error}
+
+So the interval is symmetric around the point estimate. The margin of error is the "buffer" we add and subtract.
+
+---
+
+3. Definition of Confidence Level
+
+The confidence level is the proportion of all possible random samples for which the confidence interval constructed by a given procedure will contain the true population parameter.
+
+A confidence level of 100(1-\alpha)\% corresponds to a significance level \alpha, where 0 < \alpha < 1.
+
+Common confidence levels:
+
+· 90% → \alpha = 0.10
+· 95% → \alpha = 0.05
+· 99% → \alpha = 0.01
+
+⚠️ Important interpretation: 95% confidence does NOT mean "there is a 95% probability that \mu lies in this interval." The parameter \mu is fixed; the interval is random. It means: if we repeated the sampling procedure many times, about 95% of the resulting intervals would capture \mu. Think of it as a long-run success rate of the method.
+
+---
+
+4. Case 1: Large Sample Size (n \geq 30)
+
+Let X_1, \ldots, X_n be a large random sample (n \geq 30) from a population with mean \mu and standard deviation \sigma. By the Central Limit Theorem, \overline{X} is approximately normally distributed.
+
+Then a level 100(1-\alpha)\% confidence interval for \mu is:
+
+\overline{X} \pm z_{\alpha/2}\,\sigma_{\overline{X}} \quad (5.4)
+
+where
+
+\sigma_{\overline{X}} = \frac{\sigma}{\sqrt{n}}
+
+is the standard error of the mean.
+
+When \sigma is unknown (which is the usual case in practice), we replace it with the sample standard deviation s:
+
+\overline{X} \pm z_{\alpha/2}\,\frac{s}{\sqrt{n}}
+
+Why z_{\alpha/2}? Because for a two-sided interval, we split the remaining area \alpha equally between the two tails — \alpha/2 in each tail. The critical value z_{\alpha/2} is the z-score that cuts off area \alpha/2 in the right-hand tail.
+
+---
+
+5. The Famous Critical Values (Memorize These!)
+
+Confidence Level Critical Value z_{\alpha/2} Interval
+68% 1 \overline{X} \pm 1\frac{s}{\sqrt{n}}
+90% 1.645 \overline{X} \pm 1.645\frac{s}{\sqrt{n}}
+95% 1.96 \overline{X} \pm 1.96\frac{s}{\sqrt{n}}
+99% 2.58 \overline{X} \pm 2.58\frac{s}{\sqrt{n}}
+99.7% 3 \overline{X} \pm 3\frac{s}{\sqrt{n}}
+
+The 68–95–99.7 rule (empirical rule) is the intuition behind the first, third, and fifth rows: 68% of a normal distribution lies within 1 standard deviation, 95% within 1.96, and 99.7% within 3.
+
+---
+
+6. Visualizing the 95% Interval (Page 7 Figure)
+
+The figure shows a normal curve centered at the true mean \mu. The middle shaded region covers 95% of the area, bounded by:
+\mu - 1.96\,\sigma_{\overline{X}} \quad \text{and} \quad \mu + 1.96\,\sigma_{\overline{X}}
+
+The two pink tails each hold 2.5% of the area (because \alpha/2 = 0.025).
+
+Below the curve, a random interval is drawn: \overline{X} - 1.96\sigma_{\overline{X}} to \overline{X} + 1.96\sigma_{\overline{X}}. Notice that this interval is centered at the sample mean \overline{X}, not at \mu — and in this particular draw, it happens to contain \mu. If we repeated the experiment, 95% of such random intervals would contain \mu.
+
+---
+
+7. Worked Example 1: Battery Amperages (85% CI)
+
+Problem: The sample mean and standard deviation for the cold cranking amperages of 100 batteries are \overline{X} = 185.5 and s = 5.0. Find an 85% confidence interval for the mean amperage.
+
+Solution — step by step:
+
+Step 1 — Point estimate:
+
+\overline{X} = 185.5
+
+Step 2 — Standard error:
+
+\sigma_{\overline{X}} \approx \frac{s}{\sqrt{n}} = \frac{5.0}{\sqrt{100}} = \frac{5.0}{10} = 0.5
+
+Step 3 — Critical value: Set 1 - \alpha = 0.85, so:
+
+\alpha = 0.15, \qquad \frac{\alpha}{2} = 0.075
+
+We need z_{0.075}, the z-score that cuts off 7.5\% of the area in the right-hand tail. From the z-table:
+
+z_{0.075} = 1.44
+
+Step 4 — Margin of error:
+
+(1.44)(0.5) = 0.72
+
+Step 5 — Confidence interval:
+
+185.5 \pm 0.72 = (184.78,\; 186.22)
+
+Interpretation: We are 85% confident that the true mean amperage of all such batteries lies between 184.78 and 186.22.
+
+---
+
+8. Worked Example 2: Normal Distribution with Known Variance (95% CI)
+
+Problem: Determine a 95% confidence interval for the mean \mu of a normal distribution with variance \sigma^2 = 9, sample size n = 100, and sample mean \bar{x} = 5.
+
+Given:
+
+· \bar{x} = 5
+· \sigma^2 = 9 \implies \sigma = 3
+· n = 100
+· 1 - \alpha = 0.95 \implies \alpha = 0.05 \implies \alpha/2 = 0.025
+
+Critical value from the standard normal table:
+
+z_{0.025} = 1.96
+
+The formula:
+
+\bar{x} - z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \leq \mu \leq \bar{x} + z_{\alpha/2}\frac{\sigma}{\sqrt{n}}
+
+Substituting the values:
+
+5 - 1.96 \cdot \frac{3}{10} \leq \mu \leq 5 + 1.96 \cdot \frac{3}{10}
+
+5 - 0.588 \leq \mu \leq 5 + 0.588
+
+4.412 \leq \mu \leq 5.588
+
+Answer:
+
+(4.412,\; 5.588)
+
+Notice the margin of error is 1.96 \times 0.3 = 0.588. Since the population variance was known here, we used \sigma = 3 directly, not s.
+
+---
+
+9. Two Crucial Notes: Width and Sample Size
+
+Note I — The width (margin of error) of a confidence interval:
+
+\pm\, z_{\alpha/2}\,\frac{\sigma}{\sqrt{n}}
+
+What affects the width?
+
+· Higher confidence level → larger z_{\alpha/2} → wider interval.
+· Larger \sigma (more variability in the population) → wider interval.
+· Larger n → smaller \sigma/\sqrt{n} → narrower interval (more precise).
+
+There is always a trade-off between confidence and precision: to be more confident, you must accept a wider (less precise) interval — unless you increase the sample size.
+
+Note II — Sample size needed for a target width:
+
+To construct a level 100(1-\alpha)\% confidence interval of width \pm w:
+
+n = \frac{z_{\alpha/2}^{2}\,\sigma^{2}}{w^{2}} \quad (5.5)
+
+Why? Set the margin of error equal to w:
+
+z_{\alpha/2}\frac{\sigma}{\sqrt{n}} = w \;\Longrightarrow\; \sqrt{n} = \frac{z_{\alpha/2}\sigma}{w} \;\Longrightarrow\; n = \frac{z_{\alpha/2}^2\sigma^2}{w^2}
+
+⚠️ Always round n UP to the next integer — you can't sample a fraction of a battery, and rounding down would give you less precision than required.
+
+---
+
+10. Worked Example 3: Determining Sample Size (99% CI)
+
+Problem: In the amperage example, the sample standard deviation from 100 batteries was s = 5.0\text{ A}. How many batteries must be sampled to obtain a 99% confidence interval of width \pm 1.0\text{ A}?
+
+Solution:
+
+Step 1 — Confidence level: 1 - \alpha = 0.99, so \alpha = 0.01, and:
+
+z_{\alpha/2} = z_{0.005} = 2.58
+
+Step 2 — Estimate \sigma with s = 5.0.
+
+Step 3 — Apply Equation (5.5) with w = 1.0:
+
+n = \frac{(2.58)^2 (5.0)^2}{(1.0)^2} = \frac{6.6564 \times 25}{1} = 166.41
+
+Step 4 — Round up:
+
+n \approx 167
+Answer: We need to sample 167 batteries. Notice this is larger than the original 100 — to be more confident (99% vs. 85%) with a tight \pm 1.0 A margin, we need more data.
+
+---
+
+11. Key Takeaways & Summary
+
+Concept Formula / Value
+Point estimate of \mu \overline{X}
+Standard error \sigma_{\overline{X}} = \sigma/\sqrt{n} \approx s/\sqrt{n}
+CI (large sample) \overline{X} \pm z_{\alpha/2}\dfrac{s}{\sqrt{n}}
+Margin of error z_{\alpha/2}\dfrac{s}{\sqrt{n}}
+Required sample size n = \dfrac{z_{\alpha/2}^2\sigma^2}{w^2}, rounded up
+
+Important vocabulary to remember (in English):
+
+· Statistic vs. Parameter
+· Point estimate
+· Interval estimate / Confidence interval
+· Margin of error
+· Confidence level (100(1-\alpha)\%)
+· Significance level (\alpha)
+· Standard error of the mean (\sigma_{\overline{X}})
+· Critical value (z_{\alpha/2})
+· Two-sided (two-tailed) interval
+
+The intuition in one sentence: A confidence interval is a "net" we cast around our sample mean; the confidence level tells us how often that net catches the true parameter \mu across repeated samples — and we control the net's width by choosing the confidence level and the sample size.
+
+Good luck with your studying! 📊

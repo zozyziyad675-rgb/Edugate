@@ -1,0 +1,220 @@
+Twenty MCQs from Lecture 5: Inverse Laplace Transform (2)
+
+---
+
+Q1. Find L^{-1}\left\{\dfrac{1}{s^2 + 4}\right\}.
+
+A) \dfrac{1}{2}\sin 2t
+B) \sin 2t
+C) \dfrac{1}{2}\cos 2t
+D) 2\sin 2t
+
+Answer: A) \dfrac{1}{2}\sin 2t
+
+---
+
+Q2. To find L^{-1}\left\{\dfrac{1}{s^2 + 4s + 3}\right\}, the denominator is rewritten as:
+
+A) (s+2)^2 - 1
+B) (s+2)^2 + 1
+C) (s-2)^2 - 1
+D) (s+2)^2 + 3
+
+Answer: A) (s+2)^2 - 1
+
+---
+
+Q3. Find L^{-1}\left\{\dfrac{1}{s^2 + 4s + 3}\right\}.
+
+A) e^{-2t}\sinh t
+B) e^{2t}\sinh t
+C) e^{-2t}\sin t
+D) e^{-2t}\cosh t
+
+Answer: A) e^{-2t}\sinh t
+
+---
+
+Q4. State Theorem 4 relating the inverse Laplace transform of a derivative.
+
+A) L^{-1}\left\{\dfrac{dF(s)}{ds}\right\} = tf(t)
+B) L^{-1}\left\{\dfrac{dF(s)}{ds}\right\} = -tf(t)
+C) L^{-1}\left\{\dfrac{dF(s)}{ds}\right\} = -\dfrac{f(t)}{t}
+D) L^{-1}\left\{\dfrac{dF(s)}{ds}\right\} = \dfrac{f(t)}{t}
+
+Answer: B) L^{-1}\left\{\dfrac{dF(s)}{ds}\right\} = -tf(t)
+
+---
+
+Q5. Find L^{-1}\{\ln(s+3)\}.
+
+A) -\dfrac{e^{-3t}}{t}
+B) \dfrac{e^{-3t}}{t}
+C) -\dfrac{e^{3t}}{t}
+D) -te^{-3t}
+
+Answer: A) -\dfrac{e^{-3t}}{t}
+
+---
+
+Q6. Find L^{-1}\left\{\ln\left(1 + \dfrac{1}{s^2}\right)\right\}.
+
+A) \dfrac{2 - 2\cos t}{t}
+B) \dfrac{2\cos t - 2}{t}
+C) \dfrac{2 - 2\sin t}{t}
+D) \dfrac{2 + 2\cos t}{t}
+
+Answer: A) \dfrac{2 - 2\cos t}{t}
+
+---
+
+Q7. Find L^{-1}\{\tan^{-1}s\}.
+
+A) -\dfrac{\sin t}{t}
+B) \dfrac{\sin t}{t}
+C) -\dfrac{\cos t}{t}
+D) -\dfrac{e^{-t}}{t}
+
+Answer: A) -\dfrac{\sin t}{t}
+
+---
+
+Q8. State the Second Shifting Property.
+
+A) L^{-1}\{e^{-as}F(s)\} = u(t-a)f(t+a)
+B) L^{-1}\{e^{-as}F(s)\} = u(t-a)f(t-a)
+C) L^{-1}\{e^{as}F(s)\} = u(t+a)f(t+a)
+D) L^{-1}\{e^{-as}F(s)\} = e^{at}f(t-a)
+
+Answer: B) L^{-1}\{e^{-as}F(s)\} = u(t-a)f(t-a)
+
+---
+
+Q9. Find L^{-1}\left\{\dfrac{e^{-5s}}{(s+3)^3}\right\}.
+
+A) u(t-5)\dfrac{(t-5)^2 e^{-3(t-5)}}{2}
+B) u(t-5)\dfrac{(t-5)^2 e^{3(t-5)}}{2}
+C) u(t-5)\dfrac{(t+5)^2 e^{-3(t+5)}}{2}
+D) u(t-5)\dfrac{(t-5)^3 e^{-3(t-5)}}{6}
+
+Answer: A) u(t-5)\dfrac{(t-5)^2 e^{-3(t-5)}}{2}
+
+---
+
+Q10. Find L^{-1}\left\{\dfrac{e^{-4s}}{s^2}\right\}.
+
+A) (t-4)u(t-4)
+B) (t+4)u(t+4)
+C) t\,u(t-4)
+D) (t-4)u(t)
+
+Answer: A) (t-4)u(t-4)
+
+---
+
+Q11. Find L^{-1}\left\{\dfrac{e^{-3s}}{s^2 + 9}\right\}.
+
+A) \dfrac{1}{3}u(t-3)\sin 3(t-3)
+B) \dfrac{1}{3}u(t-3)\sin 3t
+C) u(t-3)\sin 3(t-3)
+D) \dfrac{1}{3}u(t+3)\sin 3(t+3)
+
+Answer: A) \dfrac{1}{3}u(t-3)\sin 3(t-3)
+
+---
+
+Q12. For a rational function \dfrac{P(s)}{Q(s)} with distinct linear factors Q(s) = (s-s_1)(s-s_2)\cdots(s-s_n), the partial fraction expansion has the form:
+
+A) \dfrac{A_1}{s-s_1} + \dfrac{A_2}{s-s_2} + \dots + \dfrac{A_n}{s-s_n}
+B) \dfrac{A_1}{(s-s_1)^2} + \dots + \dfrac{A_n}{(s-s_n)^2}
+C) A_1(s-s_1) + A_2(s-s_2) + \dots
+D) \dfrac{A_1 s}{s-s_1} + \dots + \dfrac{A_n s}{s-s_n}
+
+Answer: A) \dfrac{A_1}{s-s_1} + \dfrac{A_2}{s-s_2} + \dots + \dfrac{A_n}{s-s_n}
+
+---
+
+Q13. For F(s) = \dfrac{s+3}{s(s-1)(s+2)}, the partial fraction constants are:
+
+A) A = -\dfrac{3}{2},\ B = \dfrac{4}{3},\ C = \dfrac{1}{6}
+B) A = \dfrac{3}{2},\ B = -\dfrac{4}{3},\ C = -\dfrac{1}{6}
+C) A = -\dfrac{3}{2},\ B = -\dfrac{4}{3},\ C = \dfrac{1}{6}
+D) A = \dfrac{3}{2},\ B = \dfrac{4}{3},\ C = \dfrac{1}{6}
+
+Answer: A) A = -\dfrac{3}{2},\ B = \dfrac{4}{3},\ C = \dfrac{1}{6}
+
+---
+
+Q14. Find L^{-1}\left\{\dfrac{s+3}{s(s-1)(s+2)}\right\}.
+
+A) -\dfrac{3}{2} + \dfrac{4}{3}e^{t} + \dfrac{1}{6}e^{-2t}
+B) -\dfrac{3}{2} + \dfrac{4}{3}e^{-t} + \dfrac{1}{6}e^{2t}
+C) \dfrac{3}{2} + \dfrac{4}{3}e^{t} + \dfrac{1}{6}e^{-2t}
+D) -\dfrac{3}{2} - \dfrac{4}{3}e^{t} + \dfrac{1}{6}e^{-2t}
+
+Answer: A) -\dfrac{3}{2} + \dfrac{4}{3}e^{t} + \dfrac{1}{6}e^{-2t}
+
+---
+
+Q15. For F(s) = \dfrac{2s-1}{s^3 - s}, the partial fraction constants are:
+
+A) A = 1,\ B = \dfrac{1}{2},\ C = -\dfrac{3}{2}
+B) A = 1,\ B = -\dfrac{1}{2},\ C = \dfrac{3}{2}
+C) A = -1,\ B = \dfrac{1}{2},\ C = \dfrac{3}{2}
+D) A = 1,\ B = \dfrac{3}{2},\ C = -\dfrac{1}{2}
+
+Answer: A) A = 1,\ B = \dfrac{1}{2},\ C = -\dfrac{3}{2}
+
+---
+
+Q16. If Q(s) has a repeated linear factor (s-s_k)^n, the corresponding portion of the partial fraction expansion is:
+A) \dfrac{A_1}{s-s_k} + \dfrac{A_2}{(s-s_k)^2} + \dots + \dfrac{A_n}{(s-s_k)^n}
+B) \dfrac{A_1}{(s-s_k)^n} only
+C) \dfrac{A_1}{s-s_k} + \dfrac{A_2}{s-s_k} + \dots
+D) \dfrac{A_1}{(s-s_k)^2} + \dfrac{A_2}{(s-s_k)^3} + \dots
+
+Answer: A) \dfrac{A_1}{s-s_k} + \dfrac{A_2}{(s-s_k)^2} + \dots + \dfrac{A_n}{(s-s_k)^n}
+
+---
+
+Q17. For F(s) = \dfrac{s^2 + 9s + 2}{(s-1)^2(s+3)}, the correct form of the partial fraction expansion is:
+
+A) \dfrac{A}{s-1} + \dfrac{B}{(s-1)^2} + \dfrac{C}{s+3}
+B) \dfrac{A}{s-1} + \dfrac{B}{s+3} + \dfrac{C}{(s+3)^2}
+C) \dfrac{A}{(s-1)^2} + \dfrac{B}{s+3}
+D) \dfrac{A}{s-1} + \dfrac{B}{(s-1)^2} + \dfrac{C}{(s+3)^2}
+
+Answer: A) \dfrac{A}{s-1} + \dfrac{B}{(s-1)^2} + \dfrac{C}{s+3}
+
+---
+
+Q18. In L^{-1}\left\{\dfrac{e^{-5s}}{(s+3)^3}\right\}, which property is applied after finding L^{-1}\left\{\dfrac{1}{(s+3)^3}\right\}?
+
+A) First Shifting Property
+B) Second Shifting Property
+C) Linearity
+D) Theorem 4 (derivative of transform)
+
+Answer: B) Second Shifting Property
+
+---
+
+Q19. In the partial fraction method, after multiplying by the denominator, the constants are often found by:
+
+A) Setting s equal to the roots of the denominator and comparing coefficients
+B) Differentiating both sides
+C) Integrating both sides
+D) Taking the Laplace transform again
+
+Answer: A) Setting s equal to the roots of the denominator and comparing coefficients
+
+---
+
+Q20. To find L^{-1}\{\ln(s+3)\}, which theorem is used?
+
+A) L^{-1}\{F'(s)\} = -tf(t)
+B) L^{-1}\{e^{-as}F(s)\} = u(t-a)f(t-a)
+C) L^{-1}\{F(s-a)\} = e^{at}f(t)
+D) L^{-1}\left\{\dfrac{F(s)}{s}\right\} = \int_0^t f(u)\,du
+
+Answer: A) L^{-1}\{F'(s)\} = -tf(t)

@@ -1,0 +1,221 @@
+Twenty MCQs from Lecture 2: Laplace Transform (2)
+
+---
+
+Q1. State the First Shifting Property (translation in s).
+
+A) If L\{f(t)\} = F(s), then L\{e^{at}f(t)\} = F(s+a)
+B) If L\{f(t)\} = F(s), then L\{e^{at}f(t)\} = F(s-a)
+C) If L\{f(t)\} = F(s), then L\{e^{-at}f(t)\} = F(s-a)
+D) If L\{f(t)\} = F(s), then L\{f(t-a)\} = e^{-as}F(s)
+
+Answer: B) If L\{f(t)\} = F(s), then L\{e^{at}f(t)\} = F(s-a)
+
+---
+
+Q2. Using the First Shifting Property, find L\{e^{3t}\cos t\}.
+
+A) \dfrac{s-3}{(s-3)^2+1}
+B) \dfrac{s+3}{(s+3)^2+1}
+C) \dfrac{1}{(s-3)^2+1}
+D) \dfrac{s-3}{(s-3)^2-1}
+
+Answer: A) \dfrac{s-3}{(s-3)^2+1}
+
+---
+
+Q3. Using the First Shifting Property, find L\{t^3 e^{-2t}\}.
+
+A) \dfrac{6}{(s-2)^4}
+B) \dfrac{6}{(s+2)^4}
+C) \dfrac{3}{(s+2)^4}
+D) \dfrac{6}{(s+2)^3}
+
+Answer: B) \dfrac{6}{(s+2)^4}
+
+---
+
+Q4. Using the First Shifting Property, find L\{e^{3t}\sinh 4t\}.
+
+A) \dfrac{4}{(s-3)^2+16}
+B) \dfrac{4}{(s+3)^2-16}
+C) \dfrac{4}{(s-3)^2-16}
+D) \dfrac{4}{(s-3)^2}
+
+Answer: C) \dfrac{4}{(s-3)^2-16}
+
+---
+
+Q5. Find L\{(e^t + t)^2\}. Which is the correct expansion before transforming?
+
+A) e^{2t} + 2te^t + t^2
+B) e^{2t} + e^t + t^2
+C) e^{2t} + 2e^t + t^2
+D) e^{2t} + 2te^{2t} + t^2
+
+Answer: A) e^{2t} + 2te^t + t^2
+
+---
+
+Q6. Given that L\{t\} = \dfrac{1}{s^2}, use the First Shifting Property to find L\{te^t\}.
+
+A) \dfrac{1}{(s+1)^2}
+B) \dfrac{1}{(s-1)^2}
+C) \dfrac{1}{s^2-1}
+D) \dfrac{2}{(s-1)^2}
+
+Answer: B) \dfrac{1}{(s-1)^2}
+
+---
+
+Q7. Find L\{(e^t + t)^2\}. Which is the correct final result?
+
+A) \dfrac{1}{s-2} + \dfrac{2}{(s-1)^2} + \dfrac{2}{s^3}
+B) \dfrac{1}{s+2} + \dfrac{2}{(s+1)^2} + \dfrac{2}{s^3}
+C) \dfrac{1}{s-2} + \dfrac{1}{(s-1)^2} + \dfrac{1}{s^3}
+D) \dfrac{1}{s-2} + \dfrac{2}{(s-1)^2} + \dfrac{1}{s^3}
+
+Answer: A) \dfrac{1}{s-2} + \dfrac{2}{(s-1)^2} + \dfrac{2}{s^3}
+
+---
+
+Q8. State the Theorem of Multiplication by t.
+
+A) L\{tf(t)\} = \dfrac{dF(s)}{ds}
+B) L\{tf(t)\} = -\dfrac{dF(s)}{ds}
+C) L\{tf(t)\} = \displaystyle\int F(s)\,ds
+D) L\{tf(t)\} = sF(s) - f(0)
+
+Answer: B) L\{tf(t)\} = -\dfrac{dF(s)}{ds}
+
+---
+
+Q9. Using the Multiplication by t theorem, find L\{t\sin at\}.
+
+A) \dfrac{2as}{(s^2+a^2)^2}
+B) \dfrac{2s}{(s^2+a^2)^2}
+C) \dfrac{a}{(s^2+a^2)^2}
+D) \dfrac{2as}{s^2+a^2}
+
+Answer: A) \dfrac{2as}{(s^2+a^2)^2}
+
+---
+
+Q10. Find L\{t\sin 3t\}.
+
+A) \dfrac{3s}{(s^2+9)^2}
+B) \dfrac{6s}{(s^2+9)^2}
+C) \dfrac{6}{(s^2+9)^2}
+D) \dfrac{6s}{s^2+9}
+
+Answer: B) \dfrac{6s}{(s^2+9)^2}
+
+---
+
+Q11. Given L\{t\sin 3t\} = \dfrac{6s}{(s^2+9)^2}, use the First Shifting Property to find L\{e^{-2t}t\sin 3t\}.
+
+A) \dfrac{6(s+2)}{\left((s+2)^2+9\right)^2}
+B) \dfrac{6(s-2)}{\left((s-2)^2+9\right)^2}
+C) \dfrac{6(s+2)}{(s+2)^2+9}
+D) \dfrac{6}{\left((s+2)^2+9\right)^2}
+
+Answer: A) \dfrac{6(s+2)}{\left((s+2)^2+9\right)^2}
+
+---
+
+Q12. To find L\{e^{3t}\cos t\}, which basic transform is used before applying the shifting property?
+
+A) L\{\sin t\} = \dfrac{1}{s^2+1}
+B) L\{\cos t\} = \dfrac{s}{s^2+1}
+C) L\{\cosh t\} = \dfrac{s}{s^2-1}
+D) L\{e^t\} = \dfrac{1}{s-1}
+
+Answer: B) L\{\cos t\} = \dfrac{s}{s^2+1}
+
+---
+
+Q13. To find L\{t^3 e^{-2t}\}, which basic transform is used before applying the shifting property?
+
+A) L\{t^3\} = \dfrac{6}{s^4}
+B) L\{t^3\} = \dfrac{3}{s^4}
+C) L\{t^3\} = \dfrac{6}{s^3}
+D) L\{t^3\} = \dfrac{1}{s^4}
+
+Answer: A) L\{t^3\} = \dfrac{6}{s^4}
+
+---
+
+Q14. In the First Shifting Property, replacing s by s-a corresponds to multiplying f(t) by which factor?
+
+A) e^{-at}
+B) e^{at}
+C) t^a
+D) \sin at
+
+Answer: B) e^{at}
+
+---
+
+Q15. To compute L\{t\sin 3t\} using multiplication by t, which derivative is calculated?
+
+A) -\dfrac{d}{ds}\left(\dfrac{3}{s^2+9}\right)
+B) \dfrac{d}{ds}\left(\dfrac{3}{s^2+9}\right)
+C) -\dfrac{d}{ds}\left(\dfrac{s}{s^2+9}\right)
+D) -\dfrac{d}{ds}\left(\dfrac{3}{s^2-9}\right)
+
+Answer: A) -\dfrac{d}{ds}\left(\dfrac{3}{s^2+9}\right)
+
+---
+
+Q16. Which property is used to find L\{e^{-2t}t\sin 3t\} from L\{t\sin 3t\}?
+
+A) Linearity
+B) Multiplication by t
+C) First Shifting Property
+D) Definition of Laplace transform directly
+
+Answer: C) First Shifting Property
+
+---
+
+Q17. Find L\{e^{3t}\sinh 4t\} using L\{\sinh 4t\} = \dfrac{4}{s^2-16}. The shift replaces s by:
+
+A) s+3
+B) s-3
+C) s-4
+D) s+4
+
+Answer: B) s-3
+
+---
+
+Q18. In L\{t^3 e^{-2t}\} = \dfrac{6}{(s+2)^4}, the shift in s is by:
+
+A) +2
+B) -2
+C) +4
+D) -4
+
+Answer: A) +2
+
+---
+
+Q19. Which of the following correctly applies the First Shifting Property to L\{e^{at}f(t)\}?
+
+A) F(s) + a
+B) F(s) - a
+C) F(s-a)
+D) F(s+a)
+
+Answer: C) F(s-a)
+
+---
+
+Q20. Find L\{t\sin at\} using L\{\sin at\} = \dfrac{a}{s^2+a^2}. The derivative -\dfrac{d}{ds}\left(\dfrac{a}{s^2+a^2}\right) equals:
+
+A) \dfrac{2as}{(s^2+a^2)^2}
+B) -\dfrac{2as}{(s^2+a^2)^2}
+C) \dfrac{2a}{(s^2+a^2)^2}
+D) \dfrac{2s}{(s^2+a^2)^2}
+
+Answer: A) \dfrac{2as}{(s^2+a^2)^2}

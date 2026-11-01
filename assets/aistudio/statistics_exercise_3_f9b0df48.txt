@@ -1,0 +1,181 @@
+20 MCQs from Lecture 3: Probability Distributions
+
+---
+
+Q1. According to the probability distributions tree, which of the following is a discrete distribution?
+A) Normal
+B) Student's t
+C) Poisson
+D) Chi-Square
+Answer: C) Poisson
+
+---
+
+Q2. The Binomial distribution models the number of successes in:
+A) An infinite number of trials
+B) A fixed number of independent Bernoulli trials
+C) A Poisson process
+D) A continuous interval
+Answer: B) A fixed number of independent Bernoulli trials
+
+---
+
+Q3. For a binomial random variable with parameters n and p, the mean is:
+A) np(1-p)
+B) np
+C) p/n
+D) n/p
+Answer: B) np
+
+---
+
+Q4. For a binomial random variable, the variance is:
+A) np
+B) np(1-p)
+C) n(1-p)
+D) p(1-p)
+Answer: B) np(1-p)
+
+---
+
+Q5. The binomial PMF is given by:
+A) \lambda^x e^{-\lambda}/x!
+B) \binom{n}{x} p^x (1-p)^{n-x}
+C) \frac{1}{\sigma\sqrt{2\pi}} e^{-(x-\mu)^2/2\sigma^2}
+D) p^x (1-p)^x
+Answer: B) \binom{n}{x} p^x (1-p)^{n-x}
+
+---
+
+Q6. The Poisson distribution expresses the probability of a given number of events occurring within:
+A) A fixed number of trials
+B) A fixed interval of time or space
+C) A continuous range
+D) A standard normal curve
+Answer: B) A fixed interval of time or space
+
+---
+
+Q7. A unique property of the Poisson distribution is that:
+A) Mean > Variance
+B) Mean < Variance
+C) Mean = Variance = \lambda
+D) Mean and variance are unrelated
+Answer: C) Mean = Variance = \lambda
+
+---
+
+Q8. The Poisson PMF is:
+A) \binom{n}{x} p^x (1-p)^{n-x}
+B) \lambda^x e^{-\lambda}/x!
+C) \frac{1}{\sqrt{2\pi}} e^{-z^2/2}
+D) np(1-p)
+Answer: B) \lambda^x e^{-\lambda}/x!
+
+---
+
+Q9. Which of the following is a continuous distribution?
+A) Binomial
+B) Poisson
+C) Normal
+D) None of the above
+Answer: C) Normal
+
+---
+
+Q10. The normal density function involves the parameters:
+A) n and p
+B) \lambda
+C) \mu and \sigma
+D) k and N
+Answer: C) \mu and \sigma
+
+---
+
+Q11. The standard normal distribution has:
+A) Mean = 1, SD = 0
+B) Mean = 0, SD = 1
+C) Mean = 0, SD = 0
+D) Mean = 1, SD = 1
+Answer: B) Mean = 0, SD = 1
+
+---
+
+Q12. The z-score transformation is given by:
+A) Z = (Y - \mu)/\sigma
+B) Z = (\mu - Y)/\sigma
+C) Z = \sigma/(Y - \mu)
+D) Z = Y/\sigma
+Answer: A) Z = (Y - \mu)/\sigma
+
+---
+
+Q13. For a normal distribution with \mu = 125 and \sigma = 13.7, the z-score for X = 110 is approximately:
+A) 1.09
+B) −1.09
+C) 5.29
+D) −5.29
+Answer: B) −1.09
+
+---
+
+Q14. For the blood pressure example, P(X > 197.5) is approximately:
+A) 0.1379
+B) 0.7242
+C) 0.0062
+D) 0.0000 (beyond table range, z ≈ 5.29)
+Answer: D) 0.0000
+
+---
+
+Q15. For the blood pressure example, P(X < 110) = P(Z < -1.09) equals:
+A) 0.1379
+B) 0.8621
+C) 0.7242
+D) 0.0062
+Answer: A) 0.1379 (by symmetry, P(Z > 1.09))
+
+---
+
+Q16. For the blood pressure example, P(110 < X < 140) = P(-1.09 < Z < 1.09) equals:
+A) 0.1379
+B) 0.7242
+C) 0.8621
+D) 0.0062
+Answer: B) 0.7242
+
+---
+
+Q17. The Central Limit Theorem states that as n \to \infty, the distribution of Z = (\bar{X} - \mu)/(\sigma/\sqrt{n}) approaches:
+A) A binomial distribution
+B) A Poisson distribution
+C) The standard normal distribution
+D) A chi-square distribution
+Answer: C) The standard normal distribution
+
+---
+
+Q18. A numerical quantity that describes a characteristic of a population is called a:
+A) Statistic
+B) Parameter
+C) Sample
+D) Variable
+Answer: B) Parameter
+
+---
+
+Q19. The standard deviation of the sample mean \bar{X} (standard error) is:
+A) \sigma
+B) \sigma^2
+C) \sigma/\sqrt{n}
+D) \sigma/n
+Answer: C) \sigma/\sqrt{n}
+
+---
+
+Q20. In the resistor example (\mu = 100, \sigma = 10, n = 25), P(\bar{X} < 95) equals:
+A) 0.0062
+B) 0.1379
+C) 0.7242
+D) 0.0228
+Answer: A) 0.0062 (z = −2.5)

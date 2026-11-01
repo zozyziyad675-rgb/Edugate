@@ -1,0 +1,141 @@
+Based on the third PDF lecture on Boolean Algebra Rules, here are 20 multiple-choice questions.
+
+1. According to the Boolean algebra rules, what is the value of x + 1?
+A) x
+B) 0
+C) 1
+D) x'
+Correct Answer: C) 1
+
+2. Which Boolean rule is represented by the equation x + 0 = x?
+A) Identity Law
+B) Null Law
+C) Idempotent Law
+D) Complement Law
+Correct Answer: A) Identity Law
+
+3. What is the result of the Boolean expression x + x?
+A) 2x
+B) x²
+C) x
+D) 1
+Correct Answer: C) x
+
+4. The rule x + x' = 1 is known as the:
+A) Absorption Law
+B) Complement Law
+C) Distribution Law
+D) Commutative Law
+Correct Answer: B) Complement Law
+
+5. What is the value of x · 1?
+A) 1
+B) 0
+C) x
+D) x'
+Correct Answer: C) x
+
+6. What is the result of x · 0?
+A) x
+B) 1
+C) 0
+D) x'
+Correct Answer: C) 0
+
+7. What is the result of x · x?
+A) x²
+B) x
+C) 1
+D) 0
+Correct Answer: B) x
+
+8. The double negation rule states that (x')' is equal to:
+A) 1
+B) 0
+C) x
+D) x'
+Correct Answer: C) x
+
+9. Which law is expressed by the equation x · (y + z) = x · y + x · z?
+A) Commutative Law
+B) Associative Law
+C) Distribution Law
+D) Absorption Law
+Correct Answer: C) Distribution Law
+
+10. Which law is expressed by the equation x + (y · z) = (x + y) · (x + z)?
+A) Distribution Law
+B) Commutative Law
+C) Absorption Law
+D) Association Law
+Correct Answer: A) Distribution Law
+
+11. The Commutative Law states that:
+A) x + y = y + x
+B) x + (y + z) = (x + y) + z
+C) x + xy = x
+D) x · (y + z) = x · y + x · z
+Correct Answer: A) x + y = y + x
+
+12. Which law is represented by the equation x + (y + z) = (x + y) + z?
+A) Distribution Law
+B) Associative Law
+C) Absorption Law
+D) Complement Law
+Correct Answer: B) Associative Law
+
+13. According to the Absorption Law, what is the simplified form of x + xy?
+A) x + y
+B) xy
+C) x
+D) 1
+Correct Answer: C) x
+
+14. According to the Absorption Law, what is the simplified form of x · (x + y)?
+A) x + y
+B) xy
+C) x
+D) y
+Correct Answer: C) x
+
+15. In the simplification example from the lecture, x + x̄y simplifies to:
+A) x + y
+B) x̄ + y
+C) xy
+D) 1
+Correct Answer: A) x + y
+
+16. In the simplification example from the lecture, x(x̄ + y) simplifies to:
+A) x + y
+B) xy
+C) x
+D) y
+Correct Answer: B) xy
+
+17. Which of the following is the correct application of De Morgan's Law for (x + y)'?
+A) x' + y'
+B) x' · y'
+C) x · y
+D) x + y
+Correct Answer: B) x' · y'
+
+18. Which of the following is the correct application of De Morgan's Law for (x · y)'?
+A) x' · y'
+B) x' + y'
+C) x + y
+D) x · y
+Correct Answer: B) x' + y'
+
+19. Simplify the expression xy + x̄z + yz using Boolean algebra rules. What is the result?
+A) xy + x̄z
+B) xy + yz
+C) x̄z + yz
+D) x + y + z
+Correct Answer: A) xy + x̄z
+
+20. In the proof of the law x + xy = x using equations, the first step is to factor out x. What is the result?
+A) x(1 + y)
+B) x(1 · y)
+C) x + (1 · y)
+D) x(x + y)
+Correct Answer: A) x(1 + y)
