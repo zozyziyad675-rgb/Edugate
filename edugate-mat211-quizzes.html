@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDUGATE Probability Quizzes (MAT211)</title>
+  <meta name="description" content="Interactive practice quizzes for Probability (MAT211) on EDUGATE with bilingual English/Arabic support and KaTeX formulas.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- KaTeX CSS & JS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Lucide Icons & Canvas Confetti CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #030305;
+      --surface: #0a0a0f;
+      --surface-card: #111118;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Animated background gradient blobs */
+    .bg-blob-1 {
+      position: fixed;
+      top: -15%;
+      left: -10%;
+      width: 55vw;
+      height: 55vw;
+      max-width: 700px;
+      max-height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+      filter: blur(50px);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatBlob1 22s infinite alternate ease-in-out;
+    }
+
+    .bg-blob-2 {
+      position: fixed;
+      top: 40%;
+      right: -15%;
+      width: 50vw;
+      height: 50vw;
+      max-width: 650px;
+      max-height: 650px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.10) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatBlob2 26s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatBlob1 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(40px, -30px, 0) scale(1.1); }
+    }
+
+    @keyframes floatBlob2 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-40px, 35px, 0) scale(1.15); }
+    }
+
+    /* Navbar */
+    .glass-nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      width: 100%;
+      background: rgba(10, 10, 15, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.85rem 1.5rem;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #e2e8f0;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-brand:hover {
+      color: var(--primary);
+    }
+
+    .course-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+    }
+
+    /* Layout Container */
+    .app-main {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* Quiz Cards Grid */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .quiz-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quiz-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: 0 12px 24px -10px rgba(99, 102, 241, 0.25);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #818cf8;
+      background: rgba(99, 102, 241, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.375rem;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .diff-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+    }
+
+    .diff-Easy { color: #34d399; background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.2); }
+    .diff-Medium { color: #fbbf24; background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.2); }
+    .diff-Hard { color: #f87171; background: rgba(248, 113, 113, 0.1); border-color: rgba(248, 113, 113, 0.2); }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .quiz-card:hover .card-title {
+      color: #c7d2fe;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .completed-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+    }
+
+    /* Option Cards */
+    .option-card {
+      background: #111118;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: 0.2s ease;
+      user-select: none;
+    }
+
+    .option-card:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .option-card.selected {
+      border-color: #6366f1;
+      border-left: 4px solid #6366f1;
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    .option-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: 0.2s ease;
+    }
+
+    .option-card.selected .option-badge {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: #6366f1;
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 12px 32px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: filter 0.2s ease, transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* KaTeX Container */
+    .formula-box {
+      background: #111118;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      margin: 1.25rem 0;
+      overflow-x: auto;
+    }
+
+    /* Explanation Box */
+    .explanation-box {
+      background: rgba(99, 102, 241, 0.03);
+      border-left: 4px solid #6366f1;
+      border-radius: 0 14px 14px 0;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      animation: expandIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes expandIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating Translate Button */
+    .translate-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 50;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .translate-btn:hover {
+      transform: scale(1.05);
+      background: rgba(99, 102, 241, 0.25);
+    }
+
+    /* Progress bar */
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    /* Navigation dots */
+    .nav-dots {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 2rem;
+    }
+
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+    }
+
+    .nav-dot.answered {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .nav-dot.active {
+      transform: scale(1.4);
+      border-color: #a5b4fc;
+      background: #818cf8;
+    }
+
+    /* Table styling */
+    .data-table-container {
+      margin: 1.25rem 0;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #111118;
+      overflow: hidden;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 14px;
+      color: #a5b4fc;
+      font-family: 'JetBrains Mono', monospace;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .data-table td {
+      padding: 8px 14px;
+      color: #cbd5e1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .data-table tr:hover {
+      background: rgba(99, 102, 241, 0.04);
+    }
+
+    /* RTL Support */
+    body.rtl {
+      direction: rtl;
+      font-family: 'Cairo', 'Inter', sans-serif;
+    }
+
+    body.rtl .font-mono,
+    body.rtl .katex,
+    body.rtl .data-table {
+      direction: ltr;
+      text-align: left;
+    }
+
+    body.rtl .explanation-box {
+      border-left: none;
+      border-right: 4px solid #6366f1;
+      border-radius: 14px 0 0 14px;
+    }
+
+    body.rtl .option-card.selected {
+      border-left: 1px solid #6366f1;
+      border-right: 4px solid #6366f1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Mesh Blobs -->
+  <div class="bg-blob-1"></div>
+  <div class="bg-blob-2"></div>
+
+  <!-- Navbar -->
+  <header class="glass-nav">
+    <div class="nav-container">
+      <div id="navLeft">
+        <a href="index.html" class="nav-brand">
+          <span>← Back to EDUGATE</span>
+        </a>
+      </div>
+      <div id="navCenter" class="font-heading" style="font-weight: 700; font-size: 1.1rem; color: #f1f5f9;">
+        Probability Quizzes
+      </div>
+      <div class="course-badge">
+        MAT211
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Anchor -->
+  <main class="app-main" id="appRoot">
+    <!-- Populated by JavaScript -->
+  </main>
+
+  <!-- Floating Translate Button -->
+  <div class="translate-btn" onclick="toggleLanguage()" title="Toggle English / Arabic">
+    <span id="langIcon" style="font-size: 1.3rem;">🌐</span>
+  </div>
+
+  <!-- Application Logic & Data -->
+  <script>
+    const quizzes = [{"id":"lecture-1-frequency-distributions","quizNumber":1,"lectureNumber":1,"title":"Lecture 1: Frequency Distributions","titleAr":"المحاضرة 1: التوزيعات التكرارية","subtitle":"Qualitative and quantitative data, classes, frequency tables, histograms, and cumulative frequencies","subtitleAr":"البيانات النوعية والكمية، الفئات، الجداول التكرارية، المدرجات التكرارية، والتكرار التراكمي","difficulty":"Easy","questionCount":20,"questions":[{"id":1,"question":"Statistics is defined as the science of collecting, organizing, presenting, analyzing, and interpreting data to assist in making more effective:","questionAr":"يُعرَّف علم الإحصاء بأنه علم جمع وتنظيم وعرض وتحليل وتفسير البيانات للمساعدة في اتخاذ:","options":["A) Observations","B) Decisions","C) Measurements","D) Samples"],"optionsAr":["A) ملاحظات أكثر فعالية","B) قرارات أكثر فعالية (Decisions)","C) قياسات أكثر فعالية","D) عينات أكثر فعالية"],"correct":"B","explanation":{"concept":"Core Definition of Statistics","conceptAr":"التعريف الأساسي لعلم الإحصاء","steps":["Statistics involves the systematic process: Collection $\\to$ Organization $\\to$ Presentation $\\to$ Analysis $\\to$ Interpretation.","The ultimate goal of this five-step statistical process is decision-making under uncertainty, allowing researchers and managers to make informed, evidence-based decisions."],"stepsAr":["يشمل الإحصاء خطوات منهجية متسلسلة: الجمع $\\to$ التنظيم $\\to$ العرض $\\to$ التحليل $\\to$ التفسير.","الهدف الأسمى لهذه العملية هو تمكين اتخاذ قرارات دقيقة ومبنية على الأدلة في ظل عدم اليقين."],"whyWrong":"Observations and measurements are merely data collection steps, not the ultimate goal. The objective of statistical analysis is making sound Decisions.","whyWrongAr":"الملاحظات والقياسات هي مجرد أدوات لجمع البيانات وليست الهدف النهائي. الهدف الجوهري للإحصاء هو اتخاذ القرارات (Decisions)."}},{"id":2,"question":"Which branch of statistics uses methods to estimate a property of a population on the basis of a sample?","questionAr":"أي فرع من فروع علم الإحصاء يستخدم أساليب لتقدير خاصية لمجتمع دراسي استناداً إلى عينة؟","options":["A) Descriptive statistics","B) Inferential statistics","C) Qualitative statistics","D) Frequency statistics"],"optionsAr":["A) الإحصاء الوصفي (Descriptive statistics)","B) الإحصاء الاستدلالي (Inferential statistics)","C) الإحصاء النوعي (Qualitative statistics)","D) إحصاء التكرارات (Frequency statistics)"],"correct":"B","explanation":{"concept":"Descriptive vs. Inferential Statistics","conceptAr":"الإحصاء الوصفي مقابل الإحصاء الاستدلالي","steps":["Descriptive statistics organizes, summarizes, and presents data from a known sample without generalizing beyond it.","Inferential statistics takes sample statistics (such as $\\bar{X}$) to make probabilistic generalizations, predictions, and estimations about unknown population parameters (such as $\\mu$)."],"stepsAr":["الإحصاء الوصفي يقتصر على تلخيص وتنظيم وعرض بيانات العينة المتاحة دون تعميم.","الإحصاء الاستدلالي (Inferential statistics) يستخدم المؤشرات الإحصائية للعينة للتوصل إلى استنتاجات وتقديرات حول معالم المجتمع الكلي المجهولة."],"whyWrong":"Descriptive statistics only summarizes sample data. Qualitative statistics refers to variable type, not a branch of statistical methodology.","whyWrongAr":"الإحصاء الوصفي يلخص البيانات فقط دون تعميم، والإحصاء النوعي يشير لنوع المتغير وليس لفرع الاستدلال."}},{"id":3,"question":"The entire set of individuals or objects of interest is called:","questionAr":"تُسمى المجموعة الكاملة من الأفراد أو العناصر محل الاهتمام بـ:","options":["A) A sample","B) A population","C) A variable","D) A frequency"],"optionsAr":["A) عينة (Sample)","B) مجتمع الدراسة (Population)","C) متغير (Variable)","D) تكرار (Frequency)"],"correct":"B","explanation":{"concept":"Population vs. Sample Definition","conceptAr":"تعريف مجتمع الدراسة والعينة","steps":["A Population consists of all items or people of interest in a study ($N$).","Characteristics calculated from a population are called Parameters (e.g., $\\mu, \\sigma$)."],"stepsAr":["مجتمع الدراسة (Population) يمثل المجموعة الشاملة والكلية لجميع العناصر أو الأفراد قيد البحث ($N$).","القيم المحسوبة من مجتمع الدراسة تسمى معالم (Parameters) مثل $\\mu$ و $\\sigma$."],"whyWrong":"A sample is only a subset of the population. A variable is an observable characteristic, and frequency is a count.","whyWrongAr":"العينة هي جزء فقط من المجتمع، والمتغير هو الخاصية المقاسة، والتكرار هو عدد مرات الظهور."}},{"id":4,"question":"A portion or part of the population of interest is called:","questionAr":"يُسمى الجزء أو العينة المأخوذة من مجتمع الدراسة بـ:","options":["A) A sample","B) A population","C) A class","D) A variable"],"optionsAr":["A) عينة (Sample)","B) مجتمع (Population)","C) فئة (Class)","D) متغير (Variable)"],"correct":"A","explanation":{"concept":"Sample Definition","conceptAr":"تعريف العينة","steps":["A sample is a representative subset of size $n$ selected from the entire population $N$.","Numerical measures obtained from a sample are called Statistics (e.g., $\\bar{X}, s$)."],"stepsAr":["العينة (Sample) هي جزء أو قطاع ممثل بحجم $n$ يتم اختياره من مجتمع الدراسة $N$.","المقاييس الرقمية المحسوبة من العينة تسمى إحصاءات (Statistics)."],"whyWrong":"A population is the complete group. A class is a category interval in a grouped table.","whyWrongAr":"المجتمع هو الكل، والفئة (Class) هي فترة تصنيفية في الجدول التكراري."}},{"id":5,"question":"A variable observed and recorded as a non-numeric characteristic or attribute is:","questionAr":"المتغير الذي يُرصد ويُسجل كخاصية أو سمة غير عددية يُسمى متغيراً:","options":["A) Quantitative","B) Discrete","C) Qualitative","D) Continuous"],"optionsAr":["A) كمياً (Quantitative)","B) منفصلاً (Discrete)","C) نوعياً / وصفياً (Qualitative)","D) متصلاً (Continuous)"],"correct":"C","explanation":{"concept":"Qualitative (Categorical) Variables","conceptAr":"المتغيرات النوعية (الوصفية)","steps":["Qualitative (or categorical/attribute) variables represent non-numeric qualities or categories.","Examples: gender, nationality, hair color, blood type, car make."],"stepsAr":["المتغيرات النوعية (Qualitative) تعبر عن سمات أو فئات غير رقمية.","أمثلة: الجنس، لون العينين، فصيلة الدم، العلامة التجارية."],"whyWrong":"Quantitative variables are numerical (either discrete or continuous). Non-numeric attributes are strictly qualitative.","whyWrongAr":"المتغيرات الكمية هي متغيرات رقمية (إما منفصلة أو متصلة)، بينما الصفات غير العددية هي نوعية حتماً."}},{"id":6,"question":"Which of the following is an example of a qualitative variable?","questionAr":"أي مما يلي يُعد مثالاً على متغير نوعي (وصفي)؟","options":["A) Balance in your checking account","B) The life of a car battery","C) Eye color","D) Number of people employed by a company"],"optionsAr":["A) رصيد حسابك المصرفي","B) العمر التشغيلي لبطارية السيارة","C) لون العينين (Eye color)","D) عدد الموظفين في شركة"],"correct":"C","explanation":{"concept":"Qualitative Examples","conceptAr":"أمثلة المتغيرات النوعية","steps":["Bank balance (dollars) = Quantitative Continuous","Battery life (hours) = Quantitative Continuous","Number of employees (count) = Quantitative Discrete","Eye color (blue, brown, green) = Non-numeric category $\\implies$ Qualitative"],"stepsAr":["رصيد الحساب = متغير كمي متصل","عمر البطارية = متغير كمي متصل","عدد الموظفين = متغير كمي منفصل (بالعد)","لون العينين = فئة غير عددية $\\implies$ متغير نوعي (Qualitative)"],"whyWrong":"Options A, B, and D are all numeric measurements or counts. Only eye color is a qualitative attribute.","whyWrongAr":"الخيارات A و B و D جميعها قيم عددية مقاسة أو معدودة، بينما لون العينين هو صفة غير عددية."}},{"id":7,"question":"Discrete variables are typically the result of:","questionAr":"المتغيرات المنفصلة (Discrete variables) هي عادةً ناتجة عن عملية:","options":["A) Measuring","B) Counting","C) Rounding","D) Estimating"],"optionsAr":["A) القياس (Measuring)","B) العد (Counting)","C) التقريب (Rounding)","D) التقدير (Estimating)"],"correct":"B","explanation":{"concept":"Discrete Variables","conceptAr":"المتغيرات الكمية المنفصلة","steps":["Discrete variables can assume only certain distinct, separated values (typically non-negative integers $0, 1, 2, \\dots$).","They always arise from counting distinct items (e.g., number of defective parts, number of cars)."],"stepsAr":["المتغيرات المنفصلة تأخذ قيماً محددة ومنفصلة (عادة أعداد صحيحة $0, 1, 2, \\dots$).","تنتج دائماً عن عملية العد (Counting) لعناصر محددة."],"whyWrong":"Measuring produces continuous variables (e.g. height, weight, time). Discrete variables are obtained by counting.","whyWrongAr":"القياس ينتج متغيرات متصلة، بينما المتغيرات المنفصلة تأتي دائماً عبر العد."}},{"id":8,"question":"Which of the following is an example of a continuous variable?","questionAr":"أي مما يلي يُمثل مثالاً على متغير متصل (Continuous variable)؟","options":["A) The number of bedrooms in a house","B) The number of students in a statistics course","C) Duration of flights from Orlando to San Diego","D) Number of strokes on a golf hole"],"optionsAr":["A) عدد غرف النوم في المنزل","B) عدد الطلاب في مساق الإحصاء","C) مدة الرحلات الجوية من أورلاندو إلى سان دييغو","D) عدد ضربات الجولف في الحفرة"],"correct":"C","explanation":{"concept":"Continuous Variables","conceptAr":"المتغيرات الكمية المتصلة","steps":["Continuous variables can take on any real value within a given continuum or interval (time, length, mass, temperature).","Flight duration can be $4.521$ hours, $4.5213$ hours, etc., depending on the precision of the measuring instrument."],"stepsAr":["المتغيرات المتصلة يمكن أن تأخذ أي قيمة ضمن مدى أو فترة متصلة على خط الأعداد.","زمن أو مدة الرحلة الجوية يقاس بوحدات زمنية مستمرة ويقبل أجزاء عشرية دقيقة بحسب أداة القياس."],"whyWrong":"Bedrooms, students, and golf strokes are counts of indivisible items ($0, 1, 2, \\dots$), making them discrete variables.","whyWrongAr":"عدد الغرف والطلاب والضربات هي أعداد صحيحة تأتي بالعد، وبالتالي فهي متغيرات منفصلة وليست متصلة."}},{"id":9,"question":"A frequency table groups qualitative data into classes that are:","questionAr":"يقوم جدول التوزيع التكراري بتجميع البيانات النوعية في فئات تتصف بأنها:","options":["A) Mutually exclusive and collectively exhaustive","B) Random and overlapping","C) Numeric and continuous","D) Discrete and infinite"],"optionsAr":["A) متنافية وشاملة كلياً (Mutually exclusive and collectively exhaustive)","B) عشوائية ومتداخلة (Random and overlapping)","C) عددية ومتصلة (Numeric and continuous)","D) منفصلة ولانهائية (Discrete and infinite)"],"correct":"A","explanation":{"concept":"Properties of Frequency Classes","conceptAr":"خصائص فئات التوزيع التكراري","steps":["Mutually exclusive: An observation can fall into one and only one class (no overlap).","Collectively exhaustive: Every single observation must belong to at least one class (nothing is omitted)."],"stepsAr":["مانعة بالتبادل / متنافية (Mutually exclusive): كل مشاهدة تقع في فئة واحدة فقط دون أي تداخل.","شاملة كلياً (Collectively exhaustive): تشمل الفئات جميع المشاهدات دون استثناء أي قيمة."],"whyWrong":"Classes can never overlap (that would cause double-counting). They must partition the entire dataset completely.","whyWrongAr":"لا يمكن للفئات أن تتداخل لأن ذلك يسبب ازدواجية في العد، بل يجب أن تقسم البيانات بدقة وبشكل كامل."}},{"id":10,"question":"In the table with Location and Number of Cars (total 180), the relative frequency for Kane (52 cars) is:","questionAr":"في جدول المواقع وعدد السيارات (المجموع الكلي = 180)، ما هو التكرار النسبي لموقع Kane (52 سيارة)؟","formula":"\\text{Relative Frequency} = \\frac{\\text{Class Frequency}}{\\text{Total Observations}} = \\frac{f}{n}","tableData":{"headers":["Location","Cars Sold (f)"],"headersAr":["الموقع","السيارات المباعة (f)"],"rows":[["Kane",52],["Olean",40],["Sheffield",45],["Tidioute",43],["Total",180]],"caption":"Automobile sales distribution by dealership location"},"options":["A) 52","B) 0.289","C) 0.222","D) 0.250"],"optionsAr":["A) 52","B) 0.289","C) 0.222","D) 0.250"],"correct":"B","explanation":{"concept":"Relative Frequency Calculation","conceptAr":"حساب التكرار النسبي","steps":["Formula: $\\text{Relative Frequency} = \\frac{f}{n}$","Given $f_{\\text{Kane}} = 52$ and total $n = 180$","Calculation: $\\frac{52}{180} = 0.28888\\dots \\approx 0.289$"],"stepsAr":["القانون: $\\text{Relative Frequency} = \\frac{f}{n}$","المعطيات: تكرار موقع Kane هو $f = 52$، وإجمالي السيارات $n = 180$","الحساب: $\\frac{52}{180} = 0.28888\\dots \\approx 0.289$"],"whyWrong":"52 is the raw frequency ($f$), not the relative frequency. $40/180 = 0.222$ is the relative frequency for Olean.","whyWrongAr":"52 هو التكرار المطلق الخام وليس النسبي. والقيمة 0.222 تمثل التكرار النسبي لفرع Olean ($40/180$)."}},{"id":11,"question":"A graph that shows qualitative classes on the horizontal axis and class frequencies on the vertical axis, with bar heights proportional to frequencies, is called a:","questionAr":"الرسم البياني الذي يعرض الفئات النوعية على المحور الأفقي وتكرارات الفئات على المحور الرأسي، بحيث يتناسب ارتفاع الأعمدة مع التكرار، يُسمى:","options":["A) Pie chart","B) Histogram","C) Bar chart","D) Frequency polygon"],"optionsAr":["A) مخطط دائري (Pie chart)","B) مدرج تكراري (Histogram)","C) مخطط أعمدة (Bar chart)","D) مضلع تكراري (Frequency polygon)"],"correct":"C","explanation":{"concept":"Bar Chart vs. Histogram","conceptAr":"مخطط الأعمدة مقابل المدرج التكراري","steps":["A Bar chart is used for qualitative/categorical data, featuring separated bars.","A Histogram is used for quantitative continuous data where adjacent bars touch each other along a numerical axis."],"stepsAr":["مخطط الأعمدة (Bar chart) يُستخدم خصيصاً للبيانات النوعية/الوصفية مع وجود مسافات فاصلة بين الأعمدة.","المدرج التكراري (Histogram) يُستخدم للبيانات الكمية المتصلة وتكون أعمدته متلاصقة."],"whyWrong":"A histogram is for quantitative numerical class intervals, not qualitative categories. A pie chart shows circular wedges.","whyWrongAr":"المدرج التكراري مخصص للفترات العددية الكمية، بينما مخطط الأعمدة مخصص للفئات النوعية المنفصلة."}},{"id":12,"question":"A chart that shows the proportion or percentage that each class represents of the total number of frequencies is a:","questionAr":"المخطط الذي يوضح النسبة أو النسبة المئوية التي تمثلها كل فئة من إجمالي التكرارات على شكل قطاعات دائرية هو:","options":["A) Bar chart","B) Pie chart","C) Histogram","D) Stem-and-leaf display"],"optionsAr":["A) مخطط أعمدة (Bar chart)","B) مخطط دائري (Pie chart)","C) مدرج تكراري (Histogram)","D) مخطط الساق والورقة (Stem-and-leaf display)"],"correct":"B","explanation":{"concept":"Pie Chart Definition","conceptAr":"تعريف المخطط الدائري (Pie Chart)","steps":["A pie chart displays a circle divided into slices/sectors.","Each slice's central angle is proportional to the relative frequency: $\\text{Angle} = \\text{Relative Frequency} \\times 360^\\circ$."],"stepsAr":["يقسم المخطط الدائري الدائرة إلى قطاعات تتناسب زواياها مع التكرار النسبي.","زاوية القطاع = $\\text{Relative Frequency} \\times 360^\\circ$."],"whyWrong":"Bar charts display frequencies via heights. A pie chart represents proportional shares of a whole ($100\\%$).","whyWrongAr":"مخطط الأعمدة يمثل القيم بالارتفاع، بينما المخطط الدائري يعبر عن النسب المئوية لأجزاء من الكل."}},{"id":13,"question":"When constructing a frequency distribution, which of the following is NOT one of the listed steps?","questionAr":"عند بناء جدول توزيع تكراري، أي مما يلي لا يُعد خطوة من الخطوات الأساسية المتبعة؟","options":["A) Decide on the number of classes","B) Determine the class interval","C) Set the individual class limits","D) Calculate the median"],"optionsAr":["A) تحديد عدد الفئات","B) تحديد طول الفئة (Class interval)","C) وضع حدود الفئات الفردية","D) حساب الوسيط (Calculate the median)"],"correct":"D","explanation":{"concept":"Steps for Constructing a Frequency Distribution","conceptAr":"خطوات بناء التوزيع التكراري","steps":["Step 1: Decide on number of classes $k$ (using $2^k > n$ rule).","Step 2: Determine class interval width $i \\ge \\frac{\\text{Max} - \\text{Min}}{k}$.","Step 3: Set individual class limits.","Step 4: Tally raw data and count class frequencies.","Calculating the median is a measure of location computed AFTER the distribution is built, not a construction step."],"stepsAr":["الخطوة 1: تحديد عدد الفئات $k$ (قاعدة $2^k > n$).","الخطوة 2: حساب طول الفئة $i \\ge \\frac{\\text{Max} - \\text{Min}}{k}$.","الخطوة 3: تحديد الحدود الدنيا والعليا للفئات.","الخطوة 4: تفريغ البيانات وحساب التكرارات.","حساب الوسيط هو مقياس نزعة مركزية يتم حسابه لاحقاً وليس خطوة من خطوات إنشاء الجدول."],"whyWrong":"Deciding $k$, finding interval width $i$, and establishing limits are the canonical steps. Median is computed subsequently.","whyWrongAr":"تحديد الفئات وطولها وحدودها هي الخطوات البنائية الثلاث، بينما الوسيط يُحسب لاحقاً."}},{"id":14,"question":"For the Wachesaw Manufacturing data (16 days of units: max = 31, min = 25), the range is calculated as:","questionAr":"لبيانات شركة Wachesaw (16 يوماً من الإنتاج، حيث القيمة العظمى = 31 والدنيا = 25)، يُحسب المدى بـ:","formula":"\\text{Range} = X_{\\max} - X_{\\min}","options":["A) 31 − 25 = 6","B) 28 − 25 = 3","C) 31 − 27 = 4","D) 30 − 26 = 4"],"optionsAr":["A) 31 − 25 = 6","B) 28 − 25 = 3","C) 31 − 27 = 4","D) 30 − 26 = 4"],"correct":"A","explanation":{"concept":"Range of a Dataset","conceptAr":"حساب مدى البيانات (Range)","steps":["Definition: $\\text{Range} = L - S = \\text{Highest Value} - \\text{Lowest Value}$","From the dataset: Highest observation = $31$, Lowest observation = $25$","Calculation: $31 - 25 = 6$"],"stepsAr":["القانون: $\\text{Range} = \\text{أعلى قيمة} - \\text{أدنى قيمة}$","من بيانات المسألة: أعلى قيمة = $31$ وأدنى قيمة = $25$","الحساب: $31 - 25 = 6$"],"whyWrong":"The range must span from the absolute maximum (31) to the absolute minimum (25), which yields 6.","whyWrongAr":"المدى هو الفارق بين أعلى قيمة (31) وأقل قيمة (25) حصراً، والناتج هو 6."}},{"id":15,"question":"In the Wachesaw example, with 6 classes and a range of 6, the class width is:","questionAr":"في مثال Wachesaw، مع 6 فئات ومدى قدره 6، يكون طول الفئة (Class width) هو:","formula":"i \\ge \\frac{\\text{Range}}{k}","options":["A) 6","B) 1","C) 2","D) 3"],"optionsAr":["A) 6","B) 1","C) 2","D) 3"],"correct":"B","explanation":{"concept":"Class Width Formula","conceptAr":"قانون طول الفئة (Class Interval)","steps":["Formula: $i \\ge \\frac{\\text{Range}}{k}$ where $k$ is number of classes.","Given $\\text{Range} = 6$ and $k = 6$ classes:","$i = \\frac{6}{6} = 1$"],"stepsAr":["القانون: $i \\ge \\frac{\\text{Range}}{k}$ حيث $k$ هو عدد الفئات.","بالتعويض بالمدى $6$ وعدد الفئات $6$:","$i = \\frac{6}{6} = 1$"],"whyWrong":"Dividing range 6 by 6 classes gives 1. A width of 2 or 3 would exceed the required span.","whyWrongAr":"قسمة المدى 6 على 6 فئات تعطي 1 تماماً."}},{"id":16,"question":"In the Wachesaw solution table, the class \"25 − 26\" has a frequency of:","questionAr":"في جدول حل مثال Wachesaw، الفئة \"25 − 26\" تملك تكراراً مقداره:","tableData":{"headers":["Class (Units)","Tally / Frequency (f)","Relative Frequency","Cumulative Frequency"],"headersAr":["الفئة (الوحدات)","التكرار (f)","التكرار النسبي","التكرار التراكمي"],"rows":[["25 - 26",4,"0.250",4],["27 - 28",4,"0.250",8],["29 - 30",4,"0.250",12],["31 - 32",4,"0.250",16]],"caption":"Wachesaw Manufacturing daily production frequency distribution"},"options":["A) 2","B) 4","C) 6","D) 1"],"optionsAr":["A) 2","B) 4","C) 6","D) 1"],"correct":"B","explanation":{"concept":"Class Frequency Tally","conceptAr":"حساب تكرار الفئة من البيانات","steps":["The raw observations falling into the interval $[25, 26]$ are: 25, 25, 26, 26.","Counting these observations gives a frequency of $f = 4$."],"stepsAr":["القيم التي تقع ضمن الفئة $[25, 26]$ في العينة هي: 25, 25, 26, 26.","بجمعها نحصل على تكرار $f = 4$."],"whyWrong":"The exact tally for values 25 and 26 in the 16-day manufacturing dataset is 4.","whyWrongAr":"عدد الأيام التي تم فيها إنتاج 25 أو 26 وحدة هو 4 أيام بالضبط."}},{"id":17,"question":"In the Wachesaw solution table, the relative frequency for the class \"27 − 28\" (with $f = 4, n = 16$) is:","questionAr":"في جدول Wachesaw، التكرار النسبي للفئة \"27 − 28\" (مع $f = 4, n = 16$) يساوي:","formula":"\\text{Relative Frequency} = \\frac{f}{n}","options":["A) 0.25","B) 0.125","C) 0.0625","D) 0.50"],"optionsAr":["A) 0.25","B) 0.125","C) 0.0625","D) 0.50"],"correct":"A","explanation":{"concept":"Relative Frequency Calculation","conceptAr":"حساب التكرار النسبي للفئة","steps":["Class frequency for $27-28$ is $f = 4$.","Total number of days observed is $n = 16$.","Relative frequency $= \\frac{4}{16} = 0.25$ (or $25\\%$)."],"stepsAr":["تكرار الفئة $27-28$ هو $f = 4$.","إجمالي الأيام في العينة هو $n = 16$.","التكرار النسبي $= \\frac{4}{16} = 0.25$ (أي $25\\%$)."],"whyWrong":"$4/16$ simplifies to $1/4 = 0.25$. 0.125 corresponds to $2/16$.","whyWrongAr":"قسمة $4 / 16$ تساوي $0.25$ تماماً."}},{"id":18,"question":"In the Wachesaw solution table, the cumulative frequency for the class \"27 − 28\" is:","questionAr":"في جدول Wachesaw، التكرار التراكمي للفئة \"27 − 28\" يساوي:","options":["A) 4","B) 8","C) 12","D) 14"],"optionsAr":["A) 4","B) 8","C) 12","D) 14"],"correct":"B","explanation":{"concept":"Cumulative Frequency","conceptAr":"التكرار التراكمي (Cumulative Frequency)","steps":["Cumulative frequency represents the running total of frequencies through the current class.","Class 1 ($25-26$): frequency $= 4$, cumulative frequency $= 4$.","Class 2 ($27-28$): frequency $= 4$, cumulative frequency $= 4 + 4 = 8$."],"stepsAr":["التكرار التراكمي هو مجموع التكرارات من بداية الجدول حتى الفئة الحالية.","الفئة الأولى ($25-26$): التكرار = $4$، التراكمي = $4$.","الفئة الثانية ($27-28$): التكرار = $4$، التراكمي = $4 + 4 = 8$."],"whyWrong":"4 is only the first class; 12 is the cumulative frequency through the third class (29-30). Through class 27-28, it is 8.","whyWrongAr":"4 هو تكرار الفئة الأولى فقط، و 12 هو تراكم الفئة الثالثة، أما الفئة الثانية فمجموعها التراكمي هو 8."}},{"id":19,"question":"Which of the following is an example of a discrete variable?","questionAr":"أي مما يلي يُعد مثالاً على متغير كمي منفصل (Discrete variable)؟","options":["A) Weight of a student","B) Yearly rainfall in Tampa, FL","C) TV sets owned","D) Amount of income tax paid"],"optionsAr":["A) وزن الطالب","B) كمية الأمطار السنوية في تامبا","C) عدد أجهزة التلفاز المملوكة (TV sets owned)","D) مبلغ ضريبة الدخل المدفوع"],"correct":"C","explanation":{"concept":"Discrete vs. Continuous Data","conceptAr":"التمييز بين البيانات المنفصلة والمتصلة","steps":["Weight, rainfall, and monetary amounts are continuous measurements that can assume fractions and continuum values.","TV sets owned is a count of physical units that can only take integer values: $0, 1, 2, 3, \\dots$, making it strictly discrete."],"stepsAr":["الوزن وهطول الأمطار والمبالغ المالية هي كميات مقاسة مستمرة تقبل قيماً كسرية.","عدد أجهزة التلفاز يمثل عداً لوحدات صحيحة غير قابلة للتجزئة ($0, 1, 2, \\dots$) فهو منفصل حصراً."],"whyWrong":"Weight and rainfall require continuous physical scales. TV sets must be counted in whole numbers.","whyWrongAr":"الوزن وكمية المطر مقاييس مستمرة، بينما عدد الأجهزة يُعد بأعداد صحيحة فقط."}},{"id":20,"question":"In the profit frequency distribution table (total 180 vehicles), which class has the highest frequency?","questionAr":"في جدول التوزيع التكراري لأرباح مبيعات المركبات (المجموع 180)، ما هي الفئة التي تمتلك أعلى تكرار؟","tableData":{"headers":["Profit Range ($)","Number of Vehicles Sold (f)"],"headersAr":["فئة الربح ($)","عدد المركبات المباعة (f)"],"rows":[["$1,000 up to $1,400",23],["$1,400 up to $1,800",38],["$1,800 up to $2,200",45],["$2,200 up to $2,600",32],["$2,600 up to $3,000",19],["Total",180]],"caption":"Vehicle profit frequency distribution"},"options":["A) $1,400 up to $1,800 (38)","B) $1,800 up to $2,200 (45)","C) $2,200 up to $2,600 (32)","D) $1,000 up to $1,400 (23)"],"optionsAr":["A) $1,400 up to $1,800 (38)","B) $1,800 up to $2,200 (45)","C) $2,200 up to $2,600 (32)","D) $1,000 up to $1,400 (23)"],"correct":"B","explanation":{"concept":"Modal Class Identification","conceptAr":"تحديد الفئة المنوالية (ذات التكرار الأعلى)","steps":["Scan the frequency column $f$ across all class intervals:","Classes: $23, 38, 45, 32, 19$.","Maximum frequency is $45$, which belongs to the class interval \\$1,800 up to \\$2,200 (the modal class)."],"stepsAr":["بمقارنة قيم التكرارات في العمود: 23، 38، 45، 32، 19.","نجد أن أعلى تكرار هو $45$ ويقابل الفئة من $1,800$ إلى $2,200$ دولار (وهي الفئة المنوالية)."],"whyWrong":"45 is the maximum frequency value, occurring in class \\$1,800 up to \\$2,200.","whyWrongAr":"أكبر تكرار في الجدول هو 45 للفئة B."}}]},{"id":"lecture-2-measures-central-tendency-dispersion","quizNumber":2,"lectureNumber":2,"title":"Lecture 2: Central Tendency & Dispersion","titleAr":"المحاضرة 2: مقاييس النزعة المركزية والتشتت","subtitle":"Mean, median, mode, percentiles, skewness, variance, standard deviation, and grouped data","subtitleAr":"المتوسط، الوسيط، المنوال، المئينات، الالتواء، التباين، الانحراف المعياري، والبيانات المبوبة","difficulty":"Medium","questionCount":20,"questions":[{"id":1,"question":"The arithmetic mean is defined as:","questionAr":"يُعرَّف الوسط الحسابي (المتوسط) بأنه:","options":["A) The middle value of an ordered dataset","B) The sum of all data values divided by the total number of observations","C) The most frequently occurring value","D) The difference between the largest and smallest values"],"optionsAr":["A) القيمة المتوسطة لمجموعة بيانات مرتبة","B) حاصل جمع كافة قيم البيانات مقسوماً على إجمالي عدد المشاهدات","C) القيمة الأكثر تكراراً وشيوعاً في البيانات","D) الفرق بين أكبر قيمة وأصغر قيمة"],"correct":"B","explanation":{"concept":"Arithmetic Mean Formula","conceptAr":"قانون الوسط الحسابي","steps":["The sample mean $\\bar{X}$ is the sum of observations divided by sample size $n$:","$\\bar{X} = \\frac{\\sum X}{n}$","It acts as the gravitational center of the distribution where $\\sum (X_i - \\bar{X}) = 0$."],"stepsAr":["الوسط الحسابي لعينة $\\bar{X}$ هو مجموع القيم مقسوماً على حجم العينة $n$:","$\\bar{X} = \\frac{\\sum X}{n}$","ويعتبر مركز الثقل للبيانات بحيث يكون مجموع انحرافات القيم عنه مساوياً للصفر $\\sum (X_i - \\bar{X}) = 0$."],"whyWrong":"A is the Median, C is the Mode, and D is the Range.","whyWrongAr":"الخيار A يمثل الوسيط، و C يمثل المنوال، و D يمثل المدى."}},{"id":2,"question":"For a sample of five heights (65.51, 72.30, 68.31, 67.05, 70.68 inches), the sample mean is:","questionAr":"لعينة مكونة من خمسة أطوال (65.51، 72.30، 68.31، 67.05، 70.68 بوصة)، فإن الوسط الحسابي للعينة هو:","formula":"\\bar{X} = \\frac{\\sum_{i=1}^{n} X_i}{n}","options":["A) 67.05 in.","B) 68.31 in.","C) 68.77 in.","D) 70.68 in."],"optionsAr":["A) 67.05 in.","B) 68.31 in.","C) 68.77 in.","D) 70.68 in."],"correct":"C","explanation":{"concept":"Sample Mean Calculation","conceptAr":"حساب الوسط الحسابي للعينة","steps":["Sum of observations: $\\sum X = 65.51 + 72.30 + 68.31 + 67.05 + 70.68 = 343.85$","Number of observations: $n = 5$","$\\bar{X} = \\frac{343.85}{5} = 68.77$ inches"],"stepsAr":["مجموع المشاهدات: $\\sum X = 65.51 + 72.30 + 68.31 + 67.05 + 70.68 = 343.85$","عدد المشاهدات: $n = 5$","$\\bar{X} = \\frac{343.85}{5} = 68.77$ بوصة"],"whyWrong":"68.31 is the sample median, not the mean. The arithmetic mean is exactly 68.77 in.","whyWrongAr":"القيمة 68.31 هي الوسيط، بينما الوسط الحسابي الدقيق هو 68.77 بوصة."}},{"id":3,"question":"When $n$ is odd, the median position is determined by:","questionAr":"عندما يكون حجم العينة $n$ عدداً فردياً، فإن رتبة (موقع) الوسيط تُحدد بالقانون:","options":["A) $\\frac{n}{2}$","B) $\\frac{n+1}{2}$","C) $\\frac{n-1}{2}$","D) $\\frac{3(n+1)}{4}$"],"optionsAr":["A) $\\frac{n}{2}$","B) $\\frac{n+1}{2}$","C) $\\frac{n-1}{2}$","D) $\\frac{3(n+1)}{4}$"],"correct":"B","explanation":{"concept":"Median Location Rule for Odd Sample Sizes","conceptAr":"تحديد موقع الوسيط لحجم عينة فردي","steps":["After arranging the dataset in ascending order, the exact midpoint for odd $n$ is located at:","$\\text{Rank} = \\frac{n + 1}{2}$","For example, with $n = 5$, the position is $\\frac{5+1}{2} = 3$rd observation."],"stepsAr":["بعد ترتيب البيانات تصاعدياً، تقع المشاهدة الوسطى تماماً عند الرتبة:","$\\text{الموقع} = \\frac{n + 1}{2}$","مثال: إذا كانت $n = 5$، فإن الموقع هو $\\frac{5+1}{2} = 3$ أي القيمة الثالثة."],"whyWrong":"$n/2$ is used for continuous formulas or even samples where two middle values are averaged.","whyWrongAr":"$n/2$ تُستخدم في البيانات الزوجية لأخذ متوسط القيمتين المركزيتين."}},{"id":4,"question":"For the five heights (65.51, 72.30, 68.31, 67.05, 70.68), the sample median is:","questionAr":"للأطوال الخمسة (65.51، 72.30، 68.31، 67.05، 70.68)، فإن وسيط العينة يساوي:","options":["A) 65.51","B) 67.05","C) 68.31","D) 70.68"],"optionsAr":["A) 65.51","B) 67.05","C) 68.31","D) 70.68"],"correct":"C","explanation":{"concept":"Finding the Median in Raw Data","conceptAr":"استخراج الوسيط من البيانات الخام","steps":["Step 1: Arrange data in ascending order: 65.51, 67.05, 68.31, 70.68, 72.30.","Step 2: Position of median with $n = 5$: $\\frac{5+1}{2} = 3$rd position.","Step 3: The 3rd value in the ordered sequence is $68.31$."],"stepsAr":["الخطوة 1: ترتيب البيانات تصاعدياً: 65.51، 67.05، 68.31، 70.68، 72.30.","الخطوة 2: رتبة الوسيط: $\\frac{5+1}{2} = 3$.","الخطوة 3: القيمة الثالثة في الترتيب هي $68.31$."],"whyWrong":"67.05 is the 2nd value, and 68.77 is the mean. The ordered 3rd element is 68.31.","whyWrongAr":"القيمة 67.05 هي الثانية، و 68.77 هو المتوسط. القيمة الوسيطة الواقعة في المنتصف هي 68.31."}},{"id":5,"question":"Quartiles divide an ordered dataset into:","questionAr":"تقسم الربيعات (Quartiles) مجموعة البيانات المرتبة إلى:","options":["A) Two equal parts","B) Four equal parts","C) Ten equal parts","D) One hundred equal parts"],"optionsAr":["A) جزأين متساويين","B) أربعة أجزاء متساوية (Four equal parts)","C) عشرة أجزاء متساوية","D) مائة جزء متساوٍ"],"correct":"B","explanation":{"concept":"Quartiles Definition","conceptAr":"تعريف الربيعات","steps":["Quartiles ($Q_1, Q_2, Q_3$) partition an ordered dataset into 4 equal segments of $25\\%$ each.","$Q_1$ = 25th percentile, $Q_2$ = 50th percentile (Median), $Q_3$ = 75th percentile."],"stepsAr":["الربيعات ($Q_1, Q_2, Q_3$) تجزئ البيانات المرتبة إلى أربعة أجزاء متساوية يمثل كل منها $25\\%$.","$Q_1$ هو الربيع الأدنى ($25\\%$)، $Q_2$ هو الوسيط ($50\\%$)، و $Q_3$ هو الربيع الأعلى ($75\\%$)."],"whyWrong":"Deciles divide into 10 parts, and percentiles divide into 100 parts. Quartiles divide into 4 parts.","whyWrongAr":"العشيرات تقسم لـ 10 أجزاء والمئينات لـ 100 جزء، بينما الربيعات تقسم لـ 4 أجزاء."}},{"id":6,"question":"The second quartile ($Q_2$) is identical to:","questionAr":"الربيع الثاني ($Q_2$) يطابق تماماً:","options":["A) The mode","B) The median","C) The range","D) The standard deviation"],"optionsAr":["A) المنوال","B) الوسيط (The median)","C) المدى","D) الانحراف المعياري"],"correct":"B","explanation":{"concept":"Equivalence of Q2 and Median","conceptAr":"تطابق الربيع الثاني مع الوسيط","steps":["By definition, $50\\%$ of observations lie below $Q_2$ and $50\\%$ lie above.","This is precisely the definition of the Median."],"stepsAr":["بحسب التعريف، يقع $50\\%$ من المشاهدات تحت $Q_2$ و $50\\%$ فوقه.","وهذا هو التعريف الدقيق للوسيط (Median)."],"whyWrong":"Mode is the most frequent value; Range is spread; only the Median marks the 50th percentile.","whyWrongAr":"المنوال هو القيمة الأكثر تكراراً، والمدى هو مقياس تشتت، بينما الوسيط هو المئيل الخمسون."}},{"id":7,"question":"The position of the k-th percentile ($P_k$) is approximately:","questionAr":"تُحدد رتبة (موقع) المئين رقم k بـ ($P_k$) تقريباً بالقانون:","options":["A) $\\frac{k(n+1)}{4}$","B) $\\frac{k(n+1)}{10}$","C) $\\frac{k(n+1)}{100}$","D) $\\frac{k(n+1)}{2}$"],"optionsAr":["A) $\\frac{k(n+1)}{4}$","B) $\\frac{k(n+1)}{10}$","C) $\\frac{k(n+1)}{100}$","D) $\\frac{k(n+1)}{2}$"],"correct":"C","explanation":{"concept":"Percentile Location Formula","conceptAr":"صيغة موقع المئين","steps":["Since percentiles divide data into 100 equal parts, the location of the $k$-th percentile is:","$L_k = \\frac{k(n + 1)}{100}$"],"stepsAr":["نظراً لأن المئينات تقسم التوزيع إلى 100 جزء متساوٍ، فإن موقع المئين رقم $k$ هو:","$L_k = \\frac{k(n + 1)}{100}$"],"whyWrong":"Dividing by 4 gives quartiles, dividing by 10 gives deciles, and dividing by 100 gives percentiles.","whyWrongAr":"القسمة على 4 للربيعات، وعلى 10 للعشيرات، وعلى 100 للمئينات."}},{"id":8,"question":"The fifth decile ($D_5$) is identical to:","questionAr":"العشير الخامس ($D_5$) يطابق تماماً:","options":["A) $Q_1$","B) $Q_3$","C) The median","D) $P_1$"],"optionsAr":["A) $Q_1$","B) $Q_3$","C) الوسيط (The median)","D) $P_1$"],"correct":"C","explanation":{"concept":"Equivalence of D5, Q2, and Median","conceptAr":"تطابق العشير الخامس مع الوسيط","steps":["$D_5$ corresponds to $\\frac{5}{10} = 50\\%$ of the data.","$50\\%$ of the ordered data corresponds to the Median ($Q_2$ and $P_{50}$)."],"stepsAr":["العشير الخامس يمثل $\\frac{5}{10} = 50\\%$ من حجم البيانات.","وهذا يعادل تماماً الوسيط والربيع الثاني والمئين الخمسين."],"whyWrong":"$Q_1$ is the 25th percentile, $Q_3$ is the 75th percentile. $D_5$ is the 50th percentile (Median).","whyWrongAr":"$Q_1$ هو ربيع 25% و $Q_3$ هو 75%، بينما $D_5$ هو 50% أي الوسيط."}},{"id":9,"question":"For the dataset 26, 25, 25, 34, the mode is:","questionAr":"لمجموعة البيانات 26، 25، 25، 34، المنوال هو:","options":["A) 25","B) 26","C) 34","D) No mode"],"optionsAr":["A) 25","B) 26","C) 34","D) لا يوجد منوال"],"correct":"A","explanation":{"concept":"Mode of Raw Data","conceptAr":"إيجاد المنوال للبيانات الخام","steps":["Count occurrences of each value in the dataset:","25 occurs 2 times.","26 occurs 1 time.","34 occurs 1 time.","The value with highest frequency is $25$."],"stepsAr":["حصر تكرار كل رقم في العينة:","الرقم 25 تكرر مرتين.","الرقم 26 تكرر مرة واحدة.","الرقم 34 تكرر مرة واحدة.","القيمة الأكثر تكراراً هي $25$."],"whyWrong":"25 appears twice, while 26 and 34 appear only once. Hence 25 is the unimodal value.","whyWrongAr":"العدد 25 تكرر مرتين بينما البقية مرة واحدة، فالمنوال هو 25."}},{"id":10,"question":"For the dataset 3, 7, 12, 6, 19, the mode is:","questionAr":"لمجموعة البيانات 3، 7، 12، 6، 19، المنوال هو:","options":["A) 3","B) 7","C) 19","D) No mode"],"optionsAr":["A) 3","B) 7","C) 19","D) لا يوجد منوال (No mode)"],"correct":"D","explanation":{"concept":"Absence of Mode","conceptAr":"انعدام المنوال في البيانات","steps":["In the dataset {3, 7, 12, 6, 19}, each distinct observation appears exactly once ($f = 1$).","When no value occurs more frequently than any other, the dataset has No Mode."],"stepsAr":["في المجموعة {3، 7، 12، 6، 19}، يظهر كل رقم مرة واحدة فقط ($f = 1$).","عندما تتساوى جميع القيم في التكرار ولا تتكرر أي قيمة أكثر من غيرها، فإنه لا يوجد منوال."],"whyWrong":"Choosing 3 or 19 is arbitrary. If no value has a frequency greater than 1, there is no mode.","whyWrongAr":"لا يجوز اختيار أصغر أو أكبر قيمة، فعند تساوي التكرار لجميع القيم لا يوجد منوال."}},{"id":11,"question":"For the dataset 3, 3, 12, 6, 8, 8, the dataset is:","questionAr":"لمجموعة البيانات 3، 3، 12، 6، 8، 8، يتصف التوزيع بأنه:","options":["A) Unimodal","B) Bimodal (3 and 8)","C) Multimodal","D) No mode"],"optionsAr":["A) أحادي المنوال (Unimodal)","B) ثنائي المنوال (Bimodal - 3 و 8)","C) متعدد المنوال (Multimodal)","D) عديم المنوال"],"correct":"B","explanation":{"concept":"Bimodal Distribution","conceptAr":"التوزيع ثنائي المنوال (Bimodal)","steps":["Frequencies: value 3 occurs 2 times; value 8 occurs 2 times; 6 and 12 occur 1 time each.","Since two distinct values share the identical maximum frequency of 2, the dataset is Bimodal with modes 3 and 8."],"stepsAr":["التكرارات: الرقم 3 تكرر مرتين، والرقم 8 تكرر مرتين، بينما 6 و 12 تكررا مرة واحدة.","بما أن هناك قيمتين تشتركان في أعلى تكرار، فإن التوزيع ثنائي المنوال (Bimodal) وقيمتاه 3 و 8."],"whyWrong":"It is not unimodal because both 3 and 8 occur twice. It is specifically bimodal.","whyWrongAr":"ليس أحادياً لأن كلاً من 3 و 8 تكررا مرتين بأعلى تكرار، فهو ثنائي المنوال."}},{"id":12,"question":"In a symmetric distribution, what is the relationship between Mean, Median, and Mode?","questionAr":"في التوزيع المتماثل (Symmetric distribution)، ما هي العلاقة بين المتوسط والوسيط والمنوال؟","options":["A) Mean > Median > Mode","B) Mean < Median < Mode","C) Mode = Mean = Median","D) Mode > Mean > Median"],"optionsAr":["A) المتوسط > الوسيط > المنوال","B) المتوسط < الوسيط < المنوال","C) المنوال = المتوسط = الوسيط (Mode = Mean = Median)","D) المنوال > المتوسط > الوسيط"],"correct":"C","explanation":{"concept":"Symmetry and Central Tendency","conceptAr":"التماثل ومقاييس النزعة المركزية","steps":["A symmetric (bell-shaped) distribution has zero skewness ($sk = 0$).","The peak of the distribution occurs exactly at the center, meaning the Mode, Median, and Mean all coincide at the same point: $\\text{Mean} = \\text{Median} = \\text{Mode}$."],"stepsAr":["في التوزيع المتماثل يكون معامل الالتواء صفراً.","تنطبق قمة المنحنى تماماً في المنتصف، مما يعني تطابق المتوسط والوسيط والمنوال في نفس النقطة المركزية."],"whyWrong":"Inequalities indicate skewness. Strict equality occurs solely in perfectly symmetric distributions.","whyWrongAr":"حالات عدم التساوي تشير إلى وجود التواء، بينما التساوي التام يتحقق فقط في التوزيع المتماثل."}},{"id":13,"question":"In a negatively skewed (skewed left) distribution:","questionAr":"في التوزيع الملتوي إلى اليسار أو التواء سالب (Negatively skewed):","options":["A) Mean > Median > Mode","B) Mean < Median < Mode","C) Mode = Mean = Median","D) Mode < Median < Mean"],"optionsAr":["A) المتوسط > الوسيط > المنوال","B) المتوسط < الوسيط < المنوال (Mean < Median < Mode)","C) المنوال = المتوسط = الوسيط","D) المنوال < الوسيط < المتوسط"],"correct":"B","explanation":{"concept":"Left-Skewed (Negative Skew) Relationship","conceptAr":"علاقة المقاييس في التوزيع الملتوي سالباً (يساراً)","steps":["In a negatively skewed distribution, extreme small values in the long left tail pull the sensitive Mean downward.","The Median resists outliers better, and the Mode stays at the high peak on the right.","Thus: $\\text{Mean} < \\text{Median} < \\text{Mode}$."],"stepsAr":["في الالتواء السالب، تسحب القيم الصغرى المتطرفة في الذيل الأيسر الوسط الحسابي لأسفل.","يقاوم الوسيط التأثر بالقيم المتطرفة، بينما يبقى المنوال عند القمة المرتفعة على اليمين.","وبالتالي تكون العلاقة: $\\text{Mean} < \\text{Median} < \\text{Mode}$."],"whyWrong":"Mean > Median > Mode is positive skew (skewed right). In left skew, the Mean is the smallest.","whyWrongAr":"المتوسط > الوسيط هو الالتواء الموجب (يميناً)، بينما في الالتواء السالب يكون المتوسط هو الأصغر."}},{"id":14,"question":"In a positively skewed (skewed right) distribution:","questionAr":"في التوزيع الملتوي إلى اليمين أو التواء موجب (Positively skewed):","options":["A) Mean > Median > Mode","B) Mean < Median < Mode","C) Mode = Mean = Median","D) Mode > Median > Mean"],"optionsAr":["A) المتوسط > الوسيط > المنوال (Mean > Median > Mode)","B) المتوسط < الوسيط < المنوال","C) المنوال = المتوسط = الوسيط","D) المنوال > الوسيط > المتوسط"],"correct":"A","explanation":{"concept":"Right-Skewed (Positive Skew) Relationship","conceptAr":"علاقة المقاييس في التوزيع الملتوي موجباً (يميناً)","steps":["In a positively skewed distribution, large extreme values in the right tail pull the Mean to the right.","The Mode remains at the peak on the left.","Thus: $\\text{Mean} > \\text{Median} > \\text{Mode}$."],"stepsAr":["في الالتواء الموجب، تسحب القيم الكبيرة في الذيل الأيمن الطويل الوسط الحسابي نحو اليمين.","ويبقى المنوال عند القمة جهة اليسار.","وبالتالي: $\\text{Mean} > \\text{Median} > \\text{Mode}$."],"whyWrong":"Option B is negative skew. When the tail stretches to the right, the Mean exceeds the Median.","whyWrongAr":"الخيار B التواء سالب. عندما يمتد الذيل جهة اليمين يكون المتوسط أكبر من الوسيط."}},{"id":15,"question":"The range is defined as:","questionAr":"يُعرَّف المدى (Range) بأنه:","options":["A) The average squared deviation from the mean","B) The positive square root of the variance","C) The difference between the maximum and minimum values","D) The standard deviation as a percentage of the mean"],"optionsAr":["A) متوسط مربعات الانحرافات عن الوسط","B) الجذر التربيعي الموجب للتباين","C) الفرق بين أكبر قيمة وأصغر قيمة (Difference between max and min)","D) الانحراف المعياري كنسبة مئوية من الوسط"],"correct":"C","explanation":{"concept":"Definition of Range","conceptAr":"تعريف المدى الإحصائي","steps":["The range is the simplest measure of dispersion: $\\text{Range} = \\text{Max} - \\text{Min}$.","It only considers the two extreme values and ignores the distribution of data between them."],"stepsAr":["المدى هو أبسط مقاييس التشتت: $\\text{Range} = \\text{Max} - \\text{Min}$.","يعتمد فقط على القيمتين الطرفيتين ويتجاهل توزيع القيم في الداخل."],"whyWrong":"A is variance, B is standard deviation, and D is coefficient of variation (CV).","whyWrongAr":"A هو التباين، و B هو الانحراف المعياري، و D هو معامل الاختلاف."}},{"id":16,"question":"The sample variance $s^2$ for raw data uses which denominator?","questionAr":"تباين العينة $s^2$ للبيانات الخام يستخدم في مقامه:","options":["A) $n$","B) $n - 1$","C) $n + 1$","D) $N$"],"optionsAr":["A) $n$","B) $n - 1$ (درجات الحرية)","C) $n + 1$","D) $N$"],"correct":"B","explanation":{"concept":"Sample Variance Degrees of Freedom (Bessel's Correction)","conceptAr":"درجات حرية تباين العينة وتصحيح بيسل","steps":["To make $s^2$ an unbiased estimator of population variance $\\sigma^2$, we divide by degrees of freedom $n - 1$ instead of $n$:","$s^2 = \\frac{\\sum (X - \\bar{X})^2}{n - 1}$","One degree of freedom is lost because the sample mean $\\bar{X}$ is used to estimate $\\mu$."],"stepsAr":["لجعل تباين العينة مقدراً غير متحيز لتباين المجتمع $\\sigma^2$، نقسم على درجات الحرية $n - 1$ بدلاً من $n$:","$s^2 = \\frac{\\sum (X - \\bar{X})^2}{n - 1}$","نفقد درجة حرية واحدة بسبب استخدام $\\bar{X}$ بدلاً من $\\mu$."],"whyWrong":"Dividing by $n$ underestimates $\\sigma^2$ (it is a biased estimator). Dividing by $n-1$ corrects this bias.","whyWrongAr":"القسمة على $n$ تعطي تقديراً متحيزاً وأقل من الحقيقة، والتصحيح يكون بالقسمة على $n-1$."}},{"id":17,"question":"The standard deviation is defined as:","questionAr":"يُعرَّف الانحراف المعياري (Standard Deviation) بأنه:","options":["A) The square of the variance","B) The positive square root of the variance","C) The difference between max and min","D) The average of all deviations"],"optionsAr":["A) مربع التباين","B) الجذر التربيعي الموجب للتباين (Positive square root of variance)","C) الفرق بين القيمة العظمى والدنيا","D) متوسط جميع الانحرافات"],"correct":"B","explanation":{"concept":"Standard Deviation Definition","conceptAr":"تعريف الانحراف المعياري","steps":["Variance is in squared units ($X^2$).","Taking the positive square root restores the original units of measurement: $s = \\sqrt{s^2}$."],"stepsAr":["التباين يُقاس بالوحدات المربعة ($X^2$).","بأخذ الجذر التربيعي الموجب، يعود المقياس لنفس وحدات قياس البيانات الأصلية: $s = \\sqrt{s^2}$."],"whyWrong":"The square of variance is $s^4$. The standard deviation is the square root of variance.","whyWrongAr":"مربع التباين هو $s^4$، بينما الانحراف المعياري هو الجذر التربيعي الموجب للتباين."}},{"id":18,"question":"The coefficient of variation (CV) is calculated as:","questionAr":"يُحسب معامل الاختلاف (CV) بالقانون:","options":["A) $s \\times \\bar{X} \\times 100\\%$","B) $\\frac{\\bar{X}}{s} \\times 100\\%$","C) $\\frac{s}{\\bar{X}} \\times 100\\%$","D) $\\frac{s^2}{\\bar{X}} \\times 100\\%$"],"optionsAr":["A) $s \\times \\bar{X} \\times 100\\%$","B) $\\frac{\\bar{X}}{s} \\times 100\\%$","C) $\\frac{s}{\\bar{X}} \\times 100\\%$ (معامل الاختلاف النسبي)","D) $\\frac{s^2}{\\bar{X}} \\times 100\\%$"],"correct":"C","explanation":{"concept":"Coefficient of Variation (CV)","conceptAr":"معامل الاختلاف (Coefficient of Variation)","steps":["CV expresses the standard deviation relative to the mean as a percentage:","$\\text{CV} = \\frac{s}{\\bar{x}} \\times 100\\%$","It is a unitless measure used to compare the relative dispersion of datasets with different units or disparate means."],"stepsAr":["يقيس معامل الاختلاف التشتت النسبي للانحراف المعياري مقارنة بالوسط كنسبة مئوية:","$\\text{CV} = \\frac{s}{\\bar{x}} \\times 100\\%$","وهو مقياس عديم الوحدات لمقارنة تشتت مجموعات بيانات ذات وحدات أو متوسطات متباينة."],"whyWrong":"The ratio is always standard deviation divided by the mean, not inverse or squared.","whyWrongAr":"النسبة دائماً هي الانحراف المعياري مقسوماً على الوسط الحسابي، وليست العكس."}},{"id":19,"question":"For grouped data, the mean is calculated using:","questionAr":"للبيانات المبوبة (Grouped data)، يُحسب الوسط الحسابي باستخدام الصيغة:","options":["A) $\\frac{\\sum x_i}{n}$","B) $\\frac{\\sum x_i f_i}{\\sum f_i}$","C) $\\frac{\\sum f_i}{\\sum x_i}$","D) $\\frac{\\sum (x_i - \\bar{X})^2}{N}$"],"optionsAr":["A) $\\frac{\\sum x_i}{n}$","B) $\\frac{\\sum x_i f_i}{\\sum f_i}$ (حيث $x_i$ هو مركز الفئة)","C) $\\frac{\\sum f_i}{\\sum x_i}$","D) $\\frac{\\sum (x_i - \\bar{X})^2}{N}$"],"correct":"B","explanation":{"concept":"Grouped Data Mean Formula","conceptAr":"قانون الوسط الحسابي للبيانات المبوبة","steps":["In grouped frequency tables, individual raw data points are lost, so each class is represented by its class mark (midpoint) $x_i = \\frac{\\text{Lower} + \\text{Upper}}{2}$.","The grouped mean is: $\\bar{X} = \\frac{\\sum f_i x_i}{\\sum f_i}$."],"stepsAr":["في البيانات المبوبة نستخدم مركز الفئة (Class mark) $x_i = \\frac{\\text{الحد الأدنى} + \\text{الحد الأعلى}}{2}$ كممثل لكل فئة.","الوسط الحسابي المبوب: $\\bar{X} = \\frac{\\sum f_i x_i}{\\sum f_i}$."],"whyWrong":"Option A is for ungrouped raw data. Option B properly weights each class midpoint by its frequency $f_i$.","whyWrongAr":"الخيار A للبيانات المفردة، بينما البيانات المبوبة تتطلب ضرب مركز الفئة بتكرارها."}},{"id":20,"question":"In the grouped data example (classes 0–8, 8–16, …, 40–48 with frequencies 8, 10, 16, 24, 15, 7; $N = 80$), the mean is:","questionAr":"في مثال البيانات المبوبة (الفئات 0–8، 8–16، ...، 40–48 بالتكرارات 8، 10، 16، 24، 15، 7؛ حيث $N = 80$)، يكون الوسط الحسابي:","formula":"\\bar{X} = \\frac{\\sum f_i x_i}{N}","tableData":{"headers":["Class Interval","Class Mark (x)","Frequency (f)","f · x"],"headersAr":["فئة الدرجات","مركز الفئة (x)","التكرار (f)","حاصل الضرب f · x"],"rows":[["0 - 8",4,8,32],["8 - 16",12,10,120],["16 - 24",20,16,320],["24 - 32",28,24,672],["32 - 40",36,15,540],["40 - 48",44,7,308],["Total","-",80,1992]],"caption":"Grouped frequency distribution and weighted products"},"options":["A) 22.5","B) 24.9","C) 26.0","D) 27.8"],"optionsAr":["A) 22.5","B) 24.9","C) 26.0","D) 27.8"],"correct":"B","explanation":{"concept":"Calculation of Grouped Mean","conceptAr":"حساب متوسط جدول التوزيع التكراري","steps":["Calculate midpoints $x_i$: 4, 12, 20, 28, 36, 44.","Compute $f_i \\cdot x_i$: $8(4)=32$, $10(12)=120$, $16(20)=320$, $24(28)=672$, $15(36)=540$, $7(44)=308$.","Sum of products: $\\sum f x = 32 + 120 + 320 + 672 + 540 + 308 = 1992$.","$\\bar{X} = \\frac{1992}{80} = 24.9$."],"stepsAr":["مراكز الفئات $x_i$: 4، 12، 20، 28، 36، 44.","حواصل الضرب $f \\cdot x$: 32 + 120 + 320 + 672 + 540 + 308 = 1992.","الوسط الحسابي: $\\bar{X} = \\frac{1992}{80} = 24.9$."],"whyWrong":"Dividing the total weighted sum 1992 by the total frequency 80 gives 24.9 exactly.","whyWrongAr":"قسمة المجموع المرجح 1992 على 80 ينتج 24.9 بالضبط."}}]},{"id":"lecture-3-probability-distributions","quizNumber":3,"lectureNumber":3,"title":"Lecture 3: Probability Distributions","titleAr":"المحاضرة 3: التوزيعات الاحتمالية","subtitle":"Binomial, Poisson, Normal, Z-score transformations, probabilities, and the Central Limit Theorem","subtitleAr":"توزيع ذي الحدين، بواسون، التوزيع الطبيعي، تحويلات Z، حساب الاحتمالات، ونظرية النهاية المركزية","difficulty":"Hard","questionCount":20,"questions":[{"id":1,"question":"According to the probability distributions tree, which of the following is a discrete distribution?","questionAr":"وفقاً لشجرة تصنيف التوزيعات الاحتمالية، أي من التوزيعات التالية يُعد توزيعاً احتمالياً منفصلاً؟","options":["A) Normal","B) Student's t","C) Poisson","D) Chi-Square"],"optionsAr":["A) التوزيع الطبيعي (Normal)","B) توزيع تي ستيودنت (Student's t)","C) توزيع بواسون (Poisson)","D) توزيع كاي تربيع (Chi-Square)"],"correct":"C","explanation":{"concept":"Discrete vs. Continuous Distributions","conceptAr":"التوزيعات المنفصلة مقابل المتصلة","steps":["Discrete distributions model random variables that take distinct, countable integer values: $X \\in \\{0, 1, 2, \\dots\\}$. Key discrete distributions include Binomial and Poisson.","Normal, Student's t, and Chi-Square are all continuous distributions defined over intervals of real numbers."],"stepsAr":["التوزيعات المنفصلة تصوغ متغيرات تأخذ قيماً صحيحة قابلة للعد ($0, 1, 2, \\dots$)، مثل توزيع ذي الحدين وتوزيع بواسون.","بينما التوزيع الطبيعي وتي وكاي تربيع هي توزيعات متصلة (Continuous)."],"whyWrong":"Normal, Student's t, and Chi-square are continuous. Poisson counts occurrences ($k = 0, 1, 2, \\dots$), so it is discrete.","whyWrongAr":"التوزيعات A و B و D هي توزيعات احتمالية متصلة، بينما بواسون منفصل بالعد."}},{"id":2,"question":"The Binomial distribution models the number of successes in:","questionAr":"يُمثِّل توزيع ذي الحدين (Binomial Distribution) عدد مرات النجاح في:","options":["A) An infinite number of trials","B) A fixed number of independent Bernoulli trials","C) A Poisson process","D) A continuous interval"],"optionsAr":["A) عدد لانهائي من المحاولات","B) عدد محدد وثابت من محاولات برنولي المستقلة (Fixed independent Bernoulli trials)","C) عملية بواسون","D) فترة متصلة"],"correct":"B","explanation":{"concept":"Conditions for a Binomial Experiment","conceptAr":"شروط تجربة ذي الحدين","steps":["1. The experiment consists of a fixed number of trials, $n$.","2. Each trial has only two mutually exclusive outcomes: Success or Failure.","3. The probability of success $p$ is constant from trial to trial.","4. The trials are independent Bernoulli trials."],"stepsAr":["1. عدد المحاولات $n$ ثابت ومحدد مسبقاً.","2. كل محاولة لها ناتجان فقط: نجاح أو فشل.","3. احتمال النجاح $p$ ثابت في كل محاولة.","4. المحاولات مستقلة عن بعضها تماماً."],"whyWrong":"Trials must be finite ($n$), binary (Bernoulli), and independent with constant probability $p$.","whyWrongAr":"المحاولات يجب أن تكون محددة العدد وثنائية ومستقلة، وليست لانهائية."}},{"id":3,"question":"For a binomial random variable with parameters $n$ and $p$, the mean $E[X]$ is:","questionAr":"لمتغير عشوائي ذي الحدين بالمعلمتين $n$ و $p$، فإن المتوسط الحسابي (القيمة المتوقعة $E[X]$) يُعطى بـ:","options":["A) $np(1-p)$","B) $np$","C) $p/n$","D) $n/p$"],"optionsAr":["A) $np(1-p)$","B) $np$","C) $p/n$","D) $n/p$"],"correct":"B","explanation":{"concept":"Mean (Expected Value) of Binomial Distribution","conceptAr":"متوسط (القيمة المتوقعة) لتوزيع ذي الحدين","steps":["For $n$ independent trials each with success probability $p$, the expected number of successes is:","$\\mu = E[X] = \\sum_{i=1}^{n} E[X_i] = n \\cdot p = np$."],"stepsAr":["لمتغير ثنائي الحدين، القيمة المتوقعة لمجموع $n$ من محاولات برنولي هي:","$\\mu = E[X] = np$."],"whyWrong":"np(1-p) is the variance $\\sigma^2$, not the mean. The mean is simply $np$.","whyWrongAr":"$np(1-p)$ هو التباين $\\sigma^2$، بينما المتوسط هو $np$."}},{"id":4,"question":"For a binomial random variable, the variance $\\text{Var}(X)$ is:","questionAr":"لمتغير عشوائي يتبع توزيع ذي الحدين، فإن التباين $\\text{Var}(X)$ يُعطى بـ:","options":["A) $np$","B) $np(1-p)$","C) $n(1-p)$","D) $p(1-p)$"],"optionsAr":["A) $np$","B) $np(1-p)$","C) $n(1-p)$","D) $p(1-p)$"],"correct":"B","explanation":{"concept":"Variance of Binomial Distribution","conceptAr":"تباين توزيع ذي الحدين","steps":["Variance formula: $\\sigma^2 = \\text{Var}(X) = np(1-p) = npq$, where $q = 1-p$ is the probability of failure.","Standard deviation is $\\sigma = \\sqrt{np(1-p)}$."],"stepsAr":["صيغة التباين: $\\sigma^2 = \\text{Var}(X) = np(1-p) = npq$، حيث $q = 1-p$ احتمال الفشل.","والانحراف المعياري هو $\\sigma = \\sqrt{np(1-p)}$."],"whyWrong":"$np$ is the mean. The variance incorporates the probability of failure: $np(1-p)$.","whyWrongAr":"$np$ هو المتوسط، أما التباين فيشمل احتمال الفشل أيضاً $np(1-p)$."}},{"id":5,"question":"The binomial probability mass function (PMF) $P(X = x)$ is given by:","questionAr":"دالة الكتلة الاحتمالية (PMF) لتوزيع ذي الحدين $P(X = x)$ تُعطى بالصيغة:","options":["A) $\\frac{\\lambda^x e^{-\\lambda}}{x!}$","B) $\\binom{n}{x} p^x (1-p)^{n-x}$","C) $\\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$","D) $p^x (1-p)^x$"],"optionsAr":["A) $\\frac{\\lambda^x e^{-\\lambda}}{x!}$","B) $\\binom{n}{x} p^x (1-p)^{n-x}$","C) $\\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$","D) $p^x (1-p)^x$"],"correct":"B","explanation":{"concept":"Binomial Probability Mass Function (PMF)","conceptAr":"دالة الكتلة الاحتمالية لذي الحدين","steps":["Formula: $P(X = x) = \\binom{n}{x} p^x (1-p)^{n-x}$ for $x = 0, 1, 2, \\dots, n$.","$\\binom{n}{x} = \\frac{n!}{x!(n-x)!}$ counts the number of arrangements of $x$ successes in $n$ trials.","$p^x (1-p)^{n-x}$ is the probability of any one specific arrangement."],"stepsAr":["الصيغة: $P(X = x) = \\binom{n}{x} p^x (1-p)^{n-x}$ للقيم $x = 0, 1, \\dots, n$.","التوافيق $\\binom{n}{x} = \\frac{n!}{x!(n-x)!}$ تحسب عدد التباديل الممكنة لـ $x$ نجاح من بين $n$ محاولة.","$p^x (1-p)^{n-x}$ هو احتمال حدوث الترتيب الفردي الواحد."],"whyWrong":"A is Poisson PMF, and C is the Normal density function (PDF). B is the Binomial PMF.","whyWrongAr":"A دالة بواسون، و C دالة كثافة التوزيع الطبيعي المتصل، و B هي دالة ذي الحدين الصحيحة."}},{"id":6,"question":"The Poisson distribution expresses the probability of a given number of events occurring within:","questionAr":"يُعبِّر توزيع بواسون عن احتمال وقوع عدد محدد من الأحداث المستقلة خلال:","options":["A) A fixed number of trials","B) A fixed interval of time or space","C) A continuous range","D) A standard normal curve"],"optionsAr":["A) عدد محدد من المحاولات","B) فترة أو وحدة محددة من الزمن أو المكان (Fixed interval of time or space)","C) مدى متصل","D) منحنى طبيعي معياري"],"correct":"B","explanation":{"concept":"Poisson Process Domain","conceptAr":"مجال وتطبيق عملية بواسون","steps":["The Poisson distribution models count data: the number of rare events occurring in a fixed interval of time, distance, area, or volume.","Examples: phone calls per minute, defects per square meter of cloth, potholes per mile."],"stepsAr":["يصوغ توزيع بواسون عدد مرات وقوع حدث نادر ومستقل خلال فترة زمنية أو حيز مكاني محدد.","أمثلة: عدد المكالمات في الدقيقة، عدد العيوب في المتر المربع، عدد حوادث السير أسبوعياً."],"whyWrong":"Binomial is based on a fixed number of trials ($n$). Poisson is defined over continuous units of time or space with average rate $\\lambda$.","whyWrongAr":"توزيع ذي الحدين يعتمد على عدد محاولات ثابت $n$، بينما بواسون يعتمد على فترة زمنية أو مساحة بمعدل $\\lambda$."}},{"id":7,"question":"A unique property of the Poisson distribution with parameter $\\lambda$ is that:","questionAr":"الخاصية الفريدة التي تميز توزيع بواسون ذي المعلمة $\\lambda$ هي أن:","options":["A) Mean > Variance","B) Mean < Variance","C) Mean = Variance = \\lambda","D) Mean and variance are unrelated"],"optionsAr":["A) المتوسط > التباين","B) المتوسط < التباين","C) المتوسط = التباين = \\lambda (Mean = Variance = \\lambda)","D) المتوسط والتباين غير مترابطين"],"correct":"C","explanation":{"concept":"Equidispersion Property of Poisson","conceptAr":"خاصية تساوي المتوسط والتباين في بواسون (Equidispersion)","steps":["In a Poisson distribution with parameter $\\lambda$:","Expected Value: $\\mu = E[X] = \\lambda$","Variance: $\\sigma^2 = \\text{Var}(X) = \\lambda$","Standard deviation: $\\sigma = \\sqrt{\\lambda}$."],"stepsAr":["في توزيع بواسون ذي المعلمة $\\lambda$:","المتوسط: $\\mu = E[X] = \\lambda$","التباين: $\\sigma^2 = \\text{Var}(X) = \\lambda$","الانحراف المعياري: $\\sigma = \\sqrt{\\lambda}$."],"whyWrong":"The defining characteristic of Poisson is that mean and variance are identical and equal to $\\lambda$.","whyWrongAr":"السمة الأساسية لبواسون هي التساوي الحتمي بين المتوسط والتباين وتساويهما مع $\\lambda$."}},{"id":8,"question":"The Poisson PMF is:","questionAr":"دالة الكتلة الاحتمالية (PMF) لتوزيع بواسون هي:","options":["A) $\\binom{n}{x} p^x (1-p)^{n-x}$","B) $\\frac{\\lambda^x e^{-\\lambda}}{x!}$","C) $\\frac{1}{\\sqrt{2\\pi}} e^{-\\frac{z^2}{2}}$","D) $np(1-p)$"],"optionsAr":["A) $\\binom{n}{x} p^x (1-p)^{n-x}$","B) $\\frac{\\lambda^x e^{-\\lambda}}{x!}$","C) $\\frac{1}{\\sqrt{2\\pi}} e^{-\\frac{z^2}{2}}$","D) $np(1-p)$"],"correct":"B","explanation":{"concept":"Poisson PMF Formula","conceptAr":"صيغة دالة بواسون الاحتمالية","steps":["Formula: $P(X = x) = \\frac{\\lambda^x e^{-\\lambda}}{x!}$ for $x = 0, 1, 2, \\dots$","Where $\\lambda > 0$ is the average arrival rate, and $e \\approx 2.71828$."],"stepsAr":["الصيغة: $P(X = x) = \\frac{\\lambda^x e^{-\\lambda}}{x!}$ للأعداد $x = 0, 1, 2, \\dots$","حيث $\\lambda$ هو متوسط معدل الحدوث، و $e \\approx 2.71828$."],"whyWrong":"A is Binomial PMF, C is the standard normal density, and D is binomial variance. B is Poisson.","whyWrongAr":"A لذي الحدين، و C للتوزيع الطبيعي المعياري، و B هي صيغة بواسون الصحيحة."}},{"id":9,"question":"Which of the following is a continuous distribution?","questionAr":"أي من التوزيعات التالية يُعتبر توزيعاً احتمالياً متصلاً؟","options":["A) Binomial","B) Poisson","C) Normal","D) None of the above"],"optionsAr":["A) ذو الحدين (Binomial)","B) بواسون (Poisson)","C) التوزيع الطبيعي (Normal)","D) لا شيء مما سبق"],"correct":"C","explanation":{"concept":"Continuous Probability Distribution","conceptAr":"التوزيع الاحتمالي المتصل","steps":["The Normal (Gaussian) distribution is a continuous distribution defined on $(-\\infty, \\infty)$.","Probabilities for continuous distributions are calculated as areas under the curve using integration: $P(a \\le X \\le b) = \\int_{a}^{b} f(x) dx$."],"stepsAr":["التوزيع الطبيعي (Normal/Gaussian) هو توزيع احتمالي متصل معرف على خط الأعداد الحقيقية بالكامل $(-\\infty, \\infty)$.","الاحتمالات في التوزيعات المتصلة تقاس بالمساحات تحت المنحنى عبر التكامل."],"whyWrong":"Binomial and Poisson are discrete distributions based on counting discrete outcomes.","whyWrongAr":"توزيع ذي الحدين وبواسون منفصلان بالعد، بينما التوزيع الطبيعي متصل."}},{"id":10,"question":"The normal density function $f(x)$ involves the parameters:","questionAr":"تعتمد دالة كثافة التوزيع الطبيعي $f(x)$ على المعلمتين:","options":["A) n and p","B) \\lambda","C) \\mu and \\sigma","D) k and N"],"optionsAr":["A) n و p","B) \\lambda","C) \\mu و \\sigma (المتوسط والانحراف المعياري)","D) k و N"],"correct":"C","explanation":{"concept":"Normal Distribution Parameters","conceptAr":"معلمات التوزيع الطبيعي","steps":["The normal distribution $N(\\mu, \\sigma^2)$ is fully characterized by two parameters:","$\\mu$: the mean, determining the center of the bell curve.","$\\sigma$: the standard deviation, determining the dispersion/spread of the bell curve."],"stepsAr":["يتحدد التوزيع الطبيعي $N(\\mu, \\sigma^2)$ كلياً بمعلمتين اثنتين:","$\\mu$: الوسط الحسابي (موقع المركز).","$\\sigma$: الانحراف المعياري (مقدار الانتشار والاتساع)."],"whyWrong":"$n$ and $p$ are for Binomial; $\\lambda$ is for Poisson. Normal requires $\\mu$ and $\\sigma$.","whyWrongAr":"$n, p$ لذي الحدين، و $\\lambda$ لبواسون، أما التوزيع الطبيعي فيحدده $\\mu$ و $\\sigma$."}},{"id":11,"question":"The standard normal distribution $Z$ has:","questionAr":"يتميز التوزيع الطبيعي المعياري $Z$ بأن له:","options":["A) Mean = 1, SD = 0","B) Mean = 0, SD = 1","C) Mean = 0, SD = 0","D) Mean = 1, SD = 1"],"optionsAr":["A) متوسط = 1، انحراف = 0","B) متوسط = 0، انحراف = 1 (Mean = 0, SD = 1)","C) متوسط = 0، انحراف = 0","D) متوسط = 1، انحراف = 1"],"correct":"B","explanation":{"concept":"Standard Normal Distribution (Z)","conceptAr":"خصائص التوزيع الطبيعي المعياري Z","steps":["The standard normal distribution is symbolized by $Z$.","Its parameters are fixed at: Mean $\\mu = 0$ and Standard Deviation $\\sigma = 1$ (variance $\\sigma^2 = 1$)."],"stepsAr":["يُرمز للتوزيع الطبيعي المعياري بالرمز $Z$.","معلماته ثابتة دائماً: المتوسط $\\mu = 0$ والانحراف المعياري $\\sigma = 1$."],"whyWrong":"A standard deviation cannot be 0 (no spread). The standard normal has $\\mu = 0$ and $\\sigma = 1$.","whyWrongAr":"لا يمكن للانحراف المعياري أن يكون صفراً، فالتوزيع الطبيعي المعياري مركزه 0 وانحرافه 1."}},{"id":12,"question":"The z-score transformation is given by:","questionAr":"تحويل القيمة الخام إلى الدرجة المعيارية z يُعطى بالصيغة:","options":["A) $Z = \\frac{Y - \\mu}{\\sigma}$","B) $Z = \\frac{\\mu - Y}{\\sigma}$","C) $Z = \\frac{\\sigma}{Y - \\mu}$","D) $Z = \\frac{Y}{\\sigma}$"],"optionsAr":["A) $Z = \\frac{Y - \\mu}{\\sigma}$","B) $Z = \\frac{\\mu - Y}{\\sigma}$","C) $Z = \\frac{\\sigma}{Y - \\mu}$","D) $Z = \\frac{Y}{\\sigma}$"],"correct":"A","explanation":{"concept":"Standardization (Z-Score)","conceptAr":"التحويل المعياري (الدرجة المعيارية Z)","steps":["The z-score measures how many standard deviations an observation $Y$ lies above or below the population mean $\\mu$:","$Z = \\frac{Y - \\mu}{\\sigma}$"],"stepsAr":["تقيس الدرجة المعيارية $Z$ بعد القيمة $Y$ عن الوسط الحسابي $\\mu$ بوحدات الانحراف المعياري $\\sigma$:","$Z = \\frac{Y - \\mu}{\\sigma}$"],"whyWrong":"Subtracting $Y$ from $\\mu$ reverses the sign. Dividing $\\sigma$ by the deviation is the inverse.","whyWrongAr":"طرح $Y$ من $\\mu$ يعكس الإشارة، والقانون الصحيح هو القيمة ناقص المتوسط مقسوماً على الانحراف."}},{"id":13,"question":"For a normal distribution with $\\mu = 125$ and $\\sigma = 13.7$, the z-score for $X = 110$ is approximately:","questionAr":"لتوزيع طبيعي بمتوسط $\\mu = 125$ وانحراف معياري $\\sigma = 13.7$، فإن الدرجة المعيارية للقيمة $X = 110$ تساوي تقريباً:","formula":"Z = \\frac{X - \\mu}{\\sigma}","options":["A) 1.09","B) −1.09","C) 5.29","D) −5.29"],"optionsAr":["A) 1.09","B) −1.09","C) 5.29","D) −5.29"],"correct":"B","explanation":{"concept":"Z-Score Computation","conceptAr":"حساب الدرجة المعيارية","steps":["Given $X = 110, \\mu = 125, \\sigma = 13.7$:","$Z = \\frac{110 - 125}{13.7} = \\frac{-15}{13.7} \\approx -1.0949 \\approx -1.09$","Since $110 < 125$, the $Z$ score must be negative."],"stepsAr":["المعطيات: $X = 110, \\mu = 125, \\sigma = 13.7$:","$Z = \\frac{110 - 125}{13.7} = \\frac{-15}{13.7} \\approx -1.09$","بما أن القيمة 110 أصغر من المتوسط 125، فإن إشارة $Z$ سالبة حتماً."],"whyWrong":"+1.09 has the wrong sign. The value 110 is below the mean, so Z is negative.","whyWrongAr":"+1.09 خاطئ في الإشارة، فالقيمة تقع يسار المتوسط وبالتالي سالبة."}},{"id":14,"question":"For the blood pressure example ($\\mu = 125, \\sigma = 13.7$), $P(X > 197.5)$ is approximately:","questionAr":"لمثال ضغط الدم ($\\mu = 125, \\sigma = 13.7$)، الاحتمال $P(X > 197.5)$ يساوي تقريباً:","formula":"Z = \\frac{X - \\mu}{\\sigma}","options":["A) 0.1379","B) 0.7242","C) 0.0062","D) 0.0000 (beyond table range, z ≈ 5.29)"],"optionsAr":["A) 0.1379","B) 0.7242","C) 0.0062","D) 0.0000 (خارج نطاق الجدول، z ≈ 5.29)"],"correct":"D","explanation":{"concept":"Extreme Tail Normal Probability","conceptAr":"احتمال الذيل المتطرف في التوزيع الطبيعي","steps":["Step 1: Convert $X = 197.5$ to $Z$ score:","$Z = \\frac{197.5 - 125}{13.7} = \\frac{72.5}{13.7} \\approx +5.29$","Step 2: A z-score of $+5.29$ lies more than 5 standard deviations above the mean.","Standard normal tables only go up to $Z = 3.49$ (where area is $0.9998$). Beyond $Z = 5$, the right tail probability is effectively $0.0000$."],"stepsAr":["الخطوة 1: تحويل $X = 197.5$ إلى درجة معيارية:","$Z = \\frac{197.5 - 125}{13.7} = \\frac{72.5}{13.7} \\approx +5.29$","الخطوة 2: الدرجة المعيارية $+5.29$ تقع على بعد أكثر من 5 انحرافات معيارية فوق الوسط، مما يجعل المساحة في أقصى اليمين تقترب عملياً من الصفر $0.0000$."],"whyWrong":"Standard normal tables max out at ~3.5. At Z = 5.29, the tail probability rounds to 0.0000.","whyWrongAr":"عند Z = 5.29 نكون في ذيل شديد التطرف خارج مدى الجداول وتؤول المساحة إلى الصفر."}},{"id":15,"question":"For the blood pressure example, $P(X < 110) = P(Z < -1.09)$ equals:","questionAr":"لمثال ضغط الدم، الاحتمال $P(X < 110) = P(Z < -1.09)$ يساوي:","options":["A) 0.1379","B) 0.8621","C) 0.7242","D) 0.0062"],"optionsAr":["A) 0.1379 (بالتماثل، P(Z > 1.09))","B) 0.8621","C) 0.7242","D) 0.0062"],"correct":"A","explanation":{"concept":"Left-Tail Probability from Standard Normal Table","conceptAr":"حساب احتمال الذيل الأيسر من جدول Z","steps":["From standard normal distribution tables, the cumulative area up to $Z = 1.09$ is $\\Phi(1.09) = 0.8621$.","By the bell curve symmetry:","$P(Z < -1.09) = P(Z > 1.09) = 1 - \\Phi(1.09) = 1 - 0.8621 = 0.1379$."],"stepsAr":["من جدول التوزيع الطبيعي المعياري، المساحة التراكمية حتى $Z = 1.09$ هي $0.8621$.","بتماثل المنحنى الطبيعي:","$P(Z < -1.09) = 1 - 0.8621 = 0.1379$."],"whyWrong":"0.8621 is the cumulative probability $P(Z < 1.09)$. For the lower tail $Z < -1.09$, it is $1 - 0.8621 = 0.1379$.","whyWrongAr":"0.8621 هو احتمال المساحة إلى يسار +1.09، أما يسار -1.09 فيساوي المتممة 0.1379."}},{"id":16,"question":"For the blood pressure example, $P(110 < X < 140) = P(-1.09 < Z < 1.09)$ equals:","questionAr":"لمثال ضغط الدم، الاحتمال $P(110 < X < 140) = P(-1.09 < Z < 1.09)$ يساوي:","options":["A) 0.1379","B) 0.7242","C) 0.8621","D) 0.0062"],"optionsAr":["A) 0.1379","B) 0.7242","C) 0.8621","D) 0.0062"],"correct":"B","explanation":{"concept":"Symmetric Interval Probability in Normal Distribution","conceptAr":"احتمال فترة متماثلة حول المتوسط في التوزيع الطبيعي","steps":["$Z_1 = \\frac{110 - 125}{13.7} = -1.09$","$Z_2 = \\frac{140 - 125}{13.7} = +1.09$","$P(-1.09 < Z < 1.09) = \\Phi(1.09) - \\Phi(-1.09)$","$\\Phi(1.09) = 0.8621$ and $\\Phi(-1.09) = 0.1379$","Probability $= 0.8621 - 0.1379 = 0.7242$."],"stepsAr":["$Z_1 = \\frac{110 - 125}{13.7} = -1.09$","$Z_2 = \\frac{140 - 125}{13.7} = +1.09$","$P(-1.09 < Z < 1.09) = 0.8621 - 0.1379 = 0.7242$."],"whyWrong":"Subtracting the lower tail (0.1379) from the upper cumulative area (0.8621) gives 0.7242.","whyWrongAr":"طرح مساحة الذيل الأيسر (0.1379) من المساحة التراكمية العلوية (0.8621) ينتج 0.7242."}},{"id":17,"question":"The Central Limit Theorem states that as $n \\to \\infty$, the standardized distribution of $Z = \\frac{\\bar{X} - \\mu}{\\sigma/\\sqrt{n}}$ approaches:","questionAr":"تنص نظرية النهاية المركزية (CLT) على أنه عندما يقترب $n$ من اللانهاية، فإن التوزيع المعياري لـ $Z$ يقترب من:","options":["A) A binomial distribution","B) A Poisson distribution","C) The standard normal distribution","D) A chi-square distribution"],"optionsAr":["A) توزيع ذي الحدين","B) توزيع بواسون","C) التوزيع الطبيعي المعياري (The standard normal distribution)","D) توزيع كاي تربيع"],"correct":"C","explanation":{"concept":"Central Limit Theorem (CLT)","conceptAr":"نظرية النهاية المركزية (Central Limit Theorem)","steps":["Regardless of the shape of the underlying population distribution (symmetric, skewed, or uniform), as sample size $n$ becomes sufficiently large ($n \\ge 30$):","The sampling distribution of the sample mean $\\bar{X}$ becomes approximately normal with mean $\\mu$ and standard error $\\frac{\\sigma}{\\sqrt{n}}$.","Standardizing gives $Z = \\frac{\\bar{X} - \\mu}{\\sigma/\\sqrt{n}} \\to N(0, 1)$."],"stepsAr":["بغض النظر عن شكل توزيع مجتمع الدراسة الأصلي، عندما يكون حجم العينة كبيراً ($n \\ge 30$):","فإن التوزيع العيني لمتوسط العينة $\\bar{X}$ يقترب من التوزيع الطبيعي بمتوسط $\\mu$ وخطأ معياري $\\frac{\\sigma}{\\sqrt{n}}$.","وعند التعيير يقترب من التوزيع الطبيعي المعياري $N(0, 1)$."],"whyWrong":"The CLT guarantees convergence specifically to the normal distribution $N(0,1)$, not discrete distributions.","whyWrongAr":"النظرية تضمن التقارب نحو التوزيع الطبيعي المعياري تحديداً."}},{"id":18,"question":"A numerical quantity that describes a characteristic of an entire population is called a:","questionAr":"المقدار العددي الذي يصف خاصية أو سمة لمجتمع الدراسة بأكمله يُسمى:","options":["A) Statistic","B) Parameter","C) Sample","D) Variable"],"optionsAr":["A) إحصاءة (Statistic)","B) معلمة (Parameter)","C) عينة (Sample)","D) متغير (Variable)"],"correct":"B","explanation":{"concept":"Parameter vs. Statistic","conceptAr":"المعلمة (Parameter) مقابل الإحصاءة (Statistic)","steps":["Memory tip: Population $\\to$ Parameter (both start with P).","Sample $\\to$ Statistic (both start with S).","A parameter is a fixed, usually unknown constant describing a population (e.g. $\\mu, \\sigma, p$)."],"stepsAr":["قاعدة للتذكر: المجتمع (Population) يقابله المعلمة (Parameter).","العينة (Sample) يقابلها الإحصاءة (Statistic).","المعلمة هي خاصية رقمية تصف المجتمع ككل وتكون ثابتة غالباً وغير معلومة."],"whyWrong":"A statistic describes a sample. A parameter describes the entire population.","whyWrongAr":"الإحصاءة تصف العينة، بينما المعلمة تصف مجتمع الدراسة كاملاً."}},{"id":19,"question":"The standard deviation of the sample mean $\\bar{X}$ (standard error) is:","questionAr":"الانحراف المعياري لمتوسط العينة $\\bar{X}$ (الخطأ المعياري) يُحسب بالصيغة:","options":["A) $\\sigma$","B) $\\sigma^2$","C) $\\frac{\\sigma}{\\sqrt{n}}$","D) $\\frac{\\sigma}{n}$"],"optionsAr":["A) $\\sigma$","B) $\\sigma^2$","C) $\\frac{\\sigma}{\\sqrt{n}}$ (الخطأ المعياري)","D) $\\frac{\\sigma}{n}$"],"correct":"C","explanation":{"concept":"Standard Error of the Mean","conceptAr":"الخطأ المعياري للوسط الحسابي","steps":["Variance of $\\bar{X}$ is $\\text{Var}(\\bar{X}) = \\frac{\\sigma^2}{n}$.","Taking the square root gives the Standard Error (SE): $\\sigma_{\\bar{X}} = \\frac{\\sigma}{\\sqrt{n}}$.","As $n$ increases, the standard error decreases by a factor of $\\sqrt{n}$."],"stepsAr":["تباين متوسط العينة هو $\\text{Var}(\\bar{X}) = \\frac{\\sigma^2}{n}$.","وبأخذ الجذر التربيعي نحصل على الخطأ المعياري: $\\sigma_{\\bar{X}} = \\frac{\\sigma}{\\sqrt{n}}$.","كلما كبر حجم العينة $n$، صغر الخطأ المعياري بمقدار $\\sqrt{n}$."],"whyWrong":"Dividing by $n$ lacks the square root. $\\sigma$ is the individual population standard deviation. SE is $\\sigma/\\sqrt{n}$.","whyWrongAr":"الانحراف المعياري للمجتمع هو $\\sigma$، أما الخطأ المعياري لمتوسط العينة فهو $\\sigma/\\sqrt{n}$."}},{"id":20,"question":"In the resistor example ($\\mu = 100, \\sigma = 10, n = 25$), $P(\\bar{X} < 95)$ equals:","questionAr":"في مثال المقاومات الكهربائية ($\\mu = 100, \\sigma = 10, n = 25$)، الاحتمال $P(\\bar{X} < 95)$ يساوي:","formula":"Z = \\frac{\\bar{X} - \\mu}{\\sigma / \\sqrt{n}}","options":["A) 0.0062","B) 0.1379","C) 0.7242","D) 0.0228"],"optionsAr":["A) 0.0062 (حيث z = −2.5)","B) 0.1379","C) 0.7242","D) 0.0228"],"correct":"A","explanation":{"concept":"Sampling Distribution Probability Calculation","conceptAr":"حساب احتمال التوزيع العيني لمتوسط العينة","steps":["Step 1: Standard error: $\\sigma_{\\bar{X}} = \\frac{\\sigma}{\\sqrt{n}} = \\frac{10}{\\sqrt{25}} = \\frac{10}{5} = 2$.","Step 2: Calculate $Z$ score: $Z = \\frac{95 - 100}{2} = \\frac{-5}{2} = -2.5$.","Step 3: Look up standard normal cumulative table for $Z = -2.5$:","$P(Z < -2.5) = 0.0062$ (or $0.62\\%$)."],"stepsAr":["الخطوة 1: حساب الخطأ المعياري: $\\sigma_{\\bar{X}} = \\frac{10}{\\sqrt{25}} = \\frac{10}{5} = 2$.","الخطوة 2: حساب الدرجة المعيارية: $Z = \\frac{95 - 100}{2} = -2.5$.","الخطوة 3: من جدول التوزيع الطبيعي المعياري عند $Z = -2.5$:","$P(Z < -2.5) = 0.0062$ (أي $0.62\\%$)."],"whyWrong":"If you forgot $\\sqrt{n}$ and divided by 10, you would get $z = -0.5$ ($P = 0.3085$). With correct SE = 2, $z = -2.5$ and $P = 0.0062$.","whyWrongAr":"الخطأ الشائع هو عدم قسمة الانحراف على جذر $n$. بقسمة 10 على 5 يكون الخطأ المعياري 2 و z = -2.5 والاحتمال 0.0062."}}]},{"id":"lecture-4-confidence-intervals","quizNumber":4,"lectureNumber":4,"title":"Lecture 4: Confidence Intervals","titleAr":"المحاضرة 4: فترات الثقة","subtitle":"Point estimation, margins of error, Z-critical values, sample size determination, and large sample CIs","subtitleAr":"التقدير بنقطة، هامش الخطأ، القيم الحرجة لـ Z، تحديد حجم العينة، وفترات ثقة العينات الكبيرة","difficulty":"Medium","questionCount":20,"questions":[{"id":1,"question":"A numerical summary of a sample is called a:","questionAr":"الموجز الرقمي المحسوب من بيانات العينة يُسمى:","options":["A) Parameter","B) Statistic","C) Population","D) Confidence level"],"optionsAr":["A) معلمة (Parameter)","B) إحصاءة (Statistic)","C) مجتمع (Population)","D) مستوى ثقة (Confidence level)"],"correct":"B","explanation":{"concept":"Sample Statistic Definition","conceptAr":"تعريف الإحصاءة (Statistic)","steps":["A Statistic is any numerical value calculated directly from sample observations (e.g., $\\bar{X}, s, p$).","It is a random variable that varies from one sample to another."],"stepsAr":["الإحصاءة (Statistic) هي أي مقياس رقمي يُحسب مباشرة من مفردات العينة (مثل $\\bar{X}, s, p$).","وهي متغير عشوائي يختلف من عينة إلى أخرى."],"whyWrong":"A parameter is a population quantity. A statistic is calculated from a sample.","whyWrongAr":"المعلمة للمجتمع، بينما الإحصاءة للعينة."}},{"id":2,"question":"A numerical summary of a population is called a:","questionAr":"الموجز أو المقياس الرقمي لمجتمع الدراسة بالكامل يُسمى:","options":["A) Statistic","B) Parameter","C) Point estimate","D) Sample mean"],"optionsAr":["A) إحصاءة (Statistic)","B) معلمة (Parameter)","C) تقدير بنقطة","D) وسط العينة"],"correct":"B","explanation":{"concept":"Population Parameter Definition","conceptAr":"تعريف المعلمة (Parameter)","steps":["A Parameter is a fixed, descriptive numerical summary of an entire population (e.g., $\\mu, \\sigma, \\sigma^2, P$).","In practice, parameters are typically unknown and estimated via sample statistics."],"stepsAr":["المعلمة (Parameter) هي مقياس وصفي ثابت يخص مجتمع الدراسة بأكمله (مثل $\\mu, \\sigma$).","في التطبيق العملي تكون المعالم مجهولة ويتم تقديرها من إحصاءات العينات."],"whyWrong":"A sample mean is a statistic. A parameter belongs solely to the population.","whyWrongAr":"متوسط العينة هو إحصاءة، بينما المعلمة تخص المجتمع فقط."}},{"id":3,"question":"A statistic used to estimate a parameter is called a:","questionAr":"تُسمى الإحصاءة المستخدمة لتقدير معلمة مجهولة بـ:","options":["A) Confidence interval","B) Margin of error","C) Point estimate","D) Significance level"],"optionsAr":["A) فترة ثقة (Confidence interval)","B) هامش خطأ (Margin of error)","C) تقدير بنقطة (Point estimate)","D) مستوى معنوية (Significance level)"],"correct":"C","explanation":{"concept":"Point Estimation","conceptAr":"التقدير بنقطة (Point Estimation)","steps":["A Point Estimate is a single numerical value computed from sample data used as the best guess for an unknown population parameter.","Example: $\\bar{X}$ is the point estimate for $\\mu$, and $s$ is the point estimate for $\\sigma$."],"stepsAr":["التقدير بنقطة هو قيمة عددية مفردة تُحسب من بيانات العينة وتعتبر أفضل تخمين لمعلمة المجتمع المجهولة.","مثال: متوسط العينة $\\bar{X}$ هو تقدير بنقطة لمتوسط المجتمع $\\mu$."],"whyWrong":"A confidence interval is a range of values, not a single point statistic.","whyWrongAr":"فترة الثقة تمثل مدى أو مجال من القيم، بينما التقدير بنقطة هو قيمة وحيدة."}},{"id":4,"question":"The sample mean $\\bar{X}$ and sample proportion $\\hat{p}$ are examples of:","questionAr":"يُمثِّل كل من متوسط العينة $\\bar{X}$ ونسبة العينة $\\hat{p}$ أمثلة على:","options":["A) Parameters","B) Point estimates","C) Confidence levels","D) Population variances"],"optionsAr":["A) معالم للمجتمع (Parameters)","B) تقديرات بنقطة (Point estimates)","C) مستويات ثقة","D) تباينات المجتمع"],"correct":"B","explanation":{"concept":"Examples of Point Estimators","conceptAr":"أمثلة على مقدرات النقطة","steps":["$\\bar{X}$ is a sample statistic used to estimate $\\mu$.","$\\hat{p} = \\frac{x}{n}$ is a sample statistic used to estimate population proportion $p$.","Both are primary examples of Point Estimates."],"stepsAr":["$\\bar{X}$ إحصاءة عينة لتقدير $\\mu$.","$\\hat{p}$ إحصاءة عينة لتقدير نسبة المجتمع $p$.","كلاهما يمثلان تقديرات بنقطة (Point estimates)."],"whyWrong":"They are computed from samples, so they are estimators/statistics, never population parameters.","whyWrongAr":"تُحسب من العينات وبالتالي هي إحصاءات وتقديرات وليست معالم مجتمع."}},{"id":5,"question":"The purpose of a confidence interval is to:","questionAr":"الهدف الأساسي من بناء فترة الثقة (Confidence Interval) هو:","options":["A) Replace the point estimate","B) Provide a margin of error for the point estimate","C) Eliminate sampling error","D) Calculate the population size"],"optionsAr":["A) استبدال التقدير بنقطة تماماً","B) توفير هامش خطأ ومدى للتقدير بنقطة (Provide a margin of error)","C) القضاء التام على خطأ المعاينة","D) حساب حجم المجتمع الكلي"],"correct":"B","explanation":{"concept":"Objective of Interval Estimation","conceptAr":"الهدف من التقدير بفترة ثقة","steps":["A point estimate almost never hits the exact true population parameter due to sampling variability.","A confidence interval surrounds the point estimate with a quantifiable margin of error: $\\text{Estimate} \\pm E$, indicating the precision and reliability of the estimate."],"stepsAr":["التقدير بنقطة نادراً ما يطابق معلمة المجتمع الحقيقية تماماً بسبب أخطاء المعاينة العشوائية.","توفر فترة الثقة نطاقاً محاطاً بهامش خطأ مقاس: $\\text{التقدير} \\pm E$ لتحديد مدى الدقة والموثوقية."],"whyWrong":"Sampling error cannot be eliminated. Confidence intervals quantify the margin of error surrounding the point estimate.","whyWrongAr":"لا يمكن إزالة خطأ المعاينة، وفترة الثقة تهدف لتحديد هامش الخطأ ومقدار عدم اليقين."}},{"id":6,"question":"A two-sided confidence interval for the population mean generally has the form:","questionAr":"تأخذ فترة الثقة ثنائية الجانب لمتوسط المجتمع عموماً الصيغة الرياضية:","options":["A) Point Estimate × Margin of Error","B) Point Estimate ± Margin of Error","C) Point Estimate ÷ Margin of Error","D) Margin of Error ± Point Estimate"],"optionsAr":["A) التقدير بنقطة × هامش الخطأ","B) التقدير بنقطة ± هامش الخطأ (Point Estimate ± Margin of Error)","C) التقدير بنقطة ÷ هامش الخطأ","D) هامش الخطأ ± التقدير بنقطة"],"correct":"B","explanation":{"concept":"Confidence Interval Canonical Form","conceptAr":"الشكل العام المعتمد لفترة الثقة","steps":["Lower Limit: $\\text{Point Estimate} - \\text{Margin of Error}$","Upper Limit: $\\text{Point Estimate} + \\text{Margin of Error}$","Compact notation: $\\text{Point Estimate} \\pm \\text{Margin of Error}$ (e.g., $\\bar{X} \\pm z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$)."],"stepsAr":["الحد الأدنى: $\\text{التقدير بنقطة} - \\text{هامش الخطأ}$","الحد الأعلى: $\\text{التقدير بنقطة} + \\text{هامش الخطأ}$","الصيغة المختصرة: $\\text{Point Estimate} \\pm \\text{Margin of Error}$."],"whyWrong":"Intervals are additive and subtractive bounds centered on the point estimate.","whyWrongAr":"فترة الثقة تنبني على الجمع والطرح المتناظر لهامش الخطأ حول التقدير بنقطة."}},{"id":7,"question":"A confidence level of $100(1-\\alpha)\\%$ corresponds to a significance level of:","questionAr":"مستوى ثقة مقداره $100(1 - \\alpha)\\%$ يقابله مستوى معنوية (دلالة) مقداره:","options":["A) $1 - \\alpha$","B) $\\alpha$","C) $\\alpha/2$","D) $2\\alpha$"],"optionsAr":["A) $1 - \\alpha$","B) $\\alpha$ (مستوى المعنوية)","C) $\\alpha/2$","D) $2\\alpha$"],"correct":"B","explanation":{"concept":"Confidence Level vs. Significance Level","conceptAr":"مستوى الثقة مقابل مستوى المعنوية","steps":["Confidence level $= 1 - \\alpha$.","Significance level $= \\alpha$.","For example: $95\\%$ confidence corresponds to $\\alpha = 1 - 0.95 = 0.05$ ($5\\%$)."],"stepsAr":["مستوى الثقة $= 1 - \\alpha$.","مستوى المعنوية $= \\alpha$.","مثال: مستوى ثقة $95\\%$ يقابله مستوى معنوية $\\alpha = 1 - 0.95 = 0.05$ ($5\\%$)."],"whyWrong":"$\\alpha$ is the significance level (risk of error). $\\alpha/2$ is the probability in each individual tail.","whyWrongAr":"$\\alpha$ هو مستوى المعنوية الإجمالي، بينما $\\alpha/2$ هو احتمال كل ذيل بمفرده."}},{"id":8,"question":"Which of the following is NOT a common confidence level in statistical practice?","questionAr":"أي من النسب التالية لا يُعتبر مستوى ثقة شائع الاستخدام في الممارسات الإحصائية القياسية؟","options":["A) 90%","B) 95%","C) 99%","D) 75%"],"optionsAr":["A) 90%","B) 95%","C) 99%","D) 75% (ليس مستوى شائعاً)"],"correct":"D","explanation":{"concept":"Standard Confidence Levels","conceptAr":"مستويات الثقة القياسية المعتمدة","steps":["The three universally accepted standard confidence levels in science and industry are $90\\%$, $95\\%$, and $99\\%$.","A $75\\%$ confidence level leaves a $25\\%$ probability of error, which is unacceptably high for scientific conclusions."],"stepsAr":["المستويات القياسية المتعارف عليها دولياً في البحوث هي $90\\%$ و $95\\%$ و $99\\%$.","مستوى $75\\%$ يترك هامش مخاطرة $25\\%$ وهو غير مقبول علمياً."],"whyWrong":"90%, 95%, and 99% are standard textbook benchmarks. 75% is never used as a standard benchmark.","whyWrongAr":"مستويات 90 و 95 و 99 هي المستويات الشائعة، و 75% نادراً ما يُستخدم."}},{"id":9,"question":"For a large sample size ($n \\ge 30$), the confidence interval for $\\mu$ uses:","questionAr":"للعينات الكبيرة بحجم ($n \\ge 30$)، فإن فترة الثقة لمتوسط المجتمع $\\mu$ تستخدم:","options":["A) The t-distribution","B) The z-distribution (standard normal)","C) The chi-square distribution","D) The F-distribution"],"optionsAr":["A) توزيع تي ستيودنت (t-distribution)","B) توزيع Z الطبيعي المعياري (Standard normal)","C) توزيع كاي تربيع","D) توزيع F"],"correct":"B","explanation":{"concept":"Large Sample Inference Distribution","conceptAr":"توزيع الاستدلال للعينات الكبيرة","steps":["By the Central Limit Theorem, when $n \\ge 30$, the sample mean $\\bar{X}$ is approximately normally distributed regardless of population shape.","Therefore, critical values are taken from the standard normal $Z$-distribution ($z_{\\alpha/2}$)."],"stepsAr":["استناداً لنظرية النهاية المركزية، عندما $n \\ge 30$ يقترب توزيع متوسط العينة من التوزيع الطبيعي.","لذا تُستخدم القيم الحرجة من توزيع $Z$ الطبيعي المعياري ($z_{\\alpha/2}$)."],"whyWrong":"The t-distribution is required for small samples ($n < 30$) when $\\sigma$ is unknown. For $n \\ge 30$, the z-distribution is used.","whyWrongAr":"توزيع تي مخصص للعينات الصغيرة ($n < 30$)، أما للعينات الكبيرة فنستخدم توزيع Z."}},{"id":10,"question":"The standard error of the sample mean is given by:","questionAr":"الخطأ المعياري لمتوسط العينة يُعطى بالصيغة:","options":["A) $\\sigma \\cdot \\sqrt{n}$","B) $\\frac{\\sigma}{\\sqrt{n}}$","C) $\\frac{\\sigma^2}{n}$","D) $\\frac{s^2}{\\sqrt{n}}$"],"optionsAr":["A) $\\sigma \\cdot \\sqrt{n}$","B) $\\frac{\\sigma}{\\sqrt{n}}$","C) $\\frac{\\sigma^2}{n}$","D) $\\frac{s^2}{\\sqrt{n}}$"],"correct":"B","explanation":{"concept":"Standard Error Formula","conceptAr":"قانون الخطأ المعياري","steps":["The standard deviation of the sampling distribution of $\\bar{X}$ is:","$\\sigma_{\\bar{X}} = \\frac{\\sigma}{\\sqrt{n}}$","When population standard deviation $\\sigma$ is unknown, it is estimated using sample standard deviation: $\\frac{s}{\\sqrt{n}}$."],"stepsAr":["الانحراف المعياري لمتوسطات العينات يُسمى الخطأ المعياري ويعطى بـ:","$\\sigma_{\\bar{X}} = \\frac{\\sigma}{\\sqrt{n}}$ أو $\\frac{s}{\\sqrt{n}}$."],"whyWrong":"Multiplying by $\\sqrt{n}$ inflates the spread; dividing by $n$ lacks the square root. $\\sigma/\\sqrt{n}$ is the exact formula.","whyWrongAr":"الضرب في $\\sqrt{n}$ خاطئ، والقسمة بدون جذر خاطئة، والقانون الصحيح هو $\\sigma/\\sqrt{n}$."}},{"id":11,"question":"$\\bar{X} \\pm 1.645 \\frac{s}{\\sqrt{n}}$ is a:","questionAr":"الصيغة $\\bar{X} \\pm 1.645 \\frac{s}{\\sqrt{n}}$ تمثل فترة ثقة بمستوى:","options":["A) 68% confidence interval","B) 90% confidence interval","C) 95% confidence interval","D) 99% confidence interval"],"optionsAr":["A) فترة ثقة 68%","B) فترة ثقة 90% (90% confidence interval)","C) فترة ثقة 95%","D) فترة ثقة 99%"],"correct":"B","explanation":{"concept":"Critical Value for 90% Confidence","conceptAr":"القيمة الحرجة لمستوى ثقة 90%","steps":["For a $90\\%$ confidence interval, $\\alpha = 1 - 0.90 = 0.10$.","Tail probability in each side: $\\alpha/2 = 0.05$.","From standard normal tables: $z_{0.05} = 1.645$.","Hence, $\\bar{X} \\pm 1.645 \\frac{s}{\\sqrt{n}}$ is a $90\\%$ confidence interval."],"stepsAr":["لمستوى ثقة $90\\%$، يكون $\\alpha = 0.10$.","المساحة في كل طرف: $\\alpha/2 = 0.05$.","من جدول Z: $z_{0.05} = 1.645$.","وبالتالي فإن هامش الخطأ $1.645 \\frac{s}{\\sqrt{n}}$ يخص مستوى ثقة $90\\%$."],"whyWrong":"95% uses 1.96, and 99% uses 2.58. 1.645 corresponds specifically to 90%.","whyWrongAr":"95% تستخدم 1.96 و 99% تستخدم 2.58، بينما 1.645 مخصصة لمستوى 90%."}},{"id":12,"question":"$\\bar{X} \\pm 1.96 \\frac{s}{\\sqrt{n}}$ is a:","questionAr":"الصيغة $\\bar{X} \\pm 1.96 \\frac{s}{\\sqrt{n}}$ تمثل فترة ثقة بمستوى:","options":["A) 68% confidence interval","B) 90% confidence interval","C) 95% confidence interval","D) 99% confidence interval"],"optionsAr":["A) فترة ثقة 68%","B) فترة ثقة 90%","C) فترة ثقة 95% (95% confidence interval)","D) فترة ثقة 99%"],"correct":"C","explanation":{"concept":"Critical Value for 95% Confidence","conceptAr":"القيمة الحرجة لمستوى ثقة 95%","steps":["For a $95\\%$ confidence interval, $\\alpha = 0.05$ and $\\alpha/2 = 0.025$.","The cumulative area up to $z_{0.025}$ is $0.9750$, which corresponds to $z = 1.96$.","Therefore, $\\bar{X} \\pm 1.96 \\frac{s}{\\sqrt{n}}$ is the standard $95\\%$ CI."],"stepsAr":["لمستوى ثقة $95\\%$، يكون $\\alpha = 0.05$ وبالتالي $\\alpha/2 = 0.025$.","المساحة التراكمية $0.9750$ تقابلها القيمة الحرجة $z = 1.96$.","وبالتالي فهذه فترة ثقة بمستوى $95\\%$."],"whyWrong":"1.96 is the classic, most famous z-multiplier for a 95% confidence interval.","whyWrongAr":"القيمة 1.96 هي المعامل القياسي لفترة الثقة 95%."}},{"id":13,"question":"$\\bar{X} \\pm 2.58 \\frac{s}{\\sqrt{n}}$ is a:","questionAr":"الصيغة $\\bar{X} \\pm 2.58 \\frac{s}{\\sqrt{n}}$ تمثل فترة ثقة بمستوى:","options":["A) 68% confidence interval","B) 90% confidence interval","C) 95% confidence interval","D) 99% confidence interval"],"optionsAr":["A) فترة ثقة 68%","B) فترة ثقة 90%","C) فترة ثقة 95%","D) فترة ثقة 99% (99% confidence interval)"],"correct":"D","explanation":{"concept":"Critical Value for 99% Confidence","conceptAr":"القيمة الحرجة لمستوى ثقة 99%","steps":["For $99\\%$ confidence level, $\\alpha = 0.01$ and $\\alpha/2 = 0.005$.","From standard normal tables: $z_{0.005} \\approx 2.576$ (commonly rounded to $2.58$).","Therefore, the multiplier $2.58$ creates a $99\\%$ confidence interval."],"stepsAr":["لمستوى ثقة $99\\%$، يكون $\\alpha = 0.01$ و $\\alpha/2 = 0.005$.","من جدول Z: $z_{0.005} \\approx 2.58$.","لذا فإن المعامل 2.58 يخص فترة ثقة $99\\%$."],"whyWrong":"2.58 captures 99% of the distribution area between $[-2.58, +2.58]$.","whyWrongAr":"المعامل 2.58 يحصر 99% من المساحة تحت المنحنى الطبيعي."}},{"id":14,"question":"For the battery example ($\\bar{X} = 185.5$, $s = 5.0$, $n = 100$), the standard error is:","questionAr":"لمثال بطاريات السيارات ($\\bar{X} = 185.5$, $s = 5.0$, $n = 100$)، فإن الخطأ المعياري يساوي:","formula":"\\text{SE} = \\frac{s}{\\sqrt{n}}","options":["A) 5.0","B) 0.5","C) 0.05","D) 1.0"],"optionsAr":["A) 5.0","B) 0.5 (s / \\sqrt{n} = 5/10)","C) 0.05","D) 1.0"],"correct":"B","explanation":{"concept":"Standard Error Computation","conceptAr":"حساب الخطأ المعياري للعينة","steps":["Sample standard deviation $s = 5.0$","Sample size $n = 100 \\implies \\sqrt{n} = \\sqrt{100} = 10$","$\\text{SE} = \\frac{s}{\\sqrt{n}} = \\frac{5.0}{10} = 0.5$"],"stepsAr":["الانحراف المعياري للعينة $s = 5.0$","حجم العينة $n = 100 \\implies \\sqrt{n} = 10$","الخطأ المعياري: $\\text{SE} = \\frac{5.0}{10} = 0.5$"],"whyWrong":"5.0 is the raw standard deviation $s$. Dividing by $\\sqrt{100} = 10$ yields 0.5.","whyWrongAr":"5.0 هو الانحراف المعياري للعينة، وبقسمته على جذر 100 ينتج 0.5."}},{"id":15,"question":"For an 85% confidence interval, $\\alpha/2$ equals:","questionAr":"لفترة ثقة بمستوى 85%، فإن قيمة $\\alpha/2$ تساوي:","options":["A) 0.15","B) 0.075","C) 0.025","D) 0.05"],"optionsAr":["A) 0.15","B) 0.075","C) 0.025","D) 0.05"],"correct":"B","explanation":{"concept":"Two-Tailed Alpha Division","conceptAr":"تقسيم مستوى المعنوية على طرفي التوزيع","steps":["Confidence level $= 85\\% = 0.85$.","Significance level: $\\alpha = 1 - 0.85 = 0.15$.","Dividing by 2 for a two-sided interval: $\\frac{\\alpha}{2} = \\frac{0.15}{2} = 0.075$."],"stepsAr":["مستوى الثقة $= 0.85$.","مستوى المعنوية: $\\alpha = 1 - 0.85 = 0.15$.","القسمة على 2 للفترة ثنائية الطرف: $\\frac{\\alpha}{2} = \\frac{0.15}{2} = 0.075$."],"whyWrong":"0.15 is the total $\\alpha$. For a two-sided interval, $\\alpha$ must be split equally between both tails: $0.15/2 = 0.075$.","whyWrongAr":"0.15 هو إجمالي $\\alpha$ للطرفين معاً، ولكل طرف بمفرده نقسم على 2 لنحصل على 0.075."}},{"id":16,"question":"The critical value $z_{0.075}$ for an 85% confidence interval is:","questionAr":"القيمة الحرجة $z_{0.075}$ لفترة ثقة 85% تساوي:","options":["A) 1.96","B) 1.645","C) 1.44","D) 2.58"],"optionsAr":["A) 1.96","B) 1.645","C) 1.44","D) 2.58"],"correct":"C","explanation":{"concept":"Finding Non-Standard Z-Critical Values","conceptAr":"إيجاد القيمة الحرجة من جدول Z","steps":["We need the $Z$ value where the upper tail area is $0.075$.","Cumulative probability to the left: $1 - 0.075 = 0.9250$.","Locating $0.9250$ in the standard normal table gives $Z = 1.44$."],"stepsAr":["نبحث عن قيمة $Z$ التي تجعل مساحة الذيل الأيمن $0.075$.","المساحة التراكمية على اليسار: $1 - 0.075 = 0.9250$.","بالبحث عن القيمة $0.9250$ في جدول Z نجد أنها تقابل $Z = 1.44$."],"whyWrong":"1.96 is for 95%, 1.645 is for 90%, and 2.58 is for 99%. 1.44 corresponds to 85%.","whyWrongAr":"1.96 لـ 95% و 1.645 لـ 90%، بينما 1.44 تقابل مساحة 85% بدقة."}},{"id":17,"question":"For the battery example ($\\bar{X} = 185.5, s = 5.0, n = 100, z_{0.075} = 1.44$), the 85% confidence interval is:","questionAr":"لمثال البطاريات ($\\bar{X} = 185.5, s = 5.0, n = 100, z_{0.075} = 1.44$)، فإن فترة الثقة 85% هي:","formula":"\\text{CI} = \\bar{X} \\pm z_{\\alpha/2} \\left(\\frac{s}{\\sqrt{n}}\\right)","options":["A) (184.78, 186.22)","B) (184.50, 186.50)","C) (185.00, 186.00)","D) (184.28, 186.72)"],"optionsAr":["A) (184.78, 186.22)","B) (184.50, 186.50)","C) (185.00, 186.00)","D) (184.28, 186.72)"],"correct":"A","explanation":{"concept":"85% Confidence Interval Calculation","conceptAr":"حساب فترة الثقة 85%","steps":["Point estimate: $\\bar{X} = 185.5$.","Standard error: $\\text{SE} = \\frac{5}{10} = 0.5$.","Critical value: $z_{0.075} = 1.44$.","Margin of error: $E = 1.44 \\times 0.5 = 0.72$.","Interval: $185.5 \\pm 0.72 = (185.5 - 0.72, 185.5 + 0.72) = (184.78, 186.22)$."],"stepsAr":["التقدير بنقطة: $\\bar{X} = 185.5$.","الخطأ المعياري: $\\text{SE} = 0.5$.","القيمة الحرجة: $z = 1.44$.","هامش الخطأ: $E = 1.44 \\times 0.5 = 0.72$.","فترة الثقة: $185.5 \\pm 0.72 = (184.78, 186.22)$."],"whyWrong":"Adding and subtracting 0.72 from 185.5 gives (184.78, 186.22).","whyWrongAr":"بطرح وإضافة 0.72 من 185.5 نحصل على الفترة (184.78, 186.22)."}},{"id":18,"question":"In Example 2.2 ($\\bar{x} = 5, \\sigma^2 = 9, n = 100$), the 95% confidence interval is:","questionAr":"في المثال 2.2 ($\\bar{x} = 5, \\sigma^2 = 9, n = 100$)، فإن فترة الثقة 95% هي:","formula":"\\text{CI} = \\bar{X} \\pm z_{\\alpha/2} \\left(\\frac{\\sigma}{\\sqrt{n}}\\right)","options":["A) (4.412, 5.588)","B) (4.500, 5.500)","C) (4.706, 5.294)","D) (3.412, 6.588)"],"optionsAr":["A) (4.412, 5.588)","B) (4.500, 5.500)","C) (4.706, 5.294)","D) (3.412, 6.588)"],"correct":"A","explanation":{"concept":"95% Confidence Interval with Known Variance","conceptAr":"حساب فترة الثقة 95% مع تباين معلوم","steps":["Given variance $\\sigma^2 = 9 \\implies \\sigma = \\sqrt{9} = 3$.","Sample size $n = 100 \\implies \\sqrt{n} = 10$.","Standard error: $\\frac{\\sigma}{\\sqrt{n}} = \\frac{3}{10} = 0.3$.","Margin of error for $95\\%$ ($z = 1.96$): $E = 1.96 \\times 0.3 = 0.588$.","Interval: $5 \\pm 0.588 = (4.412, 5.588)$."],"stepsAr":["التباين $\\sigma^2 = 9 \\implies$ الانحراف المعياري $\\sigma = 3$.","جذر العينة: $\\sqrt{100} = 10$.","الخطأ المعياري: $\\frac{3}{10} = 0.3$.","هامش الخطأ: $E = 1.96 \\times 0.3 = 0.588$.","فترة الثقة: $5 \\pm 0.588 = (4.412, 5.588)$."],"whyWrong":"A common pitfall is using $\\sigma^2=9$ directly instead of taking $\\sqrt{9}=3$. With $\\sigma=3$, the interval is (4.412, 5.588).","whyWrongAr":"الخطأ الشائع هو استخدام التباين 9 بدلاً من جذره 3. الانحراف 3 يعطي هامش خطأ 0.588."}},{"id":19,"question":"The margin of error $E$ of a confidence interval for $\\mu$ is:","questionAr":"هامش الخطأ $E$ لفترة الثقة لمتوسط المجتمع $\\mu$ يُحسب بالصيغة:","options":["A) $\\bar{X} + z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$","B) $z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$","C) $\\frac{\\sigma}{\\sqrt{n}}$","D) $z_{\\alpha/2}\\sigma$"],"optionsAr":["A) $\\bar{X} + z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$","B) $z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$","C) $\\frac{\\sigma}{\\sqrt{n}}$","D) $z_{\\alpha/2}\\sigma$"],"correct":"B","explanation":{"concept":"Margin of Error Definition and Formula","conceptAr":"تعريف وقانون هامش الخطأ","steps":["The margin of error $E$ is the maximum expected discrepancy between the true parameter $\\mu$ and point estimate $\\bar{X}$ at the chosen confidence level.","Formula: $E = z_{\\alpha/2} \\cdot \\text{SE} = z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$."],"stepsAr":["هامش الخطأ $E$ هو المقدار الذي يضاف ويطرح من التقدير بنقطة لتحديد اتساع الفترة.","الصيغة: $E = z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$."],"whyWrong":"Option A is the upper bound. Option C is only the standard error without the critical multiplier.","whyWrongAr":"A هو الحد الأعلى للفترة، و C هو الخطأ المعياري فقط دون ضربه بالقيمة الحرجة."}},{"id":20,"question":"To obtain a 99% confidence interval of width $\\pm 1.0\\text{ A}$ (with $s = 5.0$), the required sample size is approximately:","questionAr":"للحصول على فترة ثقة 99% بهامش خطأ قدره $\\pm 1.0\\text{ A}$ (مع انحراف معياري $s = 5.0$)، فإن حجم العينة المطلوب تقريباً هو:","formula":"n = \\left(\\frac{z_{\\alpha/2} \\cdot s}{E}\\right)^2","options":["A) 100","B) 167","C) 25","D) 250"],"optionsAr":["A) 100","B) 167 (باستخدام قانون n = z² s² / E²)","C) 25","D) 250"],"correct":"B","explanation":{"concept":"Sample Size Determination Formula","conceptAr":"تحديد حجم العينة المطلوب لهامش خطأ محدد","steps":["From margin of error: $E = z_{\\alpha/2} \\frac{s}{\\sqrt{n}} \\implies \\sqrt{n} = \\frac{z_{\\alpha/2} s}{E} \\implies n = \\left(\\frac{z_{\\alpha/2} s}{E}\\right)^2$.","Parameters: $99\\%$ confidence $\\implies z_{0.005} = 2.58$ (or $2.576$).","Desired error bound: $E = 1.0$, standard deviation: $s = 5.0$.","Calculation: $n = \\left(\\frac{2.58 \\times 5.0}{1.0}\\right)^2 = (12.9)^2 = 166.41$.","Always round up to the next integer: $n = 167$."],"stepsAr":["من قانون هامش الخطأ: $n = \\left(\\frac{z_{\\alpha/2} s}{E}\\right)^2$.","المعطيات: ثقة $99\\% \\implies z = 2.58$، $s = 5.0$، $E = 1.0$.","الحساب: $n = (2.58 \\times 5.0)^2 = (12.9)^2 = 166.41$.","يُقرب حجم العينة دائماً للأعلى إلى أقرب عدد صحيح: $n = 167$."],"whyWrong":"Squaring 12.9 gives 166.41, which rounds up to 167. 100 is the sample size from the earlier example.","whyWrongAr":"مربع 12.9 يساوي 166.41، ونقرب دائماً للأعلى لضمان مستوى الدقة المطلوب فيكون 167."}}]},{"id":"lecture-5-confidence-intervals-part-2","quizNumber":5,"lectureNumber":5,"title":"Lecture 5: Confidence Intervals Part 2","titleAr":"المحاضرة 5: فترات الثقة (الجزء الثاني)","subtitle":"Student's t-distribution, small samples, two-sample differences, pooled variance, and degrees of freedom","subtitleAr":"توزيع تي ستيودنت، العينات الصغيرة، الفرق بين متوسطي مجتمعين، التباين المشترك، ودرجات الحرية","difficulty":"Hard","questionCount":20,"questions":[{"id":1,"question":"For large samples ($n \\ge 30$), the sampling distribution of $\\bar{X}$ is approximately normal due to:","questionAr":"للعينات الكبيرة ($n \\ge 30$)، يقترب التوزيع العيني لـ $\\bar{X}$ من التوزيع الطبيعي نتيجة لـ:","options":["A) The t-distribution","B) The Central Limit Theorem","C) The pooled variance","D) The chi-square distribution"],"optionsAr":["A) توزيع تي","B) نظرية النهاية المركزية (The Central Limit Theorem)","C) التباين المشترك (Pooled variance)","D) توزيع كاي تربيع"],"correct":"B","explanation":{"concept":"Central Limit Theorem Foundation","conceptAr":"أساس نظرية النهاية المركزية","steps":["The Central Limit Theorem (CLT) is the fundamental statistical principle that states that regardless of the population distribution, the sampling distribution of $\\bar{X}$ becomes approximately normal as $n \\ge 30$."],"stepsAr":["نظرية النهاية المركزية (CLT) هي القاعدة الرياضية التي تنص على تقارب توزيع متوسطات العينات من التوزيع الطبيعي عندما يكون $n \\ge 30$."],"whyWrong":"The t-distribution is used for small samples. It is the Central Limit Theorem that justifies normal approximation for large samples.","whyWrongAr":"توزيع تي مخصص للعينات الصغيرة، بينما نظرية النهاية المركزية هي التي تفسر التقارب الطبيعي للعينات الكبيرة."}},{"id":2,"question":"For small samples ($n < 30$) when population variance is unknown, which distribution is used for confidence intervals?","questionAr":"للعينات الصغيرة ($n < 30$) عندما يكون تباين المجتمع مجهولاً، أي توزيع احتمالي يُستخدم لبناء فترات الثقة؟","options":["A) Standard normal Z-distribution","B) Student's t-distribution","C) Chi-square distribution","D) F-distribution"],"optionsAr":["A) توزيع Z الطبيعي المعياري","B) توزيع تي ستيودنت (Student's t-distribution)","C) توزيع كاي تربيع","D) توزيع F"],"correct":"B","explanation":{"concept":"Student's t-Distribution for Small Samples","conceptAr":"توزيع تي ستيودنت للعينات الصغيرة","steps":["When $n < 30$ and the population is normal with unknown $\\sigma$ (estimated by sample standard deviation $s$):","The sampling distribution follows Student's $t$-distribution with $n - 1$ degrees of freedom."],"stepsAr":["عندما يكون حجم العينة صغيراً $n < 30$ مع مجتمع طبيعي وانحراف معياري مجهول $\\sigma$ يُقدر بـ $s$:","فإن التوزيع العيني يتبع توزيع تي ستيودنت بدرجات حرية $n - 1$."],"whyWrong":"The standard normal Z requires a known $\\sigma$ or large $n$. For small samples with unknown $\\sigma$, Student's t-distribution is necessary.","whyWrongAr":"توزيع Z يتطلب عينات كبيرة أو انحراف مجتمع معلوم. في العينات الصغيرة ذات الانحراف المجهول يجب استخدام توزيع t."}},{"id":3,"question":"For a small sample, the degrees of freedom for the t-distribution is:","questionAr":"لعينة صغيرة مفردة بحجم $n$، تكون درجات الحرية (df) لتوزيع تي مساوية لـ:","options":["A) n","B) n + 1","C) n − 1","D) n − 2"],"optionsAr":["A) n","B) n + 1","C) n − 1 (درجات الحرية)","D) n − 2"],"correct":"C","explanation":{"concept":"Degrees of Freedom (df) for One-Sample t-Test","conceptAr":"درجات الحرية لعينة واحدة في توزيع t","steps":["Degrees of freedom represents the number of independent pieces of information in the calculation of $s$.","Since $\\bar{X}$ is calculated from the $n$ observations, one degree of freedom is lost to the constraint $\\sum (X_i - \\bar{X}) = 0$.","Thus: $\\text{df} = n - 1$."],"stepsAr":["تعبر درجات الحرية عن عدد المشاهدات المستقلة المتبقية لحساب الانحراف المعياري $s$.","نظراً لثبات الوسط $\\bar{X}$ فإننا نفقد قيداً واحداً حيث $\\sum (X_i - \\bar{X}) = 0$.","وبالتالي: $\\text{df} = n - 1$."],"whyWrong":"$n-2$ is used for two-sample pooled tests. For a single sample, $\\text{df} = n - 1$.","whyWrongAr":"$n-2$ تُستخدم لعينتين في التباين المشترك، أما للعينة الواحدة فدرجات الحرية هي $n-1$."}},{"id":4,"question":"The t-distribution is:","questionAr":"يتميز منحنى توزيع تي (t-distribution) بأنه:","options":["A) Symmetric and bell-shaped with lighter tails than normal","B) Symmetric and bell-shaped with heavier tails than normal","C) Asymmetric with heavier tails than normal","D) Identical to the normal distribution for all sample sizes"],"optionsAr":["A) متماثل وناقوسي بذيول أخف من التوزيع الطبيعي","B) متماثل وجرسي بذيول أثقل من التوزيع الطبيعي (Symmetric with heavier tails)","C) غير متماثل بذيول أثقل","D) متطابق مع التوزيع الطبيعي لجميع أحجام العينات"],"correct":"B","explanation":{"concept":"Shape of Student's t-Distribution","conceptAr":"شكل وخصائص منحنى توزيع تي","steps":["Like the standard normal curve, the $t$-distribution is symmetric, bell-shaped, and centered at $0$.","However, because estimating $\\sigma$ with $s$ introduces extra sampling variability, the $t$-distribution has more spread and heavier (fatter) tails than $Z$."],"stepsAr":["يشبه توزيع تي التوزيع الطبيعي في كونه متماثلاً وجرسياً ومركزه عند الصفر.","ولكن بسبب التباين الإضافي الناتج عن تقدير $\\sigma$ بواسطة $s$، يملك توزيع تي ذيولاً أكثر اتساعاً وثقلاً (Heavier tails) وتشتتاً أكبر."],"whyWrong":"Tails are heavier (more probability in tails), not lighter. And it is symmetric, not asymmetric.","whyWrongAr":"ذيوله أثقل (تحوي مساحة احتمالية أكبر في الأطراف) وهو متماثل تماماً حول الصفر."}},{"id":5,"question":"As the sample size (and degrees of freedom) increases, the t-distribution:","questionAr":"مع زيادة حجم العينة $n$ (وبالتالي درجات الحرية)، فإن توزيع تي:","options":["A) Moves further from the normal distribution","B) Approaches the standard normal distribution","C) Becomes skewed","D) Becomes bimodal"],"optionsAr":["A) يبتعد أكثر عن التوزيع الطبيعي","B) يقترب من التوزيع الطبيعي المعياري (Approaches standard normal)","C) يصبح ملتوياً وغير متماثل","D) يصبح ثنائي المنوال"],"correct":"B","explanation":{"concept":"Asymptotic Behavior of t-Distribution","conceptAr":"التقارب المقارب لتوزيع تي نحو التوزيع الطبيعي","steps":["As $n \\to \\infty$ and $\\text{df} \\to \\infty$, sample standard deviation $s$ converges to true population standard deviation $\\sigma$.","The extra variability vanishes, and the $t$-distribution approaches the standard normal distribution $Z$ ($\\\\lim_{\\text{df}\\to\\infty} t_{\\text{df}} = Z$)."],"stepsAr":["عندما $n \\to \\infty$ و $\\text{df} \\to \\infty$، يقترب انحراف العينة $s$ من انحراف المجتمع $\\sigma$.","يتلاشى التشتت الإضافي ويتطابق توزيع تي تدريجياً مع التوزيع الطبيعي المعياري $Z$."],"whyWrong":"The t-distribution never becomes skewed; it remains symmetric and strictly converges toward Z.","whyWrongAr":"يبقى التوزيع متماثلاً دائماً ويتقارب طردياً مع زيادة العينة نحو التوزيع الطبيعي المعياري Z."}},{"id":6,"question":"The t-random variable is mathematically defined as:","questionAr":"يُعرَّف المتغير العشوائي $T$ رياضياً بالصيغة:","options":["A) $T = Z \\cdot \\sqrt{V/\\nu}$","B) $T = \\frac{Z}{\\sqrt{V/\\nu}}$","C) $T = \\frac{\\sqrt{V/\\nu}}{Z}$","D) $T = Z + \\sqrt{V/\\nu}$"],"optionsAr":["A) $T = Z \\cdot \\sqrt{V/\\nu}$","B) $T = \\frac{Z}{\\sqrt{V/\\nu}}$","C) $T = \\frac{\\sqrt{V/\\nu}}{Z}$","D) $T = Z + \\sqrt{V/\\nu}$"],"correct":"B","explanation":{"concept":"Formal Mathematical Definition of t-Statistic","conceptAr":"التعريف الرياضي لمتغير تي العشوائي","steps":["Let $Z \\sim N(0, 1)$ be a standard normal random variable.","Let $V \\sim \\chi^2_\\nu$ be an independent chi-square random variable with $\\nu$ degrees of freedom.","Then the quotient $T = \\frac{Z}{\\sqrt{V / \\nu}}$ follows a Student's $t$-distribution with $\\nu$ degrees of freedom."],"stepsAr":["إذا كان $Z$ متغيراً طبيعياً معيارياً $N(0, 1)$.","وكان $V$ متغيراً يتبع توزيع كاي تربيع $\\chi^2_\\nu$ بدرجات حرية $\\nu$ مستقلاً عن $Z$.","فإن النسبة $T = \\frac{Z}{\\sqrt{V / \\nu}}$ تتبع توزيع تي ستيودنت بدرجات حرية $\\nu$."],"whyWrong":"It is strictly a quotient of $Z$ divided by the square root of the chi-square variable divided by its degrees of freedom: $T = Z / \\sqrt{V/\\nu}$.","whyWrongAr":"التعريف القياسي هو قسمة المتغير الطبيعي Z على جذر المتغير كاي تربيع مقسوماً على درجات حريته."}},{"id":7,"question":"For the sample 0.74, 0.75, 0.73, 0.75, 0.74, 0.72 ($n = 6$), the sample mean is:","questionAr":"للعينة 0.74، 0.75، 0.73، 0.75، 0.74، 0.72 ($n = 6$)، فإن وسط العينة يساوي:","formula":"\\bar{X} = \\frac{\\sum_{i=1}^{n} X_i}{n}","options":["A) 0.720","B) 0.738","C) 0.750","D) 0.745"],"optionsAr":["A) 0.720","B) 0.738","C) 0.750","D) 0.745"],"correct":"B","explanation":{"concept":"Sample Mean of Decimals","conceptAr":"حساب متوسط القيم العشرية","steps":["Sum of the 6 sample values:","$\\sum X = 0.74 + 0.75 + 0.73 + 0.75 + 0.74 + 0.72 = 4.43$","Sample size $n = 6$","$\\bar{X} = \\frac{4.43}{6} = 0.73833\\dots \\approx 0.738$"],"stepsAr":["مجموع القيم الست:","$\\sum X = 0.74 + 0.75 + 0.73 + 0.75 + 0.74 + 0.72 = 4.43$","حجم العينة $n = 6$","$\\bar{X} = \\frac{4.43}{6} \\approx 0.738$"],"whyWrong":"0.720 is the minimum, 0.750 is the maximum. The true arithmetic mean is 0.738.","whyWrongAr":"0.720 أصغر قيمة و 0.750 أكبر قيمة، والوسط الدقيق هو 0.738."}},{"id":8,"question":"For that sample ($n = 6$), the degrees of freedom used for the critical t-value is:","questionAr":"لتلك العينة بحجم ($n = 6$)، درجات الحرية المستخدمة لقيمة t الحرجة هي:","options":["A) 6","B) 5","C) 4","D) 7"],"optionsAr":["A) 6","B) 5","C) 4","D) 7"],"correct":"B","explanation":{"concept":"Degrees of Freedom Calculation","conceptAr":"حساب درجات الحرية","steps":["Formula: $\\text{df} = n - 1$.","Given sample size $n = 6$:","$\\text{df} = 6 - 1 = 5$."],"stepsAr":["القانون: $\\text{df} = n - 1$.","حجم العينة المعطى $n = 6$:","درجات الحرية: $\\text{df} = 6 - 1 = 5$."],"whyWrong":"Degrees of freedom is always sample size minus 1 for a single sample mean: $6 - 1 = 5$.","whyWrongAr":"درجات الحرية لعينة واحدة هي حجم العينة ناقص 1 دائماً: $6 - 1 = 5$."}},{"id":9,"question":"For a 95% confidence interval with $\\text{df} = 5$, the critical t-value $t_{5, 0.025}$ is approximately:","questionAr":"لفترة ثقة 95% بدرجات حرية $\\text{df} = 5$، فإن قيمة t الحرجة $t_{5, 0.025}$ تساوي تقريباً:","options":["A) 1.96","B) 2.015","C) 2.571","D) 3.365"],"optionsAr":["A) 1.96","B) 2.015","C) 2.571","D) 3.365"],"correct":"C","explanation":{"concept":"Reading Critical t-Values from Student's t-Table","conceptAr":"استخراج قيمة t الحرجة من جدول ستيودنت","steps":["Confidence level: $95\\% \\implies \\alpha = 0.05$.","Two-tailed critical value: $\\alpha/2 = 0.025$ in the upper tail.","Intersection of row $\\text{df} = 5$ and column $0.025$ in the $t$-table yields $t_{5, 0.025} = 2.571$."],"stepsAr":["مستوى الثقة $95\\% \\implies \\alpha = 0.05$ ومساحة الطرف $\\alpha/2 = 0.025$.","بالتقاطع بين صف درجات الحرية $\\text{df} = 5$ وعمود $0.025$:","القيمة الحرجة في جدول t هي $2.571$."],"whyWrong":"1.96 is the Z value for infinite df. For df = 5, the critical value expands to 2.571 due to small sample uncertainty.","whyWrongAr":"1.96 تخص التوزيع الطبيعي المعياري (درجات حرية لانهائية)، بينما عند df = 5 تتسع القيمة الحرجة إلى 2.571."}},{"id":10,"question":"The 95% confidence interval for the mean of the sample (0.74, 0.75, 0.73, 0.75, 0.74, 0.72) is:","questionAr":"فترة الثقة 95% لمتوسط العينة (0.74، 0.75، 0.73، 0.75، 0.74، 0.72) هي:","formula":"\\text{CI} = \\bar{X} \\pm t_{\\alpha/2, n-1} \\left(\\frac{s}{\\sqrt{n}}\\right)","options":["A) (0.720, 0.756)","B) (0.727, 0.750)","C) (0.700, 0.776)","D) (0.738, 0.750)"],"optionsAr":["A) (0.720, 0.756)","B) (0.727, 0.750)","C) (0.700, 0.776)","D) (0.738, 0.750)"],"correct":"B","explanation":{"concept":"Small Sample t-Confidence Interval Calculation","conceptAr":"حساب فترة الثقة لعينة صغيرة باستخدام توزيع t","steps":["Sample mean: $\\bar{X} = 0.7383$.","Sample standard deviation: $s \\approx 0.01169$.","Standard error: $\\frac{s}{\\sqrt{n}} = \\frac{0.01169}{\\sqrt{6}} \\approx 0.00477$.","Margin of error: $E = t_{5, 0.025} \\cdot \\text{SE} = 2.571 \\times 0.00477 \\approx 0.0122$.","Interval: $0.7383 \\pm 0.0122 = (0.7266, 0.7505) \\approx (0.727, 0.750)$."],"stepsAr":["وسط العينة: $\\bar{X} = 0.7383$.","انحراف العينة المعياري: $s \\approx 0.01169$.","الخطأ المعياري: $\\frac{s}{\\sqrt{6}} \\approx 0.00477$.","هامش الخطأ: $E = 2.571 \\times 0.00477 \\approx 0.012$.","فترة الثقة: $0.7383 \\pm 0.012 = (0.727, 0.750)$."],"whyWrong":"Calculating the exact margins with $t = 2.571$ gives the interval bounds $(0.727, 0.750)$.","whyWrongAr":"بحساب الهامش بالتعويض الدقيق لقيمة t نجد أن حدود الفترة هي (0.727، 0.750)."}},{"id":11,"question":"For the difference between two population means (large independent samples), the standard error is:","questionAr":"للفرق بين متوسطي مجتمعين (في حالة العينات الكبيرة المستقلة)، يُحسب الخطأ المعياري بالصيغة:","options":["A) $\\sqrt{\\frac{s_1^2}{n_1} - \\frac{s_2^2}{n_2}}$","B) $\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$","C) $\\frac{s_1 + s_2}{\\sqrt{n}}$","D) $s_p \\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$"],"optionsAr":["A) $\\sqrt{\\frac{s_1^2}{n_1} - \\frac{s_2^2}{n_2}}$","B) $\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$","C) $\\frac{s_1 + s_2}{\\sqrt{n}}$","D) $s_p \\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$"],"correct":"B","explanation":{"concept":"Standard Error of Two Independent Means (Large Samples)","conceptAr":"الخطأ المعياري للفرق بين متوسطين (عينات كبيرة)","steps":["For independent random samples, variances always add: $\\text{Var}(\\bar{X}_1 - \\bar{X}_2) = \\text{Var}(\\bar{X}_1) + \\text{Var}(\\bar{X}_2)$.","$\\text{Var}(\\bar{X}_1 - \\bar{X}_2) = \\frac{\\sigma_1^2}{n_1} + \\frac{\\sigma_2^2}{n_2}$.","Taking the square root gives: $\\text{SE} = \\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$."],"stepsAr":["للعينات المستقلة، تضاف التباينات دائماً ولا تُطرح: $\\text{Var}(\\bar{X}_1 - \\bar{X}_2) = \\text{Var}(\\bar{X}_1) + \\text{Var}(\\bar{X}_2)$.","وبأخذ الجذر التربيعي نحصل على الخطأ المعياري: $\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$."],"whyWrong":"Variances are never subtracted in standard errors (variability increases when combining random variables).","whyWrongAr":"لا تُطرح التباينات أبداً في الخطأ المعياري، فالتباين الكلي يزداد بالجمع."}},{"id":12,"question":"In Example 2.7 ($\\bar{Y}_1 = 80$, $\\sigma_1 = 5$, $n_1 = 30$; $\\bar{Y}_2 = 75$, $\\sigma_2 = 3$, $n_2 = 30$), the point estimate of $\\mu_1 - \\mu_2$ is:","questionAr":"في المثال 2.7 ($\\bar{Y}_1 = 80$, $\\sigma_1 = 5$, $n_1 = 30$; $\\bar{Y}_2 = 75$, $\\sigma_2 = 3$, $n_2 = 30$)، فإن التقدير بنقطة للفرق $\\mu_1 - \\mu_2$ هو:","formula":"\\hat{\\theta} = \\bar{Y}_1 - \\bar{Y}_2","options":["A) 3","B) 5","C) 7","D) 155"],"optionsAr":["A) 3","B) 5","C) 7","D) 155"],"correct":"B","explanation":{"concept":"Point Estimate for Difference Between Two Means","conceptAr":"التقدير بنقطة للفرق بين متوسطين","steps":["The best point estimator of $\\mu_1 - \\mu_2$ is the difference in sample means:","$\\bar{Y}_1 - \\bar{Y}_2 = 80 - 75 = 5$."],"stepsAr":["أفضل تقدير بنقطة للفرق بين متوسطي مجتمعين $\\mu_1 - \\mu_2$ هو الفرق بين متوسطي عينتيهما:","$\\bar{Y}_1 - \\bar{Y}_2 = 80 - 75 = 5$."],"whyWrong":"Simply subtract the second sample mean from the first: 80 - 75 = 5.","whyWrongAr":"بطرح متوسط العينة الثانية من الأولى: 80 - 75 = 5."}},{"id":13,"question":"In Example 2.7 ($\\sigma_1 = 5, n_1 = 30; \\sigma_2 = 3, n_2 = 30$), the standard error of the difference is approximately:","questionAr":"في المثال 2.7 ($\\sigma_1 = 5, n_1 = 30; \\sigma_2 = 3, n_2 = 30$)، الخطأ المعياري لفرق المتوسطين يساوي تقريباً:","formula":"\\sigma_{\\bar{Y}_1 - \\bar{Y}_2} = \\sqrt{\\frac{\\sigma_1^2}{n_1} + \\frac{\\sigma_2^2}{n_2}}","options":["A) 0.53","B) 1.0646","C) 2.00","D) 5.00"],"optionsAr":["A) 0.53","B) 1.0646","C) 2.00","D) 5.00"],"correct":"B","explanation":{"concept":"Calculation of Two-Sample Standard Error","conceptAr":"حساب الخطأ المعياري للعينتين","steps":["$\\sigma_1 = 5 \\implies \\sigma_1^2 = 25$","$\\sigma_2 = 3 \\implies \\sigma_2^2 = 9$","$\\text{SE} = \\sqrt{\\frac{25}{30} + \\frac{9}{30}} = \\sqrt{\\frac{34}{30}} = \\sqrt{1.13333} \\approx 1.06458 \\approx 1.0646$."],"stepsAr":["$\\sigma_1^2 = 25$ و $\\sigma_2^2 = 9$","$\\text{SE} = \\sqrt{\\frac{25}{30} + \\frac{9}{30}} = \\sqrt{\\frac{34}{30}} = \\sqrt{1.1333} \\approx 1.0646$."],"whyWrong":"Squaring the standard deviations and dividing by 30 gives $\\sqrt{34/30} = 1.0646$.","whyWrongAr":"بتربيع الانحرافات وقسمتها على 30 وأخذ الجذر التربيعي نحصل على 1.0646."}},{"id":14,"question":"For a 94% confidence level, $\\alpha/2$ equals:","questionAr":"لمستوى ثقة مقداره 94%، فإن قيمة $\\alpha/2$ تساوي:","options":["A) 0.06","B) 0.03","C) 0.05","D) 0.02"],"optionsAr":["A) 0.06","B) 0.03","C) 0.05","D) 0.02"],"correct":"B","explanation":{"concept":"Significance Level Halving","conceptAr":"تحديد مساحة الطرف لمستوى ثقة 94%","steps":["Confidence level: $94\\% = 0.94$.","Significance level: $\\alpha = 1 - 0.94 = 0.06$.","Split across two symmetrical tails: $\\frac{\\alpha}{2} = \\frac{0.06}{2} = 0.03$."],"stepsAr":["مستوى الثقة $= 0.94$.","$\\alpha = 1 - 0.94 = 0.06$.","تقسيم على طرفين: $\\frac{\\alpha}{2} = \\frac{0.06}{2} = 0.03$."],"whyWrong":"0.06 is total $\\alpha$. Divided by 2 for each tail gives 0.03.","whyWrongAr":"0.06 هو إجمالي ألفا للطرفين، ولكل طرف بمفرده 0.03."}},{"id":15,"question":"The 94% confidence interval for $\\mu_1 - \\mu_2$ in Example 2.7 (Estimate = 5, $\\text{SE} \\approx 1.0646$, $z_{0.03} \\approx 1.88$) is approximately:","questionAr":"فترة الثقة 94% للفرق $\\mu_1 - \\mu_2$ في المثال 2.7 هي تقريباً:","formula":"\\text{CI} = (\\bar{Y}_1 - \\bar{Y}_2) \\pm z_{\\alpha/2} \\cdot \\text{SE}","options":["A) (1.00, 9.00)","B) (3.00, 7.00)","C) (2.00, 8.00)","D) (4.00, 6.00)"],"optionsAr":["A) (1.00, 9.00)","B) (3.00, 7.00)","C) (2.00, 8.00)","D) (4.00, 6.00)"],"correct":"B","explanation":{"concept":"Two-Sample Difference Confidence Interval","conceptAr":"حساب فترة الثقة للفرق بين متوسطين","steps":["Point estimate: $80 - 75 = 5$.","Critical value for $\\alpha/2 = 0.03$: $z_{0.03} = 1.88$.","Standard error: $\\text{SE} = 1.0646$.","Margin of error: $E = 1.88 \\times 1.0646 \\approx 2.00$.","Interval: $5 \\pm 2.00 = (3.00, 7.00)$."],"stepsAr":["التقدير بنقطة: $80 - 75 = 5$.","القيمة الحرجة لـ $\\alpha/2 = 0.03$ هي $z = 1.88$.","الخطأ المعياري: $\\text{SE} = 1.0646$.","هامش الخطأ: $E = 1.88 \\times 1.0646 \\approx 2.00$.","فترة الثقة: $5 \\pm 2.00 = (3.00, 7.00)$."],"whyWrong":"Margin of error is 2.00, so $5 - 2 = 3$ and $5 + 2 = 7$.","whyWrongAr":"هامش الخطأ يساوي 2.00 تماماً، وبالطرح والجمع ينتج (3.00، 7.00)."}},{"id":16,"question":"The pooled standard deviation $s_p$ is used when:","questionAr":"يُستخدم الانحراف المعياري المشترك (Pooled standard deviation $s_p$) عندما:","options":["A) Sample sizes are large and variances are unequal","B) Small samples are used and population variances are assumed equal","C) Populations are not normal","D) The sample size is greater than 30"],"optionsAr":["A) أحجام العينات كبيرة والتباينات غير متساوية","B) العينات صغيرة وتباينات المجتمعين مفترضة التساوي (Equal variances assumed)","C) المجتمعات ليست طبيعية","D) حجم العينة أكبر من 30"],"correct":"B","explanation":{"concept":"Conditions for Pooled Variance Procedure","conceptAr":"شروط استخدام التباين المشترك","steps":["The pooled $t$-procedure assumes:","1. Both populations are normally distributed.","2. Samples are independent and small ($n_1, n_2 < 30$).","3. Population variances are equal: $\\sigma_1^2 = \\sigma_2^2 = \\sigma^2$.","Under these conditions, data from both samples are pooled to provide a single, superior estimate $s_p^2$."],"stepsAr":["شروط استخدام التباين المشترك $s_p$:","1. التوزيعان يتبعان التوزيع الطبيعي.","2. العينات صغيرة ومستقلة.","3. تباين المجتمعين متساوٍ: $\\sigma_1^2 = \\sigma_2^2$.","يتم دمج معلومات العينتين معاً لتقدير التباين المشترك بكفاءة أعلى."],"whyWrong":"Pooling specifically requires the equal variance assumption ($\\sigma_1^2 = \\sigma_2^2$). When variances differ, Welch's unpooled t is used.","whyWrongAr":"الدمج يتطلب حصراً افتراض تساوي تبايني المجتمعين في العينات الصغيرة."}},{"id":17,"question":"The degrees of freedom for the pooled t-procedure is:","questionAr":"درجات الحرية لإجراء اختبار t ذي التباين المشترك للعينتين هي:","options":["A) $n_X + n_Y$","B) $n_X + n_Y - 1$","C) $n_X + n_Y - 2$","D) $n_X - n_Y$"],"optionsAr":["A) $n_X + n_Y$","B) $n_X + n_Y - 1$","C) $n_X + n_Y - 2$","D) $n_X - n_Y$"],"correct":"C","explanation":{"concept":"Degrees of Freedom for Two-Sample Pooled t","conceptAr":"درجات حرية اختبار t المشترك لعينتين","steps":["Sample 1 contributes $n_1 - 1$ degrees of freedom.","Sample 2 contributes $n_2 - 1$ degrees of freedom.","Total degrees of freedom: $\\text{df} = (n_1 - 1) + (n_2 - 1) = n_1 + n_2 - 2$."],"stepsAr":["العينة الأولى تقدم $n_1 - 1$ درجات حرية.","العينة الثانية تقدم $n_2 - 1$ درجات حرية.","إجمالي درجات الحرية: $(n_1 - 1) + (n_2 - 1) = n_1 + n_2 - 2$."],"whyWrong":"Two means are estimated (one from each sample), subtracting 2 degrees of freedom in total.","whyWrongAr":"نظراً لحساب متوسطين مستقلين للعينتين، يتم طرح درجتي حرية: $n_1 + n_2 - 2$."}},{"id":18,"question":"In Example 2.8 (Design I: $n_1 = 11, \\bar{x}_1 = 52, s_1 = 12$; Design II: $n_2 = 6, \\bar{x}_2 = 46, s_2 = 10$), the point estimate of $\\mu_1 - \\mu_2$ is:","questionAr":"في المثال 2.8 (التصميم الأول: $n_1 = 11, \\bar{x}_1 = 52, s_1 = 12$؛ التصميم الثاني: $n_2 = 6, \\bar{x}_2 = 46, s_2 = 10$)، فإن التقدير بنقطة هو:","formula":"\\hat{\\theta} = \\bar{x}_1 - \\bar{x}_2","options":["A) 4 units","B) 6 units","C) 10 units","D) 12 units"],"optionsAr":["A) 4 وحدات","B) 6 وحدات (6 units)","C) 10 وحدات","D) 12 وحدة"],"correct":"B","explanation":{"concept":"Point Estimate of Difference in Means","conceptAr":"التقدير بنقطة للفرق بين المتوسطين","steps":["$\\bar{x}_1 = 52$","$\\bar{x}_2 = 46$","Point Estimate $= \\bar{x}_1 - \\bar{x}_2 = 52 - 46 = 6$ units."],"stepsAr":["$\\bar{x}_1 = 52$","$\\bar{x}_2 = 46$","التقدير بنقطة $= 52 - 46 = 6$ وحدات."],"whyWrong":"52 - 46 equals 6 units.","whyWrongAr":"طرح متوسط التصميم الثاني من الأول يعطي 6 وحدات."}},{"id":19,"question":"In Example 2.8 ($n_1 = 11, s_1 = 12; n_2 = 6, s_2 = 10$), the pooled variance $s_p^2$ is approximately:","questionAr":"في المثال 2.8 ($n_1 = 11, s_1 = 12; n_2 = 6, s_2 = 10$)، التباين المشترك $s_p^2$ يساوي تقريباً:","formula":"s_p^2 = \\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}","options":["A) 100.00","B) 129.33","C) 144.00","D) 122.00"],"optionsAr":["A) 100.00","B) 129.33","C) 144.00","D) 122.00"],"correct":"B","explanation":{"concept":"Pooled Variance Calculation","conceptAr":"حساب التباين المشترك","steps":["Sample 1: $n_1 = 11 \\implies n_1 - 1 = 10$; $s_1 = 12 \\implies s_1^2 = 144$. Numerator 1: $10 \\times 144 = 1440$.","Sample 2: $n_2 = 6 \\implies n_2 - 1 = 5$; $s_2 = 10 \\implies s_2^2 = 100$. Numerator 2: $5 \\times 100 = 500$.","Total degrees of freedom: $11 + 6 - 2 = 15$.","Pooled variance: $s_p^2 = \\frac{1440 + 500}{15} = \\frac{1940}{15} = 129.333\\dots \\approx 129.33$."],"stepsAr":["العينة 1: $n_1 - 1 = 10$؛ $s_1^2 = 144$. البسط الأول: $10 \\times 144 = 1440$.","العينة 2: $n_2 - 1 = 5$؛ $s_2^2 = 100$. البسط الثاني: $5 \\times 100 = 500$.","المقام (درجات الحرية): $11 + 6 - 2 = 15$.","$s_p^2 = \\frac{1440 + 500}{15} = \\frac{1940}{15} \\approx 129.33$."],"whyWrong":"100 is $s_2^2$ and 144 is $s_1^2$. The weighted pooled variance is 129.33.","whyWrongAr":"100 و 144 هما تباينا العينتين، بينما التباين المرجح المشترك بينهما هو 129.33."}},{"id":20,"question":"The 95% confidence interval for $\\mu_1 - \\mu_2$ in Example 2.8 is:","questionAr":"فترة الثقة 95% للفرق $\\mu_1 - \\mu_2$ في المثال 2.8 هي:","formula":"\\text{CI} = (\\bar{x}_1 - \\bar{x}_2) \\pm t_{\\alpha/2, \\, \\text{df}} \\cdot s_p \\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}","options":["A) (2.00, 10.00)","B) (−6.30, 18.30)","C) (0.00, 12.00)","D) (3.50, 8.50)"],"optionsAr":["A) (2.00, 10.00)","B) (−6.30, 18.30)","C) (0.00, 12.00)","D) (3.50, 8.50)"],"correct":"B","explanation":{"concept":"Two-Sample Pooled t-Confidence Interval","conceptAr":"حساب فترة الثقة 95% باستخدام t المشترك","steps":["Point estimate: $\\bar{x}_1 - \\bar{x}_2 = 52 - 46 = 6$.","Pooled standard deviation: $s_p = \\sqrt{129.33} \\approx 11.372$.","Standard error: $\\text{SE} = s_p \\sqrt{\\frac{1}{11} + \\frac{1}{6}} = 11.372 \\times \\sqrt{0.0909 + 0.1667} = 11.372 \\times 0.5075 = 5.772$.","Critical value: for $\\text{df} = 15$ at $95\\%$, $t_{15, 0.025} = 2.131$.","Margin of error: $E = 2.131 \\times 5.772 \\approx 12.30$.","Interval: $6 \\pm 12.30 = (6 - 12.30, 6 + 12.30) = (-6.30, 18.30)$."],"stepsAr":["التقدير بنقطة: $52 - 46 = 6$.","الانحراف المشترك: $s_p = \\sqrt{129.33} \\approx 11.372$.","الخطأ المعياري: $\\text{SE} = 11.372 \\times \\sqrt{\\frac{1}{11} + \\frac{1}{6}} \\approx 5.772$.","القيمة الحرجة لـ $\\text{df} = 15$: $t = 2.131$.","هامش الخطأ: $E = 2.131 \\times 5.772 \\approx 12.30$.","فترة الثقة: $6 \\pm 12.30 = (-6.30, 18.30)$."],"whyWrong":"Because the margin of error (12.30) exceeds the point estimate (6), the lower limit goes negative: $6 - 12.30 = -6.30$, and upper is $6 + 12.30 = 18.30$. Since 0 is in the interval, the designs are not significantly different.","whyWrongAr":"هامش الخطأ 12.30 أكبر من الفرق 6، وبالتالي يمتد الحد الأدنى للقيم السالبة: $(-6.30, 18.30)$. وحيث أن الصفر مشمول، فلا يوجد فرق ذو دلالة إحصائية."}}]}];
+
+    let state = {
+      language: localStorage.getItem('edugate_mat211_lang') || 'en',
+      activeQuizId: null,
+      currentQuestionIdx: 0,
+      userAnswers: {},
+      progress: JSON.parse(localStorage.getItem('edugate_mat211_prog') || '{}'),
+      isSubmitted: false
+    };
+
+    function saveProgress() {
+      localStorage.setItem('edugate_mat211_prog', JSON.stringify(state.progress));
+    }
+
+    function toggleLanguage() {
+      state.language = state.language === 'en' ? 'ar' : 'en';
+      localStorage.setItem('edugate_mat211_lang', state.language);
+      document.body.className = state.language === 'ar' ? 'rtl' : 'ltr';
+      render();
+    }
+
+    function goHome(e) {
+      if (e) e.preventDefault();
+      state.activeQuizId = null;
+      state.currentQuestionIdx = 0;
+      state.userAnswers = {};
+      state.isSubmitted = false;
+      render();
+    }
+
+    function openQuiz(quizId) {
+      state.activeQuizId = quizId;
+      state.currentQuestionIdx = 0;
+      state.userAnswers = {};
+      state.isSubmitted = false;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectOption(qId, letter) {
+      state.userAnswers[qId] = letter;
+      render();
+    }
+
+    function nextQuestion() {
+      const quiz = quizzes.find(q => q.id === state.activeQuizId);
+      if (state.currentQuestionIdx < quiz.questions.length - 1) {
+        state.currentQuestionIdx++;
+        render();
+      }
+    }
+
+    function prevQuestion() {
+      if (state.currentQuestionIdx > 0) {
+        state.currentQuestionIdx--;
+        render();
+      }
+    }
+
+    function jumpToQuestion(idx) {
+      state.currentQuestionIdx = idx;
+      render();
+    }
+
+    function submitQuiz() {
+      const quiz = quizzes.find(q => q.id === state.activeQuizId);
+      let score = 0;
+      quiz.questions.forEach(q => {
+        if (state.userAnswers[q.id] === q.correct) score++;
+      });
+
+      const current = state.progress[quiz.id] || { completed: false, bestScore: 0, attempts: 0 };
+      state.progress[quiz.id] = {
+        completed: true,
+        bestScore: Math.max(current.bestScore, score),
+        attempts: (current.attempts || 0) + 1
+      };
+      saveProgress();
+
+      state.isSubmitted = true;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Confetti burst if >= 80%
+      const pct = Math.round((score / quiz.questions.length) * 100);
+      if (pct >= 80 && window.confetti) {
+        confetti({
+          particleCount: 120,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    function renderMath() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.getElementById('appRoot'), {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function render() {
+      const root = document.getElementById('appRoot');
+      const isAr = state.language === 'ar';
+      const navLeft = document.getElementById('navLeft');
+      const navCenter = document.getElementById('navCenter');
+
+      if (!state.activeQuizId) {
+        // Render Quiz List Page
+        navLeft.innerHTML = '<a href="index.html" class="nav-brand"><span>' + (isAr ? '← العودة إلى EDUGATE' : '← Back to EDUGATE') + '</span></a>';
+        navCenter.textContent = isAr ? 'اختبارات الاحتمالات والإحصاء' : 'Probability Quizzes';
+
+        let cardsHtml = quizzes.map(q => {
+          const prog = state.progress[q.id];
+          const isDone = prog && prog.completed;
+          const best = prog ? prog.bestScore : 0;
+          const attempts = prog ? prog.attempts : 0;
+
+          return `
+            <div class="quiz-card" onclick="openQuiz('${q.id}')">
+              <div>
+                <div class="card-top">
+                  <span class="quiz-number">QUIZ 0${q.quizNumber}</span>
+                  <span class="diff-tag diff-${q.difficulty}">${q.difficulty}</span>
+                </div>
+                <div class="card-title">${isAr ? q.titleAr : q.title}</div>
+                <div class="card-desc">${isAr ? q.subtitleAr : q.subtitle}</div>
+              </div>
+              <div class="card-footer">
+                <div>${q.questionCount} MCQs ${attempts > 0 ? '· ' + attempts + ' attempts' : ''}</div>
+                ${isDone ? `<div class="completed-badge">✓ Best: ${best}/${q.questionCount}</div>` : `<div style="color: #818cf8; font-weight: 500;">Start →</div>`}
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        root.innerHTML = `
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #818cf8; margin-bottom: 0.5rem; text-transform: uppercase;">
+              MAT211 Curriculum · EDUGATE
+            </div>
+            <h2 class="font-heading" style="font-size: 2.5rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">
+              ${isAr ? 'اختبارات التدريب التفاعلية' : 'Practice Quizzes'}
+            </h2>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 650px; margin: 0 auto; line-height: 1.6;">
+              ${isAr ? 'أتقن نظريات الاحتمالات والتوزيعات والاستدلال الإحصائي من خلال الممارسة العملية' : 'Master probability theory, distributions, and statistical reasoning through practice'}
+            </p>
+          </div>
+          <div class="quiz-grid">
+            ${cardsHtml}
+          </div>
+        `;
+      } else {
+        const quiz = quizzes.find(q => q.id === state.activeQuizId);
+
+        if (!state.isSubmitted) {
+          // Render Quiz Runner
+          navLeft.innerHTML = `<a href="index.html" class="nav-brand" style="margin-right: 6px;"><span>← EDUGATE</span></a> <span style="opacity: 0.3;">/</span> <a href="#" class="nav-brand" onclick="goHome(event)" style="margin-left: 6px;"><span>${isAr ? 'جميع الاختبارات' : 'All Quizzes'}</span></a>`;
+          navCenter.textContent = isAr ? quiz.titleAr : quiz.title;
+
+          const q = quiz.questions[state.currentQuestionIdx];
+          const total = quiz.questions.length;
+          const currentSelection = state.userAnswers[q.id];
+          const isLast = state.currentQuestionIdx === total - 1;
+          const progressPct = Math.round(((state.currentQuestionIdx + 1) / total) * 100);
+
+          let formulaHtml = '';
+          if (q.formula) {
+            formulaHtml = `
+              <div class="formula-box">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #818cf8; margin-bottom: 0.4rem; text-transform: uppercase;">
+                  Governing Expression
+                </div>
+                <div>$$${q.formula}$$</div>
+              </div>
+            `;
+          }
+
+          let tableHtml = '';
+          if (q.tableData) {
+            const t = q.tableData;
+            const headers = (isAr && t.headersAr) ? t.headersAr : t.headers;
+            tableHtml = `
+              <div class="data-table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>
+                  </thead>
+                  <tbody>
+                    ${t.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+            `;
+          }
+
+          const opts = (isAr && q.optionsAr) ? q.optionsAr : q.options;
+          const letters = ['A', 'B', 'C', 'D'];
+
+          let optionsHtml = opts.map((opt, i) => {
+            const letter = letters[i];
+            const isSelected = currentSelection === letter;
+            const cleanOpt = opt.replace(/^[A-D])s*/, '');
+            return `
+              <div class="option-card ${isSelected ? 'selected' : ''}" onclick="selectOption(${q.id}, '${letter}')">
+                <div class="option-badge">${letter}</div>
+                <div style="flex: 1; font-size: 1rem; color: #e2e8f0; line-height: 1.5;">${cleanOpt}</div>
+              </div>
+            `;
+          }).join('');
+
+          let dotsHtml = quiz.questions.map((quest, i) => {
+            const isAnswered = state.userAnswers[quest.id] !== undefined;
+            const isActive = i === state.currentQuestionIdx;
+            return `<button class="nav-dot ${isAnswered ? 'answered' : ''} ${isActive ? 'active' : ''}" onclick="jumpToQuestion(${i})" title="Q${i+1}"></button>`;
+          }).join('');
+
+          root.innerHTML = `
+            <div style="max-width: 800px; margin: 0 auto;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
+                <h2 class="font-heading" style="font-size: 1.5rem; font-weight: 700; color: #fff;">
+                  ${isAr ? quiz.titleAr : quiz.title}
+                </h2>
+                <span class="font-mono" style="font-size: 0.85rem; color: #818cf8;">
+                  ${isAr ? `السؤال ${state.currentQuestionIdx + 1} من ${total}` : `Question ${state.currentQuestionIdx + 1} of ${total}`}
+                </span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: ${progressPct}%;"></div>
+              </div>
+
+              <div style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2rem; margin-top: 1.5rem; box-shadow: 0 16px 32px rgba(0,0,0,0.4);">
+                <div class="font-mono" style="font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem;">Q${q.id}.</div>
+                <div style="font-size: 1.15rem; line-height: 1.7; color: #f1f5f9; margin-bottom: 1rem;">
+                  ${isAr ? q.questionAr : q.question}
+                </div>
+                ${formulaHtml}
+                ${tableHtml}
+                <div style="margin-top: 1.5rem;">
+                  ${optionsHtml}
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.25rem;">
+                  <button class="btn-primary" style="background: rgba(255,255,255,0.08); color: #cbd5e1; padding: 10px 24px;" onclick="prevQuestion()" ${state.currentQuestionIdx === 0 ? 'disabled' : ''}>
+                    ${isAr ? 'السابق' : 'Previous'}
+                  </button>
+                  ${isLast ? `
+                    <button class="btn-primary" style="background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);" onclick="submitQuiz()" ${!currentSelection ? 'disabled' : ''}>
+                      ${isAr ? 'تسليم الاختبار والنتيجة' : 'Submit Quiz'}
+                    </button>
+                  ` : `
+                    <button class="btn-primary" onclick="nextQuestion()" ${!currentSelection ? 'disabled' : ''}>
+                      ${isAr ? 'التالي' : 'Next'}
+                    </button>
+                  `}
+                </div>
+              </div>
+
+              <div class="nav-dots">
+                ${dotsHtml}
+              </div>
+            </div>
+          `;
+        } else {
+          // Render Results & Explanations Page
+          navLeft.innerHTML = `<a href="index.html" class="nav-brand" style="margin-right: 6px;"><span>← EDUGATE</span></a> <span style="opacity: 0.3;">/</span> <a href="#" class="nav-brand" onclick="goHome(event)" style="margin-left: 6px;"><span>${isAr ? 'جميع الاختبارات' : 'All Quizzes'}</span></a>`;
+          navCenter.textContent = isAr ? 'نتيجة الاختبار' : 'Quiz Results';
+
+          let correctCount = 0;
+          quiz.questions.forEach(q => {
+            if (state.userAnswers[q.id] === q.correct) correctCount++;
+          });
+          const total = quiz.questions.length;
+          const pct = Math.round((correctCount / total) * 100);
+
+          let message = '';
+          let color = '#10b981';
+          if (pct >= 80) {
+            message = isAr ? 'ممتاز! 🎉 أداء رائع' : 'Excellent! 🎉';
+            color = '#10b981';
+          } else if (pct >= 50) {
+            message = isAr ? 'عمل جيد! واصل التدريب 💪' : 'Good job! Keep practicing 💪';
+            color = '#fbbf24';
+          } else {
+            message = isAr ? 'راجع المادة العلمية وحاول ثانية 📚' : 'Review the material and try again 📚';
+            color = '#f43f5e';
+          }
+
+          let reviewItems = quiz.questions.map(q => {
+            const userChoice = state.userAnswers[q.id];
+            const isCorrect = userChoice === q.correct;
+
+            let formulaBox = q.formula ? `<div class="formula-box">$$${q.formula}$$</div>` : '';
+            let tableBox = '';
+            if (q.tableData) {
+              const t = q.tableData;
+              const headers = (isAr && t.headersAr) ? t.headersAr : t.headers;
+              tableBox = `
+                <div class="data-table-container">
+                  <table class="data-table">
+                    <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+                    <tbody>${t.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+                  </table>
+                </div>
+              `;
+            }
+
+            let explanationBox = '';
+            if (!isCorrect) {
+              const steps = isAr ? q.explanation.stepsAr : q.explanation.steps;
+              const whyWrong = isAr ? q.explanation.whyWrongAr : q.explanation.whyWrong;
+              const concept = isAr ? q.explanation.conceptAr : q.explanation.concept;
+
+              explanationBox = `
+                <div class="explanation-box">
+                  <div class="font-heading" style="font-weight: 600; color: #818cf8; font-size: 1.05rem; margin-bottom: 0.5rem;">
+                    ${isAr ? 'لماذا هذه هي الإجابة الصحيحة؟' : 'Why this is the correct answer'}
+                  </div>
+                  <div class="font-mono" style="font-size: 0.75rem; color: #a5b4fc; margin-bottom: 0.75rem;">
+                    <strong>${isAr ? 'المفهوم الإحصائي:' : 'Statistical Concept:'}</strong> ${concept}
+                  </div>
+                  <div style="font-size: 0.9rem; line-height: 1.6; color: #e2e8f0; margin-bottom: 0.75rem;">
+                    ${steps.map((st, i) => `<div style="margin-bottom: 0.4rem;"><strong>${i+1}.</strong> ${st}</div>`).join('')}
+                  </div>
+                  <div style="font-size: 0.85rem; color: #fca5a5; background: rgba(0,0,0,0.25); padding: 0.75rem; border-radius: 8px;">
+                    ${whyWrong}
+                  </div>
+                </div>
+              `;
+            }
+
+            return `
+              <div style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-left: 5px solid ${isCorrect ? '#10b981' : '#f43f5e'}; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <span class="font-mono" style="font-size: 0.85rem; color: #818cf8; font-weight: 700;">Q${q.id}</span>
+                  <span style="font-size: 0.8rem; font-weight: 600; color: ${isCorrect ? '#10b981' : '#f43f5e'};">
+                    ${isCorrect ? (isAr ? 'إجابة صحيحة ✅' : 'Correct ✅') : (isAr ? 'إجابة خاطئة ❌' : 'Incorrect ❌')}
+                  </span>
+                </div>
+                <div style="font-size: 1.05rem; line-height: 1.6; color: #f1f5f9; margin-bottom: 0.75rem;">
+                  ${isAr ? q.questionAr : q.question}
+                </div>
+                ${formulaBox}
+                ${tableBox}
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-top: 0.75rem; color: #94a3b8;">
+                  <div>${isAr ? 'إجابتك:' : 'Your answer:'} <span style="color: ${isCorrect ? '#10b981' : '#f43f5e'}; font-weight: bold;">${userChoice ? userChoice + ') ' + ((opts.find(o => o.startsWith(userChoice + ')')) || '').replace(/^[A-D]\)\s*/, '')) : (isAr ? 'لم تتم الإجابة' : 'Unanswered')}</span></div>
+                  ${!isCorrect ? `<div>${isAr ? 'الإجابة الصحيحة:' : 'Correct answer:'} <span style="color: #10b981; font-weight: bold;">${q.correct}) ${((opts.find(o => o.startsWith(q.correct + ')')) || '').replace(/^[A-D]\)\s*/, ''))}</span></div>` : ''}
+                </div>
+                ${explanationBox}
+              </div>
+            `;
+          }).join('');
+
+          root.innerHTML = `
+            <div style="max-width: 800px; margin: 0 auto;">
+              <div style="background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 2.5rem; box-shadow: 0 16px 32px rgba(0,0,0,0.5);">
+                <div class="font-heading" style="font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; color: #fff; line-height: 1;">
+                  ${correctCount} / ${total}
+                </div>
+                <div class="font-mono" style="font-size: 1.5rem; color: #818cf8; margin-top: 0.5rem; font-weight: 600;">
+                  (${pct}%)
+                </div>
+                <div style="font-size: 1.15rem; font-weight: 600; color: ${color}; margin: 1rem 0 1.5rem 0;">
+                  ${message}
+                </div>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                  <button class="btn-primary" onclick="openQuiz('${quiz.id}')">
+                    ${isAr ? 'إعادة الاختبار' : 'Retry Quiz'}
+                  </button>
+                  <button class="btn-primary" style="background: rgba(255,255,255,0.08); color: #cbd5e1;" onclick="goHome(event)">
+                    ${isAr ? 'العودة للاختبارات' : 'Back to Quizzes'}
+                  </button>
+                </div>
+              </div>
+
+              <h3 class="font-heading" style="font-size: 1.5rem; color: #fff; margin-bottom: 1.25rem;">
+                ${isAr ? 'مراجعة جميع الأسئلة والحلول' : 'All Questions Review'}
+              </h3>
+              <div>
+                ${reviewItems}
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      renderMath();
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    // Initial render
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.className = state.language === 'ar' ? 'rtl' : 'ltr';
+      render();
+    });
+  </script>
+</body>
+</html>

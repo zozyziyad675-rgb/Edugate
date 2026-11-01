@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linear Algebra Quizzes (MAT212) | EDUGATE</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- GSAP for Smooth Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg: #030305;
+      --surface: #0a0a0f;
+      --surface-card: #111118;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-glow: rgba(99, 102, 241, 0.3);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(99, 102, 241, 0.4);
+      --success: #10b981;
+      --error: #f43f5e;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .katex-mathml {
+      display: none !important;
+    }
+
+    /* Animated background blobs */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.1;
+      animation: float 20s infinite alternate ease-in-out;
+    }
+    .blob-1 {
+      top: -10%;
+      left: -10%;
+      width: 450px;
+      height: 450px;
+      background: #6366f1;
+    }
+    .blob-2 {
+      top: 40%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: #06b6d4;
+      animation-duration: 25s;
+    }
+    .blob-3 {
+      bottom: -10%;
+      left: 30%;
+      width: 400px;
+      height: 400px;
+      background: #8b5cf6;
+      animation-duration: 22s;
+    }
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -40px) scale(1.08); }
+      100% { transform: translate(-20px, 30px) scale(0.95); }
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 10, 15, 0.85);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: #fff;
+    }
+    .badge-mat {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+      border-radius: 6px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 6rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Titles */
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+    }
+    .header-section {
+      margin-bottom: 2.5rem;
+    }
+    .page-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Grid */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .quiz-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .quiz-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Cards */
+    .quiz-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .quiz-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-hover);
+      box-shadow: 0 12px 30px var(--primary-glow);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .quiz-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      color: #cbd5e1;
+    }
+    .difficulty-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .tag-easy { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .tag-medium { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-hard { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+    
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .card-desc {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+    .card-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .best-badge {
+      color: var(--success);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Quiz View */
+    .quiz-view-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: var(--surface-card);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.75rem 0 1.75rem;
+      border: 1px solid var(--border);
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .question-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .question-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .question-prompt {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+    .math-display-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 1.2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+
+    /* Options */
+    .option-card {
+      background: var(--surface-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: all 0.2s ease;
+      text-align: left;
+      width: 100%;
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .option-card:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(99, 102, 241, 0.05);
+    }
+    .option-card.selected {
+      border-color: #6366f1;
+      border-left: 4px solid #6366f1;
+      background: rgba(99, 102, 241, 0.08);
+      color: #fff;
+    }
+    .opt-key {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .option-card.selected .opt-key {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Controls */
+    .btn-next {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 32px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter 0.2s ease, opacity 0.2s ease;
+    }
+    .btn-next:hover:not(:disabled) {
+      filter: brightness(1.1);
+    }
+    .btn-next:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .btn-submit {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 32px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      animation: pulse-glow 2s infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 10px rgba(99,102,241,0.4); }
+      50% { box-shadow: 0 0 25px rgba(99,102,241,0.8); }
+    }
+
+    /* Question dots */
+    .dots-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.45rem;
+      margin-top: 2rem;
+    }
+    .dot-item {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+    .dot-item.active {
+      border-color: #6366f1;
+      background: #6366f1;
+      color: #fff;
+      transform: scale(1.1);
+    }
+    .dot-item.answered:not(.active) {
+      border-color: rgba(99, 102, 241, 0.5);
+      background: rgba(99, 102, 241, 0.2);
+      color: #cbd5e1;
+    }
+
+    /* Results Screen */
+    .results-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .big-score {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(3rem, 6vw, 5rem);
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .score-pct {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .score-msg {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Review questions */
+    .review-item {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+    }
+    .review-item.correct {
+      border-left: 4px solid var(--success);
+    }
+    .review-item.wrong {
+      border-left: 4px solid var(--error);
+    }
+    .explanation-box {
+      background: rgba(99, 102, 241, 0.03);
+      border-left: 4px solid #6366f1;
+      border-radius: 0 14px 14px 0;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .explanation-title {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: #818cf8;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Floating Translate Button */
+    .btn-translate {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.15);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 50;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .btn-translate:hover {
+      background: rgba(99, 102, 241, 0.3);
+      transform: scale(1.05);
+      color: #fff;
+    }
+    .lang-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      font-weight: bold;
+      background: var(--primary);
+      color: #fff;
+      padding: 2px 5px;
+      border-radius: 10px;
+    }
+
+    /* Direction */
+    body[dir="rtl"] .option-card {
+      text-align: right;
+    }
+    body[dir="rtl"] .review-item.correct {
+      border-left: 1px solid var(--border);
+      border-right: 4px solid var(--success);
+    }
+    body[dir="rtl"] .review-item.wrong {
+      border-left: 1px solid var(--border);
+      border-right: 4px solid var(--error);
+    }
+    body[dir="rtl"] .explanation-box {
+      border-left: none;
+      border-right: 4px solid #6366f1;
+      border-radius: 14px 0 0 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Animated Blobs -->
+  <div class="bg-mesh">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <a id="navLeft" class="nav-brand" href="index.html" style="text-decoration: none; padding: 6px 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;">
+      <span style="color: #cbd5e1; font-weight: 500;">← Back to EDUGATE</span>
+    </a>
+    <div class="nav-title" id="navTitle">Linear Algebra Quizzes</div>
+    <div>
+      <span class="badge-mat">MAT212</span>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container" id="mainContainer">
+    <!-- Injected by JavaScript -->
+  </main>
+
+  <!-- Floating Translate Button -->
+  <button class="btn-translate" id="btnTranslate" onclick="toggleLang()" title="Switch Language (English / Arabic)">
+    <i data-lucide="globe"></i>
+    <span class="lang-badge" id="langBadge">EN</span>
+  </button>
+
+  <script>
+    // State
+    let currentLang = localStorage.getItem('edugate_linear_algebra_lang') || 'en';
+    let currentQuizId = null;
+    let currentQuestionIdx = 0;
+    let userAnswers = {};
+    let isSubmitted = false;
+    let startTime = null;
+    let timerInterval = null;
+    let elapsedSeconds = 0;
+
+    // Load Quizzes data dynamically from parent script or embedded API
+    const quizzes = [
+      {
+        id: 1, number: 1,
+        titleEn: 'Matrix Operations & Algebra Basics', titleAr: 'عمليات المصفوفات وأساسيات الجبر',
+        difficulty: 'Easy', count: 20,
+        descEn: 'Dimensions, entries, scalar multiplication, matrix products, properties of transpose.',
+        descAr: 'أبعاد المصفوفات، ضرب الثوابت، ضرب المصفوفات، وخصائص منقول المصفوفة.'
+      },
+      {
+        id: 2, number: 2,
+        titleEn: 'Square Matrix & The Inverse', titleAr: 'المصفوفات المربعة والمعكوس',
+        difficulty: 'Easy', count: 20,
+        descEn: 'Diagonal and scalar matrices, identity, triangular, symmetric, 2x2 inverse.',
+        descAr: 'المصفوفات القطرية، مصفوفة الوحدة، المصفوفات المتماثلة، ومعكوس 2x2.'
+      },
+      {
+        id: 3, number: 3,
+        titleEn: 'Linear Algebraic Systems', titleAr: 'الأنظمة الجبرية الخطية',
+        difficulty: 'Medium', count: 20,
+        descEn: 'Homogeneous systems, augmented matrices, solution sets, elementary row operations.',
+        descAr: 'الأنظمة المتجانسة، المصفوفة الموسعة، مجموعات الحل، وعمليات الصفوف الأولية.'
+      },
+      {
+        id: 4, number: 4,
+        titleEn: 'Types of Solutions of Systems', titleAr: 'أنواع حلول الأنظمة الخطية',
+        difficulty: 'Medium', count: 20,
+        descEn: 'Pivots, free variables, infinite solutions, Gaussian vs. Gauss-Jordan elimination.',
+        descAr: 'عناصر الارتكاز، المتغيرات الحرة، الحلول اللا نهائية، وحذف غاوس-جوردان.'
+      },
+      {
+        id: 5, number: 5,
+        titleEn: 'Eliminations & The Matrix Inverse', titleAr: 'الحذف وإيجاد معكوس المصفوفة',
+        difficulty: 'Medium', count: 20,
+        descEn: '[A | I_n] reduction, detecting singular matrices, solving AX=I simultaneously.',
+        descAr: 'خوارزمية [A | I_n] لإيجاد المعكوس، كشف المصفوفات الشاذة، وحل الأنظمة المتعددة.'
+      },
+      {
+        id: 6, number: 6,
+        titleEn: 'Determinants & Matrix Inverses', titleAr: 'المحددات والمعكوس بالمصفوفة المرافقة',
+        difficulty: 'Hard', count: 20,
+        descEn: 'Minors, cofactors, adj(A), properties of determinants, adjoint inversion formula.',
+        descAr: 'المحددات الصغرى، العوامل المرافقة، مصفوفة المرافقة، وقانون المعكوس.'
+      },
+      {
+        id: 7, number: 7,
+        titleEn: 'Determinants & Cramer\'s Rule', titleAr: 'المحددات وقاعدة كرامر',
+        difficulty: 'Hard', count: 20,
+        descEn: 'Invertible Matrix Theorem, Cramer\'s Rule formula x_k = det(A_k)/det(A), 2x2 and 3x3 systems.',
+        descAr: 'قاعدة كرامر لحل الأنظمة الخطية المربعة، وحساب n+1 من المحددات.'
+      }
+    ];
+
+    // LocalStorage Progress Helpers
+    function getStoredProgress() {
+      try {
+        return JSON.parse(localStorage.getItem('edugate_linear_algebra_progress_v2') || '{}');
+      } catch (e) { return {}; }
+    }
+
+    function saveAttempt(quizId, score, total) {
+      const prog = getStoredProgress();
+      const prev = prog[quizId] || { bestScore: 0, attempts: 0 };
+      prog[quizId] = {
+        completed: true,
+        bestScore: Math.max(prev.bestScore, score),
+        totalQuestions: total,
+        attempts: prev.attempts + 1,
+        lastScore: score
+      };
+      localStorage.setItem('edugate_linear_algebra_progress_v2', JSON.stringify(prog));
+    }
+
+    function toggleLang() {
+      currentLang = currentLang === 'en' ? 'ar' : 'en';
+      localStorage.setItem('edugate_linear_algebra_lang', currentLang);
+      document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.getElementById('langBadge').innerText = currentLang.toUpperCase();
+      renderApp();
+    }
+
+    function goHome() {
+      currentQuizId = null;
+      isSubmitted = false;
+      userAnswers = {};
+      clearInterval(timerInterval);
+      renderApp();
+    }
+
+    function renderApp() {
+      document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.getElementById('langBadge').innerText = currentLang.toUpperCase();
+      lucide.createIcons();
+
+      if (currentQuizId === null) {
+        renderQuizList();
+      } else {
+        // Redirect to full rich Vite React app if standalone needs deep full-quiz view
+        window.location.href = '/';
+      }
+      lucide.createIcons();
+    }
+
+    function renderQuizList() {
+      const prog = getStoredProgress();
+      const isAr = currentLang === 'ar';
+      document.getElementById('navTitle').innerText = isAr ? 'اختبارات الجبر الخطي' : 'Linear Algebra Quizzes';
+
+      let html = `
+        <div class="header-section">
+          <h2 class="page-title">${isAr ? 'اختبارات التدريب والتمارين' : 'Practice Quizzes'}</h2>
+          <p class="page-subtitle">${isAr ? 'أتقن مفاهيم المصفوفات، الأنظمة الخطية، المحددات، وقاعدة كرامر' : 'Master matrices, vectors, and linear transformations through practice'}</p>
+        </div>
+        <div class="quiz-grid">
+      `;
+
+      quizzes.forEach(q => {
+        const p = prog[q.id];
+        const isDone = p && p.completed;
+        const tagClass = q.difficulty === 'Easy' ? 'tag-easy' : q.difficulty === 'Medium' ? 'tag-medium' : 'tag-hard';
+        const diffText = isAr ? (q.difficulty === 'Easy' ? 'سهل' : q.difficulty === 'Medium' ? 'متوسط' : 'متقدم') : q.difficulty;
+
+        html += `
+          <div class="quiz-card" onclick="window.location.href='/'">
+            <div>
+              <div class="card-top">
+                <span class="quiz-num">${isAr ? 'اختبار ' + q.number : 'Quiz 0' + q.number}</span>
+                <span class="difficulty-tag ${tagClass}">${diffText}</span>
+              </div>
+              <h3 class="card-title">${isAr ? q.titleAr : q.titleEn}</h3>
+              <p class="card-desc">${isAr ? q.descAr : q.descEn}</p>
+            </div>
+            <div class="card-footer">
+              <span>${isAr ? q.count + ' أسئلة' : q.count + ' Questions'}</span>
+              ${isDone ? `<span class="best-badge"><i data-lucide="check-circle-2" style="width:14px;height:14px;"></i> Best: ${p.bestScore}/${q.count}</span>` : `<span style="color:#818cf8; font-weight:600;">${isAr ? 'ابدأ الآن ←' : 'Start →'}</span>`}
+            </div>
+          </div>
+        `;
+      });
+
+      html += '</div>';
+      document.getElementById('mainContainer').innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // Initialize
+    window.onload = () => {
+      renderApp();
+    };
+  </script>
+</body>
+</html>

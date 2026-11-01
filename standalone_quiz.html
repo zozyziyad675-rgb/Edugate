@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDUGATE - MAT313 Differential Equations Quizzes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #030305;
+      color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .font-heading { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.12;
+      animation: float 20s infinite alternate ease-in-out;
+    }
+    .blob-1 { width: 550px; height: 550px; background: #6366f1; top: -100px; left: -100px; }
+    .blob-2 { width: 500px; height: 500px; background: #06b6d4; bottom: -50px; right: -50px; }
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(60px, 40px) scale(1.1); }
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(10, 10, 15, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .brand-link:hover { color: #f1f5f9; }
+    .title-nav { font-size: 1.1rem; font-weight: 600; color: #f8fafc; }
+    .badge-mat {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #818cf8;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 6rem;
+    }
+    .btn-translate {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.15);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    .btn-translate:hover {
+      transform: scale(1.06);
+      background: rgba(99, 102, 241, 0.3);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+  <header>
+    <a class="brand-link" href="/">
+      <span>←</span>
+      <span>Back to EDUGATE</span>
+    </a>
+    <div class="title-nav">Differential Equations Quizzes</div>
+    <div class="badge-mat">MAT313</div>
+  </header>
+  <main>
+    <div style="text-align: center; padding: 4rem 1rem;">
+      <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">EDUGATE MAT313 Platform</h1>
+      <p style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 2rem;">
+        Complete interactive quizzes with KaTeX rendering, bilingual translation, and step-by-step solutions are ready!
+      </p>
+      <a href="/" style="display: inline-block; background: #6366f1; color: white; padding: 12px 32px; border-radius: 10px; text-decoration: none; font-weight: 600;">
+        Open Interactive Quizzes →
+      </a>
+    </div>
+  </main>
+</body>
+</html>

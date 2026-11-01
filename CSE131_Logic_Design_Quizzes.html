@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Design Quizzes (CSE131) - EDUGATE</title>
+  <meta name="description" content="Interactive quizzes page for Logic Design (CSE131) as part of EDUGATE platform.">
+
+  <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono, Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- KaTeX CDN for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #030305;
+      --surface: #0a0a0f;
+      --surface-card: #111118;
+      --primary: #6366f1;
+      --text: #f1f5f9;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+    }
+
+    code, pre, .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    [dir="rtl"] {
+      font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+    }
+
+    [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4 {
+      font-family: 'Cairo', 'Space Grotesk', system-ui, sans-serif;
+    }
+
+    /* Ambient animated gradient mesh background */
+    .bg-blobs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(120px);
+      opacity: 0.1;
+    }
+    .blob-1 {
+      top: -100px;
+      left: -100px;
+      width: 450px;
+      height: 450px;
+      background: #6366f1;
+      animation: float1 20s infinite alternate ease-in-out;
+    }
+    .blob-2 {
+      top: 40%;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: #06b6d4;
+      animation: float2 24s infinite alternate ease-in-out;
+    }
+    .blob-3 {
+      bottom: -100px;
+      left: 30%;
+      width: 450px;
+      height: 450px;
+      background: #4f46e5;
+      animation: float1 18s infinite alternate-reverse ease-in-out;
+    }
+
+    @keyframes float1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, -40px) scale(1.1); }
+    }
+    @keyframes float2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-40px, 30px) scale(0.95); }
+    }
+
+    /* Glassmorphic Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(3, 3, 5, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .badge-course {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #a5b4fc;
+      letter-spacing: 0.05em;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem;
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Quiz Cards Grid */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .quiz-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s, border-color 0.25s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .quiz-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Option Cards */
+    .option-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+      text-align: left;
+      color: var(--text);
+    }
+    .option-card:hover {
+      border-color: var(--primary);
+    }
+    .option-card.selected {
+      border-color: var(--primary);
+      border-left: 3px solid var(--primary);
+      background-color: rgba(99, 102, 241, 0.08);
+    }
+    [dir="rtl"] .option-card.selected {
+      border-left: 1px solid var(--primary);
+      border-right: 3px solid var(--primary);
+      text-align: right;
+    }
+
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      flex-shrink: 0;
+      margin-right: 0.85rem;
+    }
+    [dir="rtl"] .option-letter {
+      margin-right: 0;
+      margin-left: 0.85rem;
+    }
+    .option-card.selected .option-letter {
+      background: var(--primary);
+      border-color: #818cf8;
+      color: #fff;
+    }
+
+    /* Explanation Box */
+    .explanation-box {
+      background: rgba(99, 102, 241, 0.03);
+      border-left: 3px solid var(--primary);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem;
+      margin-top: 1rem;
+    }
+    [dir="rtl"] .explanation-box {
+      border-left: none;
+      border-right: 3px solid var(--primary);
+      border-radius: 12px 0 0 12px;
+    }
+
+    /* Floating Translate Button */
+    .translate-btn {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 50;
+      width: 52px;
+      height: 52px;
+      border-radius: 9999px;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #818cf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .translate-btn:hover {
+      transform: scale(1.1);
+      border-color: rgba(99, 102, 241, 0.6);
+      color: #fff;
+    }
+    .lang-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #4f46e5;
+      color: #fff;
+      font-size: 9px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 9999px;
+      border: 1px solid var(--bg);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      box-shadow: 0 6px 20px -4px rgba(99, 102, 241, 0.4);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: #4f46e5;
+      transform: translateY(-1px);
+    }
+    .btn-primary:disabled {
+      background: #1e1e2d;
+      color: #64748b;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      background: var(--surface-card);
+      color: #cbd5e1;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover:not(:disabled) {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .btn-secondary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Question dots */
+    .dot-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      color: #64748b;
+      transition: all 0.15s;
+    }
+    .dot-btn.current {
+      background: var(--primary);
+      border-color: #818cf8;
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+    .dot-btn.answered {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.4);
+      color: #c7d2fe;
+    }
+
+    /* Score Circle */
+    .score-circle {
+      width: 130px;
+      height: 130px;
+      border-radius: 9999px;
+      border: 4px solid;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 1.5rem auto;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .score-green {
+      border-color: #10b981;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.1);
+    }
+    .score-yellow {
+      border-color: #f59e0b;
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .score-red {
+      border-color: #ef4444;
+      color: #f87171;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .navbar { padding: 0 1rem; }
+      .container { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Animated Blobs -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <button class="nav-btn" id="btnBackEdugate" onclick="handleBackAction()">
+      <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+      <span id="navBackText">← Back to EDUGATE</span>
+    </button>
+    <div style="font-weight: 700; font-size: 1rem; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px;">
+      <i data-lucide="cpu" style="width: 18px; height: 18px; color: #818cf8;"></i>
+      <span id="navTitle">Logic Design Quizzes</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="badge-course">CSE131</span>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container" id="appMain">
+    <!-- Dynamic View Loaded Here -->
+  </main>
+
+  <!-- Footer -->
+  <footer style="border-top: 1px solid var(--border); padding: 1.5rem; text-align: center; font-size: 0.75rem; color: #64748b; font-family: 'JetBrains Mono', monospace; position: relative; z-index: 10;">
+    <span id="footerText">EDUGATE © 2026 · CSE131 Logic Design Quizzes</span>
+  </footer>
+
+  <!-- Floating Translate Button -->
+  <button class="translate-btn" onclick="toggleLanguage()" title="Toggle English / Arabic" aria-label="Translate">
+    <i data-lucide="globe" style="width: 22px; height: 22px;"></i>
+    <span class="lang-badge" id="langBadge">EN</span>
+  </button>
+
+  <!-- App Logic Script -->
+  <script>
+    // Import question data from storage or fallback embedded dataset
+    let currentLanguage = localStorage.getItem('edugate_quiz_lang') || 'en';
+    let currentView = 'list'; // 'list' | 'quiz' | 'results'
+    let currentQuizId = 1;
+    let currentQuestionIndex = 0;
+    let userAnswers = {}; // questionId -> optionId
+
+    function getStoredProgress() {
+      try {
+        return JSON.parse(localStorage.getItem('edugate_quiz_progress') || '{}');
+      } catch {
+        return {};
+      }
+    }
+
+    function saveProgress(quizId, score, total) {
+      const p = getStoredProgress();
+      const existingBest = p[quizId]?.bestScore || 0;
+      p[quizId] = {
+        completed: true,
+        score: score,
+        total: total,
+        bestScore: Math.max(existingBest, score),
+        percent: Math.round((score / total) * 100),
+        date: new Date().toISOString()
+      };
+      localStorage.setItem('edugate_quiz_progress', JSON.stringify(p));
+    }
+
+    // Load Quiz Data from main window or API
+    let QUIZZES = [];
+
+    // Initialize after DOM load
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Check if host app window has quizzes or fetch
+      try {
+        const res = await fetch('/src/data/quizzes.ts');
+        // If not found in plain HTML, we use embedded dataset
+      } catch {}
+
+      // Fallback or embedded definitions will be initialized
+      initEmbeddedQuizzes();
+      updateLanguageUI();
+      renderCurrentView();
+      lucide.createIcons();
+    });
+
+    function toggleLanguage() {
+      currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
+      localStorage.setItem('edugate_quiz_lang', currentLanguage);
+      document.documentElement.lang = currentLanguage;
+      document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+      updateLanguageUI();
+      renderCurrentView();
+    }
+
+    function updateLanguageUI() {
+      const isAr = currentLanguage === 'ar';
+      document.documentElement.lang = currentLanguage;
+      document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+      document.getElementById('langBadge').innerText = isAr ? 'ع' : 'EN';
+      
+      const backText = document.getElementById('navBackText');
+      if (currentView === 'list') {
+        backText.innerText = isAr ? '← العودة إلى إديوجيت' : '← Back to EDUGATE';
+      } else {
+        backText.innerText = isAr ? '← قائمة الاختبارات' : '← Back to Quizzes';
+      }
+
+      document.getElementById('navTitle').innerText = isAr ? 'اختبارات التصميم المنطقي' : 'Logic Design Quizzes';
+      document.getElementById('footerText').innerText = isAr 
+        ? 'EDUGATE © 2026 · منصة اختبارات التصميم المنطقي CSE131'
+        : 'EDUGATE © 2026 · CSE131 Logic Design Quizzes';
+    }
+
+    function handleBackAction() {
+      if (currentView !== 'list') {
+        currentView = 'list';
+        userAnswers = {};
+        updateLanguageUI();
+        renderCurrentView();
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    function openQuiz(quizId) {
+      currentQuizId = quizId;
+      currentQuestionIndex = 0;
+      userAnswers = {};
+      currentView = 'quiz';
+      updateLanguageUI();
+      renderCurrentView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderCurrentView() {
+      const main = document.getElementById('appMain');
+      if (currentView === 'list') {
+        renderQuizList(main);
+      } else if (currentView === 'quiz') {
+        renderQuizInterface(main);
+      } else if (currentView === 'results') {
+        renderQuizResults(main);
+      }
+      lucide.createIcons();
+    }
+
+    /* 1. Quiz List Page */
+    function renderQuizList(container) {
+      const isAr = currentLanguage === 'ar';
+      const progress = getStoredProgress();
+
+      let cardsHtml = '';
+      QUIZZES.forEach(q => {
+        const p = progress[q.id];
+        const isDone = p && p.completed;
+        const total = q.questions.length;
+        const bestScore = isDone ? p.bestScore : 0;
+        const bestPercent = isDone ? Math.round((bestScore / total) * 100) : 0;
+
+        cardsHtml += `
+          <div class="quiz-card" onclick="openQuiz(${q.id})">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; color: #818cf8;">
+                  ${isAr ? 'اختبار ' + q.id : 'QUIZ 0' + q.id} · <span style="color: #94a3b8; font-weight: normal;">${isAr ? q.difficultyAr : q.difficulty}</span>
+                </span>
+                ${isDone ? `
+                  <span style="color: #34d399; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                    <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i> ${bestScore}/${total}
+                  </span>
+                ` : `<span style="font-size: 0.75rem; color: #64748b; font-family: 'JetBrains Mono';">${isAr ? 'لم يبدأ' : 'Not Started'}</span>`}
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem;">
+                ${isAr ? q.titleAr : q.titleEn}
+              </h3>
+              <p style="font-size: 0.8rem; color: #94a3b8; line-height: 1.5; margin-bottom: 1rem;">
+                ${isAr ? q.descAr : q.descEn}
+              </p>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.85rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; font-family: 'JetBrains Mono';">
+              <span><i data-lucide="help-circle" style="width: 13px; height: 13px; vertical-align: -2px;"></i> ${total} ${isAr ? 'سؤال' : 'Questions'}</span>
+              <span style="color: #818cf8; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                ${isDone ? (isAr ? 'إعادة المحاولة' : 'Retake') : (isAr ? 'بدء الاختبار' : 'Start Quiz')} →
+              </span>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div style="text-align: center; max-width: 600px; margin: 0 auto 2.5rem auto;">
+          <h1 style="font-size: 2.25rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+            ${isAr ? 'اختبارات التدريب العملي' : 'Practice Quizzes'}
+          </h1>
+          <p style="font-size: 1rem; color: #94a3b8;">
+            ${isAr ? 'اختبر نفسك وتعلّم من أخطائك بدقة' : 'Test yourself and learn from your mistakes'}
+          </p>
+        </div>
+        <div class="quiz-grid">
+          ${cardsHtml}
+        </div>
+      `;
+    }
+
+    /* 2. Quiz Interface (1 Question at a time) */
+    function renderQuizInterface(container) {
+      const isAr = currentLanguage === 'ar';
+      const quiz = QUIZZES.find(q => q.id === currentQuizId);
+      const q = quiz.questions[currentQuestionIndex];
+      const total = quiz.questions.length;
+      const selected = userAnswers[q.id];
+      const isLast = currentQuestionIndex === total - 1;
+
+      let optionsHtml = '';
+      q.options.forEach(opt => {
+        const isSel = selected === opt.id;
+        optionsHtml += `
+          <button class="option-card ${isSel ? 'selected' : ''}" onclick="selectOption('${opt.id}')">
+            <div style="display: flex; align-items: center;">
+              <span class="option-letter">${opt.id}</span>
+              <span style="font-size: 0.95rem; font-weight: 500;">${isAr ? opt.textAr : opt.text}</span>
+            </div>
+            <div style="width: 18px; height: 18px; border-radius: 9999px; border: 1.5px solid ${isSel ? '#6366f1' : 'rgba(255,255,255,0.2)'}; background: ${isSel ? '#6366f1' : 'transparent'}; display: flex; align-items: center; justify-content: center;">
+              ${isSel ? '<i data-lucide="check" style="width: 12px; height: 12px; color: #fff; stroke-width: 3;"></i>' : ''}
+            </div>
+          </button>
+        `;
+      });
+
+      // Question dots
+      let dotsHtml = '';
+      quiz.questions.forEach((item, idx) => {
+        const isCurrent = idx === currentQuestionIndex;
+        const isAns = userAnswers[item.id] !== undefined;
+        let c = 'dot-btn';
+        if (isCurrent) c += ' current';
+        else if (isAns) c += ' answered';
+        dotsHtml += `<button class="${c}" onclick="jumpToQuestion(${idx})">${idx + 1}</button>`;
+      });
+
+      container.innerHTML = `
+        <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+          <div>
+            <div style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #818cf8; font-weight: 700;">
+              ${isAr ? 'اختبار ' + quiz.id : 'QUIZ 0' + quiz.id}
+            </div>
+            <h2 style="font-size: 1.5rem; font-weight: 700; color: #fff;">
+              ${isAr ? quiz.titleAr : quiz.titleEn}
+            </h2>
+          </div>
+          <div style="font-family: 'JetBrains Mono'; font-size: 0.85rem; font-weight: 700; color: #c7d2fe;">
+            ${isAr ? `السؤال ${currentQuestionIndex + 1} من ${total}` : `Question ${currentQuestionIndex + 1} of ${total}`}
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem; line-height: 1.6;">
+            ${isAr ? q.questionAr : q.questionEn}
+          </h3>
+
+          <div style="margin-top: 1rem;">
+            ${optionsHtml}
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+          <button class="btn-secondary" onclick="prevQuestion()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>
+            ${isAr ? 'السابق' : 'Previous'}
+          </button>
+          <button class="btn-primary" onclick="nextQuestion()" ${!selected ? 'disabled' : ''}>
+            ${isLast ? (isAr ? 'إرسال وتصحيح الاختبار' : 'Submit Quiz') : (isAr ? 'التالي' : 'Next')}
+          </button>
+        </div>
+
+        <!-- Question Dots -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;">
+          <div style="font-size: 0.75rem; font-family: 'JetBrains Mono'; color: #94a3b8; margin-bottom: 0.6rem;">
+            ${isAr ? 'خريطة الأسئلة' : 'Question Map'}
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            ${dotsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function selectOption(optId) {
+      const quiz = QUIZZES.find(q => q.id === currentQuizId);
+      const q = quiz.questions[currentQuestionIndex];
+      userAnswers[q.id] = optId;
+      renderCurrentView();
+    }
+
+    function nextQuestion() {
+      const quiz = QUIZZES.find(q => q.id === currentQuizId);
+      if (currentQuestionIndex === quiz.questions.length - 1) {
+        submitQuiz();
+      } else {
+        currentQuestionIndex++;
+        renderCurrentView();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderCurrentView();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function jumpToQuestion(idx) {
+      currentQuestionIndex = idx;
+      renderCurrentView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function submitQuiz() {
+      const quiz = QUIZZES.find(q => q.id === currentQuizId);
+      let score = 0;
+      quiz.questions.forEach(q => {
+        if (userAnswers[q.id] === q.correctAnswer) {
+          score++;
+        }
+      });
+      saveProgress(quiz.id, score, quiz.questions.length);
+      currentView = 'results';
+      updateLanguageUI();
+      renderCurrentView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* 3. Quiz Results & Explanations Page */
+    function renderQuizResults(container) {
+      const isAr = currentLanguage === 'ar';
+      const quiz = QUIZZES.find(q => q.id === currentQuizId);
+      const total = quiz.questions.length;
+      let correct = 0;
+      quiz.questions.forEach(q => {
+        if (userAnswers[q.id] === q.correctAnswer) correct++;
+      });
+      const percent = Math.round((correct / total) * 100);
+
+      let circleClass = percent >= 80 ? 'score-green' : percent >= 50 ? 'score-yellow' : 'score-red';
+
+      let listHtml = '';
+      quiz.questions.forEach(q => {
+        const userChoice = userAnswers[q.id];
+        const isOk = userChoice === q.correctAnswer;
+        const chosenOpt = q.options.find(o => o.id === userChoice);
+        const correctOpt = q.options.find(o => o.id === q.correctAnswer);
+
+        listHtml += `
+          <div style="background: var(--surface); border: 1px solid ${isOk ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.35)'}; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.25rem;">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 1rem;">
+              <div style="display: flex; gap: 10px;">
+                <span style="color: ${isOk ? '#34d399' : '#f87171'};">
+                  <i data-lucide="${isOk ? 'check-circle-2' : 'x-circle'}" style="width: 20px; height: 20px;"></i>
+                </span>
+                <div>
+                  <div style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #94a3b8;">
+                    ${isAr ? 'السؤال ' + q.id : 'Question ' + q.id} · <span style="color: ${isOk ? '#34d399' : '#f87171'}; font-weight: 700;">${isOk ? (isAr ? 'صحيح' : 'Correct') : (isAr ? 'خطأ' : 'Incorrect')}</span>
+                  </div>
+                  <div style="font-weight: 600; font-size: 1rem; color: #fff; margin-top: 4px;">
+                    ${isAr ? q.questionAr : q.questionEn}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Answers Comparison -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; font-family: 'JetBrains Mono'; font-size: 0.75rem; margin-bottom: 1rem;">
+              <div style="padding: 10px 14px; border-radius: 10px; background: ${isOk ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.15)'}; border: 1px solid ${isOk ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}; color: ${isOk ? '#a7f3d0' : '#fca5a5'};">
+                <span style="font-size: 10px; text-transform: uppercase; color: #94a3b8; display: block; margin-bottom: 2px;">
+                  ${isAr ? 'إجابتك:' : 'Your Answer:'}
+                </span>
+                <strong>${userChoice ? userChoice + ') ' + (isAr ? chosenOpt?.textAr : chosenOpt?.text) : (isAr ? 'لم تجب' : 'Unanswered')}</strong>
+              </div>
+              <div style="padding: 10px 14px; border-radius: 10px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.35); color: #a7f3d0;">
+                <span style="font-size: 10px; text-transform: uppercase; color: #94a3b8; display: block; margin-bottom: 2px;">
+                  ${isAr ? 'الإجابة النموذجية الصحيحة:' : 'Correct Answer:'}
+                </span>
+                <strong>${q.correctAnswer}) ${isAr ? correctOpt?.textAr : correctOpt?.text}</strong>
+              </div>
+            </div>
+
+            <!-- Explanation Box -->
+            <div class="explanation-box">
+              <div style="display: flex; align-items: center; gap: 6px; color: #818cf8; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem;">
+                <i data-lucide="lightbulb" style="width: 16px; height: 16px;"></i>
+                <span>${isAr ? 'لماذا هذه هي الإجابة الصحيحة' : 'Why this is the correct answer'}</span>
+              </div>
+              <div style="font-size: 0.825rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 0.6rem;">
+                ${isAr ? q.explanation.logicAr : q.explanation.logicEn}
+              </div>
+              <div style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #34d399; background: #0a0a0f; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border);">
+                <strong>Rule:</strong> ${isAr ? q.explanation.ruleAr : q.explanation.ruleEn}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 2.5rem;">
+          <h2 style="font-size: 1.75rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;">
+            ${isAr ? quiz.titleAr : quiz.titleEn}
+          </h2>
+          <div class="score-circle ${circleClass}">
+            <span style="font-size: 2.5rem; font-weight: 800; font-family: 'JetBrains Mono';">${percent}%</span>
+            <span style="font-size: 0.75rem; font-family: 'JetBrains Mono';">${correct} / ${total}</span>
+          </div>
+          <p style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem;">
+            ${isAr ? `لقد أجبت على ${correct} من أصل ${total} إجابة صحيحة (${percent}%)` : `You got ${correct} out of ${total} correct (${percent}%)`}
+          </p>
+          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn-primary" onclick="openQuiz(${quiz.id})">
+              <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
+              <span>${isAr ? 'إعادة الاختبار' : 'Retry Quiz'}</span>
+            </button>
+            <button class="btn-secondary" onclick="handleBackAction()">
+              <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+              <span>${isAr ? 'العودة لقائمة الاختبارات' : 'Back to Quizzes'}</span>
+            </button>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">
+          ${isAr ? 'مراجعة الأسئلة وحلولها النموذجية' : 'Questions & Solutions Breakdown'}
+        </h3>
+        <div>
+          ${listHtml}
+        </div>
+      `;
+    }
+
+    function initEmbeddedQuizzes() {
+      // Connect to global quizzes
+      QUIZZES = [
+        {
+          id: 1,
+          titleEn: "Numbering Systems & Digital Signals",
+          titleAr: "أنظمة العد والإشارات الرقمية",
+          difficulty: "Foundational",
+          difficultyAr: "تأسيسي",
+          descEn: "Digital levels, binary, octal, hex, ASCII, and electrical pulse signals.",
+          descAr: "مستويات الجهد الرقمي، الثنائي، الثماني، الست عشري، والنبضات الرقمية.",
+          questions: [
+            {
+              id: 1,
+              questionEn: "Which of the following represents the correct range of digits used in the Binary numbering system?",
+              questionAr: "أي مما يلي يمثل النطاق الصحيح للأرقام المستخدمة في نظام العد الثنائي؟",
+              options: [{id:'A', text:'0 to 9', textAr:'من 0 إلى 9'}, {id:'B', text:'0 to 7', textAr:'من 0 إلى 7'}, {id:'C', text:'0 to 1', textAr:'من 0 إلى 1'}, {id:'D', text:'0 to F', textAr:'من 0 إلى F'}],
+              correctAnswer: 'C',
+              explanation: {
+                logicEn: "The binary system operates on Base-2. Valid digits in any base-r system strictly range from 0 to (r - 1). Therefore, only 0 and 1 exist.",
+                logicAr: "يعمل النظام الثنائي على الأساس 2. الأرقام الصالحة تقع من 0 إلى (r - 1)، لذلك يوجد فقط 0 و 1.",
+                ruleEn: "Base-2 digits = {0, 1}",
+                ruleAr: "أرقام الأساس 2 = {0, 1}"
+              }
+            },
+            {
+              id: 2,
+              questionEn: "In the Hexadecimal numbering system, which letters are used to represent values from 10 to 15?",
+              questionAr: "في نظام العد الست عشري، ما هي الأحرف المستخدمة لتمثيل القيم من 10 إلى 15؟",
+              options: [{id:'A', text:'A, B, C, D, E, F', textAr:'A, B, C, D, E, F'}, {id:'B', text:'10, 11, 12, 13, 14, 15', textAr:'10, 11, 12, 13, 14, 15'}, {id:'C', text:'A, B, C, D, E, G', textAr:'A, B, C, D, E, G'}, {id:'D', text:'0, 1, 2, 3, 4, 5', textAr:'0, 1, 2, 3, 4, 5'}],
+              correctAnswer: 'A',
+              explanation: {
+                logicEn: "Hexadecimal (Base-16) uses digits 0-9 and letters A through F: A=10, B=11, C=12, D=13, E=14, F=15.",
+                logicAr: "يستخدم الست عشري الأرقام 0-9 والحروف A إلى F: A=10, B=11, C=12, D=13, E=14, F=15.",
+                ruleEn: "Hex literals: A=10, B=11, C=12, D=13, E=14, F=15.",
+                ruleAr: "حروف الست عشري تمثل القيم من 10 إلى 15."
+              }
+            },
+            {
+              id: 3,
+              questionEn: "According to the digital signal diagram, what voltage level represents the 'High' state?",
+              questionAr: "وفقاً لمخطط الإشارة الرقمية، ما هو مستوى الجهد الذي يمثل الحالة المرتفعة 'High'؟",
+              options: [{id:'A', text:'0 V', textAr:'0 V'}, {id:'B', text:'2.5 V', textAr:'2.5 V'}, {id:'C', text:'5 V', textAr:'5 V'}, {id:'D', text:'10 V', textAr:'10 V'}],
+              correctAnswer: 'C',
+              explanation: {
+                logicEn: "In standard TTL digital circuits, logic 1 (HIGH state) is represented by +5 V, while logic 0 (LOW state) is 0 V.",
+                logicAr: "في الدوائر الرقمية القياسية، الحالة 1 (HIGH) تمثل بـ +5 فولت، والحالة 0 (LOW) تمثل بـ 0 فولت.",
+                ruleEn: "TTL Digital standard: HIGH = 5 V, LOW = 0 V.",
+                ruleAr: "معيار الجهد الرقمي: المرتفع = 5 فولت والمنخفض = 0 فولت."
+              }
+            },
+            {
+              id: 4,
+              questionEn: "Which numbering system uses the digits 0 through 7?",
+              questionAr: "أي نظام عد يستخدم الأرقام من 0 إلى 7؟",
+              options: [{id:'A', text:'Decimal', textAr:'العشري'}, {id:'B', text:'Binary', textAr:'الثنائي'}, {id:'C', text:'Octal', textAr:'الثماني'}, {id:'D', text:'Hexadecimal', textAr:'الست عشري'}],
+              correctAnswer: 'C',
+              explanation: {
+                logicEn: "Octal is base 8. Valid symbols are digits 0 through 7. Digit 8 is never valid in base 8.",
+                logicAr: "النظام الثماني أساسه 8، وأرقامه من 0 إلى 7.",
+                ruleEn: "Base-8: {0, 1, 2, 3, 4, 5, 6, 7}",
+                ruleAr: "أرقام الثماني: من 0 إلى 7."
+              }
+            },
+            {
+              id: 5,
+              questionEn: "What does the acronym 'ASCII' stand for in the context of the diagram?",
+              questionAr: "إلامَ يشير الاختصار 'ASCII'؟",
+              options: [{id:'A', text:'American Standard Code for Information Interchange', textAr:'American Standard Code for Information Interchange'}, {id:'B', text:'Advanced System Code for Interface Interaction', textAr:'Advanced System Code for Interface Interaction'}, {id:'C', text:'Analog Signal Control for Internal Input', textAr:'Analog Signal Control for Internal Input'}, {id:'D', text:'Automated System Code for Information', textAr:'Automated System Code for Information'}],
+              correctAnswer: 'A',
+              explanation: {
+                logicEn: "ASCII stands for 'American Standard Code for Information Interchange', a character encoding standard for electronic communication.",
+                logicAr: "يرمز ASCII إلى الرمز القياسي الأمريكي لتبادل المعلومات.",
+                ruleEn: "ASCII: American Standard Code for Information Interchange.",
+                ruleAr: "تعريف معيار ASCII القياسي الدولي."
+              }
+            },
+            {
+              id: 6,
+              questionEn: "The Decimal numbering system uses digits from 0 to 9.",
+              questionAr: "نظام العد العشري يستخدم الأرقام من 0 إلى 9.",
+              options: [{id:'True', text:'True', textAr:'صحيح'}, {id:'False', text:'False', textAr:'خطأ'}],
+              correctAnswer: 'True',
+              explanation: {
+                logicEn: "True. Decimal is base 10 and has ten symbols: 0 through 9.",
+                logicAr: "صحيح. النظام العشري له أساس 10 ويحتوي على الأرقام من 0 إلى 9.",
+                ruleEn: "Decimal base-10 = {0..9}",
+                ruleAr: "العشري أساس 10 = {0..9}"
+              }
+            },
+            {
+              id: 7,
+              questionEn: "An Alternating Current (AC) signal is represented as a square wave in the diagram.",
+              questionAr: "إشارة التيار المتردد (AC) تمثل كموجة مربعة في المخطط.",
+              options: [{id:'True', text:'True', textAr:'صحيح'}, {id:'False', text:'False', textAr:'خطأ'}],
+              correctAnswer: 'False',
+              explanation: {
+                logicEn: "False. AC signal is continuous analog waveform represented as a sine wave. Square waves represent digital signals.",
+                logicAr: "خطأ. إشارة AC التماثلية تُمثل بموجة جيبية (Sine wave). بينما الموجة المربعة تمثل الإشارة الرقمية.",
+                ruleEn: "AC = Sine wave; Digital = Square wave pulse.",
+                ruleAr: "إشارة AC = موجة جيبية؛ الرقمية = موجة مربعة."
+              }
+            },
+            {
+              id: 8,
+              questionEn: "In the Binary system, the digit 2 is not allowed.",
+              questionAr: "في النظام الثنائي، الرقم 2 غير مسموح به.",
+              options: [{id:'True', text:'True', textAr:'صحيح'}, {id:'False', text:'False', textAr:'خطأ'}],
+              correctAnswer: 'True',
+              explanation: {
+                logicEn: "True. Binary base 2 contains only digits 0 and 1. Value 2 is written as (10)₂.",
+                logicAr: "صحيح. النظام الثنائي يحوي فقط 0 و 1.",
+                ruleEn: "Binary = {0, 1} only.",
+                ruleAr: "الثنائي = 0 و 1 فقط."
+              }
+            }
+          ]
+        },
+        {
+          id: 2,
+          titleEn: "Numbering Systems & Arithmetic",
+          titleAr: "أنظمة العد والعمليات الحسابية",
+          difficulty: "Intermediate",
+          difficultyAr: "متوسط",
+          descEn: "Radix weights, octal carry rules, hex conversions, and fractional binary operations.",
+          descAr: "أوزان المنازل، جمع النظام الثماني، تحويلات الست عشري، وكسور الثنائي.",
+          questions: [
+            {
+              id: 1,
+              questionEn: "What is the base of the Hexadecimal numbering system?",
+              questionAr: "ما هو أساس نظام العد الست عشري؟",
+              options: [{id:'A', text:'2', textAr:'2'}, {id:'B', text:'8', textAr:'8'}, {id:'C', text:'10', textAr:'10'}, {id:'D', text:'16', textAr:'16'}],
+              correctAnswer: 'D',
+              explanation: {
+                logicEn: "Hexadecimal has base 16.",
+                logicAr: "النظام الست عشري أساسه 16.",
+                ruleEn: "Hexadecimal base = 16.",
+                ruleAr: "الأساس = 16."
+              }
+            },
+            {
+              id: 2,
+              questionEn: "Convert the octal number (721.34)₈ to decimal. What is the weight of the digit '3'?",
+              questionAr: "في العدد الثماني (721.34)₈، ما هو وزن الرقم '3'؟",
+              options: [{id:'A', text:'8²', textAr:'8²'}, {id:'B', text:'8¹', textAr:'8¹'}, {id:'C', text:'8⁻¹', textAr:'8⁻¹'}, {id:'D', text:'8⁻²', textAr:'8⁻²'}],
+              correctAnswer: 'C',
+              explanation: {
+                logicEn: "The first position immediately to the right of the radix point is position -1, so its weight is 8⁻¹.",
+                logicAr: "المنزلة الأولى يمين الفاصلة موقعها -1 ووزنها 8⁻¹.",
+                ruleEn: "Fractional weight = r⁻¹ = 8⁻¹.",
+                ruleAr: "وزن أول منزلة كسرية = 8⁻¹."
+              }
+            },
+            {
+              id: 3,
+              questionEn: "When performing addition in the octal system, if the sum of a column is equal to or greater than 8, what is the rule?",
+              questionAr: "في جمع النظام الثماني، إذا كان حاصل جمع العمود مساوياً أو أكبر من 8، فما هي القاعدة؟",
+              options: [{id:'A', text:'Subtract 8 and carry 1 to the next position', textAr:'اطرح 8 واحمل 1 للمنزلة التالية'}, {id:'B', text:'Subtract 10 and carry 1', textAr:'اطرح 10 واحمل 1'}, {id:'C', text:'Add 8 and carry 1', textAr:'أضف 8 واحمل 1'}, {id:'D', text:'Reset to 0 and carry 2', textAr:'صفّر الخانة واحمل 2'}],
+              correctAnswer: 'A',
+              explanation: {
+                logicEn: "Because the base is 8, subtract 8 to keep the remainder in that column and carry 1 to the next column.",
+                logicAr: "لأن الأساس 8، نطرح 8 لكتابة الباقي ونحمل 1 للمنزلة التالية.",
+                ruleEn: "If Sum ≥ 8, write (Sum - 8) and carry 1.",
+                ruleAr: "إذا كان المجموع ≥ 8، اطرح 8 واحمل 1."
+              }
+            },
+            {
+              id: 4,
+              questionEn: "To convert an octal number to binary, how many binary digits (bits) are equivalent to one octal digit?",
+              questionAr: "كم بت ثنائي يعادل خانة ثمانية واحدة؟",
+              options: [{id:'A', text:'2', textAr:'2'}, {id:'B', text:'3', textAr:'3'}, {id:'C', text:'4', textAr:'4'}, {id:'D', text:'8', textAr:'8'}],
+              correctAnswer: 'B',
+              explanation: {
+                logicEn: "Since 8 = 2³, exactly 3 bits represent one octal digit (000 to 111).",
+                logicAr: "لأن 8 = 2³، فإن كل خانة ثمانية تكافئ 3 بتات ثنائية.",
+                ruleEn: "1 Octal digit = 3 Binary bits.",
+                ruleAr: "1 خانة ثمانية = 3 بت ثنائي."
+              }
+            },
+            {
+              id: 5,
+              questionEn: "What is the binary equivalent of the hexadecimal digit 'F'?",
+              questionAr: "ما هو المكافئ الثنائي للرمز الست عشري 'F'؟",
+              options: [{id:'A', text:'1111', textAr:'1111'}, {id:'B', text:'1010', textAr:'1010'}, {id:'C', text:'1100', textAr:'1100'}, {id:'D', text:'1000', textAr:'1000'}],
+              correctAnswer: 'A',
+              explanation: {
+                logicEn: "F = 15 in decimal = (1111)₂ in binary.",
+                logicAr: "الرمز F يعادل 15 في العشري = (1111)₂ في الثنائي.",
+                ruleEn: "F₁₆ = 15₁₀ = 1111₂.",
+                ruleAr: "F = 1111."
+              }
+            }
+          ]
+        },
+        {
+          id: 3,
+          titleEn: "Logic Gates & Universal Logic",
+          titleAr: "البوابات المنطقية والمنطق الشامل",
+          difficulty: "Intermediate",
+          difficultyAr: "متوسط",
+          descEn: "AND, OR, NOT, NAND, NOR, XOR, XNOR truth tables and circuits.",
+          descAr: "جداول حقيقة ودوائر AND, OR, NOT, NAND, NOR, XOR, XNOR.",
+          questions: [
+            {
+              id: 1,
+              questionEn: "Which of the following are considered 'Basic Logic Gates' according to the lecture?",
+              questionAr: "أي من البوابات التالية تعتبر بوابات أساسية؟",
+              options: [{id:'A', text:'XOR, XNOR, NAND', textAr:'XOR, XNOR, NAND'}, {id:'B', text:'NOT, AND, OR', textAr:'NOT, AND, OR'}, {id:'C', text:'NAND, NOR, NOT', textAr:'NAND, NOR, NOT'}, {id:'D', text:'AND, OR, XOR', textAr:'AND, OR, XOR'}],
+              correctAnswer: 'B',
+              explanation: {
+                logicEn: "The three primary logic gates are NOT, AND, and OR.",
+                logicAr: "البوابات المنطقية الأساسية الثلاث هي NOT و AND و OR.",
+                ruleEn: "Basic gates: NOT, AND, OR.",
+                ruleAr: "البوابات الأساسية: NOT, AND, OR."
+              }
+            },
+            {
+              id: 2,
+              questionEn: "An AND gate produces an output of 1 only when:",
+              questionAr: "تنتج بوابة AND الخرج 1 فقط عندما:",
+              options: [{id:'A', text:'At least one input is 1', textAr:'أحد المداخل على الأقل 1'}, {id:'B', text:'Both inputs are 0', textAr:'كلا المدخلين 0'}, {id:'C', text:'Both inputs are 1', textAr:'كلا المدخلين 1'}, {id:'D', text:'The inputs are different', textAr:'المدخلان مختلفان'}],
+              correctAnswer: 'C',
+              explanation: {
+                logicEn: "AND gate outputs 1 only when all inputs are 1.",
+                logicAr: "تنتج بوابة AND القيمة 1 فقط عندما تكون جميع المداخل 1.",
+                ruleEn: "1 AND 1 = 1.",
+                ruleAr: "الخرج 1 فقط إذا كان كلا المدخلين 1."
+              }
+            },
+            {
+              id: 3,
+              questionEn: "In the circuit F = (X + Y) · Ȳ, what is the output F when X = 1 and Y = 1?",
+              questionAr: "في الدائرة F = (X + Y) · Ȳ، ما هو الخرج F عندما يكون X = 1 و Y = 1؟",
+              options: [{id:'A', text:'0', textAr:'0'}, {id:'B', text:'1', textAr:'1'}, {id:'C', text:'X', textAr:'X'}, {id:'D', text:'Y', textAr:'Y'}],
+              correctAnswer: 'A',
+              explanation: {
+                logicEn: "(X + Y) = (1 + 1) = 1. Ȳ = 1' = 0. Then F = 1 · 0 = 0.",
+                logicAr: "(X + Y) = (1 + 1) = 1. Ȳ = 0. والخرج F = 1 · 0 = 0.",
+                ruleEn: "F = (1+1) · 0 = 0.",
+                ruleAr: "الضرب في 0 يعطي 0."
+              }
+            },
+            {
+              id: 4,
+              questionEn: "Which logic gate is said to be a 'universal gate' because any digital system can be implemented with it?",
+              questionAr: "أي بوابة منطقية تعرف بالبوابة الشاملة؟",
+              options: [{id:'A', text:'AND', textAr:'AND'}, {id:'B', text:'OR', textAr:'OR'}, {id:'C', text:'XOR', textAr:'XOR'}, {id:'D', text:'NAND', textAr:'NAND'}],
+              correctAnswer: 'D',
+              explanation: {
+                logicEn: "NAND and NOR are universal gates because any logic function can be synthesized purely with them.",
+                logicAr: "NAND بوابة شاملة لأنه يمكن بناء جميع الدوال المنطقية باستخدامها وحدها.",
+                ruleEn: "Universal Gate: NAND.",
+                ruleAr: "البوابة الشاملة: NAND."
+              }
+            }
+          ]
+        },
+        {
+          id: 4,
+          titleEn: "Boolean Algebra Rules & Simplification",
+          titleAr: "قواعد الجبر البولي والتبسيط",
+          difficulty: "Intermediate",
+          difficultyAr: "متوسط",
+          descEn: "Identity, complement, absorption, distributive, and De Morgan laws.",
+          descAr: "قوانين المحايد والمتمم والامتصاص والتوزيع وقوانين ديمورجان.",
+          questions: [
+            {
+              id: 1,
+              questionEn: "According to the Boolean algebra rules, what is the value of x + 1?",
+              questionAr: "ما هي قيمة x + 1 في الجبر البولي؟",
+              options: [{id:'A', text:'x', textAr:'x'}, {id:'B', text:'0', textAr:'0'}, {id:'C', text:'1', textAr:'1'}, {id:'D', text:'x\'', textAr:'x\''}],
+              correctAnswer: 'C',
+              explanation: {
+                logicEn: "By the Null Law of OR, combining any variable with 1 results in 1.",
+                logicAr: "وفقاً لقانون الإفناء، جمع أي متغير مع 1 ينتج 1 دائماً.",
+                ruleEn: "x + 1 = 1.",
+                ruleAr: "x + 1 = 1."
+              }
+            },
+            {
+              id: 2,
+              questionEn: "According to the Absorption Law, what is the simplified form of x + xy?",
+              questionAr: "وفقاً لقانون الامتصاص، ما هو تبسيط x + xy؟",
+              options: [{id:'A', text:'x + y', textAr:'x + y'}, {id:'B', text:'xy', textAr:'xy'}, {id:'C', text:'x', textAr:'x'}, {id:'D', text:'1', textAr:'1'}],
+              correctAnswer: 'C',
+              explanation: {
+                logicEn: "x + xy = x(1 + y) = x(1) = x.",
+                logicAr: "x + xy = x(1 + y) = x.",
+                ruleEn: "Absorption Law: x + xy = x.",
+                ruleAr: "قانون الامتصاص: x + xy = x."
+              }
+            },
+            {
+              id: 3,
+              questionEn: "Which of the following is the correct application of De Morgan's Law for (x + y)'?",
+              questionAr: "ما هو التطبيق الصحيح لقانون ديمورجان لـ (x + y)'؟",
+              options: [{id:'A', text:'x\' + y\'', textAr:'x\' + y\''}, {id:'B', text:'x\' · y\'', textAr:'x\' · y\''}, {id:'C', text:'x · y', textAr:'x · y'}, {id:'D', text:'x + y', textAr:'x + y'}],
+              correctAnswer: 'B',
+              explanation: {
+                logicEn: "(x + y)' = x' · y'. Complement of a sum is the product of complements.",
+                logicAr: "متمم الجمع يساوي ضرب المتممات: (x + y)' = x' · y'.",
+                ruleEn: "(x + y)' = x' · y'.",
+                ruleAr: "(x + y)' = x' · y'."
+              }
+            }
+          ]
+        },
+        {
+          id: 5,
+          titleEn: "Canonical Forms & Minterms",
+          titleAr: "الصيغ المعيارية والحدود الصغرى والكبرى",
+          difficulty: "Advanced",
+          difficultyAr: "متقدم",
+          descEn: "Sum of Minterms (SOP), Product of Maxterms (POS), and 3-variable expansions.",
+          descAr: "مجموع الحدود الصغرى، جداء الحدود الكبرى، وتوسيعات 3 متغيرات.",
+          questions: [
+            {
+              id: 1,
+              questionEn: "According to De Morgan's Law, the complement of the function F = (A + B + C + D) is:",
+              questionAr: "ما هو متمم الدالة F = (A + B + C + D)؟",
+              options: [{id:'A', text:'A\' + B\' + C\' + D\'', textAr:'A\' + B\' + C\' + D\''}, {id:'B', text:'A\' · B\' · C\' · D\'', textAr:'A\' · B\' · C\' · D\''}, {id:'C', text:'A · B · C · D', textAr:'A · B · C · D'}, {id:'D', text:'(A + B + C + D)\'', textAr:'(A + B + C + D)\''}],
+              correctAnswer: 'B',
+              explanation: {
+                logicEn: "Complement of sum of variables is the product of their individual complements: A' · B' · C' · D'.",
+                logicAr: "متمم مجموع المتغيرات هو حاصل ضرب متمماتها: A' · B' · C' · D'.",
+                ruleEn: "(A+B+C+D)' = A'B'C'D'.",
+                ruleAr: "قانون ديمورجان المعمم."
+              }
+            },
+            {
+              id: 2,
+              questionEn: "For a 3-variable function, how many possible minterms are there?",
+              questionAr: "لدالة بـ 3 متغيرات، كم حداً أصغر يمكن تكوينه؟",
+              options: [{id:'A', text:'3', textAr:'3'}, {id:'B', text:'6', textAr:'6'}, {id:'C', text:'8', textAr:'8'}, {id:'D', text:'16', textAr:'16'}],
+              correctAnswer: 'C',
+              explanation: {
+                logicEn: "For n=3 variables, there are 2³ = 8 minterms (m₀ through m₇).",
+                logicAr: "لـ 3 متغيرات: 2³ = 8 حدود صغرى (m₀ إلى m₇).",
+                ruleEn: "Number of minterms = 2ⁿ = 2³ = 8.",
+                ruleAr: "عدد الحدود = 2³ = 8."
+              }
+            },
+            {
+              id: 3,
+              questionEn: "If F = Σ(1, 4, 5, 6, 7) for a 3-variable function, what are the corresponding maxterms?",
+              questionAr: "إذا كانت F = Σ(1, 4, 5, 6, 7)، فما هي الحدود الكبرى المقابلة؟",
+              options: [{id:'A', text:'Π(0, 2, 3)', textAr:'Π(0, 2, 3)'}, {id:'B', text:'Π(1, 4, 5, 6, 7)', textAr:'Π(1, 4, 5, 6, 7)'}, {id:'C', text:'Π(0, 1, 2, 3)', textAr:'Π(0, 1, 2, 3)'}, {id:'D', text:'Π(2, 3, 4, 5)', textAr:'Π(2, 3, 4, 5)'}],
+              correctAnswer: 'A',
+              explanation: {
+                logicEn: "Maxterms Π contain the complementary indices where F = 0: {0, 2, 3}.",
+                logicAr: "الحدود الكبرى Π تضم المؤشرات المتبقية حيث الخرج 0: {0, 2, 3}.",
+                ruleEn: "F = Σ(1,4,5,6,7) = Π(0,2,3).",
+                ruleAr: "ثنائية Σ و Π."
+              }
+            }
+          ]
+        }
+      ];
+    }
+  </script>
+</body>
+</html>

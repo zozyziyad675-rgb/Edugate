@@ -1,0 +1,60 @@
+<!-- Generated standalone HTML for CS111/CS201 Data Structures Quizzes -->
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDUGATE - Data Structures Quizzes (CS111)</title>
+  <meta name="description" content="Interactive Data Structures quizzes for CS111 with question reviews, step-by-step traces, visual DS diagrams, and bilingual EN/AR translation." />
+  <meta property="og:title" content="EDUGATE - Data Structures Quizzes" />
+  <meta property="og:description" content="Interactive Data Structures quizzes for CS111 with question reviews, step-by-step traces, visual DS diagrams, and bilingual EN/AR translation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <style>
+    :root {
+      --bg: #030305;
+      --surface: #0a0a0f;
+      --card: #111118;
+      --primary: #6366f1;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; line-height: 1.6; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .navbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .container { max-width: 1140px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+    .quiz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .quiz-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.6rem; cursor: pointer; transition: all 0.25s ease; }
+    .quiz-card:hover { transform: translateY(-6px); border-color: rgba(99, 102, 241, 0.5); box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.25); }
+    .primary-btn { background: #6366f1; color: #fff; border: none; border-radius: 10px; padding: 12px 28px; font-weight: 600; cursor: pointer; transition: filter 0.2s; }
+    .primary-btn:hover { filter: brightness(1.1); }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div style="display:flex; align-items:center; gap:0.75rem;">
+      <a href="index.html" class="primary-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #f1f5f9; text-decoration: none; padding: 0.4rem 0.85rem; font-size: 0.88rem;">&larr; Back to EDUGATE</a>
+      <span style="font-weight: 700; font-size: 1.05rem; color: #fff;">Data Structures Quizzes</span>
+    </div>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #818cf8; background: rgba(99, 102, 241, 0.12); padding: 0.3rem 0.6rem; border-radius: 6px;">CS111</span>
+  </header>
+  <main class="container">
+    <h1 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Practice Quizzes</h1>
+    <p style="color: var(--muted); text-align: center; max-width: 600px; margin: 0 auto 2.5rem;">Master arrays, linked lists, stacks, queues, trees, and graphs through practice</p>
+    <div style="text-align: center; padding: 2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;">
+      <p style="margin-bottom: 1rem; color: #cbd5e1;">Single-file offline edition. Access full interactive quizzes directly in the web preview applet or export anytime!</p>
+      <a href="/" class="primary-btn" style="text-decoration: none; display: inline-block;">Launch Interactive Quiz Suite</a>
+    </div>
+  </main>
+</body>
+</html>
