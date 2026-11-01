@@ -1,0 +1,141 @@
+Here are 20 multiple-choice questions based on the Module 2 lecture slides, with the correct answer listed under each question.
+
+1. According to the lecture, why is hardware speed not a reliable way to compare algorithms?
+A) Because hardware speed is always the same across different computers.
+B) Because clock time depends on hardware, operating system, compiler, and background activity.
+C) Because hardware speed only matters for space complexity, not time complexity.
+D) Because algorithm analysis always uses real clock time.
+Correct Answer: B
+
+2. Which property of an algorithm means it must "stop after a limited number of steps"?
+A) Correctness
+B) Clarity
+C) Finiteness
+D) Generality
+Correct Answer: C
+
+3. In the FindMax(A) algorithm, what is the stated pre-condition?
+A) A is sorted.
+B) A has at least two distinct values.
+C) A is non-empty.
+D) A contains only positive numbers.
+Correct Answer: C
+
+4. When tracing FindMax([7, 4, 8, 3, 10]), what is the value of max after the loop checks the value 8?
+A) 7
+B) 4
+C) 8
+D) 10
+Correct Answer: C
+
+5. For an array of n elements, how many comparisons does the FindMax algorithm perform?
+A) n
+B) n - 1
+C) n / 2
+D) 1
+Correct Answer: B
+
+6. Why does the lecture state "Never initialize max to 0 unless the problem guarantees non-negative data"?
+A) Because 0 is not a valid integer in C#.
+B) Because if all values are negative, 0 would incorrectly remain the maximum.
+C) Because initializing to 0 causes a stack overflow.
+D) Because the first element must always be the maximum.
+Correct Answer: B
+
+7. In the "second largest distinct value" pseudocode, what is the initial value of both first and second?
+A) 0
+B) The first element of the array
+C) Negative infinity
+D) Positive infinity
+Correct Answer: C
+
+8. When tracing the second largest distinct value on [4, 9, 2, 9, 7], what happens when the algorithm encounters the second 9?
+A) first becomes 9 and second becomes 4.
+B) It is ignored because x > first is false and x > second is false.
+C) second becomes 9.
+D) The algorithm throws an error for duplicate values.
+Correct Answer: B
+
+9. According to the operation count table, what is the growth class of two consecutive loops, each running n times?
+A) Constant
+B) Linear
+C) Quadratic
+D) Logarithmic
+Correct Answer: B
+
+10. The triangular nested loop (where the inner loop runs from i+1 to n) has an operation count of n(n-1)/2. What is its growth class?
+A) Θ(n)
+B) Θ(n log n)
+C) Θ(n²)
+D) Θ(log n)
+Correct Answer: C
+
+11. In the "repeated halving" example (while x > 1: x //= 2), how many iterations occur relative to n?
+A) n iterations
+B) n² iterations
+C) About log₂(n) iterations
+D) About n/2 iterations
+Correct Answer: C
+
+12. For the mixed loop with an outer loop of n iterations and an inner while loop that repeatedly halves x, what is the total growth class?
+A) Θ(n)
+B) Θ(log n)
+C) Θ(n log n)
+D) Θ(n²)
+Correct Answer: C
+
+13. What does auxiliary space complexity count?
+A) The total memory used by the entire program.
+B) The extra memory used beyond the input itself.
+C) Only the memory used by recursive calls.
+D) The memory used by the operating system.
+Correct Answer: B
+
+14. In the space complexity examples, the FindMax function has constant auxiliary space, while the doubled(values) function creates a new list. What is the auxiliary space of doubled(values)?
+A) Θ(1)
+B) Θ(log n)
+C) Θ(n)
+D) Θ(n²)
+Correct Answer: C
+
+15. What does Big-O notation describe?
+A) A lower bound on the growth of an algorithm.
+B) A tight bound on the growth of an algorithm.
+C) An upper bound on the growth of an algorithm.
+D) The exact runtime of an algorithm in seconds.
+Correct Answer: C
+
+16. Simplify the expression 4n² + 30n + 100 using asymptotic notation.
+A) Θ(n)
+B) Θ(n²)
+C) Θ(n log n)
+D) Θ(n³)
+Correct Answer: B
+
+17. In the linear search algorithm, what is the best-case time complexity?
+A) Θ(n)
+B) Θ(1)
+C) Θ(log n)
+D) Θ(n²)
+Correct Answer: B
+
+18. What is the pre-condition for binary search, as stated in the lecture?
+A) The array must be non-empty.
+B) The array must contain only distinct values.
+C) The array must be sorted.
+D) The array must have an even number of elements.
+Correct Answer: C
+
+19. When tracing binary search on [3, 8, 12, 17, 21, 29, 34, 41] for target 29, what is the value of mid at the first step?
+A) 0
+B) 3
+C) 4
+D) 5
+Correct Answer: B
+
+20. The lecture states that for f(n) = 3n + 10, the claim f(n) is O(n²) is:
+A) False, because n² grows slower than n.
+B) True, but loose because n² grows faster than needed.
+C) True and tight, because it is the simplest bound.
+D) False, because constants cannot be dropped for Big-O.
+Correct Answer: B
